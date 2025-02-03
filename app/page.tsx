@@ -1,4 +1,21 @@
-import Image from "next/image";
+"use client"
+
+import { Card } from "@/components/ui/card"
+import { Button } from "@/components/ui/button"
+import {
+  Send,
+  Repeat,
+  LayersIcon as LayerStack,
+  BracketsIcon as Bridge,
+  Plus,
+  Home,
+  ImageIcon,
+  Zap,
+  History,
+  Compass,
+  RefreshCcw,
+  AlertTriangle,
+} from "lucide-react"
 
 export default function Home() {
   return (
