@@ -315,27 +315,18 @@ export default function Page() {
         className="min-h-screen bg-cover bg-center flex items-center justify-center p-4 font-['Segoe_UI']"
       >
         <div className="w-[490px] max-w-lg h-[780px] bg-gradient-to-b from-[#12121d]/80 to-[#12121d]/95 backdrop-blur-xl main-card rounded-[18px] overflow-hidden flex flex-col">
-          {/* Header */}
-          <div className="relative p-6">
-            <button className="absolute left-6 top-6 w-8 h-8 flex items-center justify-center rounded-full bg-[#272739]">
-              <ChevronLeft className="w-5 h-5 text-white" />
-            </button>
-            <div className="absolute right-6 top-6">
-              <span className="text-[#22c55e] text-sm font-medium">MAIN</span>
-            </div>
-          </div>
 
           {/* Content */}
-          <div className="flex-1 flex flex-col items-center justify-center gap-6 px-6">
+          <div className="flex-1 flex flex-col items-center justify-center gap-5 px-6">
             <img
               src="/landing-new.webp"
               alt="Welcome"
-              className="w-32 h-32 mb-4"
+              className="w-48 h-48 mb-4"
             />
-            <h1 className="text-2xl font-bold text-white text-center">
-              Welcome to the United Arab Emirates
+            <h1 className="text-4xl font-bold text-white text-center">
+              Welcome to the Emirates
             </h1>
-            <p className="text-gray-400 text-center">
+            <p className="text-gray-400 text-lg mb-4 text-center">
               Let's start by getting to know you
             </p>
 
