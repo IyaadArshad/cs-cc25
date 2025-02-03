@@ -1,16 +1,21 @@
 "use client";
 
 import { useState } from "react";
-import { Home, ImageIcon, Zap, History, Compass } from "lucide-react";
+import { Home, ImageIcon, Zap, Settings, Compass } from "lucide-react";
 import {
   HomeFilled,
   ImageFilled,
   ZapFilled,
-  HistoryFilled,
+  SettingsFilled,
   CompassFilled,
 } from "./filled-icons";
 
-type Tab = "home" | "nft" | "moon" | "history" | "explore";
+type Tab = "home" | "nft" | "moon" | "explore" | "settings";
+
+const backgrounds = [
+  'https://images.pexels.com/photos/1473673/pexels-photo-1473673.jpeg',
+  'https://images.pexels.com/photos/442579/pexels-photo-442579.jpeg'
+]
 
 type WeatherCondition = "sunny" | "cloudy" | "rainy";
 
@@ -82,6 +87,9 @@ function WeatherPill({ temperature, condition }: WeatherPillProps) {
 export default function Page() {
   const [activeTab, setActiveTab] = useState<Tab>("home");
 
+  // Generate a random background URL
+  const randomBackground = backgrounds[Math.floor(Math.random() * backgrounds.length)];
+
   const getTabContent = (tab: Tab) => {
     switch (tab) {
       case "home":
@@ -110,24 +118,50 @@ export default function Page() {
             <h2 className="text-white text-2xl">$MOON Trading</h2>
           </div>
         );
-      case "history":
-        return (
-          <div className="flex-1 p-5">
-            <h2 className="text-white text-2xl">Transaction History</h2>
-          </div>
-        );
       case "explore":
         return (
           <div className="flex-1 p-5">
             <h2 className="text-white text-2xl">Explore</h2>
           </div>
         );
+      case "settings":
+        return (
+          <div className="flex-1 p-5">
+            <h2 className="text-white text-6xl text-bold text-left ml-2 mb-8 mt-6">Settings</h2>
+            <div className="space-y-4">
+              <div className="flex items-center justify-between p-4 bg-[#272739] rounded-lg">
+                <span className="text-white">Dark Mode</span>
+                <label className="relative inline-flex items-center cursor-pointer">
+                  <input type="checkbox" className="sr-only peer" />
+                  <div className="w-11 h-6 bg-gray-600 peer-focus:outline-none rounded-full peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-[#2563eb]"></div>
+                </label>
+              </div>
+              <div className="flex items-center justify-between p-4 bg-[#272739] rounded-lg">
+                <span className="text-white">Notifications</span>
+                <label className="relative inline-flex items-center cursor-pointer">
+                  <input type="checkbox" className="sr-only peer" />
+                  <div className="w-11 h-6 bg-gray-600 peer-focus:outline-none rounded-full peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-[#2563eb]"></div>
+                </label>
+              </div>
+              <div className="flex items-center justify-between p-4 bg-[#272739] rounded-lg">
+                <span className="text-white">Sound Effects</span>
+                <label className="relative inline-flex items-center cursor-pointer">
+                  <input type="checkbox" className="sr-only peer" />
+                  <div className="w-11 h-6 bg-gray-600 peer-focus:outline-none rounded-full peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-[#2563eb]"></div>
+                </label>
+              </div>
+            </div>
+          </div>
+        );
     }
   };
 
   return (
-    <div className="min-h-screen bg-[url('https://hebbkx1anhila5yf.public.blob.vercel-storage.com/image-gOA9GTBU3ZgUUbsxU1ifxPbK3L8fPT.png')] bg-cover bg-center flex items-center justify-center p-4 font-['Segoe_UI']">
-      <div className="w-[490px] max-w-lg h-[780px] bg-[#12121d] main-card rounded-[18px] overflow-hidden flex flex-col">
+    <div
+      style={{ backgroundImage: `url(${randomBackground})` }}
+      className="min-h-screen bg-cover bg-center flex items-center justify-center p-4 font-['Segoe_UI']"
+    >
+      <div className="w-[490px] max-w-lg h-[780px] bg-gradient-to-b from-[#12121d]/80 to-[#12121d]/95 backdrop-blur-xl main-card rounded-[18px] overflow-hidden flex flex-col">
         {/* Main Content Area */}
         {getTabContent(activeTab)}
 
@@ -138,7 +172,7 @@ export default function Page() {
             className="absolute top-0 left-0 w-1/5 h-1 bg-[#2563eb] transition-all duration-300 ease-in-out"
             style={{
               transform: `translateX(${
-                ["home", "nft", "moon", "history", "explore"].indexOf(
+                ["home", "nft", "moon", "explore", "settings"].indexOf(
                   activeTab
                 ) * 100
               }%)`,
@@ -197,23 +231,6 @@ export default function Page() {
             </span>
           </button>
           <button
-            onClick={() => setActiveTab("history")}
-            className="flex flex-col items-center justify-center gap-1 mx-7"
-          >
-            {activeTab === "history" ? (
-              <HistoryFilled className="w-8 h-8 text-[#2563eb]" />
-            ) : (
-              <History className="w-8 h-8 text-[#ffffff]" />
-            )}
-            <span
-              className={`text-[12px] ${
-                activeTab === "history" ? "text-[#2563eb]" : "text-[#ffffff]"
-              }`}
-            >
-              History
-            </span>
-          </button>
-          <button
             onClick={() => setActiveTab("explore")}
             className="flex flex-col items-center justify-center gap-1 mx-7"
           >
@@ -228,6 +245,23 @@ export default function Page() {
               }`}
             >
               Explore
+            </span>
+          </button>
+          <button
+            onClick={() => setActiveTab("settings")}
+            className="flex flex-col items-center justify-center gap-1 mx-7"
+          >
+            {activeTab === "settings" ? (
+              <SettingsFilled className="w-8 h-8 text-[#2563eb]" />
+            ) : (
+              <Settings className="w-8 h-8 text-[#ffffff]" />
+            )}
+            <span
+              className={`text-[12px] ${
+                activeTab === "settings" ? "text-[#2563eb]" : "text-[#ffffff]"
+              }`}
+            >
+              Settings
             </span>
           </button>
         </div>
