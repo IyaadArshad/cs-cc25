@@ -5,7 +5,7 @@ import { Home, ImageIcon, Zap, History, Compass } from "lucide-react"
 export default function Page() {
   return (
     <div className="min-h-screen bg-[url('/images/background.png')] bg-cover bg-center flex items-center justify-center p-4 font-['Inter']">
-      <div className="w-full max-w-[420px] bg-[#121212] rounded-[18px] overflow-hidden flex flex-col min-h-[680px]">
+      <div className="w-full max-w-[420px] bg-[#12121d] main-card rounded-[18px] overflow-hidden flex flex-col min-h-[580px]">
         {/* Main Content Area */}
         <div className="flex-1 p-5">
           {/* Header Area */}
@@ -30,27 +30,27 @@ export default function Page() {
         </div>
 
         {/* Bottom Navigation */}
-        <div className="bg-[#1A1A1A] h-[72px] flex justify-around items-center border-t border-[#232323]">
+        <div className="bg-[#090910] h-[72px] flex justify-around items-center border-t border-[#232323]">
           <button className="flex flex-col items-center justify-center gap-1">
-            <Home className="w-5 h-5 text-white/60" />
-            <span className="text-[10px] text-white/60">Home</span>
+            <Home className="w-5 h-5 text-[#ffffff]" />
+            <span className="text-[10px] text-[#ffffff]">Home</span>
           </button>
           <button className="flex flex-col items-center justify-center gap-1">
-            <ImageIcon className="w-5 h-5 text-white/60" />
-            <span className="text-[10px] text-white/60">NFT</span>
+            <ImageIcon className="w-5 h-5 text-[#ffffff]" />
+            <span className="text-[10px] text-[#ffffff]">NFT</span>
           </button>
-          <button className="flex flex-col items-center justify-center gap-1">
-            <Zap className="w-5 h-5 text-white/60" />
-            <span className="text-[10px] text-white/60">$MOON</span>
-          </button>
-          <button className="flex flex-col items-center justify-center gap-1">
-            <History className="w-5 h-5 text-white/60" />
-            <span className="text-[10px] text-white/60">History</span>
-          </button>
-          <button className="flex flex-col items-center justify-center gap-1">
-            <Compass className="w-5 h-5 text-white/60" />
-            <span className="text-[10px] text-white/60">Explore</span>
-          </button>
+            <button className="flex flex-col items-center justify-center gap-1">
+            <Zap className="w-5 h-5 text-[#ffffff]" />
+            <span className="text-[10px] text-[#ffffff]">$MOON</span>
+            </button>
+            <button className="flex flex-col items-center justify-center gap-1">
+            <History className="w-5 h-5 text-[#ffffff]" />
+            <span className="text-[10px] text-[#ffffff]">History</span>
+            </button>
+            <button className="flex flex-col items-center justify-center gap-1">
+            <Compass className="w-5 h-5 text-[#ffffff]" />
+            <span className="text-[10px] text-[#ffffff]">Explore</span>
+            </button>
         </div>
       </div>
     </div>
