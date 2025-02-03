@@ -41,20 +41,20 @@ interface SettingsItemProps {
 
 function SettingsItem({ icon, title, description, plainIcon }: SettingsItemProps) {
   return (
-    <div className="flex items-center justify-between py-4 cursor-pointer group">
+    <div className="flex items-center justify-between py-4 cursor-pointer group hover:bg-[#1e1e2e45] transition-colors">
       <div className="flex items-center gap-4">
         { plainIcon ? (
           // Render icon directly without wrapper styling
           <div>{icon}</div>
         ) : (
           // ...existing wrapper...
-          <div className="w-10 h-10 flex items-center justify-center rounded-full bg-[#272739] text-white">
+          <div className="w-12 h-12 flex items-center justify-center rounded-full bg-[#272739] text-white">
             {icon}
           </div>
         )}
         <div className="flex flex-col">
-          <span className="text-white text-sm font-medium">{title}</span>
-          <span className="text-gray-400 text-xs">{description}</span>
+          <span className="text-white text-base font-semibold">{title}</span>
+          <span className="text-gray-400 text-sm">{description}</span>
         </div>
       </div>
       <ChevronRight className="w-5 h-5 text-gray-400 group-hover:text-white transition-colors" />
@@ -170,7 +170,7 @@ export default function Page() {
               <button className="w-8 h-8 flex items-center justify-center rounded-full bg-[#272739]">
                 <ChevronLeft className="w-5 h-5 text-white" />
               </button>
-              <h1 className="text-2xl font-semibold text-center text-white">Settings</h1>
+              <h1 className="text-xl font-semibold text-center text-white">Settings</h1>
             </div>
 
             {/* Profile Section */}
@@ -179,7 +179,7 @@ export default function Page() {
                 <img src="/images/default_pfp.png" alt="Profile" style={{ borderRadius: "9999px", width: "auto", height: "64px"}} className="text-white" />
               </div>
               <div className="flex-1">
-                <h2 className="text-white mb-2 font-bold text-2xl">The Donors Foundation</h2>
+                <h2 className="text-white mb-2 font-bold text-xl">The Donors Foundation</h2>
                 <p className="text-gray-400 text-sm">Crypto, for good. $DONOR allows people to donate more with...</p>
               </div>
               <button className="w-8 h-8 flex items-center justify-center rounded-full bg-[#272739]">
@@ -188,30 +188,29 @@ export default function Page() {
             </div>
 
             {/* Wallet Settings Section */}
-            <div className="mb-8">
-              <h3 className="text-xl font-bold text-white mb-4">App Settings</h3>
+            <div className="mb-8">  
               <div className="space-y-2">
               <SettingsItem 
                 plainIcon
-                icon={<ConnectedIcon className="w-5 h-5 text-white" />}
+                icon={<ConnectedIcon className="w-7 h-7 text-white" />}
                 title="Connected Apps"
                 description="Manage connected apps"
               />
               <SettingsItem
                 plainIcon
-                icon={<Shield className="w-5 h-5 text-white" />}
+                icon={<Shield className="w-7 h-7 text-white" />}
                 title="Security and Recovery"
                 description="Manage your passwords and recovery methods"
               />
               <SettingsItem
                 plainIcon
-                icon={<MoreHorizontal className="w-5 h-5 text-white" />}
+                icon={<MoreHorizontal className="w-7 h-7 text-white" />}
                 title="Change Password" 
                 description="Change the password used to unlock your app"
               />
               <SettingsItem
                 plainIcon
-                icon={<Trash2 className="w-5 h-5 text-white" />}
+                icon={<Trash2 className="w-7 h-7 text-white" />}
                 title="Remove Account"
                 description="Remove this account from your app"
               />
@@ -220,7 +219,6 @@ export default function Page() {
 
             {/* App Settings Section */}
             <div>
-              <h3 className="text-sm font-medium text-white mb-4">App Settings</h3>
               <div className="space-y-2">
                 <SettingsItem
                   icon={<HomeIcon className="w-5 h-5" />}
