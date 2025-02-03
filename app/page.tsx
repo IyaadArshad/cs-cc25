@@ -71,10 +71,10 @@ function WeatherPill({ temperature, condition }: WeatherPillProps) {
   const Icon = weatherIcons[condition];
 
   return (
-    <div className="flex items-center bg-gradient-to-r from-gray-800 to-gray-900 rounded-full shadow-lg px-4 py-2 space-x-2">
-      <div className="text-yellow-400">{Icon}</div>
-      <span className="text-sm font-semibold text-white">{temperature}°</span>
-      <span className="text-xs text-gray-300 capitalize">{condition}</span>
+    <div className="flex items-center bg-[#272739] rounded-full shadow-[0_4px_12px_rgba(0,0,0,0.5)] px-4 py-2 space-x-2">
+      <div className="text-yellow-400 drop-shadow-[0_0_8px_rgba(0,0,0,0.8)]">{Icon}</div>
+      <span className="text-sm font-semibold text-white drop-shadow-[0_2px_4px_rgba(0,0,0,0.8)]">{temperature}°</span>
+      <span className="text-xs font-medium text-gray-200 capitalize drop-shadow-[0_2px_4px_rgba(0,0,0,0.8)]">{condition}</span>
     </div>
   );
 }
