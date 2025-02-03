@@ -16,7 +16,7 @@ import {
   HomeIcon,
   MessageSquare,
 } from "lucide-react"
-import { HomeFilled, ImageFilled, ZapFilled, SettingsFilled, CompassFilled } from "./filled-icons"
+import { HomeFilled, ImageFilled, ZapFilled, SettingsFilled, CompassFilled, EditProfile } from "./filled-icons"
 
 type Tab = "home" | "nft" | "moon" | "explore" | "settings";
 
@@ -157,30 +157,30 @@ export default function Page() {
         return (
           <div className="flex-1 p-5 overflow-y-auto">
             {/* Header */}
-            <div className="flex items-center gap-4 mb-4">
+            <div className="flex items-center gap-4 mb-7 ">
               <button className="w-8 h-8 flex items-center justify-center rounded-full bg-[#272739]">
                 <ChevronLeft className="w-5 h-5 text-white" />
               </button>
-              <h1 className="text-lg font-semibold text-white">Settings</h1>
+              <h1 className="text-2xl font-semibold text-center text-white">Settings</h1>
             </div>
 
             {/* Profile Section */}
             <div className="flex items-center gap-4 mb-8">
-              <div className="w-12 h-12 rounded-full bg-[#2563eb] flex items-center justify-center">
+              <div className="w-16 h-16 rounded-full bg-[#2563eb] flex items-center justify-center">
                 <span className="text-white text-xl">🐕</span>
               </div>
               <div className="flex-1">
-                <h2 className="text-white text-base font-medium">The Donors Foundation</h2>
+                <h2 className="text-white mb-2 font-bold text-2xl">The Donors Foundation</h2>
                 <p className="text-gray-400 text-sm">Crypto, for good. $DONOR allows people to donate more with...</p>
               </div>
               <button className="w-8 h-8 flex items-center justify-center rounded-full bg-[#272739]">
-                <Settings className="w-4 h-4 text-white" />
+                <EditProfile className="" />
               </button>
             </div>
 
             {/* Wallet Settings Section */}
             <div className="mb-8">
-              <h3 className="text-sm font-medium text-white mb-4">Wallet Settings</h3>
+              <h3 className="text-xl font-bold text-white mb-4">App Settings</h3>
               <div className="space-y-2">
                 <SettingsItem
                   icon={<Rocket className="w-5 h-5" />}
