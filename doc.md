@@ -1,9 +1,9 @@
 Main application sections / tabs:
 1. Home -> simple welcome screen with clear call-to-action
-2. Explore -> browse features and app contentx
+2. Discover -> browse locations, restaurants, entertainment places and local attractions
 3. Connect -> engage with community and share experiences
 4. Tips -> Contains stuff like the entertainer, dubizzle, nol, dubai police, salik, petrol price?
-4. Notifications -> view alerts and updates
+4. Experiences -> view alerts and updates
 5. Profile -> personal account and settings
 
 Setup:
