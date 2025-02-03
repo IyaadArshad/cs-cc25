@@ -16,7 +16,7 @@ import {
   HomeIcon,
   MessageSquare,
 } from "lucide-react"
-import { HomeFilled, ImageFilled, ZapFilled, SettingsFilled, CompassFilled, EditProfile, ConnectedIcon } from "./filled-icons"
+import { HomeFilled, ImageFilled, ZapFilled, SettingsFilled, CompassFilled, EditProfile, ConnectedIcon, CommunityIcon, ReportIssuesOrGiveFeedbackIcon } from "./filled-icons"
 
 type Tab = "home" | "nft" | "moon" | "explore" | "settings";
 
@@ -165,12 +165,12 @@ export default function Page() {
       case "settings":
         return (
           <div className="flex-1 p-5 overflow-y-auto">
-            {/* Header */}
-            <div className="flex items-center gap-4 mb-7 ">
-              <button className="w-8 h-8 flex items-center justify-center rounded-full bg-[#272739]">
+            {/* Updated Header */}
+            <div className="relative mb-7">
+              <button className="absolute left-0 w-8 h-8 flex items-center justify-center rounded-full bg-[#272739]">
                 <ChevronLeft className="w-5 h-5 text-white" />
               </button>
-              <h1 className="text-xl font-semibold text-center text-white">Settings</h1>
+              <h1 className="text-xl font-semibold text-white text-center">Settings</h1>
             </div>
 
             {/* Profile Section */}
@@ -219,14 +219,17 @@ export default function Page() {
 
             {/* App Settings Section */}
             <div>
+              <h3 className="text-2xl font-bold text-white mb-4">Other</h3>
               <div className="space-y-2">
                 <SettingsItem
-                  icon={<HomeIcon className="w-5 h-5" />}
+                plainIcon
+                  icon={<CommunityIcon className="w-7 h-7 text-white" />}
                   title="Dubai Community"
                   description="Come and join us"
                 />
                 <SettingsItem
-                  icon={<MessageSquare className="w-5 h-5" />}
+                plainIcon
+                  icon={<ReportIssuesOrGiveFeedbackIcon className="w-7 h-7 text-white" />}
                   title="Report Issues or Give Feedback"
                   description="Let us know what we can improve on"
                 />
