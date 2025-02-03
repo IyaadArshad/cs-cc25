@@ -1,6 +1,6 @@
-"use client"
+"use client";
 
-import { useState } from "react"
+import { useState, useEffect } from "react";
 import {
   Home,
   ImageIcon,
@@ -9,21 +9,29 @@ import {
   Compass,
   ChevronLeft,
   ChevronRight,
-  Rocket,
   Shield,
   MoreHorizontal,
   Trash2,
-  HomeIcon,
-  MessageSquare,
-} from "lucide-react"
-import { HomeFilled, ImageFilled, ZapFilled, SettingsFilled, CompassFilled, EditProfile, ConnectedIcon, CommunityIcon, ReportIssuesOrGiveFeedbackIcon } from "./filled-icons"
+} from "lucide-react";
+import {
+  HomeFilled,
+  ImageFilled,
+  ZapFilled,
+  SettingsFilled,
+  CompassFilled,
+  EditProfile,
+  ConnectedIcon,
+  CommunityIcon,
+  ReportIssuesOrGiveFeedbackIcon,
+} from "./filled-icons";
+import type React from "react";
 
 type Tab = "home" | "nft" | "moon" | "explore" | "settings";
 
 const backgrounds = [
-  'https://images.pexels.com/photos/1473673/pexels-photo-1473673.jpeg',
-  'https://images.pexels.com/photos/442579/pexels-photo-442579.jpeg'
-]
+  "https://images.pexels.com/photos/1473673/pexels-photo-1473673.jpeg",
+  "https://images.pexels.com/photos/442579/pexels-photo-442579.jpeg",
+];
 
 type WeatherCondition = "sunny" | "cloudy" | "rainy";
 
@@ -39,11 +47,16 @@ interface SettingsItemProps {
   plainIcon?: boolean;
 }
 
-function SettingsItem({ icon, title, description, plainIcon }: SettingsItemProps) {
+function SettingsItem({
+  icon,
+  title,
+  description,
+  plainIcon,
+}: SettingsItemProps) {
   return (
     <div className="flex items-center justify-between py-4 cursor-pointer group hover:bg-[#1e1e2e45] transition-colors">
       <div className="flex items-center gap-4">
-        { plainIcon ? (
+        {plainIcon ? (
           // Render icon directly without wrapper styling
           <div>{icon}</div>
         ) : (
@@ -115,18 +128,50 @@ function WeatherPill({ temperature, condition }: WeatherPillProps) {
 
   return (
     <div className="flex items-center bg-[#272739] rounded-full shadow-[0_4px_12px_rgba(0,0,0,0.5)] px-4 py-2 space-x-2">
-      <div className="text-yellow-400 drop-shadow-[0_0_8px_rgba(0,0,0,0.8)]">{Icon}</div>
-      <span className="text-sm font-semibold text-white drop-shadow-[0_2px_4px_rgba(0,0,0,0.8)]">{temperature}°</span>
-      <span className="text-xs font-medium text-gray-200 capitalize drop-shadow-[0_2px_4px_rgba(0,0,0,0.8)]">{condition}</span>
+      <div className="text-yellow-400 drop-shadow-[0_0_8px_rgba(0,0,0,0.8)]">
+        {Icon}
+      </div>
+      <span className="text-sm font-semibold text-white drop-shadow-[0_2px_4px_rgba(0,0,0,0.8)]">
+        {temperature}°
+      </span>
+      <span className="text-xs font-medium text-gray-200 capitalize drop-shadow-[0_2px_4px_rgba(0,0,0,0.8)]">
+        {condition}
+      </span>
     </div>
   );
 }
 
 export default function Page() {
   const [activeTab, setActiveTab] = useState<Tab>("home");
+  const [userName, setUserName] = useState("");
+  const [hasUserCookie, setHasUserCookie] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    // Check for existing name cookie
+    const nameCookie = document.cookie
+      .split(";")
+      .find((c) => c.trim().startsWith("name="));
+    if (nameCookie) {
+      const name = nameCookie.split("=")[1];
+      setUserName(name);
+      setHasUserCookie(true);
+    }
+    setIsLoading(false);
+  }, []);
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (userName.trim()) {
+      // Set cookie for 7 days
+      document.cookie = `name=${userName};path=/;max-age=${60 * 60 * 24 * 7}`;
+      setHasUserCookie(true);
+    }
+  };
 
   // Generate a random background URL
-  const randomBackground = backgrounds[Math.floor(Math.random() * backgrounds.length)];
+  const randomBackground =
+    backgrounds[Math.floor(Math.random() * backgrounds.length)];
 
   const getTabContent = (tab: Tab) => {
     switch (tab) {
@@ -136,7 +181,7 @@ export default function Page() {
             <div className="flex flex-col items-center justify-center space-y-6 mt-16">
               {/* Welcome Section */}
               <h1 className="text-4xl text-white text-center">
-                Welcome back, Ahmed
+                Welcome back, {userName}
               </h1>
 
               {/* Weather Pill */}
@@ -170,17 +215,32 @@ export default function Page() {
               <button className="absolute left-0 w-8 h-8 flex items-center justify-center rounded-full bg-[#272739]">
                 <ChevronLeft className="w-5 h-5 text-white" />
               </button>
-              <h1 className="text-xl font-semibold text-white text-center">Settings</h1>
+              <h1 className="text-xl font-semibold text-white text-center">
+                Settings
+              </h1>
             </div>
 
             {/* Profile Section */}
             <div className="flex items-center gap-4 mb-8">
               <div className="w-16 h-16 rounded-full bg-[#2563eb] flex items-center justify-center">
-                <img src="/images/default_pfp.png" alt="Profile" style={{ borderRadius: "9999px", width: "auto", height: "64px"}} className="text-white" />
+                <img
+                  src="/images/default_pfp.png"
+                  alt="Profile"
+                  style={{
+                    borderRadius: "9999px",
+                    width: "auto",
+                    height: "64px",
+                  }}
+                  className="text-white"
+                />
               </div>
               <div className="flex-1">
-                <h2 className="text-white mb-2 font-bold text-xl">The Donors Foundation</h2>
-                <p className="text-gray-400 text-sm">Crypto, for good. $DONOR allows people to donate more with...</p>
+                <h2 className="text-white mb-2 font-bold text-xl">
+                  The Donors Foundation
+                </h2>
+                <p className="text-gray-400 text-sm">
+                  Crypto, for good. $DONOR allows people to donate more with...
+                </p>
               </div>
               <button className="w-8 h-8 flex items-center justify-center rounded-full bg-[#272739]">
                 <EditProfile className="" />
@@ -188,32 +248,32 @@ export default function Page() {
             </div>
 
             {/* Wallet Settings Section */}
-            <div className="mb-8">  
+            <div className="mb-8">
               <div className="space-y-2">
-              <SettingsItem 
-                plainIcon
-                icon={<ConnectedIcon className="w-7 h-7 text-white" />}
-                title="Connected Apps"
-                description="Manage connected apps"
-              />
-              <SettingsItem
-                plainIcon
-                icon={<Shield className="w-7 h-7 text-white" />}
-                title="Security and Recovery"
-                description="Manage your passwords and recovery methods"
-              />
-              <SettingsItem
-                plainIcon
-                icon={<MoreHorizontal className="w-7 h-7 text-white" />}
-                title="Change Password" 
-                description="Change the password used to unlock your app"
-              />
-              <SettingsItem
-                plainIcon
-                icon={<Trash2 className="w-7 h-7 text-white" />}
-                title="Remove Account"
-                description="Remove this account from your app"
-              />
+                <SettingsItem
+                  plainIcon
+                  icon={<ConnectedIcon className="w-7 h-7 text-white" />}
+                  title="Connected Apps"
+                  description="Manage connected apps"
+                />
+                <SettingsItem
+                  plainIcon
+                  icon={<Shield className="w-7 h-7 text-white" />}
+                  title="Security and Recovery"
+                  description="Manage your passwords and recovery methods"
+                />
+                <SettingsItem
+                  plainIcon
+                  icon={<MoreHorizontal className="w-7 h-7 text-white" />}
+                  title="Change Password"
+                  description="Change the password used to unlock your app"
+                />
+                <SettingsItem
+                  plainIcon
+                  icon={<Trash2 className="w-7 h-7 text-white" />}
+                  title="Remove Account"
+                  description="Remove this account from your app"
+                />
               </div>
             </div>
 
@@ -222,23 +282,139 @@ export default function Page() {
               <h3 className="text-2xl font-bold text-white mb-4">Other</h3>
               <div className="space-y-2">
                 <SettingsItem
-                plainIcon
+                  plainIcon
                   icon={<CommunityIcon className="w-7 h-7 text-white" />}
                   title="Dubai Community"
                   description="Come and join us"
                 />
                 <SettingsItem
-                plainIcon
-                  icon={<ReportIssuesOrGiveFeedbackIcon className="w-7 h-7 text-white" />}
+                  plainIcon
+                  icon={
+                    <ReportIssuesOrGiveFeedbackIcon className="w-7 h-7 text-white" />
+                  }
                   title="Report Issues or Give Feedback"
                   description="Let us know what we can improve on"
                 />
               </div>
             </div>
           </div>
-        )
+        );
+      default:
+        return null;
     }
   };
+
+  if (isLoading) {
+    return null;
+  }
+
+  if (!hasUserCookie) {
+    return (
+      <div
+        style={{ backgroundImage: `url(${randomBackground})` }}
+        className="min-h-screen bg-cover bg-center flex items-center justify-center p-4 font-['Segoe_UI']"
+      >
+        <div className="w-[490px] max-w-lg h-[780px] bg-gradient-to-b from-[#12121d]/80 to-[#12121d]/95 backdrop-blur-xl main-card rounded-[18px] overflow-hidden flex flex-col">
+          {/* Header */}
+          <div className="relative p-6">
+            <button className="absolute left-6 top-6 w-8 h-8 flex items-center justify-center rounded-full bg-[#272739]">
+              <ChevronLeft className="w-5 h-5 text-white" />
+            </button>
+            <div className="absolute right-6 top-6">
+              <span className="text-[#22c55e] text-sm font-medium">MAIN</span>
+            </div>
+          </div>
+
+          {/* Content */}
+          <div className="flex-1 flex flex-col items-center justify-center gap-6 px-6">
+            <img
+              src="/landing-new.webp"
+              alt="Welcome"
+              className="w-32 h-32 mb-4"
+            />
+            <h1 className="text-2xl font-bold text-white text-center">
+              Welcome to the United Arab Emirates
+            </h1>
+            <p className="text-gray-400 text-center">
+              Let's start by getting to know you
+            </p>
+
+            <form onSubmit={handleSubmit} className="w-full max-w-sm space-y-6">
+              <div className="space-y-2">
+                <input
+                  type="text"
+                  value={userName}
+                  onChange={(e) => setUserName(e.target.value)}
+                  placeholder="Enter your name"
+                  className="w-full px-4 py-3 bg-[#272739] rounded-lg text-white placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-[#2563eb]"
+                  required
+                />
+              </div>
+
+              <button
+                type="submit"
+                className="w-full py-3 bg-[#2563eb] hover:bg-[#2563eb]/90 text-white font-medium rounded-lg transition-colors"
+              >
+                Next
+              </button>
+            </form>
+          </div>
+
+          {/* Bottom Navigation (disabled state) */}
+            <div className="bg-[#090910] min-h-[96px] flex justify-around items-center border-t border-[#232323] p-4 relative">
+            {/* Active tab indicator (hidden in disabled state) */}
+            <div className="absolute top-0 left-0 w-1/5 h-1 bg-[#2563eb] opacity-30"></div>
+
+            <button
+            disabled
+            className="flex flex-col items-center justify-center gap-1 mx-7 opacity-50 cursor-not-allowed"
+            >
+            <Home className="w-8 h-8 text-[#ffffff]/50" />
+            <span className="text-[12px] text-[#ffffff]/50">
+              Home
+            </span>
+            </button>
+            <button
+            disabled
+            className="flex flex-col items-center justify-center gap-1 mx-7 opacity-50 cursor-not-allowed"
+            >
+            <ImageIcon className="w-8 h-8 text-[#ffffff]/50" />
+            <span className="text-[12px] text-[#ffffff]/50">
+              NFT
+            </span>
+            </button>
+            <button
+            disabled
+            className="flex flex-col items-center justify-center gap-1 mx-7 opacity-50 cursor-not-allowed"
+            >
+            <Zap className="w-8 h-8 text-[#ffffff]/50" />
+            <span className="text-[12px] text-[#ffffff]/50">
+              $MOON
+            </span>
+            </button>
+            <button
+            disabled
+            className="flex flex-col items-center justify-center gap-1 mx-7 opacity-50 cursor-not-allowed"
+            >
+            <Compass className="w-8 h-8 text-[#ffffff]/50" />
+            <span className="text-[12px] text-[#ffffff]/50">
+              Explore
+            </span>
+            </button>
+            <button
+            disabled
+            className="flex flex-col items-center justify-center gap-1 mx-7 opacity-50 cursor-not-allowed"
+            >
+            <Settings className="w-8 h-8 text-[#ffffff]/50" />
+            <span className="text-[12px] text-[#ffffff]/50">
+              Settings
+            </span>
+            </button>
+          </div>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div
