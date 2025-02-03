@@ -5,7 +5,7 @@ import { Home, ImageIcon, Zap, History, Compass } from "lucide-react"
 export default function Page() {
   return (
     <div className="min-h-screen bg-[url('/images/background.png')] bg-cover bg-center flex items-center justify-center p-4 font-['Inter']">
-      <div className="w-full max-w-lg  bg-[#12121d] main-card rounded-[18px] overflow-hidden flex flex-col ">
+      <div className="w-[490px] max-w-lg h-[780px] bg-[#12121d] main-card rounded-[18px] overflow-hidden flex flex-col ">
         {/* Main Content Area */}
         <div className="flex-1 p-5">
           {/* Header Area */}
