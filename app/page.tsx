@@ -145,9 +145,217 @@ export default function Page() {
   const [activeTab, setActiveTab] = useState<Tab>("home");
   const [userName, setUserName] = useState("");
   const [bio, setBio] = useState("");
-  const [showBio, setShowBio] = useState(false);
+  // Remove showBio and use new phase state
+  const [phase, setPhase] = useState<"name" | "bio" | "origin" | "loading" | "interests">("name");
+  const [origin, setOrigin] = useState("");
+  const [countrySearch, setCountrySearch] = useState("");
   const [hasUserCookie, setHasUserCookie] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
+  const loadingPhrases = [
+    "AI is identifying your personality",
+    "Matching your interests",
+    "Analyzing your preferences",
+    "Finding connections",
+    "Discovering your style"
+  ];
+  const [loadingIndex, setLoadingIndex] = useState(0);
+
+  const countries = [
+    { name: "Afghanistan", flag: "🇦🇫" },
+    { name: "Albania", flag: "🇦🇱" },
+    { name: "Algeria", flag: "🇩🇿" },
+    { name: "Andorra", flag: "🇦🇩" },
+    { name: "Angola", flag: "🇦🇴" },
+    { name: "Antigua and Barbuda", flag: "🇦🇬" },
+    { name: "Argentina", flag: "🇦🇷" },
+    { name: "Armenia", flag: "🇦🇲" },
+    { name: "Australia", flag: "🇦🇺" },
+    { name: "Austria", flag: "🇦🇹" },
+    { name: "Azerbaijan", flag: "🇦🇿" },
+    { name: "Bahamas", flag: "🇧🇸" },
+    { name: "Bahrain", flag: "🇧🇭" },
+    { name: "Bangladesh", flag: "🇧🇩" },
+    { name: "Barbados", flag: "🇧🇧" },
+    { name: "Belarus", flag: "🇧🇾" },
+    { name: "Belgium", flag: "🇧🇪" },
+    { name: "Belize", flag: "🇧🇿" },
+    { name: "Benin", flag: "🇧🇯" },
+    { name: "Bhutan", flag: "🇧🇹" },
+    { name: "Bolivia", flag: "🇧🇴" },
+    { name: "Bosnia and Herzegovina", flag: "🇧🇦" },
+    { name: "Botswana", flag: "🇧🇼" },
+    { name: "Brazil", flag: "🇧🇷" },
+    { name: "Brunei", flag: "🇧🇳" },
+    { name: "Bulgaria", flag: "🇧🇬" },
+    { name: "Burkina Faso", flag: "🇧" },
+    { name: "Burundi", flag: "🇧🇮" },
+    { name: "Cabo Verde", flag: "🇨🇻" },
+    { name: "Cambodia", flag: "🇰🇭" },
+    { name: "Cameroon", flag: "🇨🇲" },
+    { name: "Canada", flag: "🇨🇦" },
+    { name: "Central African Republic", flag: "🇨🇫" },
+    { name: "Chad", flag: "🇹🇩" },
+    { name: "Chile", flag: "🇨🇱" },
+    { name: "China", flag: "🇨🇳" },
+    { name: "Colombia", flag: "🇨🇴" },
+    { name: "Comoros", flag: "🇰🇲" },
+    { name: "Congo (Congo-Brazzaville)", flag: "🇨🇬" },
+    { name: "Costa Rica", flag: "🇨🇷" },
+    { name: "Croatia", flag: "🇭🇷" },
+    { name: "Cuba", flag: "🇨🇺" },
+    { name: "Cyprus", flag: "🇨🇾" },
+    { name: "Czechia", flag: "🇨🇿" },
+    { name: "Democratic Republic of the Congo", flag: "🇨🇩" },
+    { name: "Denmark", flag: "🇩🇰" },
+    { name: "Djibouti", flag: "🇩🇯" },
+    { name: "Dominica", flag: "🇩🇲" },
+    { name: "Dominican Republic", flag: "🇩🇴" },
+    { name: "Ecuador", flag: "🇪🇨" },
+    { name: "Egypt", flag: "🇪🇬" },
+    { name: "El Salvador", flag: "🇸🇻" },
+    { name: "Equatorial Guinea", flag: "🇬🇶" },
+    { name: "Eritrea", flag: "🇪🇷" },
+    { name: "Estonia", flag: "🇪🇪" },
+    { name: "Eswatini", flag: "🇸🇿" },
+    { name: "Ethiopia", flag: "🇪🇹" },
+    { name: "Fiji", flag: "🇫🇯" },
+    { name: "Finland", flag: "🇫🇮" },
+    { name: "France", flag: "🇫🇷" },
+    { name: "Gabon", flag: "🇬🇦" },
+    { name: "Gambia", flag: "🇬🇲" },
+    { name: "Georgia", flag: "🇬🇪" },
+    { name: "Germany", flag: "🇩🇪" },
+    { name: "Ghana", flag: "🇬🇭" },
+    { name: "Greece", flag: "🇬🇷" },
+    { name: "Grenada", flag: "🇬🇩" },
+    { name: "Guatemala", flag: "🇬🇹" },
+    { name: "Guinea", flag: "🇬🇳" },
+    { name: "Guinea-Bissau", flag: "🇬🇼" },
+    { name: "Guyana", flag: "🇬🇾" },
+    { name: "Haiti", flag: "🇭🇹" },
+    { name: "Holy See", flag: "🇻🇦" },
+    { name: "Honduras", flag: "🇭🇳" },
+    { name: "Hungary", flag: "🇭🇺" },
+    { name: "Iceland", flag: "🇮🇸" },
+    { name: "India", flag: "🇮🇳" },
+    { name: "Indonesia", flag: "🇮🇩" },
+    { name: "Iran", flag: "🇮🇷" },
+    { name: "Iraq", flag: "🇮🇶" },
+    { name: "Ireland", flag: "🇮🇪" },
+    { name: "Israel", flag: "🇮🇱" },
+    { name: "Italy", flag: "🇮🇹" },
+    { name: "Jamaica", flag: "🇯🇲" },
+    { name: "Japan", flag: "🇯🇵" },
+    { name: "Jordan", flag: "🇯🇴" },
+    { name: "Kazakhstan", flag: "🇰🇿" },
+    { name: "Kenya", flag: "🇰🇪" },
+    { name: "Kiribati", flag: "🇰🇮" },
+    { name: "Kuwait", flag: "🇰🇼" },
+    { name: "Kyrgyzstan", flag: "🇰🇬" },
+    { name: "Laos", flag: "🇱🇦" },
+    { name: "Latvia", flag: "🇱🇻" },
+    { name: "Lebanon", flag: "🇱🇧" },
+    { name: "Lesotho", flag: "🇱🇸" },
+    { name: "Liberia", flag: "🇱🇷" },
+    { name: "Libya", flag: "🇱🇾" },
+    { name: "Liechtenstein", flag: "🇱🇮" },
+    { name: "Lithuania", flag: "🇱🇹" },
+    { name: "Luxembourg", flag: "🇱🇺" },
+    { name: "Madagascar", flag: "🇲🇬" },
+    { name: "Malawi", flag: "🇲🇼" },
+    { name: "Malaysia", flag: "🇲🇾" },
+    { name: "Maldives", flag: "🇲🇻" },
+    { name: "Mali", flag: "🇲🇱" },
+    { name: "Malta", flag: "🇲🇹" },
+    { name: "Marshall Islands", flag: "🇲🇭" },
+    { name: "Mauritania", flag: "🇲🇷" },
+    { name: "Mauritius", flag: "🇲🇺" },
+    { name: "Mexico", flag: "🇲🇽" },
+    { name: "Micronesia", flag: "🇫🇲" },
+    { name: "Moldova", flag: "🇲🇩" },
+    { name: "Monaco", flag: "🇲🇨" },
+    { name: "Mongolia", flag: "🇲🇳" },
+    { name: "Montenegro", flag: "🇲🇪" },
+    { name: "Morocco", flag: "🇲🇦" },
+    { name: "Mozambique", flag: "🇲🇿" },
+    { name: "Myanmar", flag: "🇲🇲" },
+    { name: "Namibia", flag: "🇳🇦" },
+    { name: "Nauru", flag: "🇳🇷" },
+    { name: "Nepal", flag: "🇳🇵" },
+    { name: "Netherlands", flag: "🇳🇱" },
+    { name: "New Zealand", flag: "🇳🇿" },
+    { name: "Nicaragua", flag: "🇳🇮" },
+    { name: "Niger", flag: "🇳🇪" },
+    { name: "Nigeria", flag: "🇳🇬" },
+    { name: "North Korea", flag: "🇰🇵" },
+    { name: "North Macedonia", flag: "🇲🇰" },
+    { name: "Norway", flag: "🇳🇴" },
+    { name: "Oman", flag: "🇴🇲" },
+    { name: "Pakistan", flag: "🇵🇰" },
+    { name: "Palau", flag: "🇵🇼" },
+    { name: "Palestine", flag: "🇵🇸" },
+    { name: "Panama", flag: "🇵🇦" },
+    { name: "Papua New Guinea", flag: "🇵🇬" },
+    { name: "Paraguay", flag: "🇵🇾" },
+    { name: "Peru", flag: "🇵🇪" },
+    { name: "Philippines", flag: "🇵🇭" },
+    { name: "Poland", flag: "🇵🇱" },
+    { name: "Portugal", flag: "🇵🇹" },
+    { name: "Qatar", flag: "🇶🇦" },
+    { name: "Romania", flag: "🇷🇴" },
+    { name: "Russia", flag: "🇷🇺" },
+    { name: "Rwanda", flag: "🇷🇼" },
+    { name: "Saint Kitts and Nevis", flag: "🇰🇳" },
+    { name: "Saint Lucia", flag: "🇱🇨" },
+    { name: "Saint Vincent and the Grenadines", flag: "🇻🇨" },
+    { name: "Samoa", flag: "🇼🇸" },
+    { name: "San Marino", flag: "🇸🇲" },
+    { name: "Sao Tome and Principe", flag: "🇸🇹" },
+    { name: "Saudi Arabia", flag: "🇸🇦" },
+    { name: "Senegal", flag: "🇸🇳" },
+    { name: "Serbia", flag: "🇷🇸" },
+    { name: "Seychelles", flag: "🇸🇨" },
+    { name: "Sierra Leone", flag: "🇸🇱" },
+    { name: "Singapore", flag: "🇸🇬" },
+    { name: "Slovakia", flag: "🇸🇰" },
+    { name: "Slovenia", flag: "🇸🇮" },
+    { name: "Solomon Islands", flag: "🇸🇧" },
+    { name: "Somalia", flag: "🇸🇴" },
+    { name: "South Africa", flag: "🇿🇦" },
+    { name: "South Korea", flag: "🇰🇷" },
+    { name: "South Sudan", flag: "🇸🇸" },
+    { name: "Spain", flag: "🇪🇸" },
+    { name: "Sri Lanka", flag: "🇱🇰" },
+    { name: "Sudan", flag: "🇸🇩" },
+    { name: "Suriname", flag: "🇸🇷" },
+    { name: "Sweden", flag: "🇸🇪" },
+    { name: "Switzerland", flag: "🇨🇭" },
+    { name: "Syria", flag: "🇸🇾" },
+    { name: "Tajikistan", flag: "🇹🇯" },
+    { name: "Tanzania", flag: "🇹🇿" },
+    { name: "Thailand", flag: "🇹🇭" },
+    { name: "Timor-Leste", flag: "🇹🇱" },
+    { name: "Togo", flag: "🇹🇬" },
+    { name: "Tonga", flag: "🇹🇴" },
+    { name: "Trinidad and Tobago", flag: "🇹🇹" },
+    { name: "Tunisia", flag: "🇹🇳" },
+    { name: "Turkey", flag: "🇹🇷" },
+    { name: "Turkmenistan", flag: "🇹🇲" },
+    { name: "Tuvalu", flag: "🇹🇻" },
+    { name: "Uganda", flag: "🇺🇬" },
+    { name: "Ukraine", flag: "🇺🇦" },
+    { name: "United Arab Emirates", flag: "🇦🇪" },
+    { name: "United Kingdom", flag: "🇬🇧" },
+    { name: "United States of America", flag: "🇺🇸" },
+    { name: "Uruguay", flag: "🇺🇾" },
+    { name: "Uzbekistan", flag: "🇺🇿" },
+    { name: "Vanuatu", flag: "🇻🇺" },
+    { name: "Venezuela", flag: "🇻🇪" },
+    { name: "Vietnam", flag: "🇻🇳" },
+    { name: "Yemen", flag: "🇾🇪" },
+    { name: "Zambia", flag: "🇿🇲" },
+    { name: "Zimbabwe", flag: "🇿🇼" },
+  ];
 
   useEffect(() => {
     // Check for existing name cookie
@@ -162,26 +370,48 @@ export default function Page() {
     setIsLoading(false);
   }, []);
 
-  const handleSubmit = (e: React.FormEvent) => {
+  // Handle multi‐phase submission
+  const handleFormSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    if (!showBio) {
+    if (phase === "name") {
       if (userName.trim()) {
-        // Set cookie for name for 7 days
         document.cookie = `name=${userName};path=/;max-age=${60 * 60 * 24 * 7}`;
-        setShowBio(true);
+        setPhase("bio");
       }
-    } else {
+    } else if (phase === "bio") {
       if (bio.trim()) {
-        // Set cookie for bio for 7 days and then mark cookie is complete
         document.cookie = `bio=${bio};path=/;max-age=${60 * 60 * 24 * 7}`;
-        setHasUserCookie(true);
+        setPhase("origin");
+      }
+    } else if (phase === "origin") {
+      if (origin.trim()) {
+        setPhase("loading");
       }
     }
   };
 
+  // In loading phase, cycle phrases and simulate API call
+  useEffect(() => {
+    let phraseInterval: NodeJS.Timeout;
+    if (phase === "loading") {
+      phraseInterval = setInterval(() => {
+        setLoadingIndex((prev) => (prev + 1) % loadingPhrases.length);
+      }, 4000);
+      // Simulate API call delay
+      setTimeout(() => {
+        clearInterval(phraseInterval);
+        setPhase("interests");
+      }, 12000); // simulate 12 sec load
+    }
+    return () => phraseInterval && clearInterval(phraseInterval);
+  }, [phase]);
+
   // Generate a random background URL
   const randomBackground =
     backgrounds[Math.floor(Math.random() * backgrounds.length)];
+
+  // Interests options for the final page
+  const interests = ["Music", "Tech", "Travel", "Sports", "Art", "Food"];
 
   const getTabContent = (tab: Tab) => {
     switch (tab) {
@@ -328,39 +558,77 @@ export default function Page() {
 
           {/* Content */}
           <div className="flex-1 flex flex-col items-center justify-center gap-5 px-6">
-            <div className="relative w-48 h-48 mb-4">
-              <img
-                src="/landing-new.webp"
-                alt="Welcome"
-                className={`absolute inset-0 object-cover w-full h-full transition-opacity duration-500 ${showBio ? "opacity-0" : "opacity-100"}`}
-              />
-              <img
-                src="/images/default_pfp.png"
-                alt="Profile"
-                className={`absolute inset-0 object-cover w-full h-full transition-opacity duration-500 rounded-full transform ${showBio ? "opacity-100 scale-110" : "opacity-0 scale-90"}`}
-              />
-            </div>
-            <h1 className="text-4xl font-bold text-white text-center">
-              {showBio ? userName : "Welcome to the Emirates"}
-            </h1>
-            <p className="text-gray-400 text-lg mb-4 text-center">
-              {showBio
-                ? "How would you describe yourself?"
-                : "Let's start by getting to know you"}
-            </p>
-
-            <form onSubmit={handleSubmit} className="w-full max-w-sm space-y-6">
+            {phase === "name" || phase === "bio" ? (
+              <div className="relative w-48 h-48 mb-4">
+                <img
+                  src="/landing-new.webp"
+                  alt="Welcome"
+                  className={`absolute inset-0 object-cover w-full h-full transition-opacity duration-500 ${phase === "name" ? "opacity-100" : "opacity-0"}`}
+                />
+                <img
+                  src="/images/default_pfp.png"
+                  alt="Profile"
+                  className={`absolute inset-0 object-cover w-full h-full transition-opacity duration-500 rounded-full transform ${phase === "bio" ? "opacity-100 scale-110" : "opacity-0 scale-90"}`}
+                />
+              </div>
+            ) : phase === "origin" ? (
+              <div className="relative w-24 h-24 mb-4">
+                <img
+                  src="/images/default_pfp.png"
+                  alt="Profile"
+                  className="object-cover w-full h-full rounded-full transition-all duration-500"
+                />
+              </div>
+            ) : null}
+            {phase === "loading" ? (
+              <div className="flex flex-col items-center">
+                {/* Simple spinner */}
+                <div className="animate-spin rounded-full h-12 w-12 border-t-4 border-b-4 border-[#2563eb]"></div>
+                <h1 className="mt-4 text-2xl font-bold text-white">Loading...</h1>
+                <p className="mt-2 text-lg text-gray-300">
+                  {loadingPhrases[loadingIndex]}
+                </p>
+              </div>
+            ) : phase === "interests" ? (
+              <div className="flex flex-col items-center">
+                <h1 className="text-2xl text-white mb-4">Select Your Interests</h1>
+                <div className="flex flex-wrap gap-3 justify-center">
+                  {interests.map((item) => (
+                    <button
+                      key={item}
+                      className="px-4 py-2 bg-[#272739] rounded-full text-white hover:bg-[#2563eb] transition-colors"
+                    >
+                      {item}
+                    </button>
+                  ))}
+                </div>
+              </div>
+            ) : (
+              <>
+                <h1 className="text-4xl font-bold text-white text-center">
+                  {phase === "name" ? "Welcome to the Emirates" : userName}
+                </h1>
+                {phase !== "origin" && (
+                  <p className="text-gray-400 text-lg mb-4 text-center">
+                    {phase === "name"
+                      ? "Let's start by getting to know you"
+                      : phase === "bio"
+                      ? "How would you describe yourself?"
+                      : null}
+                  </p>
+                )}
+                {phase === "origin" && (
+                  <div className="w-full">
+                    <p className="text-gray-400 text-lg text-center mb-2">
+                      Where are you coming from?
+                    </p>
+                  </div>
+                )}
+              </>
+            )}
+            <form onSubmit={handleFormSubmit} className="w-full max-w-sm space-y-6">
               <div className="space-y-2">
-                {showBio ? (
-                  <input
-                    type="text"
-                    value={bio}
-                    onChange={(e) => setBio(e.target.value)}
-                    placeholder="Write your bio"
-                    className="w-full px-4 py-3 bg-[#272739] rounded-lg text-white placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-[#2563eb]"
-                    required
-                  />
-                ) : (
+                {phase === "name" ? (
                   <input
                     type="text"
                     value={userName}
@@ -369,15 +637,54 @@ export default function Page() {
                     className="w-full px-4 py-3 bg-[#272739] rounded-lg text-white placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-[#2563eb]"
                     required
                   />
-                )}
+                ) : phase === "bio" ? (
+                  <input
+                    type="text"
+                    value={bio}
+                    onChange={(e) => setBio(e.target.value)}
+                    placeholder="Write your bio"
+                    className="w-full px-4 py-3 bg-[#272739] rounded-lg text-white placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-[#2563eb]"
+                    required
+                  />
+                ) : phase === "origin" ? (
+                  <>
+                    <input
+                      type="text"
+                      value={countrySearch}
+                      onChange={(e) => setCountrySearch(e.target.value)}
+                      placeholder="Search your country"
+                      className="w-full px-4 py-3 bg-[#272739] rounded-lg text-white placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-[#2563eb] mb-4"
+                    />
+                    <div className="max-h-48 overflow-y-scroll w-full grid grid-cols-2 gap-2">
+                      {countries
+                        .filter((c) =>
+                          c.name.toLowerCase().includes(countrySearch.toLowerCase())
+                        )
+                        .map((c) => (
+                            <button
+                            key={c.name}
+                            onClick={() => {
+                              setOrigin(c.name);
+                              setCountrySearch(c.name);
+                            }}
+                            className="flex items-center gap-2 p-2 bg-[#272739] rounded-lg hover:bg-[#2563eb] transition-colors"
+                            >
+                            <span className="text-xl">{c.flag}</span>
+                            <span className="text-sm text-white truncate">{c.name}</span>
+                            </button>
+                        ))}
+                    </div>
+                  </>
+                ) : null}
               </div>
-
-              <button
-                type="submit"
-                className="w-full py-3 bg-[#2563eb] hover:bg-[#2563eb]/90 text-white font-medium rounded-lg transition-colors"
-              >
-                Next
-              </button>
+              {phase !== "loading" && phase !== "interests" && (
+                <button
+                  type="submit"
+                  className="w-full py-3 bg-[#2563eb] hover:bg-[#2563eb]/90 text-white font-medium rounded-lg transition-colors"
+                >
+                  Next
+                </button>
+              )}
             </form>
           </div>
 
