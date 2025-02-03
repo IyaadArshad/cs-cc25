@@ -16,7 +16,7 @@ import {
   HomeIcon,
   MessageSquare,
 } from "lucide-react"
-import { HomeFilled, ImageFilled, ZapFilled, SettingsFilled, CompassFilled, EditProfile } from "./filled-icons"
+import { HomeFilled, ImageFilled, ZapFilled, SettingsFilled, CompassFilled, EditProfile, ConnectedIcon } from "./filled-icons"
 
 type Tab = "home" | "nft" | "moon" | "explore" | "settings";
 
@@ -33,16 +33,25 @@ interface WeatherPillProps {
 }
 
 interface SettingsItemProps {
-  icon: React.ReactNode
-  title: string
-  description: string
+  icon: React.ReactNode;
+  title: string;
+  description: string;
+  plainIcon?: boolean;
 }
 
-function SettingsItem({ icon, title, description }: SettingsItemProps) {
+function SettingsItem({ icon, title, description, plainIcon }: SettingsItemProps) {
   return (
     <div className="flex items-center justify-between py-4 cursor-pointer group">
       <div className="flex items-center gap-4">
-        <div className="w-10 h-10 flex items-center justify-center rounded-full bg-[#272739] text-white">{icon}</div>
+        { plainIcon ? (
+          // Render icon directly without wrapper styling
+          <div>{icon}</div>
+        ) : (
+          // ...existing wrapper...
+          <div className="w-10 h-10 flex items-center justify-center rounded-full bg-[#272739] text-white">
+            {icon}
+          </div>
+        )}
         <div className="flex flex-col">
           <span className="text-white text-sm font-medium">{title}</span>
           <span className="text-gray-400 text-xs">{description}</span>
@@ -50,7 +59,7 @@ function SettingsItem({ icon, title, description }: SettingsItemProps) {
       </div>
       <ChevronRight className="w-5 h-5 text-gray-400 group-hover:text-white transition-colors" />
     </div>
-  )
+  );
 }
 
 const weatherIcons = {
@@ -167,7 +176,7 @@ export default function Page() {
             {/* Profile Section */}
             <div className="flex items-center gap-4 mb-8">
               <div className="w-16 h-16 rounded-full bg-[#2563eb] flex items-center justify-center">
-                <span className="text-white text-xl">🐕</span>
+                <img src="/images/default_pfp.png" alt="Profile" style={{ borderRadius: "9999px", width: "auto", height: "64px"}} className="text-white" />
               </div>
               <div className="flex-1">
                 <h2 className="text-white mb-2 font-bold text-2xl">The Donors Foundation</h2>
@@ -182,26 +191,30 @@ export default function Page() {
             <div className="mb-8">
               <h3 className="text-xl font-bold text-white mb-4">App Settings</h3>
               <div className="space-y-2">
-                <SettingsItem
-                  icon={<Rocket className="w-5 h-5" />}
-                  title="Connected Apps"
-                  description="Manage apps access to your app"
-                />
-                <SettingsItem
-                  icon={<Shield className="w-5 h-5" />}
-                  title="Security and Recovery"
-                  description="Manage your passwords and recovery methods"
-                />
-                <SettingsItem
-                  icon={<MoreHorizontal className="w-5 h-5" />}
-                  title="Change Password"
-                  description="Change the password used to unlock your app"
-                />
-                <SettingsItem
-                  icon={<Trash2 className="w-5 h-5" />}
-                  title="Remove Account"
-                  description="Remove this account from your app"
-                />
+              <SettingsItem 
+                plainIcon
+                icon={<ConnectedIcon className="w-5 h-5 text-white" />}
+                title="Connected Apps"
+                description="Manage connected apps"
+              />
+              <SettingsItem
+                plainIcon
+                icon={<Shield className="w-5 h-5 text-white" />}
+                title="Security and Recovery"
+                description="Manage your passwords and recovery methods"
+              />
+              <SettingsItem
+                plainIcon
+                icon={<MoreHorizontal className="w-5 h-5 text-white" />}
+                title="Change Password" 
+                description="Change the password used to unlock your app"
+              />
+              <SettingsItem
+                plainIcon
+                icon={<Trash2 className="w-5 h-5 text-white" />}
+                title="Remove Account"
+                description="Remove this account from your app"
+              />
               </div>
             </div>
 
