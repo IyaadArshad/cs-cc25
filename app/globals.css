@@ -86,3 +86,9 @@ body {
     @apply bg-background text-foreground;
   }
 }
+
+.main-card {
+  --tw-shadow: 0 15px 50px -12px rgb(0 0 0 / 0.5);
+  --tw-shadow-colored: 0 15px 50px -12px var(--tw-shadow-color);
+  box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);
+}
