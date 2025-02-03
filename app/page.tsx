@@ -30,7 +30,7 @@ type Tab = "home" | "nft" | "moon" | "explore" | "settings";
 
 const backgrounds = [
   "https://images.pexels.com/photos/1473673/pexels-photo-1473673.jpeg",
-  "https://images.pexels.com/photos/442579/pexels-photo-442579.jpeg",
+//  "https://images.pexels.com/photos/442579/pexels-photo-442579.jpeg",
 ];
 
 type WeatherCondition = "sunny" | "cloudy" | "rainy";
@@ -144,6 +144,8 @@ function WeatherPill({ temperature, condition }: WeatherPillProps) {
 export default function Page() {
   const [activeTab, setActiveTab] = useState<Tab>("home");
   const [userName, setUserName] = useState("");
+  const [bio, setBio] = useState("");
+  const [showBio, setShowBio] = useState(false);
   const [hasUserCookie, setHasUserCookie] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
 
@@ -162,10 +164,18 @@ export default function Page() {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    if (userName.trim()) {
-      // Set cookie for 7 days
-      document.cookie = `name=${userName};path=/;max-age=${60 * 60 * 24 * 7}`;
-      setHasUserCookie(true);
+    if (!showBio) {
+      if (userName.trim()) {
+        // Set cookie for name for 7 days
+        document.cookie = `name=${userName};path=/;max-age=${60 * 60 * 24 * 7}`;
+        setShowBio(true);
+      }
+    } else {
+      if (bio.trim()) {
+        // Set cookie for bio for 7 days and then mark cookie is complete
+        document.cookie = `bio=${bio};path=/;max-age=${60 * 60 * 24 * 7}`;
+        setHasUserCookie(true);
+      }
     }
   };
 
@@ -318,28 +328,48 @@ export default function Page() {
 
           {/* Content */}
           <div className="flex-1 flex flex-col items-center justify-center gap-5 px-6">
-            <img
-              src="/landing-new.webp"
-              alt="Welcome"
-              className="w-48 h-48 mb-4"
-            />
+            <div className="relative w-48 h-48 mb-4">
+              <img
+                src="/landing-new.webp"
+                alt="Welcome"
+                className={`absolute inset-0 object-cover w-full h-full transition-opacity duration-500 ${showBio ? "opacity-0" : "opacity-100"}`}
+              />
+              <img
+                src="/images/default_pfp.png"
+                alt="Profile"
+                className={`absolute inset-0 object-cover w-full h-full transition-opacity duration-500 rounded-full transform ${showBio ? "opacity-100 scale-110" : "opacity-0 scale-90"}`}
+              />
+            </div>
             <h1 className="text-4xl font-bold text-white text-center">
-              Welcome to the Emirates
+              {showBio ? userName : "Welcome to the Emirates"}
             </h1>
             <p className="text-gray-400 text-lg mb-4 text-center">
-              Let's start by getting to know you
+              {showBio
+                ? "How would you describe yourself?"
+                : "Let's start by getting to know you"}
             </p>
 
             <form onSubmit={handleSubmit} className="w-full max-w-sm space-y-6">
               <div className="space-y-2">
-                <input
-                  type="text"
-                  value={userName}
-                  onChange={(e) => setUserName(e.target.value)}
-                  placeholder="Enter your name"
-                  className="w-full px-4 py-3 bg-[#272739] rounded-lg text-white placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-[#2563eb]"
-                  required
-                />
+                {showBio ? (
+                  <input
+                    type="text"
+                    value={bio}
+                    onChange={(e) => setBio(e.target.value)}
+                    placeholder="Write your bio"
+                    className="w-full px-4 py-3 bg-[#272739] rounded-lg text-white placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-[#2563eb]"
+                    required
+                  />
+                ) : (
+                  <input
+                    type="text"
+                    value={userName}
+                    onChange={(e) => setUserName(e.target.value)}
+                    placeholder="Enter your name"
+                    className="w-full px-4 py-3 bg-[#272739] rounded-lg text-white placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-[#2563eb]"
+                    required
+                  />
+                )}
               </div>
 
               <button
