@@ -34,6 +34,8 @@ import {
   LinkIcon,
 } from "@heroicons/react/24/outline";
 import { Rocket } from "lucide-react";
+import CaseHome from "./case/home";
+import CaseDiscover from "./case/discover";
 
 export default function Page() {
   const [activeTab, setActiveTab] = useState<Tab>("home");
@@ -162,23 +164,11 @@ export default function Page() {
     switch (tab) {
       case "home":
         return (
-          <div className="flex-1 p-6">
-            <div className="flex flex-col items-center justify-center space-y-6 mt-16">
-              {/* Welcome Section */}
-              <h1 className="text-4xl text-white text-center">
-                Welcome back, {userName}
-              </h1>
-
-              {/* Weather Pill */}
-              <WeatherPill temperature={22} condition="sunny" />
-            </div>
-          </div>
+          <CaseHome />
         );
       case "discover":
         return (
-          <div className="flex-1 p-5">
-            <h2 className="text-white text-2xl">NFT Gallery</h2>
-          </div>
+          <CaseDiscover />
         );
       case "experiences":
         return (
