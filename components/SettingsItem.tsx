@@ -1,4 +1,4 @@
-import { SettingsItemProps } from "../../types/types";
+import { SettingsItemProps } from "../types/types";
 import { ChevronRight } from "lucide-react";
 
 export default function SettingsItem({
