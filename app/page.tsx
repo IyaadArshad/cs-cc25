@@ -36,6 +36,7 @@ import {
 import { Rocket } from "lucide-react";
 import CaseHome from "./case/home";
 import CaseDiscover from "./case/discover";
+import CaseTips from "./case/tips";
 
 export default function Page() {
   const [activeTab, setActiveTab] = useState<Tab>("home");
@@ -178,9 +179,7 @@ export default function Page() {
         );
       case "tips":
         return (
-          <div className="flex-1 p-5">
-            <h2 className="text-white text-2xl">Explore</h2>
-          </div>
+          <CaseTips />
         );
       case "profile":
         return (
