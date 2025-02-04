@@ -1,5 +1,14 @@
 import WeatherPill from "@/components/WeatherPill";
 
+import { Card, CardContent } from "@/components/ui/card"
+import {
+  Carousel,
+  CarouselContent,
+  CarouselItem,
+  CarouselNext,
+  CarouselPrevious,
+} from "@/components/ui/carousel"
+
 export default function CaseHome() {
   return (    
     <div className="flex-1 p-6">
@@ -11,6 +20,8 @@ export default function CaseHome() {
 
         {/* Weather Pill */}
         <WeatherPill temperature={22} condition="sunny" />
+
+
       </div>
     </div>
   );
