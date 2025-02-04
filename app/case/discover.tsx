@@ -6,12 +6,12 @@ import { motion, AnimatePresence } from "framer-motion";
 
 // Animation variants for cards – custom value * 0.1 = delay
 const cardVariants = {
-	hidden: { opacity: 0, y: 20 },
-	visible: (custom: number) => ({
-		opacity: 1,
-		y: 0,
-		transition: { delay: custom * 0.1 }
-	})
+  hidden: { opacity: 0, y: 20 },
+  visible: (custom: number) => ({
+    opacity: 1,
+    y: 0,
+    transition: { delay: custom * 0.1 }
+  })
 };
 
 interface Place {
@@ -50,7 +50,7 @@ export default function CaseDiscover() {
           >
             {/* Detail View */}
             <div className="flex items-center gap-4 mb-6">
-              <motion.button 
+              <motion.button
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
                 onClick={() => setSelectedPlace(null)}
@@ -60,8 +60,8 @@ export default function CaseDiscover() {
                 <span>Back</span>
               </motion.button>
             </div>
-    
-            <motion.h1 
+
+            <motion.h1
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ delay: 0.2 }}
@@ -69,21 +69,21 @@ export default function CaseDiscover() {
             >
               {selectedPlace.title}
             </motion.h1>
-            
-            <motion.div 
+
+            <motion.div
               initial={{ opacity: 0, scale: 0.95 }}
               animate={{ opacity: 1, scale: 1 }}
               transition={{ delay: 0.3 }}
               className="relative w-full h-[300px] mb-8"
             >
-              <img 
-                src={selectedPlace.image} 
+              <img
+                src={selectedPlace.image}
                 alt={selectedPlace.title}
                 className="w-full h-full object-cover rounded-lg"
               />
             </motion.div>
-    
-            <motion.div 
+
+            <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.4 }}
@@ -95,7 +95,7 @@ export default function CaseDiscover() {
                 </p>
               ))}
             </motion.div>
-    
+
             <motion.button
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
@@ -108,7 +108,7 @@ export default function CaseDiscover() {
               Learn More
               <ExternalLink className="w-4 h-4" />
             </motion.button>
-    
+
             <motion.button
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
@@ -140,7 +140,7 @@ export default function CaseDiscover() {
             >
               Discover Abu Dhabi
             </motion.h1>
-    
+
             {/* Section 1: Places to Visit */}
             <section className="mb-12">
               <motion.h2
@@ -169,7 +169,7 @@ export default function CaseDiscover() {
                 </CarouselContent>
               </Carousel>
             </section>
-    
+
             {/* Section 2: Culinary Delights */}
             <section className="mb-12">
               <motion.h2
@@ -199,7 +199,7 @@ export default function CaseDiscover() {
                 </CarouselContent>
               </Carousel>
             </section>
-    
+
             {/* Section 3: Local Markets & Stores */}
             <section className="mb-12">
               <motion.h2
@@ -228,7 +228,7 @@ export default function CaseDiscover() {
                 </CarouselContent>
               </Carousel>
             </section>
-    
+
             {/* Section 4: Essential Services */}
             <section className="mb-12">
               <motion.h2
@@ -266,15 +266,15 @@ export default function CaseDiscover() {
 
 function PlaceCard({ place, onSelect }: { place: Place; onSelect: () => void }) {
   return (
-    <Card 
+    <Card
       className="bg-gray-800 border-gray-700 h-[320px] select-none cursor-pointer hover:bg-gray-700/50 transition-colors"
       onClick={onSelect}
     >
       <CardContent className="p-6 flex flex-col h-full">
-        <img 
-          src={place.image || "/placeholder.svg"} 
-          alt={place.title} 
-          className="w-full h-36 object-cover rounded-md mb-4" 
+        <img
+          src={place.image || "/placeholder.svg"}
+          alt={place.title}
+          className="w-full h-36 object-cover rounded-md mb-4"
         />
         <h3 className="text-white text-lg font-semibold mb-2 line-clamp-2">{place.title}</h3>
         <p className="text-gray-400 text-sm line-clamp-3">{place.description}</p>
@@ -408,14 +408,15 @@ const foodPlaces = [
   {
     image: "/images/mandi.jpg", // remains unchanged
     title: "Al Mandi and Al Madhbi House",
-    description: "Yemeni restaurant.",
+    description: "Authentic Yemeni restaurant specializing in Mandi and Madhbi dishes.",
     longDescription: [
-      "Papa John's offers fresh, quality pizzas with a variety of toppings at competitive prices.",
-      "Regular promotions and combo deals make it an affordable option for families.",
-      "Quick delivery service and consistent quality across all branches.",
-      "Popular for both dine-in and delivery, with multiple locations throughout Abu Dhabi."
+      "Al Mandi and Al Madhbi House offers traditional Yemeni cuisine, known for its flavorful rice and grilled meats.",
+      "Signature dishes include slow-cooked Mandi, charcoal-grilled Madhbi, and rich, aromatic stews.",
+      "A cozy and welcoming atmosphere, perfect for families and groups.",
+      "Popular for both dine-in and takeaway, with generous portions at affordable prices."
     ],
-    externalLink: "https://papajohns.ae"
+    externalLink: "https://almandi-house.ae/" // Replace with the actual link if available
+
   },
   {
     // Nested folder image: updated with a new valid URL
