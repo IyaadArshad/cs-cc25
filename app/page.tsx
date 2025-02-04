@@ -286,9 +286,9 @@ export default function Page() {
     return (
       <div
         style={{ backgroundImage: `url(${randomBackground})` }}
-        className="min-h-screen bg-cover bg-center flex items-center justify-center p-4 font-['Segoe_UI']"
+        className="min-h-screen bg-cover bg-center flex items-center justify-center p-4 font-['Segoe_UI'] sm:p-4 p-0"
       >
-        <div className="w-[490px] max-w-lg h-[780px] bg-gradient-to-b from-[#12121d]/80 to-[#12121d]/95 backdrop-blur-xl main-card rounded-[18px] overflow-hidden flex flex-col">
+        <div className="w-full h-screen sm:w-[490px] sm:max-w-lg sm:h-[780px] bg-gradient-to-b from-[#12121d]/80 to-[#12121d]/95 backdrop-blur-xl main-card sm:rounded-[18px] overflow-hidden flex flex-col">
 
           {/* Content */}
           <div className="flex-1 flex flex-col items-center justify-center gap-5 px-6">
@@ -444,7 +444,7 @@ export default function Page() {
 
             <button
             disabled
-            className="flex flex-col items-center justify-center gap-1 mx-7 opacity-50 cursor-not-allowed"
+            className="flex flex-col items-center justify-center gap-1 mx-2 sm:mx-7 opacity-50 cursor-not-allowed"
             >
             <HomeIcon className="w-8 h-8 text-[#ffffff]/50" />
             <span className="text-[12px] text-[#ffffff]/50">
@@ -453,7 +453,7 @@ export default function Page() {
             </button>
             <button
             disabled
-            className="flex flex-col items-center justify-center gap-1 mx-7 opacity-50 cursor-not-allowed"
+            className="flex flex-col items-center justify-center gap-1 mx-2 sm:mx-7 opacity-50 cursor-not-allowed"
             >
             <MagnifyingGlassIcon className="w-8 h-8 text-[#ffffff]/50" />
             <span className="text-[12px] text-[#ffffff]/50">
@@ -462,7 +462,7 @@ export default function Page() {
             </button>
             <button
             disabled
-            className="flex flex-col items-center justify-center gap-1 mx-7 opacity-50 cursor-not-allowed"
+            className="flex flex-col items-center justify-center gap-1 mx-2 sm:mx-7 opacity-50 cursor-not-allowed"
             >
             <LightBulbIcon className="w-8 h-8 text-[#ffffff]/50" />
             <span className="text-[12px] text-[#ffffff]/50">
@@ -471,7 +471,7 @@ export default function Page() {
             </button>
             <button
             disabled
-            className="flex flex-col items-center justify-center gap-1 mx-7 opacity-50 cursor-not-allowed"
+            className="flex flex-col items-center justify-center gap-1 mx-2 sm:mx-7 opacity-50 cursor-not-allowed"
             >
             <RocketLaunchIcon className="w-8 h-8 text-[#ffffff]/50" />
             <span className="text-[12px] text-[#ffffff]/50">
@@ -480,7 +480,7 @@ export default function Page() {
             </button>
             <button
             disabled
-            className="flex flex-col items-center justify-center gap-1 mx-7 opacity-50 cursor-not-allowed"
+            className="flex flex-col items-center justify-center gap-1 mx-2 sm:mx-7 opacity-50 cursor-not-allowed"
             >
             <UserCircleIcon className="w-8 h-8 text-[#ffffff]/50" />
             <span className="text-[12px] text-[#ffffff]/50">
@@ -496,9 +496,9 @@ export default function Page() {
   return (
     <div
       style={{ backgroundImage: `url(${randomBackground})` }}
-      className="min-h-screen bg-cover bg-center flex items-center justify-center p-4 font-['Segoe_UI']"
+      className="min-h-screen bg-cover bg-center flex items-center justify-center p-4 font-['Segoe_UI'] sm:p-4 p-0"
     >
-      <div className="w-[490px] max-w-lg h-[780px] bg-gradient-to-b from-[#12121d]/80 to-[#12121d]/95 backdrop-blur-xl main-card rounded-[18px] overflow-hidden flex flex-col">
+      <div className="w-full h-screen sm:w-[490px] sm:max-w-lg sm:h-[780px] bg-gradient-to-b from-[#12121d]/80 to-[#12121d]/95 backdrop-blur-xl main-card sm:rounded-[18px] overflow-hidden flex flex-col">
         {/* Main Content Area */}
         {getTabContent(activeTab)}
 
@@ -518,7 +518,7 @@ export default function Page() {
 
           <button
             onClick={() => setActiveTab("home")}
-            className="flex flex-col items-center justify-center gap-1 mx-7"
+            className="flex flex-col items-center justify-center gap-1 mx-2 sm:mx-7"
           >
             {activeTab === "home" ? (
               <HomeIconFilled className="w-8 h-8 text-[#2563eb]" />
@@ -535,7 +535,7 @@ export default function Page() {
           </button>
           <button
             onClick={() => setActiveTab("discover")}
-            className="flex flex-col items-center justify-center gap-1 mx-7"
+            className="flex flex-col items-center justify-center gap-1 mx-2 sm:mx-7"
           >
             {activeTab === "discover" ? (
               <MagnifyingGlassFilled className="w-8 h-8 text-[#2563eb]" />
@@ -552,7 +552,7 @@ export default function Page() {
           </button>
           <button
             onClick={() => setActiveTab("tips")}
-            className="flex flex-col items-center justify-center gap-1 mx-7"
+            className="flex flex-col items-center justify-center gap-1 mx-2 sm:mx-7"
           >
             {activeTab === "tips" ? (
               <LightBulbFilled className="w-8 h-8 text-[#2563eb]" />
@@ -569,7 +569,7 @@ export default function Page() {
           </button>
           <button
             onClick={() => setActiveTab("experiences")}
-            className="flex flex-col items-center justify-center gap-1 mx-7"
+            className="flex flex-col items-center justify-center gap-1 mx-2 sm:mx-7"
           >
             {activeTab === "experiences" ? (
               <RocketLaunchFilled className="w-8 h-8 text-[#2563eb]" />
@@ -586,7 +586,7 @@ export default function Page() {
           </button>
           <button
             onClick={() => setActiveTab("profile")}
-            className="flex flex-col items-center justify-center gap-1 mx-7"
+            className="flex flex-col items-center justify-center gap-1 mx-2 sm:mx-7"
           >
             {activeTab === "profile" ? (
               <UserCircleFilled className="w-8 h-8 text-[#2563eb]" />
