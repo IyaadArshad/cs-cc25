@@ -136,7 +136,7 @@ export default function CaseHome() {
         <div className="absolute top-6 right-6">
           <ProgressBar percentage={40} />
         </div>
-        <div className="flex flex-col items-center justify-center space-y-6 mt-20">
+        <div className="flex flex-col items-center justify-center space-y-6 mt-6">
           <div className="w-full max-w-xl mt-6 space-y-4">
             {furtherSteps.map((step, index) => (
               <div
@@ -147,7 +147,7 @@ export default function CaseHome() {
                   <h3 className="text-lg font-medium text-zinc-200">{step.title}</h3>
                   <p className="text-sm text-zinc-400">{step.description}</p>
                 </div>
-                <button className="p-2 rounded bg-white/10 group-hover:bg-white/20 text-white">
+                <button className="p-2 rounded text-white"> {/*bg-white/10 group-hover:bg-white/20 */}
                   <ArrowRight className="w-5 h-5 transform transition-transform group-hover:translate-x-1" />
                 </button>
               </div>
