@@ -382,7 +382,7 @@ const foodPlaces = [
   },
   {
     // Nested folder image: updated with a new valid URL
-    image: "https://upload.wikimedia.org/wikipedia/commons/0/0b/Nando%27s_Restaurant.jpg",
+    image: "https://upload.wikimedia.org/wikipedia/commons/thumb/7/72/Flame-grilled_PERi-PERi_chicken.jpg/440px-Flame-grilled_PERi-PERi_chicken.jpg",
     title: "Nando's",
     description: "Famous for its Peri-Peri chicken in a casual dining atmosphere.",
     longDescription: [
@@ -432,7 +432,7 @@ const foodPlaces = [
   },
   {
     // Nested folder image: updated with a new valid URL
-    image: "https://images.unsplash.com/photo-1572441710579-5a5c7b6d31c9",
+    image: "https://www.mushrifmall.com/media/4035/subway.jpg?anchor=center&mode=crop&width=640&height=460&rnd=133558577160000000",
     title: "Subway",
     description: "Fresh sandwiches and salads with customizable options.",
     longDescription: [
@@ -461,88 +461,88 @@ const foodPlaces = [
 const shoppingPlaces = [
   {
     // Updated with a new valid URL
-    image: "https://upload.wikimedia.org/wikipedia/commons/1/1d/Yas_Mall_Abu_Dhabi.jpg",
+    image: "https://visitabudhabi.ae/-/media/project/vad/galleryimages/things-to-do/shopping/yas-mall/yas-mall.jpg",
     title: "Yas Mall",
     description: "Largest mall in Abu Dhabi with over 370 stores and 60 restaurants.",
   },
   {
     // Updated with a new valid URL
-    image: "https://upload.wikimedia.org/wikipedia/commons/3/30/The_Galleria_Al_Maryah_Island.jpg",
+    image: "https://dynamic-media-cdn.tripadvisor.com/media/photo-o/10/33/3a/bc/the-galleria-on-al-maryah.jpg?w=900&h=500&s=1",
     title: "The Galleria Al Maryah Island",
     description: "Luxury shopping destination with high-end brands and dining options.",
   },
   {
     // Updated with a new valid URL
-    image: "https://upload.wikimedia.org/wikipedia/commons/7/75/Abu_Dhabi_Mall.jpg",
+    image: "https://www.timeoutabudhabi.com/cloud/timeoutabudhabi/2024/03/05/Abu-Dhabi-Mall-1024x768.jpg",
     title: "Abu Dhabi Mall",
     description: "Central mall with a mix of local and international brands.",
   },
   {
     // Updated with a new valid URL
-    image: "https://upload.wikimedia.org/wikipedia/commons/2/2a/Madinat_Zayed_Shopping_Centre.jpg",
+    image: "https://www.lineproperty.com/media/e30dr5by/madinat-zayed-mall-banner.jpg?width=1920&height=900",
     title: "Madinat Zayed Shopping Centre",
     description: "Known for its gold souk and traditional items.",
   },
   {
     // Updated with a new valid URL
-    image: "https://upload.wikimedia.org/wikipedia/commons/8/8f/World_Trade_Center_Mall_Abu_Dhabi.jpg",
+    image: "https://visitabudhabi.ae/-/media/project/vad/things-to-do/shopping-and-lifestyle/the-mall-at-the-world-trade-centre-abu-dhabi/world-trade-center-souk-and-mall.jpg",
     title: "World Trade Center Mall",
     description: "Modern mall in the heart of the city with a traditional souk feel.",
   },
   {
     // Updated with a new valid URL
-    image: "https://upload.wikimedia.org/wikipedia/commons/4/4d/Dalma_Mall_Abu_Dhabi.jpg",
+    image: "https://upload.wikimedia.org/wikipedia/commons/c/ce/Dalma_Exterior.jpg",
     title: "Dalma Mall",
     description: "Large shopping center with a variety of stores and entertainment options.",
   },
   {
     // Updated with a new valid URL
-    image: "https://upload.wikimedia.org/wikipedia/commons/a/a9/Mushrif_Mall_Abu_Dhabi.jpg",
+    image: "https://visitabudhabi.ae/-/media/project/vad/galleryimages/things-to-do/mushrif-mall/4x8a4946.jpg",
     title: "Mushrif Mall",
     description: "Family-friendly mall with a good mix of retail and leisure facilities.",
-  },
+  }
 ];
 
 const essentialServices = [
   {
     // Updated with a new valid URL
-    image: "https://upload.wikimedia.org/wikipedia/commons/e/e3/TAMM_logo.png",
+    image: "https://www.propertyfinder.ae/blog/wp-content/uploads/2024/01/1-11.jpg",
     title: "TAMM Service Centre",
     description: "One-stop shop for government services in Abu Dhabi.",
   },
   {
     // Updated with a new valid URL
-    image: "https://upload.wikimedia.org/wikipedia/commons/6/63/SEHA_logo.png",
+    image: "https://play-lh.googleusercontent.com/dUx9d9Nl7dzEflxaA4sqUuVNC26rFCN-NTvmu1wKHXrBZY9wqNBseHRViwlcFM2JSu8C",
     title: "Abu Dhabi Health Services (SEHA)",
     description: "Network of public hospitals and clinics in Abu Dhabi.",
   },
   {
     // Updated with a new valid URL
-    image: "https://upload.wikimedia.org/wikipedia/en/9/99/Abu_Dhabi_Police_logo.png",
+    image: "https://cdn1-m.alittihad.ae/store/archive/image/2024/1/20/f219dbe5-2e32-49ec-a700-8346b2f8ccfe.jpg",
     title: "Abu Dhabi Police",
     description: "Main law enforcement agency, offering various services including traffic-related matters.",
   },
   {
     // Updated with a new valid URL
-    image: "https://upload.wikimedia.org/wikipedia/commons/f/f1/Abu_Dhabi_Department_of_Municipalities_and_Transport_logo.png",
+    image: "https://www.mediaoffice.abudhabi/assets/resized/sm/upload/m5/b6/jg/ph/web-0-690-0-0.jpg?k=a3b3099236",
     title: "Department of Municipalities and Transport",
     description: "Handles city planning, transportation, and municipal affairs.",
   },
   {
     // Updated with a new valid URL
-    image: "https://upload.wikimedia.org/wikipedia/commons/4/42/Abu_Dhabi_Distribution_Company_logo.png",
+    image: "https://www.addc.ae/content/Brand%20Guideline/ADDC%20Logo%20jpeg.jpg",
     title: "Abu Dhabi Distribution Company",
     description: "Manages electricity and water services for residents.",
   },
   {
     // Updated with a new valid URL
-    image: "https://upload.wikimedia.org/wikipedia/commons/3/31/Abu_Dhabi_Chamber_logo.png",
+    image: "https://www.abudhabichamber.ae/-/media/Project/ADCCIV2/ADCCI/Media-Center---News/2024/adc-coo-1.jpg",
     title: "Abu Dhabi Chamber",
     description: "Supports businesses and provides various commercial services.",
   },
   {
     // Updated with a new valid URL
-    image: "https://upload.wikimedia.org/wikipedia/commons/5/50/Abu_Dhabi_Judicial_Department_logo.png",
+    image: "https://media.licdn.com/dms/image/v2/C510BAQGtbau1ELQ8yg/company-logo_200_200/company-logo_200_200/0/1631390381130?e=2147483647&v=beta&t=oVYEQKWw9mxYA0uYcimJeGnSJ_Eqohz4DvYFRtRgKpQ",
     title: "Abu Dhabi Judicial Department",
     description: "Handles legal matters and court services in the emirate.",
   },
