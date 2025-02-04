@@ -506,43 +506,43 @@ const shoppingPlaces = [
 const essentialServices = [
   {
     // Updated with a new valid URL
-    image: "https://upload.wikimedia.org/wikipedia/commons/e/e3/TAMM_logo.png",
+    image: "https://www.propertyfinder.ae/blog/wp-content/uploads/2024/01/1-11.jpg",
     title: "TAMM Service Centre",
     description: "One-stop shop for government services in Abu Dhabi.",
   },
   {
     // Updated with a new valid URL
-    image: "https://upload.wikimedia.org/wikipedia/commons/6/63/SEHA_logo.png",
+    image: "https://play-lh.googleusercontent.com/dUx9d9Nl7dzEflxaA4sqUuVNC26rFCN-NTvmu1wKHXrBZY9wqNBseHRViwlcFM2JSu8C",
     title: "Abu Dhabi Health Services (SEHA)",
     description: "Network of public hospitals and clinics in Abu Dhabi.",
   },
   {
     // Updated with a new valid URL
-    image: "https://upload.wikimedia.org/wikipedia/en/9/99/Abu_Dhabi_Police_logo.png",
+    image: "https://cdn1-m.alittihad.ae/store/archive/image/2024/1/20/f219dbe5-2e32-49ec-a700-8346b2f8ccfe.jpg",
     title: "Abu Dhabi Police",
     description: "Main law enforcement agency, offering various services including traffic-related matters.",
   },
   {
     // Updated with a new valid URL
-    image: "https://upload.wikimedia.org/wikipedia/commons/f/f1/Abu_Dhabi_Department_of_Municipalities_and_Transport_logo.png",
+    image: "https://www.mediaoffice.abudhabi/assets/resized/sm/upload/m5/b6/jg/ph/web-0-690-0-0.jpg?k=a3b3099236",
     title: "Department of Municipalities and Transport",
     description: "Handles city planning, transportation, and municipal affairs.",
   },
   {
     // Updated with a new valid URL
-    image: "https://upload.wikimedia.org/wikipedia/commons/4/42/Abu_Dhabi_Distribution_Company_logo.png",
+    image: "https://www.addc.ae/content/Brand%20Guideline/ADDC%20Logo%20jpeg.jpg",
     title: "Abu Dhabi Distribution Company",
     description: "Manages electricity and water services for residents.",
   },
   {
     // Updated with a new valid URL
-    image: "https://upload.wikimedia.org/wikipedia/commons/3/31/Abu_Dhabi_Chamber_logo.png",
+    image: "https://www.abudhabichamber.ae/-/media/Project/ADCCIV2/ADCCI/Media-Center---News/2024/adc-coo-1.jpg",
     title: "Abu Dhabi Chamber",
     description: "Supports businesses and provides various commercial services.",
   },
   {
     // Updated with a new valid URL
-    image: "https://upload.wikimedia.org/wikipedia/commons/5/50/Abu_Dhabi_Judicial_Department_logo.png",
+    image: "https://media.licdn.com/dms/image/v2/C510BAQGtbau1ELQ8yg/company-logo_200_200/company-logo_200_200/0/1631390381130?e=2147483647&v=beta&t=oVYEQKWw9mxYA0uYcimJeGnSJ_Eqohz4DvYFRtRgKpQ",
     title: "Abu Dhabi Judicial Department",
     description: "Handles legal matters and court services in the emirate.",
   },
