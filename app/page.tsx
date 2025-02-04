@@ -2,30 +2,35 @@
 
 import { useState, useEffect } from "react";
 import {
-  Home,
-  ImageIcon,
-  Zap,
-  Settings,
-  Compass,
-  ChevronLeft,
-  ChevronRight,
-  Shield,
-  MoreHorizontal,
-  Trash2,
-} from "lucide-react";
+  HomeIcon as HomeIconFilled,
+  MagnifyingGlassIcon as MagnifyingGlassFilled,
+  LightBulbIcon as LightBulbFilled,
+  UserCircleIcon as UserCircleFilled,
+  RocketLaunchIcon as RocketLaunchFilled,
+  ChevronLeftIcon as ChevronLeftFilled,
+  ChevronRightIcon as ChevronRightFilled,
+  ShieldCheckIcon as ShieldCheckFilled,
+  TrashIcon as TrashFilled,
+  ExclamationCircleIcon,
+  UserGroupIcon,
+} from "@heroicons/react/24/solid";
 import {
-  HomeFilled,
-  ImageFilled,
-  ZapFilled,
-  SettingsFilled,
-  CompassFilled,
-  EditProfile,
-  ConnectedIcon,
-  CommunityIcon,
-  ReportIssuesOrGiveFeedbackIcon,
-} from "./filled-icons";
+  HomeIcon,
+  MagnifyingGlassIcon,
+  LightBulbIcon,
+  UserCircleIcon,
+  RocketLaunchIcon,
+  ChevronLeftIcon,
+  ChevronRightIcon,
+  ShieldCheckIcon,
+  TrashIcon,
+  LockClosedIcon,
+  LinkIcon,
+} from "@heroicons/react/24/outline";
+
 import type React from "react";
 import { countries } from "./countries";
+import { Rocket } from "lucide-react";
 
 type Tab = "home" | "discover" | "experiences" | "tips" | "profile";
 
@@ -71,7 +76,7 @@ function SettingsItem({
           <span className="text-gray-400 text-sm">{description}</span>
         </div>
       </div>
-      <ChevronRight className="w-5 h-5 text-gray-400 group-hover:text-white transition-colors" />
+      <ChevronRightFilled className="w-5 h-5 text-gray-400 group-hover:text-white transition-colors" />
     </div>
   );
 }
@@ -311,7 +316,7 @@ export default function Page() {
             {/* Updated Header */}
             <div className="relative mb-7">
               <button className="absolute left-0 w-8 h-8 flex items-center justify-center rounded-full bg-[#272739]">
-                <ChevronLeft className="w-5 h-5 text-white" />
+                <ChevronLeftFilled className="w-5 h-5 text-white" />
               </button>
               <h1 className="text-xl font-semibold text-white text-center">
                 Settings
@@ -341,7 +346,6 @@ export default function Page() {
                 </p>
               </div>
               <button className="w-8 h-8 flex items-center justify-center rounded-full bg-[#272739]">
-                <EditProfile className="" />
               </button>
             </div>
 
@@ -350,25 +354,25 @@ export default function Page() {
               <div className="space-y-2">
                 <SettingsItem
                   plainIcon
-                  icon={<ConnectedIcon className="w-7 h-7 text-white" />}
+                  icon={<LinkIcon className="w-7 h-7 text-white" />}
                   title="Connected Apps"
                   description="Manage connected apps"
                 />
                 <SettingsItem
                   plainIcon
-                  icon={<Shield className="w-7 h-7 text-white" />}
+                  icon={<ShieldCheckIcon className="w-7 h-7 text-white" />}
                   title="Security and Recovery"
                   description="Manage your passwords and recovery methods"
                 />
                 <SettingsItem
                   plainIcon
-                  icon={<MoreHorizontal className="w-7 h-7 text-white" />}
+                  icon={<LockClosedIcon className="w-7 h-7 text-white" />}
                   title="Change Password"
                   description="Change the password used to unlock your app"
                 />
                 <SettingsItem
                   plainIcon
-                  icon={<Trash2 className="w-7 h-7 text-white" />}
+                  icon={<TrashIcon className="w-7 h-7 text-white" />}
                   title="Remove Account"
                   description="Remove this account from your app"
                 />
@@ -381,14 +385,14 @@ export default function Page() {
               <div className="space-y-2">
                 <SettingsItem
                   plainIcon
-                  icon={<CommunityIcon className="w-7 h-7 text-white" />}
+                  icon={<UserGroupIcon className="w-7 h-7 text-white" />}
                   title="Dubai Community"
                   description="Come and join us"
                 />
                 <SettingsItem
                   plainIcon
                   icon={
-                    <ReportIssuesOrGiveFeedbackIcon className="w-7 h-7 text-white" />
+                    <ExclamationCircleIcon className="w-7 h-7 text-white" />
                   }
                   title="Report Issues or Give Feedback"
                   description="Let us know what we can improve on"
@@ -570,7 +574,7 @@ export default function Page() {
             disabled
             className="flex flex-col items-center justify-center gap-1 mx-7 opacity-50 cursor-not-allowed"
             >
-            <Home className="w-8 h-8 text-[#ffffff]/50" />
+            <HomeIcon className="w-8 h-8 text-[#ffffff]/50" />
             <span className="text-[12px] text-[#ffffff]/50">
               Home
             </span>
@@ -579,7 +583,7 @@ export default function Page() {
             disabled
             className="flex flex-col items-center justify-center gap-1 mx-7 opacity-50 cursor-not-allowed"
             >
-            <ImageIcon className="w-8 h-8 text-[#ffffff]/50" />
+            <MagnifyingGlassIcon className="w-8 h-8 text-[#ffffff]/50" />
             <span className="text-[12px] text-[#ffffff]/50">
               Discover
             </span>
@@ -588,7 +592,7 @@ export default function Page() {
             disabled
             className="flex flex-col items-center justify-center gap-1 mx-7 opacity-50 cursor-not-allowed"
             >
-            <Zap className="w-8 h-8 text-[#ffffff]/50" />
+            <LightBulbIcon className="w-8 h-8 text-[#ffffff]/50" />
             <span className="text-[12px] text-[#ffffff]/50">
               Tips
             </span>
@@ -597,7 +601,7 @@ export default function Page() {
             disabled
             className="flex flex-col items-center justify-center gap-1 mx-7 opacity-50 cursor-not-allowed"
             >
-            <Compass className="w-8 h-8 text-[#ffffff]/50" />
+            <RocketLaunchIcon className="w-8 h-8 text-[#ffffff]/50" />
             <span className="text-[12px] text-[#ffffff]/50">
               Experiences
             </span>
@@ -606,7 +610,7 @@ export default function Page() {
             disabled
             className="flex flex-col items-center justify-center gap-1 mx-7 opacity-50 cursor-not-allowed"
             >
-            <Settings className="w-8 h-8 text-[#ffffff]/50" />
+            <UserCircleIcon className="w-8 h-8 text-[#ffffff]/50" />
             <span className="text-[12px] text-[#ffffff]/50">
               Profile
             </span>
@@ -645,9 +649,9 @@ export default function Page() {
             className="flex flex-col items-center justify-center gap-1 mx-7"
           >
             {activeTab === "home" ? (
-              <HomeFilled className="w-8 h-8 text-[#2563eb]" />
+              <HomeIconFilled className="w-8 h-8 text-[#2563eb]" />
             ) : (
-              <Home className="w-8 h-8 text-[#ffffff]" />
+              <HomeIcon className="w-8 h-8 text-[#ffffff]" />
             )}
             <span
               className={`text-[12px] ${
@@ -662,9 +666,9 @@ export default function Page() {
             className="flex flex-col items-center justify-center gap-1 mx-7"
           >
             {activeTab === "discover" ? (
-              <ImageFilled className="w-8 h-8 text-[#2563eb]" />
+              <MagnifyingGlassFilled className="w-8 h-8 text-[#2563eb]" />
             ) : (
-              <ImageIcon className="w-8 h-8 text-[#ffffff]" />
+              <MagnifyingGlassIcon className="w-8 h-8 text-[#ffffff]" />
             )}
             <span
               className={`text-[12px] ${
@@ -679,9 +683,9 @@ export default function Page() {
             className="flex flex-col items-center justify-center gap-1 mx-7"
           >
             {activeTab === "tips" ? (
-              <ZapFilled className="w-8 h-8 text-[#2563eb]" />
+              <LightBulbFilled className="w-8 h-8 text-[#2563eb]" />
             ) : (
-              <Zap className="w-8 h-8 text-[#ffffff]" />
+              <LightBulbIcon className="w-8 h-8 text-[#ffffff]" />
             )}
             <span
               className={`text-[12px] ${
@@ -696,9 +700,9 @@ export default function Page() {
             className="flex flex-col items-center justify-center gap-1 mx-7"
           >
             {activeTab === "experiences" ? (
-              <CompassFilled className="w-8 h-8 text-[#2563eb]" />
+              <RocketLaunchFilled className="w-8 h-8 text-[#2563eb]" />
             ) : (
-              <Compass className="w-8 h-8 text-[#ffffff]" />
+              <RocketLaunchIcon className="w-8 h-8 text-[#ffffff]" />
             )}
             <span
               className={`text-[12px] ${
@@ -713,9 +717,9 @@ export default function Page() {
             className="flex flex-col items-center justify-center gap-1 mx-7"
           >
             {activeTab === "profile" ? (
-              <SettingsFilled className="w-8 h-8 text-[#2563eb]" />
+              <UserCircleFilled className="w-8 h-8 text-[#2563eb]" />
             ) : (
-              <Settings className="w-8 h-8 text-[#ffffff]" />
+              <UserCircleIcon className="w-8 h-8 text-[#ffffff]" />
             )}
             <span
               className={`text-[12px] ${
