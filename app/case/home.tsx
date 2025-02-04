@@ -62,22 +62,47 @@ function ProgressCircle({ percentage = 40, hideText = false }) {
 export default function CaseHome() {
   const [overviewMode, setOverviewMode] = useState(false)
 
+  // Update and reorder the furtherSteps array:
   const furtherSteps = [
     {
-      title: "Apply for a Driving License",
-      description: "Start your journey to drive in Dubai with an official UAE driving license",
+      title: "Confirm visa Appointment",
+      description: "Confirm your secured residency permit",
     },
     {
-      title: "Register for Healthcare",
-      description: "Get access to Dubai's world-class healthcare system",
+      title: "Confirm School Setup",
+      description: "Set up enrollment details for your children's schooling in Abu Dhabi",
     },
     {
-      title: "Set up Internet & TV",
-      description: "Connect your home with high-speed internet and entertainment",
+      title: "Locate Hospitals Nearby",
+      description: "Find quality healthcare providers and facilities near you",
     },
     {
-      title: "Join Local Communities",
-      description: "Connect with other expats and locals in your area",
+      title: "Apply for a Driver's License",
+      description: "Start the process to get your official UAE driving license",
+    },
+    {
+      title: "Obtain Medical Insurance",
+      description: "Ensure you have adequate health coverage in the UAE",
+    },
+    {
+      title: "Register for a Mobile SIM Card",
+      description: "Stay connected by choosing the best telecom provider in the UAE",
+    },
+    {
+      title: "Set up a Bank Account",
+      description: "Open a UAE bank account for seamless financial transactions",
+    },
+    {
+      title: "Connect with Expat Communities",
+      description: "Join local groups to share experiences and receive support",
+    },
+    {
+      title: "Learn about Emirati Culture",
+      description: "Discover local customs and traditions specific to Abu Dhabi",
+    },
+    {
+      title: "Explore UAE Infrastructure",
+      description: "Get informed about public transport, utilities, and connectivity services",
     },
   ]
 
