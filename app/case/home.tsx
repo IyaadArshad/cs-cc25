@@ -1,7 +1,7 @@
 import { Card, CardContent } from "@/components/ui/card"
 import { Carousel, CarouselContent, CarouselItem } from "@/components/ui/carousel"
 import { Button } from "@/components/ui/button"
-import { ArrowLeft, ChevronDown } from "lucide-react"
+import { ArrowLeft, ChevronDown, ArrowRight } from "lucide-react"
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible"
 import { useState } from "react"
 
@@ -121,8 +121,8 @@ export default function CaseHome() {
                   <h3 className="text-lg font-medium text-zinc-200">{step.title}</h3>
                   <p className="text-sm text-zinc-400">{step.description}</p>
                 </div>
-                <button className="px-3 py-1.5 rounded bg-white/10 hover:bg-white/20 text-white">
-                  Go
+                <button className="p-2 rounded bg-white/10 hover:bg-white/20 text-white">
+                  <ArrowRight className="w-5 h-5 transform transition-transform hover:translate-x-1" />
                 </button>
               </div>
             ))}
@@ -136,16 +136,15 @@ export default function CaseHome() {
     <div className="flex-1 p-6 overflow-y-auto">
       <div className="flex flex-col items-center justify-center space-y-6 mt-8">
         <h1 className="text-4xl text-white text-center mb-3">Welcome back, TESTNAME</h1>
-        <ProgressCircle />
+        {/* Wrap ProgressCircle with clickable area with hover and wiggle animation */}
+        <div 
+          onClick={() => setOverviewMode(true)} 
+          className="cursor-pointer transform transition-transform hover:scale-105 animate-wiggle"
+        >
+          <ProgressCircle />
+        </div>
         <div className="w-full max-w-xl">
-          <div onClick={() => setOverviewMode(true)} className="cursor-pointer">
-            <div className="flex items-center justify-between hover:bg-gray-700/50 transition-colors p-4">
-              <div className="flex items-center gap-2">
-                <span className="text-lg text-zinc-200">Want to take things further?</span>
-              </div>
-              <p className="h-5 w-5 text-white transition-transform duration-200 ease-in-out">{/* icon placeholder */}</p>
-            </div>
-          </div>
+          {/* ...existing code... */}
         </div>
         <Carousel className="w-full max-w-sm mt-4">
           <CarouselContent className="-ml-2">
@@ -162,6 +161,21 @@ export default function CaseHome() {
           </CarouselContent>
         </Carousel>
       </div>
+      {/* Add custom keyframes for wiggle animation */}
+      <style jsx global>{`
+        @keyframes wiggle {
+          0%, 80%, 100% { transform: rotate(0deg); }
+          10% { transform: rotate(-3deg); }
+          20% { transform: rotate(3deg); }
+          30% { transform: rotate(-3deg); }
+          40% { transform: rotate(3deg); }
+        }
+        .animate-wiggle {
+          animation: wiggle 1s ease-in-out;
+          animation-delay: 14s;
+          animation-iteration-count: infinite;
+        }
+      `}</style>
     </div>
   )
 }
