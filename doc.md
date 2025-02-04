@@ -11,3 +11,12 @@ Name -> Pfp (default image only) -> Interests -> Location ->
 // sets up profile
 Additional Setup Options:
 - Quick Onboarding: Step-by-step guide for first-time users
+
+
+home > HomeIcon
+imageicon > magnifyingglassicon
+zap > lightbulbicon
+settings > usercircleicon
+compass > rocketlaunchicon
+shield > shieldcheckicon
+trash2 > trashicon
