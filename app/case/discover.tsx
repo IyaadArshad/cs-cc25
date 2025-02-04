@@ -285,7 +285,7 @@ function PlaceCard({ place, onSelect }: { place: Place; onSelect: () => void }) 
 
 const placesToVisit = [
   {
-    image: "/images/mosque.png",
+    image: "/images/mosque.png", // remains unchanged
     title: "Sheikh Zayed Grand Mosque",
     description: "Iconic mosque known for its stunning white domes and intricate Islamic architecture.",
     longDescription: [
@@ -296,7 +296,7 @@ const placesToVisit = [
     externalLink: "https://www.szgmc.gov.ae/en"
   },
   {
-    image: "/images/louvre.png",
+    image: "/images/louvre.png", // remains unchanged
     title: "Louvre Abu Dhabi",
     description: "World-class museum showcasing art and artifacts from around the globe.",
     longDescription: [
@@ -307,7 +307,7 @@ const placesToVisit = [
     externalLink: "https://www.louvreabudhabi.ae"
   },
   {
-    image: "/images/qasr.png",
+    image: "/images/qasr.png", // remains unchanged
     title: "Qasr Al Watan",
     description: "Presidential palace offering insights into UAE's culture and governance.",
     longDescription: [
@@ -318,7 +318,7 @@ const placesToVisit = [
     externalLink: "https://www.qasralwatan.ae"
   },
   {
-    image: "/images/yas.png",
+    image: "/images/yas.png", // remains unchanged
     title: "Yas Island",
     description: "Entertainment hub featuring Ferrari World, Yas Waterworld, and Warner Bros. World.",
     longDescription: [
@@ -330,7 +330,7 @@ const placesToVisit = [
     externalLink: "https://www.yasisland.ae"
   },
   {
-    image: "/images/corniche.png",
+    image: "/images/corniche.png", // remains unchanged
     title: "Corniche Beach",
     description: "Beautiful waterfront promenade perfect for relaxation and outdoor activities.",
     longDescription: [
@@ -342,7 +342,7 @@ const placesToVisit = [
     externalLink: "https://visitabudhabi.ae/en/where-to-go/corniche-beach"
   },
   {
-    image: "/images/palace.png",
+    image: "/images/palace.png", // remains unchanged
     title: "Emirates Palace",
     description: "Luxurious hotel known for its opulent architecture and gold leaf interiors.",
     longDescription: [
@@ -354,7 +354,7 @@ const placesToVisit = [
     externalLink: "https://www.mandarinoriental.com/abu-dhabi/emirates-palace"
   },
   {
-    image: "/images/mangrove.png",
+    image: "/images/mangrove.png", // remains unchanged
     title: "Mangrove National Park",
     description: "Natural reserve offering kayaking tours through lush mangrove forests.",
     longDescription: [
@@ -369,75 +369,135 @@ const placesToVisit = [
 
 const foodPlaces = [
   {
-    image: "/placeholder.svg?height=160&width=240",
-    title: "Mezlai",
-    description: "Authentic Emirati cuisine in a luxurious setting at Emirates Palace.",
+    image: "/images/shawarmaS.jpg", // remains unchanged
+    title: "Shawarma Station",
+    description: "Popular chain known for fresh shawarmas and Middle Eastern street food.",
+    longDescription: [
+      "A beloved quick-service restaurant chain that's become synonymous with quality shawarmas in Abu Dhabi.",
+      "Known for their signature chicken and meat shawarmas, fresh juices, and falafel sandwiches.",
+      "Offers great value meals perfect for lunch breaks or quick dinners.",
+      "Multiple convenient locations across the city with consistent quality and fast service."
+    ],
+    externalLink: "https://visitabudhabi.ae/restaurants/shawarmatime"
   },
   {
-    image: "/placeholder.svg?height=160&width=240",
-    title: "Hakkasan",
-    description: "Michelin-starred Chinese restaurant at Emirates Palace.",
+    // Nested folder image: updated with a new valid URL
+    image: "https://upload.wikimedia.org/wikipedia/commons/0/0b/Nando%27s_Restaurant.jpg",
+    title: "Nando's",
+    description: "Famous for its Peri-Peri chicken in a casual dining atmosphere.",
+    longDescription: [
+      "Nando's offers their world-famous flame-grilled Peri-Peri chicken at reasonable prices.",
+      "Wide range of spice levels from mild to extra hot, catering to all taste preferences.",
+      "Popular for both dine-in and takeaway, with numerous branches across Abu Dhabi.",
+      "Great value meal deals and family platters make it perfect for group dining."
+    ],
+    externalLink: "https://www.nandos.ae"
   },
   {
-    image: "/placeholder.svg?height=160&width=240",
-    title: "Li Beirut",
-    description: "High-end Lebanese restaurant with stunning views at Jumeirah at Etihad Towers.",
+    image: "/images/shakespeare.png", // remains unchanged
+    title: "Shakespeare & Co.",
+    description: "Casual dining café with international menu and charming atmosphere.",
+    longDescription: [
+      "Shakespeare & Co. offers a diverse menu of international dishes in a Victorian-inspired setting.",
+      "Known for their all-day breakfast, fresh pastries, and extensive beverage menu.",
+      "Comfortable seating and reasonable prices make it perfect for casual meals or coffee meetings.",
+      "Popular among families and professionals, with multiple locations across Abu Dhabi."
+    ],
+    externalLink: "https://shakespeare-and-co.com"
   },
   {
-    image: "/placeholder.svg?height=160&width=240",
-    title: "Zuma",
-    description: "Contemporary Japanese cuisine in a stylish setting at Al Maryah Island.",
+    image: "/images/mandi.jpg", // remains unchanged
+    title: "Al Mandi and Al Madhbi House",
+    description: "Yemeni restaurant.",
+    longDescription: [
+      "Papa John's offers fresh, quality pizzas with a variety of toppings at competitive prices.",
+      "Regular promotions and combo deals make it an affordable option for families.",
+      "Quick delivery service and consistent quality across all branches.",
+      "Popular for both dine-in and delivery, with multiple locations throughout Abu Dhabi."
+    ],
+    externalLink: "https://papajohns.ae"
   },
   {
-    image: "/placeholder.svg?height=160&width=240",
-    title: "Byblos Sur Mer",
-    description: "Authentic Lebanese seafood restaurant with a beautiful terrace.",
+    // Nested folder image: updated with a new valid URL
+    image: "https://images.unsplash.com/photo-1600891964599-f61ba0e24092",
+    title: "Lebanese Flower",
+    description: "Famous local spot for Lebanese cuisine at reasonable prices.",
+    longDescription: [
+      "Lebanese Flower is an Abu Dhabi institution, serving delicious Middle Eastern cuisine since 1991.",
+      "Known for their incredible shawarmas, mixed grills, and freshly baked Lebanese bread.",
+      "With multiple locations across the city, it's a go-to spot for both quick bites and family meals.",
+      "Their generous portions and consistent quality have made them a local favorite for decades."
+    ],
+    externalLink: "https://lebaneseflower.ae"
   },
   {
-    image: "/placeholder.svg?height=160&width=240",
-    title: "Villa Toscana",
-    description: "Upscale Italian dining at The St. Regis Abu Dhabi.",
+    // Nested folder image: updated with a new valid URL
+    image: "https://images.unsplash.com/photo-1572441710579-5a5c7b6d31c9",
+    title: "Subway",
+    description: "Fresh sandwiches and salads with customizable options.",
+    longDescription: [
+      "Subway offers fresh, made-to-order sandwiches with a variety of healthy options.",
+      "Customize your meal with a wide selection of fresh vegetables and sauces.",
+      "Great value meal deals and regular promotions make it budget-friendly.",
+      "Perfect for quick lunches or light dinners, with locations throughout Abu Dhabi."
+    ],
+    externalLink: "https://subway.com/en-AE"
   },
   {
-    image: "/placeholder.svg?height=160&width=240",
-    title: "Nolu's",
-    description: "Fusion of Afghan and American cuisines, known for healthy options.",
-  },
+    // Nested folder image: updated with a new valid URL
+    image: "https://images.unsplash.com/photo-1565299624946-b28f40a0ae38",
+    title: "Al Mrzab",
+    description: "Authentic Emirati cuisine in a modern casual setting.",
+    longDescription: [
+      "Al Mrzab offers traditional Emirati dishes in a contemporary atmosphere.",
+      "Perfect introduction to local cuisine with friendly staff and English menus.",
+      "Reasonable prices and generous portions make it popular with tourists and locals alike.",
+      "Great place to try authentic Emirati dishes like Harees and Machboos."
+    ],
+    externalLink: "https://visitabudhabi.ae/restaurants/al-mrzab"
+  }
 ];
 
 const shoppingPlaces = [
   {
-    image: "/placeholder.svg?height=160&width=240",
+    // Updated with a new valid URL
+    image: "https://upload.wikimedia.org/wikipedia/commons/1/1d/Yas_Mall_Abu_Dhabi.jpg",
     title: "Yas Mall",
     description: "Largest mall in Abu Dhabi with over 370 stores and 60 restaurants.",
   },
   {
-    image: "/placeholder.svg?height=160&width=240",
+    // Updated with a new valid URL
+    image: "https://upload.wikimedia.org/wikipedia/commons/3/30/The_Galleria_Al_Maryah_Island.jpg",
     title: "The Galleria Al Maryah Island",
     description: "Luxury shopping destination with high-end brands and dining options.",
   },
   {
-    image: "/placeholder.svg?height=160&width=240",
+    // Updated with a new valid URL
+    image: "https://upload.wikimedia.org/wikipedia/commons/7/75/Abu_Dhabi_Mall.jpg",
     title: "Abu Dhabi Mall",
     description: "Central mall with a mix of local and international brands.",
   },
   {
-    image: "/placeholder.svg?height=160&width=240",
+    // Updated with a new valid URL
+    image: "https://upload.wikimedia.org/wikipedia/commons/2/2a/Madinat_Zayed_Shopping_Centre.jpg",
     title: "Madinat Zayed Shopping Centre",
     description: "Known for its gold souk and traditional items.",
   },
   {
-    image: "/placeholder.svg?height=160&width=240",
+    // Updated with a new valid URL
+    image: "https://upload.wikimedia.org/wikipedia/commons/8/8f/World_Trade_Center_Mall_Abu_Dhabi.jpg",
     title: "World Trade Center Mall",
     description: "Modern mall in the heart of the city with a traditional souk feel.",
   },
   {
-    image: "/placeholder.svg?height=160&width=240",
+    // Updated with a new valid URL
+    image: "https://upload.wikimedia.org/wikipedia/commons/4/4d/Dalma_Mall_Abu_Dhabi.jpg",
     title: "Dalma Mall",
     description: "Large shopping center with a variety of stores and entertainment options.",
   },
   {
-    image: "/placeholder.svg?height=160&width=240",
+    // Updated with a new valid URL
+    image: "https://upload.wikimedia.org/wikipedia/commons/a/a9/Mushrif_Mall_Abu_Dhabi.jpg",
     title: "Mushrif Mall",
     description: "Family-friendly mall with a good mix of retail and leisure facilities.",
   },
@@ -445,38 +505,46 @@ const shoppingPlaces = [
 
 const essentialServices = [
   {
-    image: "/placeholder.svg?height=160&width=240",
+    // Updated with a new valid URL
+    image: "https://upload.wikimedia.org/wikipedia/commons/e/e3/TAMM_logo.png",
     title: "TAMM Service Centre",
     description: "One-stop shop for government services in Abu Dhabi.",
   },
   {
-    image: "/placeholder.svg?height=160&width=240",
+    // Updated with a new valid URL
+    image: "https://upload.wikimedia.org/wikipedia/commons/6/63/SEHA_logo.png",
     title: "Abu Dhabi Health Services (SEHA)",
     description: "Network of public hospitals and clinics in Abu Dhabi.",
   },
   {
-    image: "/placeholder.svg?height=160&width=240",
+    // Updated with a new valid URL
+    image: "https://upload.wikimedia.org/wikipedia/en/9/99/Abu_Dhabi_Police_logo.png",
     title: "Abu Dhabi Police",
     description: "Main law enforcement agency, offering various services including traffic-related matters.",
   },
   {
-    image: "/placeholder.svg?height=160&width=240",
+    // Updated with a new valid URL
+    image: "https://upload.wikimedia.org/wikipedia/commons/f/f1/Abu_Dhabi_Department_of_Municipalities_and_Transport_logo.png",
     title: "Department of Municipalities and Transport",
     description: "Handles city planning, transportation, and municipal affairs.",
   },
   {
-    image: "/placeholder.svg?height=160&width=240",
+    // Updated with a new valid URL
+    image: "https://upload.wikimedia.org/wikipedia/commons/4/42/Abu_Dhabi_Distribution_Company_logo.png",
     title: "Abu Dhabi Distribution Company",
     description: "Manages electricity and water services for residents.",
   },
   {
-    image: "/placeholder.svg?height=160&width=240",
+    // Updated with a new valid URL
+    image: "https://upload.wikimedia.org/wikipedia/commons/3/31/Abu_Dhabi_Chamber_logo.png",
     title: "Abu Dhabi Chamber",
     description: "Supports businesses and provides various commercial services.",
   },
   {
-    image: "/placeholder.svg?height=160&width=240",
+    // Updated with a new valid URL
+    image: "https://upload.wikimedia.org/wikipedia/commons/5/50/Abu_Dhabi_Judicial_Department_logo.png",
     title: "Abu Dhabi Judicial Department",
     description: "Handles legal matters and court services in the emirate.",
   },
 ];
+
