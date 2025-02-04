@@ -25,6 +25,7 @@ import {
   ReportIssuesOrGiveFeedbackIcon,
 } from "./filled-icons";
 import type React from "react";
+import { countries } from "./countries";
 
 type Tab = "home" | "nft" | "moon" | "explore" | "settings";
 
@@ -146,216 +147,25 @@ export default function Page() {
   const [userName, setUserName] = useState("");
   const [bio, setBio] = useState("");
   // Remove showBio and use new phase state
-  const [phase, setPhase] = useState<"name" | "bio" | "origin" | "loading" | "interests">("name");
+  const [phase, setPhase] = useState<"name" | "bio" | "origin" | "loading" | "confirmInterests" | "final">("name");
   const [origin, setOrigin] = useState("");
   const [countrySearch, setCountrySearch] = useState("");
   const [hasUserCookie, setHasUserCookie] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
   const loadingPhrases = [
     "AI is identifying your personality",
-    "Matching your interests",
-    "Analyzing your preferences",
-    "Finding connections",
-    "Discovering your style"
+    "Matching your traits",
+    "Analyzing your profile",
+    "Gathering insights",
+    "Almost there"
   ];
   const [loadingIndex, setLoadingIndex] = useState(0);
-
-  const countries = [
-    { name: "Afghanistan", flag: "🇦🇫" },
-    { name: "Albania", flag: "🇦🇱" },
-    { name: "Algeria", flag: "🇩🇿" },
-    { name: "Andorra", flag: "🇦🇩" },
-    { name: "Angola", flag: "🇦🇴" },
-    { name: "Antigua and Barbuda", flag: "🇦🇬" },
-    { name: "Argentina", flag: "🇦🇷" },
-    { name: "Armenia", flag: "🇦🇲" },
-    { name: "Australia", flag: "🇦🇺" },
-    { name: "Austria", flag: "🇦🇹" },
-    { name: "Azerbaijan", flag: "🇦🇿" },
-    { name: "Bahamas", flag: "🇧🇸" },
-    { name: "Bahrain", flag: "🇧🇭" },
-    { name: "Bangladesh", flag: "🇧🇩" },
-    { name: "Barbados", flag: "🇧🇧" },
-    { name: "Belarus", flag: "🇧🇾" },
-    { name: "Belgium", flag: "🇧🇪" },
-    { name: "Belize", flag: "🇧🇿" },
-    { name: "Benin", flag: "🇧🇯" },
-    { name: "Bhutan", flag: "🇧🇹" },
-    { name: "Bolivia", flag: "🇧🇴" },
-    { name: "Bosnia and Herzegovina", flag: "🇧🇦" },
-    { name: "Botswana", flag: "🇧🇼" },
-    { name: "Brazil", flag: "🇧🇷" },
-    { name: "Brunei", flag: "🇧🇳" },
-    { name: "Bulgaria", flag: "🇧🇬" },
-    { name: "Burkina Faso", flag: "🇧" },
-    { name: "Burundi", flag: "🇧🇮" },
-    { name: "Cabo Verde", flag: "🇨🇻" },
-    { name: "Cambodia", flag: "🇰🇭" },
-    { name: "Cameroon", flag: "🇨🇲" },
-    { name: "Canada", flag: "🇨🇦" },
-    { name: "Central African Republic", flag: "🇨🇫" },
-    { name: "Chad", flag: "🇹🇩" },
-    { name: "Chile", flag: "🇨🇱" },
-    { name: "China", flag: "🇨🇳" },
-    { name: "Colombia", flag: "🇨🇴" },
-    { name: "Comoros", flag: "🇰🇲" },
-    { name: "Congo (Congo-Brazzaville)", flag: "🇨🇬" },
-    { name: "Costa Rica", flag: "🇨🇷" },
-    { name: "Croatia", flag: "🇭🇷" },
-    { name: "Cuba", flag: "🇨🇺" },
-    { name: "Cyprus", flag: "🇨🇾" },
-    { name: "Czechia", flag: "🇨🇿" },
-    { name: "Democratic Republic of the Congo", flag: "🇨🇩" },
-    { name: "Denmark", flag: "🇩🇰" },
-    { name: "Djibouti", flag: "🇩🇯" },
-    { name: "Dominica", flag: "🇩🇲" },
-    { name: "Dominican Republic", flag: "🇩🇴" },
-    { name: "Ecuador", flag: "🇪🇨" },
-    { name: "Egypt", flag: "🇪🇬" },
-    { name: "El Salvador", flag: "🇸🇻" },
-    { name: "Equatorial Guinea", flag: "🇬🇶" },
-    { name: "Eritrea", flag: "🇪🇷" },
-    { name: "Estonia", flag: "🇪🇪" },
-    { name: "Eswatini", flag: "🇸🇿" },
-    { name: "Ethiopia", flag: "🇪🇹" },
-    { name: "Fiji", flag: "🇫🇯" },
-    { name: "Finland", flag: "🇫🇮" },
-    { name: "France", flag: "🇫🇷" },
-    { name: "Gabon", flag: "🇬🇦" },
-    { name: "Gambia", flag: "🇬🇲" },
-    { name: "Georgia", flag: "🇬🇪" },
-    { name: "Germany", flag: "🇩🇪" },
-    { name: "Ghana", flag: "🇬🇭" },
-    { name: "Greece", flag: "🇬🇷" },
-    { name: "Grenada", flag: "🇬🇩" },
-    { name: "Guatemala", flag: "🇬🇹" },
-    { name: "Guinea", flag: "🇬🇳" },
-    { name: "Guinea-Bissau", flag: "🇬🇼" },
-    { name: "Guyana", flag: "🇬🇾" },
-    { name: "Haiti", flag: "🇭🇹" },
-    { name: "Holy See", flag: "🇻🇦" },
-    { name: "Honduras", flag: "🇭🇳" },
-    { name: "Hungary", flag: "🇭🇺" },
-    { name: "Iceland", flag: "🇮🇸" },
-    { name: "India", flag: "🇮🇳" },
-    { name: "Indonesia", flag: "🇮🇩" },
-    { name: "Iran", flag: "🇮🇷" },
-    { name: "Iraq", flag: "🇮🇶" },
-    { name: "Ireland", flag: "🇮🇪" },
-    { name: "Israel", flag: "🇮🇱" },
-    { name: "Italy", flag: "🇮🇹" },
-    { name: "Jamaica", flag: "🇯🇲" },
-    { name: "Japan", flag: "🇯🇵" },
-    { name: "Jordan", flag: "🇯🇴" },
-    { name: "Kazakhstan", flag: "🇰🇿" },
-    { name: "Kenya", flag: "🇰🇪" },
-    { name: "Kiribati", flag: "🇰🇮" },
-    { name: "Kuwait", flag: "🇰🇼" },
-    { name: "Kyrgyzstan", flag: "🇰🇬" },
-    { name: "Laos", flag: "🇱🇦" },
-    { name: "Latvia", flag: "🇱🇻" },
-    { name: "Lebanon", flag: "🇱🇧" },
-    { name: "Lesotho", flag: "🇱🇸" },
-    { name: "Liberia", flag: "🇱🇷" },
-    { name: "Libya", flag: "🇱🇾" },
-    { name: "Liechtenstein", flag: "🇱🇮" },
-    { name: "Lithuania", flag: "🇱🇹" },
-    { name: "Luxembourg", flag: "🇱🇺" },
-    { name: "Madagascar", flag: "🇲🇬" },
-    { name: "Malawi", flag: "🇲🇼" },
-    { name: "Malaysia", flag: "🇲🇾" },
-    { name: "Maldives", flag: "🇲🇻" },
-    { name: "Mali", flag: "🇲🇱" },
-    { name: "Malta", flag: "🇲🇹" },
-    { name: "Marshall Islands", flag: "🇲🇭" },
-    { name: "Mauritania", flag: "🇲🇷" },
-    { name: "Mauritius", flag: "🇲🇺" },
-    { name: "Mexico", flag: "🇲🇽" },
-    { name: "Micronesia", flag: "🇫🇲" },
-    { name: "Moldova", flag: "🇲🇩" },
-    { name: "Monaco", flag: "🇲🇨" },
-    { name: "Mongolia", flag: "🇲🇳" },
-    { name: "Montenegro", flag: "🇲🇪" },
-    { name: "Morocco", flag: "🇲🇦" },
-    { name: "Mozambique", flag: "🇲🇿" },
-    { name: "Myanmar", flag: "🇲🇲" },
-    { name: "Namibia", flag: "🇳🇦" },
-    { name: "Nauru", flag: "🇳🇷" },
-    { name: "Nepal", flag: "🇳🇵" },
-    { name: "Netherlands", flag: "🇳🇱" },
-    { name: "New Zealand", flag: "🇳🇿" },
-    { name: "Nicaragua", flag: "🇳🇮" },
-    { name: "Niger", flag: "🇳🇪" },
-    { name: "Nigeria", flag: "🇳🇬" },
-    { name: "North Korea", flag: "🇰🇵" },
-    { name: "North Macedonia", flag: "🇲🇰" },
-    { name: "Norway", flag: "🇳🇴" },
-    { name: "Oman", flag: "🇴🇲" },
-    { name: "Pakistan", flag: "🇵🇰" },
-    { name: "Palau", flag: "🇵🇼" },
-    { name: "Palestine", flag: "🇵🇸" },
-    { name: "Panama", flag: "🇵🇦" },
-    { name: "Papua New Guinea", flag: "🇵🇬" },
-    { name: "Paraguay", flag: "🇵🇾" },
-    { name: "Peru", flag: "🇵🇪" },
-    { name: "Philippines", flag: "🇵🇭" },
-    { name: "Poland", flag: "🇵🇱" },
-    { name: "Portugal", flag: "🇵🇹" },
-    { name: "Qatar", flag: "🇶🇦" },
-    { name: "Romania", flag: "🇷🇴" },
-    { name: "Russia", flag: "🇷🇺" },
-    { name: "Rwanda", flag: "🇷🇼" },
-    { name: "Saint Kitts and Nevis", flag: "🇰🇳" },
-    { name: "Saint Lucia", flag: "🇱🇨" },
-    { name: "Saint Vincent and the Grenadines", flag: "🇻🇨" },
-    { name: "Samoa", flag: "🇼🇸" },
-    { name: "San Marino", flag: "🇸🇲" },
-    { name: "Sao Tome and Principe", flag: "🇸🇹" },
-    { name: "Saudi Arabia", flag: "🇸🇦" },
-    { name: "Senegal", flag: "🇸🇳" },
-    { name: "Serbia", flag: "🇷🇸" },
-    { name: "Seychelles", flag: "🇸🇨" },
-    { name: "Sierra Leone", flag: "🇸🇱" },
-    { name: "Singapore", flag: "🇸🇬" },
-    { name: "Slovakia", flag: "🇸🇰" },
-    { name: "Slovenia", flag: "🇸🇮" },
-    { name: "Solomon Islands", flag: "🇸🇧" },
-    { name: "Somalia", flag: "🇸🇴" },
-    { name: "South Africa", flag: "🇿🇦" },
-    { name: "South Korea", flag: "🇰🇷" },
-    { name: "South Sudan", flag: "🇸🇸" },
-    { name: "Spain", flag: "🇪🇸" },
-    { name: "Sri Lanka", flag: "🇱🇰" },
-    { name: "Sudan", flag: "🇸🇩" },
-    { name: "Suriname", flag: "🇸🇷" },
-    { name: "Sweden", flag: "🇸🇪" },
-    { name: "Switzerland", flag: "🇨🇭" },
-    { name: "Syria", flag: "🇸🇾" },
-    { name: "Tajikistan", flag: "🇹🇯" },
-    { name: "Tanzania", flag: "🇹🇿" },
-    { name: "Thailand", flag: "🇹🇭" },
-    { name: "Timor-Leste", flag: "🇹🇱" },
-    { name: "Togo", flag: "🇹🇬" },
-    { name: "Tonga", flag: "🇹🇴" },
-    { name: "Trinidad and Tobago", flag: "🇹🇹" },
-    { name: "Tunisia", flag: "🇹🇳" },
-    { name: "Turkey", flag: "🇹🇷" },
-    { name: "Turkmenistan", flag: "🇹🇲" },
-    { name: "Tuvalu", flag: "🇹🇻" },
-    { name: "Uganda", flag: "🇺🇬" },
-    { name: "Ukraine", flag: "🇺🇦" },
-    { name: "United Arab Emirates", flag: "🇦🇪" },
-    { name: "United Kingdom", flag: "🇬🇧" },
-    { name: "United States of America", flag: "🇺🇸" },
-    { name: "Uruguay", flag: "🇺🇾" },
-    { name: "Uzbekistan", flag: "🇺🇿" },
-    { name: "Vanuatu", flag: "🇻🇺" },
-    { name: "Venezuela", flag: "🇻🇪" },
-    { name: "Vietnam", flag: "🇻🇳" },
-    { name: "Yemen", flag: "🇾🇪" },
-    { name: "Zambia", flag: "🇿🇲" },
-    { name: "Zimbabwe", flag: "🇿🇼" },
-  ];
+  // Add new states for interests confirmation
+  const [apiInterests, setApiInterests] = useState<string[]>([]);
+  const [confirmedInterests, setConfirmedInterests] = useState<string[]>([]);
+  // New states to control per-interest confirmation flow
+  const [currentInterestIndex, setCurrentInterestIndex] = useState(0);
+  const [currentInterestResponse, setCurrentInterestResponse] = useState<boolean | null>(null);
 
   useEffect(() => {
     // Check for existing name cookie
@@ -390,21 +200,69 @@ export default function Page() {
     }
   };
 
-  // In loading phase, cycle phrases and simulate API call
+  // New effect for loading phase: fetch interests from API
   useEffect(() => {
-    let phraseInterval: NodeJS.Timeout;
     if (phase === "loading") {
-      phraseInterval = setInterval(() => {
-        setLoadingIndex((prev) => (prev + 1) % loadingPhrases.length);
-      }, 4000);
-      // Simulate API call delay
-      setTimeout(() => {
-        clearInterval(phraseInterval);
-        setPhase("interests");
-      }, 12000); // simulate 12 sec load
+      fetch(`/api/v1/setup/generateInterests?bio=${encodeURIComponent(bio)}&originCountry=${encodeURIComponent(origin)}`)
+        .then((res) => res.json())
+        .then((data) => {
+          setApiInterests(data.interests || []);
+          setPhase("confirmInterests");
+          setCurrentInterestIndex(0);
+          setCurrentInterestResponse(null);
+        })
+        .catch((err) => {
+          console.error(err);
+          // ...error handling...
+        });
     }
-    return () => phraseInterval && clearInterval(phraseInterval);
-  }, [phase]);
+  }, [phase, bio, origin]);
+
+  // New effect to update loading phrase every 3 seconds while loading
+  useEffect(() => {
+    if (phase === "loading") {
+      const interval = setInterval(() => {
+        setLoadingIndex(prev => (prev + 1) % loadingPhrases.length);
+      }, 3000);
+      return () => clearInterval(interval);
+    }
+  }, [phase, loadingPhrases.length]);
+
+  // Handlers for confirming interests
+  const handleInterestConfirmation = (interest: string, confirmed: boolean) => {
+    if (confirmed) {
+      if (!confirmedInterests.includes(interest)) {
+        setConfirmedInterests((prev) => [...prev, interest]);
+      }
+    } else {
+      setConfirmedInterests((prev) => prev.filter((i) => i !== interest));
+    }
+  };
+
+  const handleConfirmFinalInterests = () => {
+    document.cookie = `interests=${JSON.stringify(confirmedInterests)};path=/;max-age=${60 * 60 * 24 * 7}`;
+    document.cookie = `country=${origin};path=/;max-age=${60 * 60 * 24 * 7}`;
+    setPhase("final");
+  };
+
+  // New handler for processing each interest
+  const handleNextInterest = () => {
+    if (currentInterestResponse === true) {
+      setConfirmedInterests((prev) => [...prev, apiInterests[currentInterestIndex]]);
+    }
+    // Reset response for next interest
+    setCurrentInterestResponse(null);
+    if (currentInterestIndex < apiInterests.length - 1) {
+      setCurrentInterestIndex((prev) => prev + 1);
+    } else {
+      // Finished process – save cookies
+      document.cookie = `interests=${JSON.stringify(confirmedInterests.concat(
+        currentInterestResponse === true ? [apiInterests[currentInterestIndex]] : []
+      ))};path=/;max-age=${60 * 60 * 24 * 7}`;
+      document.cookie = `country=${origin};path=/;max-age=${60 * 60 * 24 * 7}`;
+      setPhase("final");
+    }
+  };
 
   // Generate a random background URL
   const randomBackground =
@@ -589,19 +447,34 @@ export default function Page() {
                   {loadingPhrases[loadingIndex]}
                 </p>
               </div>
-            ) : phase === "interests" ? (
-              <div className="flex flex-col items-center">
-                <h1 className="text-2xl text-white mb-4">Select Your Interests</h1>
-                <div className="flex flex-wrap gap-3 justify-center">
-                  {interests.map((item) => (
-                    <button
-                      key={item}
-                      className="px-4 py-2 bg-[#272739] rounded-full text-white hover:bg-[#2563eb] transition-colors"
-                    >
-                      {item}
-                    </button>
-                  ))}
+            ) : phase === "confirmInterests" ? (
+              <div className="p-6 flex flex-col items-center">
+                {/* Profile picture at top */}
+                <img src="/images/default_pfp.png" alt="Profile" className="w-24 h-24 rounded-full mb-4" />
+                <h1 className="text-white text-xl font-bold mb-4">
+                  Do you like {apiInterests[currentInterestIndex]}?
+                </h1>
+                <div className="flex space-x-4 mb-6">
+                  <button
+                    onClick={() => setCurrentInterestResponse(true)}
+                    className={`px-4 py-2 rounded ${currentInterestResponse === true ? "bg-purple-700" : "bg-purple-500"} text-white`}
+                  >
+                    Yes
+                  </button>
+                  <button
+                    onClick={() => setCurrentInterestResponse(false)}
+                    className={`px-4 py-2 rounded ${currentInterestResponse === false ? "bg-gray-700" : "bg-gray-500"} text-white`}
+                  >
+                    No
+                  </button>
                 </div>
+                <button
+                  onClick={handleNextInterest}
+                  disabled={currentInterestResponse === null}
+                  className="px-6 py-3 rounded bg-purple-600 text-white disabled:opacity-50"
+                >
+                  Next
+                </button>
               </div>
             ) : (
               <>
@@ -677,7 +550,7 @@ export default function Page() {
                   </>
                 ) : null}
               </div>
-              {phase !== "loading" && phase !== "interests" && (
+              {phase !== "loading" && phase !== "confirmInterests" && (
                 <button
                   type="submit"
                   className="w-full py-3 bg-[#2563eb] hover:bg-[#2563eb]/90 text-white font-medium rounded-lg transition-colors"
