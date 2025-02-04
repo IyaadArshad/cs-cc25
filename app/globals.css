@@ -94,4 +94,9 @@ body {
 
 .suggestion-name {
   background: linear-gradient(to right, rgba(128, 128, 128, 0.2), rgba(128, 128, 128, 0.1));
+  padding-right: 8px;
+  padding-left: 8px;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  border-radius: 4px;
 }

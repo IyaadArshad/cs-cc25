@@ -206,7 +206,9 @@ export default function Page() {
       fetch(`/api/v1/setup/generateInterests?bio=${encodeURIComponent(bio)}&originCountry=${encodeURIComponent(origin)}`)
         .then((res) => res.json())
         .then((data) => {
-          setApiInterests(data.interests || []);
+          const suggestions = data.interests || [];
+          // If there are more than 12 suggestions, only take the first 12
+          setApiInterests(suggestions.slice(0, 12));
           setPhase("confirmInterests");
           setCurrentInterestIndex(0);
           setCurrentInterestResponse(null);
@@ -450,9 +452,9 @@ export default function Page() {
             ) : phase === "confirmInterests" ? (
               <div className="p-6 flex flex-col items-center">
                 {/* Profile picture at top */}
-                <img src="/images/default_pfp.png" alt="Profile" className="w-24 h-24 rounded-full mb-4" />
-                <h1 className="text-white text-xl font-bold mb-4">
-                  Do you like <span className="suggestion-name">{apiInterests[currentInterestIndex]}</span>?
+                <img src="/images/default_pfp.png" alt="Profile" className="w-48 h-48 rounded-full mb-12" />
+                <h1 className="text-white text-3xl font-bold mb-4">
+                  Do you like <span className="suggestion-name">{apiInterests[currentInterestIndex]} ?</span>
                 </h1>
                 <div className="flex space-x-4 mb-6">
                   <button
