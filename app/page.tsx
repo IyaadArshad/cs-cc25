@@ -519,7 +519,7 @@ export default function Page() {
             className="absolute top-0 left-0 w-1/5 h-1 bg-[#2563eb] transition-all duration-300 ease-in-out"
             style={{
               transform: `translateX(${
-                ["home", "discover", "tips", "explore", "settings"].indexOf(
+                ["home", "discover", "tips", "experiences", "profile"].indexOf(
                   activeTab
                 ) * 100
               }%)`,
@@ -588,7 +588,7 @@ export default function Page() {
             )}
             <span
               className={`text-[12px] ${
-                activeTab === "tips" ? "text-[#2563eb]" : "text-[#ffffff]"
+                activeTab === "experiences" ? "text-[#2563eb]" : "text-[#ffffff]"
               }`}
             >
               Explore
