@@ -91,3 +91,7 @@ body {
   --tw-shadow-colored: 0 15px 50px -12px var(--tw-shadow-color);
   box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);
 }
+
+.suggestion-name {
+  background: linear-gradient(to right, rgba(128, 128, 128, 0.2), rgba(128, 128, 128, 0.1));
+}

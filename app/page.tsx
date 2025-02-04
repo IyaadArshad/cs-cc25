@@ -452,7 +452,7 @@ export default function Page() {
                 {/* Profile picture at top */}
                 <img src="/images/default_pfp.png" alt="Profile" className="w-24 h-24 rounded-full mb-4" />
                 <h1 className="text-white text-xl font-bold mb-4">
-                  Do you like {apiInterests[currentInterestIndex]}?
+                  Do you like <span className="suggestion-name">{apiInterests[currentInterestIndex]}</span>?
                 </h1>
                 <div className="flex space-x-4 mb-6">
                   <button
