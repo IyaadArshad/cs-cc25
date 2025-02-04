@@ -419,7 +419,7 @@ const foodPlaces = [
   },
   {
     // Nested folder image: updated with a new valid URL
-    image: "https://images.unsplash.com/photo-1600891964599-f61ba0e24092",
+    image: "/images/lebaneseflower.jpg",
     title: "Lebanese Flower",
     description: "Famous local spot for Lebanese cuisine at reasonable prices.",
     longDescription: [
@@ -432,7 +432,7 @@ const foodPlaces = [
   },
   {
     // Nested folder image: updated with a new valid URL
-    image: "https://www.mushrifmall.com/media/4035/subway.jpg?anchor=center&mode=crop&width=640&height=460&rnd=133558577160000000",
+    image: "/images/subway.jpg",
     title: "Subway",
     description: "Fresh sandwiches and salads with customizable options.",
     longDescription: [
@@ -445,7 +445,7 @@ const foodPlaces = [
   },
   {
     // Nested folder image: updated with a new valid URL
-    image: "https://images.unsplash.com/photo-1565299624946-b28f40a0ae38",
+    image: "/images/almrzab.jpg",
     title: "Al Mrzab",
     description: "Authentic Emirati cuisine in a modern casual setting.",
     longDescription: [
@@ -461,43 +461,43 @@ const foodPlaces = [
 const shoppingPlaces = [
   {
     // Updated with a new valid URL
-    image: "https://visitabudhabi.ae/-/media/project/vad/galleryimages/things-to-do/shopping/yas-mall/yas-mall.jpg",
+    image: "/images/yasmall.jpg",
     title: "Yas Mall",
     description: "Largest mall in Abu Dhabi with over 370 stores and 60 restaurants.",
   },
   {
     // Updated with a new valid URL
-    image: "https://dynamic-media-cdn.tripadvisor.com/media/photo-o/10/33/3a/bc/the-galleria-on-al-maryah.jpg?w=900&h=500&s=1",
+    image: "/images/galleria.jpg",
     title: "The Galleria Al Maryah Island",
     description: "Luxury shopping destination with high-end brands and dining options.",
   },
   {
     // Updated with a new valid URL
-    image: "https://www.timeoutabudhabi.com/cloud/timeoutabudhabi/2024/03/05/Abu-Dhabi-Mall-1024x768.jpg",
+    image: "/images/admall.jpg",
     title: "Abu Dhabi Mall",
     description: "Central mall with a mix of local and international brands.",
   },
   {
     // Updated with a new valid URL
-    image: "https://www.lineproperty.com/media/e30dr5by/madinat-zayed-mall-banner.jpg?width=1920&height=900",
+    image: "/images/madinatzayed.jpg",
     title: "Madinat Zayed Shopping Centre",
     description: "Known for its gold souk and traditional items.",
   },
   {
     // Updated with a new valid URL
-    image: "https://visitabudhabi.ae/-/media/project/vad/things-to-do/shopping-and-lifestyle/the-mall-at-the-world-trade-centre-abu-dhabi/world-trade-center-souk-and-mall.jpg",
+    image: "/images/wtcmall.jpg",
     title: "World Trade Center Mall",
     description: "Modern mall in the heart of the city with a traditional souk feel.",
   },
   {
     // Updated with a new valid URL
-    image: "https://upload.wikimedia.org/wikipedia/commons/c/ce/Dalma_Exterior.jpg",
+    image: "/images/dalma.jpg",
     title: "Dalma Mall",
     description: "Large shopping center with a variety of stores and entertainment options.",
   },
   {
     // Updated with a new valid URL
-    image: "https://visitabudhabi.ae/-/media/project/vad/galleryimages/things-to-do/mushrif-mall/4x8a4946.jpg",
+    image: "/images/mushrifmall.jpg",
     title: "Mushrif Mall",
     description: "Family-friendly mall with a good mix of retail and leisure facilities.",
   }
@@ -506,43 +506,43 @@ const shoppingPlaces = [
 const essentialServices = [
   {
     // Updated with a new valid URL
-    image: "https://www.propertyfinder.ae/blog/wp-content/uploads/2024/01/1-11.jpg",
+    image: "/images/tamm.jpg",
     title: "TAMM Service Centre",
     description: "One-stop shop for government services in Abu Dhabi.",
   },
   {
     // Updated with a new valid URL
-    image: "https://play-lh.googleusercontent.com/dUx9d9Nl7dzEflxaA4sqUuVNC26rFCN-NTvmu1wKHXrBZY9wqNBseHRViwlcFM2JSu8C",
+    image: "/images/seha.jpg",
     title: "Abu Dhabi Health Services (SEHA)",
     description: "Network of public hospitals and clinics in Abu Dhabi.",
   },
   {
     // Updated with a new valid URL
-    image: "https://cdn1-m.alittihad.ae/store/archive/image/2024/1/20/f219dbe5-2e32-49ec-a700-8346b2f8ccfe.jpg",
+    image: "/images/adpolice.jpg",
     title: "Abu Dhabi Police",
     description: "Main law enforcement agency, offering various services including traffic-related matters.",
   },
   {
     // Updated with a new valid URL
-    image: "https://www.mediaoffice.abudhabi/assets/resized/sm/upload/m5/b6/jg/ph/web-0-690-0-0.jpg?k=a3b3099236",
+    image: "/images/admunandtransport.jpg",
     title: "Department of Municipalities and Transport",
     description: "Handles city planning, transportation, and municipal affairs.",
   },
   {
     // Updated with a new valid URL
-    image: "https://www.addc.ae/content/Brand%20Guideline/ADDC%20Logo%20jpeg.jpg",
+    image: "/images/addc.jpg",
     title: "Abu Dhabi Distribution Company",
     description: "Manages electricity and water services for residents.",
   },
   {
     // Updated with a new valid URL
-    image: "https://www.abudhabichamber.ae/-/media/Project/ADCCIV2/ADCCI/Media-Center---News/2024/adc-coo-1.jpg",
+    image: "/images/adchamber.jpg",
     title: "Abu Dhabi Chamber",
     description: "Supports businesses and provides various commercial services.",
   },
   {
     // Updated with a new valid URL
-    image: "https://media.licdn.com/dms/image/v2/C510BAQGtbau1ELQ8yg/company-logo_200_200/company-logo_200_200/0/1631390381130?e=2147483647&v=beta&t=oVYEQKWw9mxYA0uYcimJeGnSJ_Eqohz4DvYFRtRgKpQ",
+    image: "/images/adjudicial.jpg",
     title: "Abu Dhabi Judicial Department",
     description: "Handles legal matters and court services in the emirate.",
   },
