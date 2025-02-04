@@ -1,34 +1,39 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import {
-  Home,
-  ImageIcon,
-  Zap,
-  Settings,
-  Compass,
-  ChevronLeft,
-  Shield,
-  MoreHorizontal,
-  Trash2,
-} from "lucide-react";
-import {
-  HomeFilled,
-  ImageFilled,
-  ZapFilled,
-  SettingsFilled,
-  CompassFilled,
-  EditProfile,
-  ConnectedIcon,
-  CommunityIcon,
-  ReportIssuesOrGiveFeedbackIcon,
-} from "./filled-icons";
 import type React from "react";
 import { countries } from "./countries";
 import { Tab, WeatherCondition, SettingsItemProps, WeatherPillProps } from "../types/types"
 import SettingsItem from "@/components/SettingsItem";
 import { backgrounds } from "../variables/backgrouds";
 import WeatherPill from "@/components/WeatherPill";
+import {
+  HomeIcon as HomeIconFilled,
+  MagnifyingGlassIcon as MagnifyingGlassFilled,
+  LightBulbIcon as LightBulbFilled,
+  UserCircleIcon as UserCircleFilled,
+  RocketLaunchIcon as RocketLaunchFilled,
+  ChevronLeftIcon as ChevronLeftFilled,
+  ChevronRightIcon as ChevronRightFilled,
+  ShieldCheckIcon as ShieldCheckFilled,
+  TrashIcon as TrashFilled,
+  ExclamationCircleIcon,
+  UserGroupIcon,
+} from "@heroicons/react/24/solid";
+import {
+  HomeIcon,
+  MagnifyingGlassIcon,
+  LightBulbIcon,
+  UserCircleIcon,
+  RocketLaunchIcon,
+  ChevronLeftIcon,
+  ChevronRightIcon,
+  ShieldCheckIcon,
+  TrashIcon,
+  LockClosedIcon,
+  LinkIcon,
+} from "@heroicons/react/24/outline";
+import { Rocket } from "lucide-react";
 
 export default function Page() {
   const [activeTab, setActiveTab] = useState<Tab>("home");
@@ -169,31 +174,31 @@ export default function Page() {
             </div>
           </div>
         );
-      case "nft":
+      case "discover":
         return (
           <div className="flex-1 p-5">
             <h2 className="text-white text-2xl">NFT Gallery</h2>
           </div>
         );
-      case "moon":
+      case "experiences":
         return (
           <div className="flex-1 p-5">
-            <h2 className="text-white text-2xl">$MOON Trading</h2>
+            <h2 className="text-white text-2xl">$tips Trading</h2>
           </div>
         );
-      case "explore":
+      case "tips":
         return (
           <div className="flex-1 p-5">
             <h2 className="text-white text-2xl">Explore</h2>
           </div>
         );
-      case "settings":
+      case "profile":
         return (
           <div className="flex-1 p-5 overflow-y-auto">
             {/* Updated Header */}
             <div className="relative mb-7">
               <button className="absolute left-0 w-8 h-8 flex items-center justify-center rounded-full bg-[#272739]">
-                <ChevronLeft className="w-5 h-5 text-white" />
+                <ChevronLeftFilled className="w-5 h-5 text-white" />
               </button>
               <h1 className="text-xl font-semibold text-white text-center">
                 Settings
@@ -223,7 +228,6 @@ export default function Page() {
                 </p>
               </div>
               <button className="w-8 h-8 flex items-center justify-center rounded-full bg-[#272739]">
-                <EditProfile className="" />
               </button>
             </div>
 
@@ -232,25 +236,25 @@ export default function Page() {
               <div className="space-y-2">
                 <SettingsItem
                   plainIcon
-                  icon={<ConnectedIcon className="w-7 h-7 text-white" />}
+                  icon={<LinkIcon className="w-7 h-7 text-white" />}
                   title="Connected Apps"
                   description="Manage connected apps"
                 />
                 <SettingsItem
                   plainIcon
-                  icon={<Shield className="w-7 h-7 text-white" />}
+                  icon={<ShieldCheckIcon className="w-7 h-7 text-white" />}
                   title="Security and Recovery"
                   description="Manage your passwords and recovery methods"
                 />
                 <SettingsItem
                   plainIcon
-                  icon={<MoreHorizontal className="w-7 h-7 text-white" />}
+                  icon={<LockClosedIcon className="w-7 h-7 text-white" />}
                   title="Change Password"
                   description="Change the password used to unlock your app"
                 />
                 <SettingsItem
                   plainIcon
-                  icon={<Trash2 className="w-7 h-7 text-white" />}
+                  icon={<TrashIcon className="w-7 h-7 text-white" />}
                   title="Remove Account"
                   description="Remove this account from your app"
                 />
@@ -263,14 +267,14 @@ export default function Page() {
               <div className="space-y-2">
                 <SettingsItem
                   plainIcon
-                  icon={<CommunityIcon className="w-7 h-7 text-white" />}
+                  icon={<UserGroupIcon className="w-7 h-7 text-white" />}
                   title="Dubai Community"
                   description="Come and join us"
                 />
                 <SettingsItem
                   plainIcon
                   icon={
-                    <ReportIssuesOrGiveFeedbackIcon className="w-7 h-7 text-white" />
+                    <ExclamationCircleIcon className="w-7 h-7 text-white" />
                   }
                   title="Report Issues or Give Feedback"
                   description="Let us know what we can improve on"
@@ -452,7 +456,7 @@ export default function Page() {
             disabled
             className="flex flex-col items-center justify-center gap-1 mx-7 opacity-50 cursor-not-allowed"
             >
-            <Home className="w-8 h-8 text-[#ffffff]/50" />
+            <HomeIcon className="w-8 h-8 text-[#ffffff]/50" />
             <span className="text-[12px] text-[#ffffff]/50">
               Home
             </span>
@@ -461,36 +465,36 @@ export default function Page() {
             disabled
             className="flex flex-col items-center justify-center gap-1 mx-7 opacity-50 cursor-not-allowed"
             >
-            <ImageIcon className="w-8 h-8 text-[#ffffff]/50" />
+            <MagnifyingGlassIcon className="w-8 h-8 text-[#ffffff]/50" />
             <span className="text-[12px] text-[#ffffff]/50">
-              NFT
+              Discover
             </span>
             </button>
             <button
             disabled
             className="flex flex-col items-center justify-center gap-1 mx-7 opacity-50 cursor-not-allowed"
             >
-            <Zap className="w-8 h-8 text-[#ffffff]/50" />
+            <LightBulbIcon className="w-8 h-8 text-[#ffffff]/50" />
             <span className="text-[12px] text-[#ffffff]/50">
-              $MOON
+              Tips
             </span>
             </button>
             <button
             disabled
             className="flex flex-col items-center justify-center gap-1 mx-7 opacity-50 cursor-not-allowed"
             >
-            <Compass className="w-8 h-8 text-[#ffffff]/50" />
+            <RocketLaunchIcon className="w-8 h-8 text-[#ffffff]/50" />
             <span className="text-[12px] text-[#ffffff]/50">
-              Explore
+              Experiences
             </span>
             </button>
             <button
             disabled
             className="flex flex-col items-center justify-center gap-1 mx-7 opacity-50 cursor-not-allowed"
             >
-            <Settings className="w-8 h-8 text-[#ffffff]/50" />
+            <UserCircleIcon className="w-8 h-8 text-[#ffffff]/50" />
             <span className="text-[12px] text-[#ffffff]/50">
-              Settings
+              Profile
             </span>
             </button>
           </div>
@@ -515,7 +519,7 @@ export default function Page() {
             className="absolute top-0 left-0 w-1/5 h-1 bg-[#2563eb] transition-all duration-300 ease-in-out"
             style={{
               transform: `translateX(${
-                ["home", "nft", "moon", "explore", "settings"].indexOf(
+                ["home", "discover", "tips", "explore", "settings"].indexOf(
                   activeTab
                 ) * 100
               }%)`,
@@ -527,9 +531,9 @@ export default function Page() {
             className="flex flex-col items-center justify-center gap-1 mx-7"
           >
             {activeTab === "home" ? (
-              <HomeFilled className="w-8 h-8 text-[#2563eb]" />
+              <HomeIconFilled className="w-8 h-8 text-[#2563eb]" />
             ) : (
-              <Home className="w-8 h-8 text-[#ffffff]" />
+              <HomeIcon className="w-8 h-8 text-[#ffffff]" />
             )}
             <span
               className={`text-[12px] ${
@@ -540,68 +544,68 @@ export default function Page() {
             </span>
           </button>
           <button
-            onClick={() => setActiveTab("nft")}
+            onClick={() => setActiveTab("discover")}
             className="flex flex-col items-center justify-center gap-1 mx-7"
           >
-            {activeTab === "nft" ? (
-              <ImageFilled className="w-8 h-8 text-[#2563eb]" />
+            {activeTab === "discover" ? (
+              <MagnifyingGlassFilled className="w-8 h-8 text-[#2563eb]" />
             ) : (
-              <ImageIcon className="w-8 h-8 text-[#ffffff]" />
+              <MagnifyingGlassIcon className="w-8 h-8 text-[#ffffff]" />
             )}
             <span
               className={`text-[12px] ${
-                activeTab === "nft" ? "text-[#2563eb]" : "text-[#ffffff]"
+                activeTab === "discover" ? "text-[#2563eb]" : "text-[#ffffff]"
               }`}
             >
-              NFT
+              Discover
             </span>
           </button>
           <button
-            onClick={() => setActiveTab("moon")}
+            onClick={() => setActiveTab("tips")}
             className="flex flex-col items-center justify-center gap-1 mx-7"
           >
-            {activeTab === "moon" ? (
-              <ZapFilled className="w-8 h-8 text-[#2563eb]" />
+            {activeTab === "tips" ? (
+              <LightBulbFilled className="w-8 h-8 text-[#2563eb]" />
             ) : (
-              <Zap className="w-8 h-8 text-[#ffffff]" />
+              <LightBulbIcon className="w-8 h-8 text-[#ffffff]" />
             )}
             <span
               className={`text-[12px] ${
-                activeTab === "moon" ? "text-[#2563eb]" : "text-[#ffffff]"
+                activeTab === "tips" ? "text-[#2563eb]" : "text-[#ffffff]"
               }`}
             >
-              $MOON
+              Tips
             </span>
           </button>
           <button
-            onClick={() => setActiveTab("explore")}
+            onClick={() => setActiveTab("experiences")}
             className="flex flex-col items-center justify-center gap-1 mx-7"
           >
-            {activeTab === "explore" ? (
-              <CompassFilled className="w-8 h-8 text-[#2563eb]" />
+            {activeTab === "experiences" ? (
+              <RocketLaunchFilled className="w-8 h-8 text-[#2563eb]" />
             ) : (
-              <Compass className="w-8 h-8 text-[#ffffff]" />
+              <RocketLaunchIcon className="w-8 h-8 text-[#ffffff]" />
             )}
             <span
               className={`text-[12px] ${
-                activeTab === "explore" ? "text-[#2563eb]" : "text-[#ffffff]"
+                activeTab === "tips" ? "text-[#2563eb]" : "text-[#ffffff]"
               }`}
             >
               Explore
             </span>
           </button>
           <button
-            onClick={() => setActiveTab("settings")}
+            onClick={() => setActiveTab("profile")}
             className="flex flex-col items-center justify-center gap-1 mx-7"
           >
-            {activeTab === "settings" ? (
-              <SettingsFilled className="w-8 h-8 text-[#2563eb]" />
+            {activeTab === "profile" ? (
+              <UserCircleFilled className="w-8 h-8 text-[#2563eb]" />
             ) : (
-              <Settings className="w-8 h-8 text-[#ffffff]" />
+              <UserCircleIcon className="w-8 h-8 text-[#ffffff]" />
             )}
             <span
               className={`text-[12px] ${
-                activeTab === "settings" ? "text-[#2563eb]" : "text-[#ffffff]"
+                activeTab === "profile" ? "text-[#2563eb]" : "text-[#ffffff]"
               }`}
             >
               Settings
