@@ -15,11 +15,14 @@ export default function CaseHome() {
       <div className="flex flex-col items-center justify-center space-y-6 mt-16">
         {/* Welcome Section */}
         <h1 className="text-4xl text-white text-center">
-          Welcome back, {userName}
+          Welcome back, TESTNAME
         </h1>
 
         {/* Weather Pill */}
+
         <WeatherPill temperature={22} condition="sunny" />
+
+        <Carousel></Carousel>
 
 
       </div>
