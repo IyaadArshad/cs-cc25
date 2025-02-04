@@ -1,8 +1,18 @@
-import { Carousel, CarouselContent, CarouselItem, CarouselNext } from "@/components/ui/carousel";
+import { Carousel, CarouselContent, CarouselItem } from "@/components/ui/carousel";
 import { Card, CardContent } from "@/components/ui/card";
 import { MapPin, Utensils, ShoppingBag, Landmark, ArrowLeft, ExternalLink } from "lucide-react";
-import { useState } from "react";
+import { useState, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
+
+// Animation variants for cards – custom value * 0.1 = delay
+const cardVariants = {
+	hidden: { opacity: 0, y: 20 },
+	visible: (custom: number) => ({
+		opacity: 1,
+		y: 0,
+		transition: { delay: custom * 0.1 }
+	})
+};
 
 interface Place {
   image: string;
@@ -14,6 +24,7 @@ interface Place {
 
 export default function CaseDiscover() {
   const [selectedPlace, setSelectedPlace] = useState<Place | null>(null);
+  const isFirstRender = useRef(true);
 
   const carouselOptions = {
     loop: true,
@@ -113,67 +124,134 @@ export default function CaseDiscover() {
         ) : (
           <motion.div
             key="carousel"
-            initial={{ opacity: 0 }}
+            initial={isFirstRender.current ? { opacity: 0 } : false}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
+            onAnimationComplete={() => {
+              isFirstRender.current = false;
+            }}
           >
-            {/* Carousel View */}
-            <h1 className="text-white mt-4 mb-6 text-left text-3xl font-bold">Discover Abu Dhabi</h1>
+            {/* Top heading */}
+            <motion.h1
+              initial={isFirstRender.current ? { opacity: 0, y: 20 } : false}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.1 }}
+              className="text-white mt-4 mb-6 text-left text-3xl font-bold"
+            >
+              Discover Abu Dhabi
+            </motion.h1>
     
+            {/* Section 1: Places to Visit */}
             <section className="mb-12">
-              <h2 className="text-white text-xl font-semibold mb-6 flex items-center">
+              <motion.h2
+                initial={isFirstRender.current ? { opacity: 0, y: 20 } : false}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.3 }}
+                className="text-white text-xl font-semibold mb-6 flex items-center"
+              >
                 <MapPin className="mr-2" /> Places to Visit
-              </h2>
+              </motion.h2>
               <Carousel opts={carouselOptions} className="w-full cursor-grab active:cursor-grabbing">
                 <CarouselContent className="select-none -ml-2">
                   {placesToVisit.map((place, index) => (
                     <CarouselItem key={index} className="pl-2 basis-[48%] md:basis-[48%] lg:basis-[48%]">
-                      <PlaceCard place={place} onSelect={() => setSelectedPlace(place)} />
+                      <motion.div
+                        variants={cardVariants}
+                        initial={isFirstRender.current ? "hidden" : false}
+                        animate="visible"
+                        // Base offset 4: delay = (4 + index) * 0.1 = 0.4, 0.5, ...
+                        custom={index + 4}
+                      >
+                        <PlaceCard place={place} onSelect={() => setSelectedPlace(place)} />
+                      </motion.div>
                     </CarouselItem>
                   ))}
                 </CarouselContent>
               </Carousel>
             </section>
     
+            {/* Section 2: Culinary Delights */}
             <section className="mb-12">
-              <h2 className="text-white text-xl font-semibold mb-6 flex items-center">
+              <motion.h2
+                initial={isFirstRender.current ? { opacity: 0, y: 20 } : false}
+                animate={{ opacity: 1, y: 0 }}
+                // Header delay set so it appears after Section 1 cards
+                transition={{ delay: 1.2 }}
+                className="text-white text-xl font-semibold mb-6 flex items-center"
+              >
                 <Utensils className="mr-2" /> Culinary Delights
-              </h2>
+              </motion.h2>
               <Carousel opts={carouselOptions} className="w-full cursor-grab active:cursor-grabbing">
                 <CarouselContent className="select-none -ml-2">
                   {foodPlaces.map((place, index) => (
                     <CarouselItem key={index} className="pl-2 basis-[48%] md:basis-[48%] lg:basis-[48%]">
-                      <PlaceCard place={place} onSelect={() => setSelectedPlace(place)} />
+                      <motion.div
+                        variants={cardVariants}
+                        initial={isFirstRender.current ? "hidden" : false}
+                        animate="visible"
+                        // Base offset 13: cards start at 1.3s delay
+                        custom={index + 13}
+                      >
+                        <PlaceCard place={place} onSelect={() => setSelectedPlace(place)} />
+                      </motion.div>
                     </CarouselItem>
                   ))}
                 </CarouselContent>
               </Carousel>
             </section>
     
+            {/* Section 3: Local Markets & Stores */}
             <section className="mb-12">
-              <h2 className="text-white text-xl font-semibold mb-6 flex items-center">
+              <motion.h2
+                initial={isFirstRender.current ? { opacity: 0, y: 20 } : false}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 2.0 }}
+                className="text-white text-xl font-semibold mb-6 flex items-center"
+              >
                 <ShoppingBag className="mr-2" /> Local Markets & Stores
-              </h2>
+              </motion.h2>
               <Carousel opts={carouselOptions} className="w-full cursor-grab active:cursor-grabbing">
                 <CarouselContent className="select-none -ml-2">
                   {shoppingPlaces.map((place, index) => (
                     <CarouselItem key={index} className="pl-2 basis-[48%] md:basis-[48%] lg:basis-[48%]">
-                      <PlaceCard place={place} onSelect={() => setSelectedPlace(place)} />
+                      <motion.div
+                        variants={cardVariants}
+                        initial={isFirstRender.current ? "hidden" : false}
+                        animate="visible"
+                        // Base offset 21: cards start at 2.1s delay
+                        custom={index + 21}
+                      >
+                        <PlaceCard place={place} onSelect={() => setSelectedPlace(place)} />
+                      </motion.div>
                     </CarouselItem>
                   ))}
                 </CarouselContent>
               </Carousel>
             </section>
     
+            {/* Section 4: Essential Services */}
             <section className="mb-12">
-              <h2 className="text-white text-xl font-semibold mb-6 flex items-center">
+              <motion.h2
+                initial={isFirstRender.current ? { opacity: 0, y: 20 } : false}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 2.8 }}
+                className="text-white text-xl font-semibold mb-6 flex items-center"
+              >
                 <Landmark className="mr-2" /> Essential Services
-              </h2>
+              </motion.h2>
               <Carousel opts={carouselOptions} className="w-full cursor-grab active:cursor-grabbing">
                 <CarouselContent className="select-none -ml-2">
                   {essentialServices.map((service, index) => (
                     <CarouselItem key={index} className="pl-2 basis-[48%] md:basis-[48%] lg:basis-[48%]">
-                      <PlaceCard place={service} onSelect={() => setSelectedPlace(service)} />
+                      <motion.div
+                        variants={cardVariants}
+                        initial={isFirstRender.current ? "hidden" : false}
+                        animate="visible"
+                        // Base offset 29: cards start at 2.9s delay
+                        custom={index + 29}
+                      >
+                        <PlaceCard place={service} onSelect={() => setSelectedPlace(service)} />
+                      </motion.div>
                     </CarouselItem>
                   ))}
                 </CarouselContent>
