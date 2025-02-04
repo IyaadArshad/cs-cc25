@@ -26,9 +26,9 @@ import {
 import type React from "react";
 import { countries } from "./countries";
 import { Tab, WeatherCondition, SettingsItemProps, WeatherPillProps } from "../types/types"
-import SettingsItem from "./components/SettingsItem";
+import SettingsItem from "@/components/SettingsItem";
 import { backgrounds } from "../variables/backgrouds";
-import WeatherPill from "./components/WeatherPill";
+import WeatherPill from "@/components/WeatherPill";
 
 const weatherIcons = {
   sunny: (
