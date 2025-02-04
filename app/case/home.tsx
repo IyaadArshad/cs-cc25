@@ -1,8 +1,6 @@
 import { Card, CardContent } from "@/components/ui/card"
 import { Carousel, CarouselContent, CarouselItem } from "@/components/ui/carousel"
-import { Button } from "@/components/ui/button"
-import { ArrowLeft, ChevronDown, ArrowRight } from "lucide-react"
-import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible"
+import { ArrowLeft, ArrowRight } from "lucide-react"
 import { useState } from "react"
 
 function ProgressBar({ percentage = 40 }) {
