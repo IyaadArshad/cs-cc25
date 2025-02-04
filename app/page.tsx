@@ -27,7 +27,7 @@ import {
 import type React from "react";
 import { countries } from "./countries";
 
-type Tab = "home" | "nft" | "moon" | "explore" | "settings";
+type Tab = "home" | "discover" | "experiences" | "tips" | "profile";
 
 const backgrounds = [
   "https://images.pexels.com/photos/1473673/pexels-photo-1473673.jpeg",
@@ -287,25 +287,25 @@ export default function Page() {
             </div>
           </div>
         );
-      case "nft":
+      case "discover":
         return (
           <div className="flex-1 p-5">
             <h2 className="text-white text-2xl">NFT Gallery</h2>
           </div>
         );
-      case "moon":
+      case "experiences":
         return (
           <div className="flex-1 p-5">
             <h2 className="text-white text-2xl">$MOON Trading</h2>
           </div>
         );
-      case "explore":
+      case "tips":
         return (
           <div className="flex-1 p-5">
             <h2 className="text-white text-2xl">Explore</h2>
           </div>
         );
-      case "settings":
+      case "profile":
         return (
           <div className="flex-1 p-5 overflow-y-auto">
             {/* Updated Header */}
@@ -581,7 +581,7 @@ export default function Page() {
             >
             <ImageIcon className="w-8 h-8 text-[#ffffff]/50" />
             <span className="text-[12px] text-[#ffffff]/50">
-              NFT
+              Discover
             </span>
             </button>
             <button
@@ -590,7 +590,7 @@ export default function Page() {
             >
             <Zap className="w-8 h-8 text-[#ffffff]/50" />
             <span className="text-[12px] text-[#ffffff]/50">
-              $MOON
+              Tips
             </span>
             </button>
             <button
@@ -599,7 +599,7 @@ export default function Page() {
             >
             <Compass className="w-8 h-8 text-[#ffffff]/50" />
             <span className="text-[12px] text-[#ffffff]/50">
-              Explore
+              Experiences
             </span>
             </button>
             <button
@@ -608,7 +608,7 @@ export default function Page() {
             >
             <Settings className="w-8 h-8 text-[#ffffff]/50" />
             <span className="text-[12px] text-[#ffffff]/50">
-              Settings
+              Profile
             </span>
             </button>
           </div>
@@ -633,7 +633,7 @@ export default function Page() {
             className="absolute top-0 left-0 w-1/5 h-1 bg-[#2563eb] transition-all duration-300 ease-in-out"
             style={{
               transform: `translateX(${
-                ["home", "nft", "moon", "explore", "settings"].indexOf(
+                ["home", "discover", "moon", "explore", "settings"].indexOf(
                   activeTab
                 ) * 100
               }%)`,
@@ -658,68 +658,68 @@ export default function Page() {
             </span>
           </button>
           <button
-            onClick={() => setActiveTab("nft")}
+            onClick={() => setActiveTab("discover")}
             className="flex flex-col items-center justify-center gap-1 mx-7"
           >
-            {activeTab === "nft" ? (
+            {activeTab === "discover" ? (
               <ImageFilled className="w-8 h-8 text-[#2563eb]" />
             ) : (
               <ImageIcon className="w-8 h-8 text-[#ffffff]" />
             )}
             <span
               className={`text-[12px] ${
-                activeTab === "nft" ? "text-[#2563eb]" : "text-[#ffffff]"
+                activeTab === "discover" ? "text-[#2563eb]" : "text-[#ffffff]"
               }`}
             >
-              NFT
+              Discover
             </span>
           </button>
           <button
-            onClick={() => setActiveTab("moon")}
+            onClick={() => setActiveTab("tips")}
             className="flex flex-col items-center justify-center gap-1 mx-7"
           >
-            {activeTab === "moon" ? (
+            {activeTab === "tips" ? (
               <ZapFilled className="w-8 h-8 text-[#2563eb]" />
             ) : (
               <Zap className="w-8 h-8 text-[#ffffff]" />
             )}
             <span
               className={`text-[12px] ${
-                activeTab === "moon" ? "text-[#2563eb]" : "text-[#ffffff]"
+                activeTab === "tips" ? "text-[#2563eb]" : "text-[#ffffff]"
               }`}
             >
-              $MOON
+              Tips
             </span>
           </button>
           <button
-            onClick={() => setActiveTab("explore")}
+            onClick={() => setActiveTab("experiences")}
             className="flex flex-col items-center justify-center gap-1 mx-7"
           >
-            {activeTab === "explore" ? (
+            {activeTab === "experiences" ? (
               <CompassFilled className="w-8 h-8 text-[#2563eb]" />
             ) : (
               <Compass className="w-8 h-8 text-[#ffffff]" />
             )}
             <span
               className={`text-[12px] ${
-                activeTab === "explore" ? "text-[#2563eb]" : "text-[#ffffff]"
+                activeTab === "tips" ? "text-[#2563eb]" : "text-[#ffffff]"
               }`}
             >
               Explore
             </span>
           </button>
           <button
-            onClick={() => setActiveTab("settings")}
+            onClick={() => setActiveTab("profile")}
             className="flex flex-col items-center justify-center gap-1 mx-7"
           >
-            {activeTab === "settings" ? (
+            {activeTab === "profile" ? (
               <SettingsFilled className="w-8 h-8 text-[#2563eb]" />
             ) : (
               <Settings className="w-8 h-8 text-[#ffffff]" />
             )}
             <span
               className={`text-[12px] ${
-                activeTab === "settings" ? "text-[#2563eb]" : "text-[#ffffff]"
+                activeTab === "profile" ? "text-[#2563eb]" : "text-[#ffffff]"
               }`}
             >
               Settings
