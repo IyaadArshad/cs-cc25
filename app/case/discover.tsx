@@ -6,12 +6,12 @@ import { motion, AnimatePresence } from "framer-motion";
 
 // Animation variants for cards – custom value * 0.1 = delay
 const cardVariants = {
-	hidden: { opacity: 0, y: 20 },
-	visible: (custom: number) => ({
-		opacity: 1,
-		y: 0,
-		transition: { delay: custom * 0.1 }
-	})
+  hidden: { opacity: 0, y: 20 },
+  visible: (custom: number) => ({
+    opacity: 1,
+    y: 0,
+    transition: { delay: custom * 0.1 }
+  })
 };
 
 interface Place {
@@ -50,7 +50,7 @@ export default function CaseDiscover() {
           >
             {/* Detail View */}
             <div className="flex items-center gap-4 mb-6">
-              <motion.button 
+              <motion.button
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
                 onClick={() => setSelectedPlace(null)}
@@ -60,8 +60,8 @@ export default function CaseDiscover() {
                 <span>Back</span>
               </motion.button>
             </div>
-    
-            <motion.h1 
+
+            <motion.h1
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ delay: 0.2 }}
@@ -69,21 +69,21 @@ export default function CaseDiscover() {
             >
               {selectedPlace.title}
             </motion.h1>
-            
-            <motion.div 
+
+            <motion.div
               initial={{ opacity: 0, scale: 0.95 }}
               animate={{ opacity: 1, scale: 1 }}
               transition={{ delay: 0.3 }}
               className="relative w-full h-[300px] mb-8"
             >
-              <img 
-                src={selectedPlace.image} 
+              <img
+                src={selectedPlace.image}
                 alt={selectedPlace.title}
                 className="w-full h-full object-cover rounded-lg"
               />
             </motion.div>
-    
-            <motion.div 
+
+            <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.4 }}
@@ -95,7 +95,7 @@ export default function CaseDiscover() {
                 </p>
               ))}
             </motion.div>
-    
+
             <motion.button
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
@@ -108,7 +108,7 @@ export default function CaseDiscover() {
               Learn More
               <ExternalLink className="w-4 h-4" />
             </motion.button>
-    
+
             <motion.button
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
@@ -140,7 +140,7 @@ export default function CaseDiscover() {
             >
               Discover Abu Dhabi
             </motion.h1>
-    
+
             {/* Section 1: Places to Visit */}
             <section className="mb-12">
               <motion.h2
@@ -169,7 +169,7 @@ export default function CaseDiscover() {
                 </CarouselContent>
               </Carousel>
             </section>
-    
+
             {/* Section 2: Culinary Delights */}
             <section className="mb-12">
               <motion.h2
@@ -199,7 +199,7 @@ export default function CaseDiscover() {
                 </CarouselContent>
               </Carousel>
             </section>
-    
+
             {/* Section 3: Local Markets & Stores */}
             <section className="mb-12">
               <motion.h2
@@ -228,7 +228,7 @@ export default function CaseDiscover() {
                 </CarouselContent>
               </Carousel>
             </section>
-    
+
             {/* Section 4: Essential Services */}
             <section className="mb-12">
               <motion.h2
@@ -266,15 +266,15 @@ export default function CaseDiscover() {
 
 function PlaceCard({ place, onSelect }: { place: Place; onSelect: () => void }) {
   return (
-    <Card 
+    <Card
       className="bg-gray-800 border-gray-700 h-[320px] select-none cursor-pointer hover:bg-gray-700/50 transition-colors"
       onClick={onSelect}
     >
       <CardContent className="p-6 flex flex-col h-full">
-        <img 
-          src={place.image || "/placeholder.svg"} 
-          alt={place.title} 
-          className="w-full h-36 object-cover rounded-md mb-4" 
+        <img
+          src={place.image || "/placeholder.svg"}
+          alt={place.title}
+          className="w-full h-36 object-cover rounded-md mb-4"
         />
         <h3 className="text-white text-lg font-semibold mb-2 line-clamp-2">{place.title}</h3>
         <p className="text-gray-400 text-sm line-clamp-3">{place.description}</p>
@@ -408,18 +408,19 @@ const foodPlaces = [
   {
     image: "/images/mandi.jpg", // remains unchanged
     title: "Al Mandi and Al Madhbi House",
-    description: "Yemeni restaurant.",
+    description: "Authentic Yemeni restaurant specializing in Mandi and Madhbi dishes.",
     longDescription: [
-      "Papa John's offers fresh, quality pizzas with a variety of toppings at competitive prices.",
-      "Regular promotions and combo deals make it an affordable option for families.",
-      "Quick delivery service and consistent quality across all branches.",
-      "Popular for both dine-in and delivery, with multiple locations throughout Abu Dhabi."
+      "Al Mandi and Al Madhbi House offers traditional Yemeni cuisine, known for its flavorful rice and grilled meats.",
+      "Signature dishes include slow-cooked Mandi, charcoal-grilled Madhbi, and rich, aromatic stews.",
+      "A cozy and welcoming atmosphere, perfect for families and groups.",
+      "Popular for both dine-in and takeaway, with generous portions at affordable prices."
     ],
-    externalLink: "https://papajohns.ae"
+    externalLink: "https://almandi-house.ae/" // Replace with the actual link if available
+
   },
   {
     // Nested folder image: updated with a new valid URL
-    image: "https://images.unsplash.com/photo-1600891964599-f61ba0e24092",
+    image: "/images/lebaneseflower.jpg",
     title: "Lebanese Flower",
     description: "Famous local spot for Lebanese cuisine at reasonable prices.",
     longDescription: [
@@ -432,7 +433,7 @@ const foodPlaces = [
   },
   {
     // Nested folder image: updated with a new valid URL
-    image: "https://www.mushrifmall.com/media/4035/subway.jpg?anchor=center&mode=crop&width=640&height=460&rnd=133558577160000000",
+    image: "/images/subway.jpg",
     title: "Subway",
     description: "Fresh sandwiches and salads with customizable options.",
     longDescription: [
@@ -445,7 +446,7 @@ const foodPlaces = [
   },
   {
     // Nested folder image: updated with a new valid URL
-    image: "https://images.unsplash.com/photo-1565299624946-b28f40a0ae38",
+    image: "/images/almrzab.jpg",
     title: "Al Mrzab",
     description: "Authentic Emirati cuisine in a modern casual setting.",
     longDescription: [
@@ -460,91 +461,174 @@ const foodPlaces = [
 
 const shoppingPlaces = [
   {
-    // Updated with a new valid URL
-    image: "https://visitabudhabi.ae/-/media/project/vad/galleryimages/things-to-do/shopping/yas-mall/yas-mall.jpg",
+    image: "/images/yasmall.jpg",
     title: "Yas Mall",
     description: "Largest mall in Abu Dhabi with over 370 stores and 60 restaurants.",
+    longDescription: [
+      "Yas Mall is Abu Dhabi's largest and most modern shopping destination, spanning over 2.5 million square feet.",
+      "The mall features unique concepts like Ferrari World Abu Dhabi and Warner Bros. World Abu Dhabi nearby.",
+      "Visitors can enjoy a diverse mix of international and local brands across fashion, electronics, and home furnishings.",
+      "The mall's entertainment options include a 20-screen cinema, family entertainment center, and year-round events."
+    ],
+    externalLink: "https://yasmall.ae"
   },
   {
-    // Updated with a new valid URL
-    image: "https://dynamic-media-cdn.tripadvisor.com/media/photo-o/10/33/3a/bc/the-galleria-on-al-maryah.jpg?w=900&h=500&s=1",
+    image: "/images/galleria.jpg",
     title: "The Galleria Al Maryah Island",
     description: "Luxury shopping destination with high-end brands and dining options.",
+    longDescription: [
+      "The Galleria is Abu Dhabi's premier luxury shopping and dining destination on Al Maryah Island.",
+      "The mall houses over 400 stores including flagship luxury boutiques and first-to-Abu Dhabi brands.",
+      "Its dining collection features award-winning restaurants with spectacular waterfront views.",
+      "The expansion includes a dedicated family entertainment zone with innovative leisure attractions."
+    ],
+    externalLink: "https://thegalleria.ae"
   },
   {
-    // Updated with a new valid URL
-    image: "https://www.timeoutabudhabi.com/cloud/timeoutabudhabi/2024/03/05/Abu-Dhabi-Mall-1024x768.jpg",
+    image: "/images/admall.jpg",
     title: "Abu Dhabi Mall",
     description: "Central mall with a mix of local and international brands.",
+    longDescription: [
+      "Abu Dhabi Mall is strategically located in the heart of the city's business district.",
+      "The mall offers a comprehensive retail mix with over 200 stores spread across four levels.",
+      "Its family entertainment center and ice rink make it a popular destination for families.",
+      "The mall is directly connected to Beach Rotana Hotel, making it convenient for tourists."
+    ],
+    externalLink: "https://abudhabi-mall.com"
   },
   {
-    // Updated with a new valid URL
-    image: "https://www.lineproperty.com/media/e30dr5by/madinat-zayed-mall-banner.jpg?width=1920&height=900",
+    image: "/images/madinatzayed.jpg",
     title: "Madinat Zayed Shopping Centre",
     description: "Known for its gold souk and traditional items.",
+    longDescription: [
+      "Madinat Zayed Shopping Centre is famous for its extensive gold souk featuring dozens of jewelry stores.",
+      "The center offers traditional Arabic perfumes, textiles, and handicrafts alongside modern retail stores.",
+      "Its gold souk is known for competitive prices and authentic Arabic jewelry designs.",
+      "The shopping centre serves as a cultural bridge between traditional and modern retail experiences."
+    ],
+    externalLink: "https://madinatzayed-mall.com"
   },
   {
-    // Updated with a new valid URL
-    image: "https://visitabudhabi.ae/-/media/project/vad/things-to-do/shopping-and-lifestyle/the-mall-at-the-world-trade-centre-abu-dhabi/world-trade-center-souk-and-mall.jpg",
+    image: "/images/wtcmall.jpg",
     title: "World Trade Center Mall",
     description: "Modern mall in the heart of the city with a traditional souk feel.",
+    longDescription: [
+      "World Trade Center Mall combines modern retail with traditional Arabian architecture.",
+      "The mall features a contemporary interpretation of a traditional souk with over 160 shops.",
+      "Its central location makes it a key shopping destination in Abu Dhabi's downtown area.",
+      "The mall's rooftop garden provides a unique outdoor shopping and dining experience."
+    ],
+    externalLink: "https://wtcad.ae"
   },
   {
-    // Updated with a new valid URL
-    image: "https://upload.wikimedia.org/wikipedia/commons/c/ce/Dalma_Exterior.jpg",
+    image: "/images/dalma.jpg",
     title: "Dalma Mall",
     description: "Large shopping center with a variety of stores and entertainment options.",
+    longDescription: [
+      "Dalma Mall is one of Abu Dhabi's largest shopping destinations with over 450 stores.",
+      "The mall features an extensive entertainment zone with a multi-screen cinema and family attractions.",
+      "Its diverse dining options include both international restaurants and local cuisine.",
+      "The mall serves as a community hub for the Mussafah and Mohammed Bin Zayed City areas."
+    ],
+    externalLink: "https://dalmamall.ae"
   },
   {
-    // Updated with a new valid URL
-    image: "https://visitabudhabi.ae/-/media/project/vad/galleryimages/things-to-do/mushrif-mall/4x8a4946.jpg",
+    image: "/images/mushrifmall.jpg",
     title: "Mushrif Mall",
     description: "Family-friendly mall with a good mix of retail and leisure facilities.",
+    longDescription: [
+      "Mushrif Mall is designed as a family-centric shopping destination with over 200 retail outlets.",
+      "The mall's distinctive feature is its circular design making navigation intuitive for shoppers.",
+      "It houses one of the largest indoor play areas for children in Abu Dhabi.",
+      "The mall's traditional souk section offers local products and handicrafts."
+    ],
+    externalLink: "https://mushrifmall.com"
   }
 ];
 
 const essentialServices = [
   {
-    // Updated with a new valid URL
-    image: "https://www.propertyfinder.ae/blog/wp-content/uploads/2024/01/1-11.jpg",
+    image: "/images/tamm.jpg",
     title: "TAMM Service Centre",
     description: "One-stop shop for government services in Abu Dhabi.",
+    longDescription: [
+      "TAMM is Abu Dhabi's comprehensive government services platform integrating over 600 services.",
+      "The center offers digital solutions for business, personal, and administrative requirements.",
+      "TAMM's service centers provide in-person support with multilingual staff members.",
+      "The platform has revolutionized government service delivery in Abu Dhabi through digital transformation."
+    ],
+    externalLink: "https://tamm.abudhabi"
   },
   {
-    // Updated with a new valid URL
-    image: "https://play-lh.googleusercontent.com/dUx9d9Nl7dzEflxaA4sqUuVNC26rFCN-NTvmu1wKHXrBZY9wqNBseHRViwlcFM2JSu8C",
+    image: "/images/seha.jpg",
     title: "Abu Dhabi Health Services (SEHA)",
     description: "Network of public hospitals and clinics in Abu Dhabi.",
+    longDescription: [
+      "SEHA operates the largest healthcare network in the UAE with multiple hospitals and clinics.",
+      "The organization provides comprehensive healthcare services from primary to specialized care.",
+      "SEHA facilities are equipped with state-of-the-art medical technology and expert healthcare professionals.",
+      "Their services include emergency care, specialized treatments, and preventive healthcare programs."
+    ],
+    externalLink: "https://seha.ae"
   },
   {
-    // Updated with a new valid URL
-    image: "https://cdn1-m.alittihad.ae/store/archive/image/2024/1/20/f219dbe5-2e32-49ec-a700-8346b2f8ccfe.jpg",
+    image: "/images/adpolice.jpg",
     title: "Abu Dhabi Police",
     description: "Main law enforcement agency, offering various services including traffic-related matters.",
+    longDescription: [
+      "Abu Dhabi Police is the primary law enforcement agency ensuring safety and security in the emirate.",
+      "They offer digital services for traffic fines, licensing, and various security permits.",
+      "The force is known for its smart police stations providing 24/7 services without human intervention.",
+      "Their community policing initiatives help maintain strong relationships with residents."
+    ],
+    externalLink: "https://adi.gov.ae"
   },
   {
-    // Updated with a new valid URL
-    image: "https://www.mediaoffice.abudhabi/assets/resized/sm/upload/m5/b6/jg/ph/web-0-690-0-0.jpg?k=a3b3099236",
+    image: "/images/admunandtransport.jpg",
     title: "Department of Municipalities and Transport",
     description: "Handles city planning, transportation, and municipal affairs.",
+    longDescription: [
+      "The Department oversees urban planning, infrastructure development, and public transportation in Abu Dhabi.",
+      "They manage municipal services including building permits and land allocation.",
+      "The department is responsible for developing and maintaining Abu Dhabi's transport network.",
+      "Their services include parking management, public bus operations, and maritime transport regulation."
+    ],
+    externalLink: "https://dmt.gov.ae"
   },
   {
-    // Updated with a new valid URL
-    image: "https://www.addc.ae/content/Brand%20Guideline/ADDC%20Logo%20jpeg.jpg",
+    image: "/images/addc.jpg",
     title: "Abu Dhabi Distribution Company",
     description: "Manages electricity and water services for residents.",
+    longDescription: [
+      "ADDC is the sole provider of electricity and water services in Abu Dhabi region.",
+      "They offer digital services for bill payments, connection requests, and consumption monitoring.",
+      "The company implements smart meter solutions for better resource management.",
+      "ADDC promotes sustainable consumption through various awareness programs."
+    ],
+    externalLink: "https://addc.ae"
   },
   {
-    // Updated with a new valid URL
-    image: "https://www.abudhabichamber.ae/-/media/Project/ADCCIV2/ADCCI/Media-Center---News/2024/adc-coo-1.jpg",
+    image: "/images/adchamber.jpg",
     title: "Abu Dhabi Chamber",
     description: "Supports businesses and provides various commercial services.",
+    longDescription: [
+      "Abu Dhabi Chamber represents the interests of the private sector in Abu Dhabi.",
+      "They provide crucial services for business setup and development in the emirate.",
+      "The chamber offers training programs and workshops for business development.",
+      "Their services include certificate of origin issuance and business networking opportunities."
+    ],
+    externalLink: "https://abudhabichamber.ae"
   },
   {
-    // Updated with a new valid URL
-    image: "https://media.licdn.com/dms/image/v2/C510BAQGtbau1ELQ8yg/company-logo_200_200/company-logo_200_200/0/1631390381130?e=2147483647&v=beta&t=oVYEQKWw9mxYA0uYcimJeGnSJ_Eqohz4DvYFRtRgKpQ",
+    image: "/images/adjudicial.jpg",
     title: "Abu Dhabi Judicial Department",
     description: "Handles legal matters and court services in the emirate.",
-  },
+    longDescription: [
+      "The Judicial Department manages all courts and legal services in Abu Dhabi.",
+      "They provide digital services for case filing, document authentication, and legal inquiries.",
+      "The department offers alternative dispute resolution services including mediation.",
+      "Their services include notary public, marriage services, and legal consultation."
+    ],
+    externalLink: "https://adjd.gov.ae"
+  }
 ];
-
