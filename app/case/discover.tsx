@@ -460,91 +460,174 @@ const foodPlaces = [
 
 const shoppingPlaces = [
   {
-    // Updated with a new valid URL
     image: "/images/yasmall.jpg",
     title: "Yas Mall",
     description: "Largest mall in Abu Dhabi with over 370 stores and 60 restaurants.",
+    longDescription: [
+      "Yas Mall is Abu Dhabi's largest and most modern shopping destination, spanning over 2.5 million square feet.",
+      "The mall features unique concepts like Ferrari World Abu Dhabi and Warner Bros. World Abu Dhabi nearby.",
+      "Visitors can enjoy a diverse mix of international and local brands across fashion, electronics, and home furnishings.",
+      "The mall's entertainment options include a 20-screen cinema, family entertainment center, and year-round events."
+    ],
+    externalLink: "https://yasmall.ae"
   },
   {
-    // Updated with a new valid URL
     image: "/images/galleria.jpg",
     title: "The Galleria Al Maryah Island",
     description: "Luxury shopping destination with high-end brands and dining options.",
+    longDescription: [
+      "The Galleria is Abu Dhabi's premier luxury shopping and dining destination on Al Maryah Island.",
+      "The mall houses over 400 stores including flagship luxury boutiques and first-to-Abu Dhabi brands.",
+      "Its dining collection features award-winning restaurants with spectacular waterfront views.",
+      "The expansion includes a dedicated family entertainment zone with innovative leisure attractions."
+    ],
+    externalLink: "https://thegalleria.ae"
   },
   {
-    // Updated with a new valid URL
     image: "/images/admall.jpg",
     title: "Abu Dhabi Mall",
     description: "Central mall with a mix of local and international brands.",
+    longDescription: [
+      "Abu Dhabi Mall is strategically located in the heart of the city's business district.",
+      "The mall offers a comprehensive retail mix with over 200 stores spread across four levels.",
+      "Its family entertainment center and ice rink make it a popular destination for families.",
+      "The mall is directly connected to Beach Rotana Hotel, making it convenient for tourists."
+    ],
+    externalLink: "https://abudhabi-mall.com"
   },
   {
-    // Updated with a new valid URL
     image: "/images/madinatzayed.jpg",
     title: "Madinat Zayed Shopping Centre",
     description: "Known for its gold souk and traditional items.",
+    longDescription: [
+      "Madinat Zayed Shopping Centre is famous for its extensive gold souk featuring dozens of jewelry stores.",
+      "The center offers traditional Arabic perfumes, textiles, and handicrafts alongside modern retail stores.",
+      "Its gold souk is known for competitive prices and authentic Arabic jewelry designs.",
+      "The shopping centre serves as a cultural bridge between traditional and modern retail experiences."
+    ],
+    externalLink: "https://madinatzayed-mall.com"
   },
   {
-    // Updated with a new valid URL
     image: "/images/wtcmall.jpg",
     title: "World Trade Center Mall",
     description: "Modern mall in the heart of the city with a traditional souk feel.",
+    longDescription: [
+      "World Trade Center Mall combines modern retail with traditional Arabian architecture.",
+      "The mall features a contemporary interpretation of a traditional souk with over 160 shops.",
+      "Its central location makes it a key shopping destination in Abu Dhabi's downtown area.",
+      "The mall's rooftop garden provides a unique outdoor shopping and dining experience."
+    ],
+    externalLink: "https://wtcad.ae"
   },
   {
-    // Updated with a new valid URL
     image: "/images/dalma.jpg",
     title: "Dalma Mall",
     description: "Large shopping center with a variety of stores and entertainment options.",
+    longDescription: [
+      "Dalma Mall is one of Abu Dhabi's largest shopping destinations with over 450 stores.",
+      "The mall features an extensive entertainment zone with a multi-screen cinema and family attractions.",
+      "Its diverse dining options include both international restaurants and local cuisine.",
+      "The mall serves as a community hub for the Mussafah and Mohammed Bin Zayed City areas."
+    ],
+    externalLink: "https://dalmamall.ae"
   },
   {
-    // Updated with a new valid URL
     image: "/images/mushrifmall.jpg",
     title: "Mushrif Mall",
     description: "Family-friendly mall with a good mix of retail and leisure facilities.",
+    longDescription: [
+      "Mushrif Mall is designed as a family-centric shopping destination with over 200 retail outlets.",
+      "The mall's distinctive feature is its circular design making navigation intuitive for shoppers.",
+      "It houses one of the largest indoor play areas for children in Abu Dhabi.",
+      "The mall's traditional souk section offers local products and handicrafts."
+    ],
+    externalLink: "https://mushrifmall.com"
   }
 ];
 
 const essentialServices = [
   {
-    // Updated with a new valid URL
     image: "/images/tamm.jpg",
     title: "TAMM Service Centre",
     description: "One-stop shop for government services in Abu Dhabi.",
+    longDescription: [
+      "TAMM is Abu Dhabi's comprehensive government services platform integrating over 600 services.",
+      "The center offers digital solutions for business, personal, and administrative requirements.",
+      "TAMM's service centers provide in-person support with multilingual staff members.",
+      "The platform has revolutionized government service delivery in Abu Dhabi through digital transformation."
+    ],
+    externalLink: "https://tamm.abudhabi"
   },
   {
-    // Updated with a new valid URL
     image: "/images/seha.jpg",
     title: "Abu Dhabi Health Services (SEHA)",
     description: "Network of public hospitals and clinics in Abu Dhabi.",
+    longDescription: [
+      "SEHA operates the largest healthcare network in the UAE with multiple hospitals and clinics.",
+      "The organization provides comprehensive healthcare services from primary to specialized care.",
+      "SEHA facilities are equipped with state-of-the-art medical technology and expert healthcare professionals.",
+      "Their services include emergency care, specialized treatments, and preventive healthcare programs."
+    ],
+    externalLink: "https://seha.ae"
   },
   {
-    // Updated with a new valid URL
     image: "/images/adpolice.jpg",
     title: "Abu Dhabi Police",
     description: "Main law enforcement agency, offering various services including traffic-related matters.",
+    longDescription: [
+      "Abu Dhabi Police is the primary law enforcement agency ensuring safety and security in the emirate.",
+      "They offer digital services for traffic fines, licensing, and various security permits.",
+      "The force is known for its smart police stations providing 24/7 services without human intervention.",
+      "Their community policing initiatives help maintain strong relationships with residents."
+    ],
+    externalLink: "https://adi.gov.ae"
   },
   {
-    // Updated with a new valid URL
     image: "/images/admunandtransport.jpg",
     title: "Department of Municipalities and Transport",
     description: "Handles city planning, transportation, and municipal affairs.",
+    longDescription: [
+      "The Department oversees urban planning, infrastructure development, and public transportation in Abu Dhabi.",
+      "They manage municipal services including building permits and land allocation.",
+      "The department is responsible for developing and maintaining Abu Dhabi's transport network.",
+      "Their services include parking management, public bus operations, and maritime transport regulation."
+    ],
+    externalLink: "https://dmt.gov.ae"
   },
   {
-    // Updated with a new valid URL
     image: "/images/addc.jpg",
     title: "Abu Dhabi Distribution Company",
     description: "Manages electricity and water services for residents.",
+    longDescription: [
+      "ADDC is the sole provider of electricity and water services in Abu Dhabi region.",
+      "They offer digital services for bill payments, connection requests, and consumption monitoring.",
+      "The company implements smart meter solutions for better resource management.",
+      "ADDC promotes sustainable consumption through various awareness programs."
+    ],
+    externalLink: "https://addc.ae"
   },
   {
-    // Updated with a new valid URL
     image: "/images/adchamber.jpg",
     title: "Abu Dhabi Chamber",
     description: "Supports businesses and provides various commercial services.",
+    longDescription: [
+      "Abu Dhabi Chamber represents the interests of the private sector in Abu Dhabi.",
+      "They provide crucial services for business setup and development in the emirate.",
+      "The chamber offers training programs and workshops for business development.",
+      "Their services include certificate of origin issuance and business networking opportunities."
+    ],
+    externalLink: "https://abudhabichamber.ae"
   },
   {
-    // Updated with a new valid URL
     image: "/images/adjudicial.jpg",
     title: "Abu Dhabi Judicial Department",
     description: "Handles legal matters and court services in the emirate.",
-  },
+    longDescription: [
+      "The Judicial Department manages all courts and legal services in Abu Dhabi.",
+      "They provide digital services for case filing, document authentication, and legal inquiries.",
+      "The department offers alternative dispute resolution services including mediation.",
+      "Their services include notary public, marriage services, and legal consultation."
+    ],
+    externalLink: "https://adjd.gov.ae"
+  }
 ];
-
