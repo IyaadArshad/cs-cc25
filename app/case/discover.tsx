@@ -26,153 +26,162 @@ export default function CaseDiscover() {
     align: 'start' as const, // Align items to start to show partial third item
   };
 
-  if (selectedPlace) {
-    return (
-      <motion.div 
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        exit={{ opacity: 0, y: 20 }}
-        transition={{ duration: 0.3 }}
-        className="flex-1 p-5 overflow-y-auto"
-      >
-        <div className="flex items-center gap-4 mb-6">
-          <motion.button 
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}
-            onClick={() => setSelectedPlace(null)}
-            className="flex items-center gap-2 text-white hover:text-blue-400"
-          >
-            <ArrowLeft className="w-5 h-5" />
-            <span>Back</span>
-          </motion.button>
-        </div>
-
-        <motion.h1 
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 0.2 }}
-          className="text-white text-4xl font-bold mb-8"
-        >
-          {selectedPlace.title}
-        </motion.h1>
-        
-        <motion.div 
-          initial={{ opacity: 0, scale: 0.95 }}
-          animate={{ opacity: 1, scale: 1 }}
-          transition={{ delay: 0.3 }}
-          className="relative w-full h-[300px] mb-8"
-        >
-          <img 
-            src={selectedPlace.image} 
-            alt={selectedPlace.title}
-            className="w-full h-full object-cover rounded-lg"
-          />
-        </motion.div>
-
-        <motion.div 
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.4 }}
-          className="space-y-4 mb-8"
-        >
-          {selectedPlace.longDescription?.map((paragraph, index) => (
-            <p key={index} className="text-gray-300 text-lg leading-relaxed">
-              {paragraph}
-            </p>
-          ))}
-        </motion.div>
-
-        <motion.button
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.5 }}
-          whileHover={{ scale: 1.02 }}
-          whileTap={{ scale: 0.98 }}
-          onClick={() => window.open(selectedPlace.externalLink, '_blank')}
-          className="w-full py-4 bg-blue-600 hover:bg-blue-700 text-white rounded-lg flex items-center justify-center gap-2"
-        >
-          Learn More
-          <ExternalLink className="w-4 h-4" />
-        </motion.button>
-
-        <motion.button
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.6 }}
-          whileHover={{ scale: 1.05 }}
-          whileTap={{ scale: 0.95 }}
-          onClick={() => setSelectedPlace(null)}
-          className="w-full py-4 mt-4 bg-gray-600 hover:bg-gray-700 text-white rounded-lg flex items-center justify-center"
-        >
-          Back
-        </motion.button>
-      </motion.div>
-    );
-  }
-
   return (
     <div className="flex-1 p-5 overflow-y-auto">
-      <h1 className="text-white mt-4 mb-6 text-left text-3xl font-bold">Discover Abu Dhabi</h1>
-
-      <section className="mb-12">
-        <h2 className="text-white text-xl font-semibold mb-6 flex items-center">
-          <MapPin className="mr-2" /> Places to Visit
-        </h2>
-        <Carousel opts={carouselOptions} className="w-full cursor-grab active:cursor-grabbing">
-          <CarouselContent className="select-none -ml-2">
-            {placesToVisit.map((place, index) => (
-              <CarouselItem key={index} className="pl-2 basis-[48%] md:basis-[48%] lg:basis-[48%]">
-                <PlaceCard place={place} onSelect={() => setSelectedPlace(place)} />
-              </CarouselItem>
-            ))}
-          </CarouselContent>
-        </Carousel>
-      </section>
-
-      <section className="mb-12">
-        <h2 className="text-white text-xl font-semibold mb-6 flex items-center">
-          <Utensils className="mr-2" /> Culinary Delights
-        </h2>
-        <Carousel opts={carouselOptions} className="w-full cursor-grab active:cursor-grabbing">
-          <CarouselContent className="select-none -ml-2">
-            {foodPlaces.map((place, index) => (
-              <CarouselItem key={index} className="pl-2 basis-[48%] md:basis-[48%] lg:basis-[48%]">
-                <PlaceCard place={place} onSelect={() => setSelectedPlace(place)} />
-              </CarouselItem>
-            ))}
-          </CarouselContent>
-        </Carousel>
-      </section>
-
-      <section className="mb-12">
-        <h2 className="text-white text-xl font-semibold mb-6 flex items-center">
-          <ShoppingBag className="mr-2" /> Local Markets & Stores
-        </h2>
-        <Carousel opts={carouselOptions} className="w-full cursor-grab active:cursor-grabbing">
-          <CarouselContent className="select-none -ml-2">
-            {shoppingPlaces.map((place, index) => (
-              <CarouselItem key={index} className="pl-2 basis-[48%] md:basis-[48%] lg:basis-[48%]">
-                <PlaceCard place={place} onSelect={() => setSelectedPlace(place)} />
-              </CarouselItem>
-            ))}
-          </CarouselContent>
-        </Carousel>
-      </section>
-
-      <section className="mb-12">
-        <h2 className="text-white text-xl font-semibold mb-6 flex items-center">
-          <Landmark className="mr-2" /> Essential Services
-        </h2>
-        <Carousel opts={carouselOptions} className="w-full cursor-grab active:cursor-grabbing">
-          <CarouselContent className="select-none -ml-2">
-            {essentialServices.map((service, index) => (
-              <CarouselItem key={index} className="pl-2 basis-[48%] md:basis-[48%] lg:basis-[48%]">
-                <PlaceCard place={service} onSelect={() => setSelectedPlace(service)} />
-              </CarouselItem>
-            ))}
-          </CarouselContent>
-        </Carousel>
-      </section>
+      <AnimatePresence mode="wait">
+        {selectedPlace ? (
+          <motion.div
+            key="detail"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: 20 }}
+            transition={{ duration: 0.3 }}
+          >
+            {/* Detail View */}
+            <div className="flex items-center gap-4 mb-6">
+              <motion.button 
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+                onClick={() => setSelectedPlace(null)}
+                className="flex items-center gap-2 text-white hover:text-blue-400"
+              >
+                <ArrowLeft className="w-5 h-5" />
+                <span>Back</span>
+              </motion.button>
+            </div>
+    
+            <motion.h1 
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ delay: 0.2 }}
+              className="text-white text-4xl font-bold mb-8"
+            >
+              {selectedPlace.title}
+            </motion.h1>
+            
+            <motion.div 
+              initial={{ opacity: 0, scale: 0.95 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ delay: 0.3 }}
+              className="relative w-full h-[300px] mb-8"
+            >
+              <img 
+                src={selectedPlace.image} 
+                alt={selectedPlace.title}
+                className="w-full h-full object-cover rounded-lg"
+              />
+            </motion.div>
+    
+            <motion.div 
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.4 }}
+              className="space-y-4 mb-8"
+            >
+              {selectedPlace.longDescription?.map((paragraph, index) => (
+                <p key={index} className="text-gray-300 text-lg leading-relaxed">
+                  {paragraph}
+                </p>
+              ))}
+            </motion.div>
+    
+            <motion.button
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.5 }}
+              whileHover={{ scale: 1.02 }}
+              whileTap={{ scale: 0.98 }}
+              onClick={() => window.open(selectedPlace.externalLink, '_blank')}
+              className="w-full py-4 bg-blue-600 hover:bg-blue-700 text-white rounded-lg flex items-center justify-center gap-2"
+            >
+              Learn More
+              <ExternalLink className="w-4 h-4" />
+            </motion.button>
+    
+            <motion.button
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.6 }}
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+              onClick={() => setSelectedPlace(null)}
+              className="w-full py-4 mt-4 bg-gray-600 hover:bg-gray-700 text-white rounded-lg flex items-center justify-center"
+            >
+              Back
+            </motion.button>
+          </motion.div>
+        ) : (
+          <motion.div
+            key="carousel"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+          >
+            {/* Carousel View */}
+            <h1 className="text-white mt-4 mb-6 text-left text-3xl font-bold">Discover Abu Dhabi</h1>
+    
+            <section className="mb-12">
+              <h2 className="text-white text-xl font-semibold mb-6 flex items-center">
+                <MapPin className="mr-2" /> Places to Visit
+              </h2>
+              <Carousel opts={carouselOptions} className="w-full cursor-grab active:cursor-grabbing">
+                <CarouselContent className="select-none -ml-2">
+                  {placesToVisit.map((place, index) => (
+                    <CarouselItem key={index} className="pl-2 basis-[48%] md:basis-[48%] lg:basis-[48%]">
+                      <PlaceCard place={place} onSelect={() => setSelectedPlace(place)} />
+                    </CarouselItem>
+                  ))}
+                </CarouselContent>
+              </Carousel>
+            </section>
+    
+            <section className="mb-12">
+              <h2 className="text-white text-xl font-semibold mb-6 flex items-center">
+                <Utensils className="mr-2" /> Culinary Delights
+              </h2>
+              <Carousel opts={carouselOptions} className="w-full cursor-grab active:cursor-grabbing">
+                <CarouselContent className="select-none -ml-2">
+                  {foodPlaces.map((place, index) => (
+                    <CarouselItem key={index} className="pl-2 basis-[48%] md:basis-[48%] lg:basis-[48%]">
+                      <PlaceCard place={place} onSelect={() => setSelectedPlace(place)} />
+                    </CarouselItem>
+                  ))}
+                </CarouselContent>
+              </Carousel>
+            </section>
+    
+            <section className="mb-12">
+              <h2 className="text-white text-xl font-semibold mb-6 flex items-center">
+                <ShoppingBag className="mr-2" /> Local Markets & Stores
+              </h2>
+              <Carousel opts={carouselOptions} className="w-full cursor-grab active:cursor-grabbing">
+                <CarouselContent className="select-none -ml-2">
+                  {shoppingPlaces.map((place, index) => (
+                    <CarouselItem key={index} className="pl-2 basis-[48%] md:basis-[48%] lg:basis-[48%]">
+                      <PlaceCard place={place} onSelect={() => setSelectedPlace(place)} />
+                    </CarouselItem>
+                  ))}
+                </CarouselContent>
+              </Carousel>
+            </section>
+    
+            <section className="mb-12">
+              <h2 className="text-white text-xl font-semibold mb-6 flex items-center">
+                <Landmark className="mr-2" /> Essential Services
+              </h2>
+              <Carousel opts={carouselOptions} className="w-full cursor-grab active:cursor-grabbing">
+                <CarouselContent className="select-none -ml-2">
+                  {essentialServices.map((service, index) => (
+                    <CarouselItem key={index} className="pl-2 basis-[48%] md:basis-[48%] lg:basis-[48%]">
+                      <PlaceCard place={service} onSelect={() => setSelectedPlace(service)} />
+                    </CarouselItem>
+                  ))}
+                </CarouselContent>
+              </Carousel>
+            </section>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </div>
   );
 }
