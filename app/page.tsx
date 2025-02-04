@@ -8,7 +8,6 @@ import {
   Settings,
   Compass,
   ChevronLeft,
-  ChevronRight,
   Shield,
   MoreHorizontal,
   Trash2,
@@ -26,55 +25,10 @@ import {
 } from "./filled-icons";
 import type React from "react";
 import { countries } from "./countries";
-
-type Tab = "home" | "nft" | "moon" | "explore" | "settings";
-
-const backgrounds = [
-  "https://images.pexels.com/photos/1473673/pexels-photo-1473673.jpeg",
-//  "https://images.pexels.com/photos/442579/pexels-photo-442579.jpeg",
-];
-
-type WeatherCondition = "sunny" | "cloudy" | "rainy";
-
-interface WeatherPillProps {
-  temperature: number;
-  condition: WeatherCondition;
-}
-
-interface SettingsItemProps {
-  icon: React.ReactNode;
-  title: string;
-  description: string;
-  plainIcon?: boolean;
-}
-
-function SettingsItem({
-  icon,
-  title,
-  description,
-  plainIcon,
-}: SettingsItemProps) {
-  return (
-    <div className="flex items-center justify-between py-4 cursor-pointer group hover:bg-[#1e1e2e45] transition-colors">
-      <div className="flex items-center gap-4">
-        {plainIcon ? (
-          // Render icon directly without wrapper styling
-          <div>{icon}</div>
-        ) : (
-          // ...existing wrapper...
-          <div className="w-12 h-12 flex items-center justify-center rounded-full bg-[#272739] text-white">
-            {icon}
-          </div>
-        )}
-        <div className="flex flex-col">
-          <span className="text-white text-base font-semibold">{title}</span>
-          <span className="text-gray-400 text-sm">{description}</span>
-        </div>
-      </div>
-      <ChevronRight className="w-5 h-5 text-gray-400 group-hover:text-white transition-colors" />
-    </div>
-  );
-}
+import { Tab, WeatherCondition, SettingsItemProps, WeatherPillProps } from "../types/types"
+import SettingsItem from "./components/SettingsItem";
+import { backgrounds } from "../variables/backgrouds";
+import WeatherPill from "./components/WeatherPill";
 
 const weatherIcons = {
   sunny: (
@@ -124,29 +78,10 @@ const weatherIcons = {
   ),
 };
 
-function WeatherPill({ temperature, condition }: WeatherPillProps) {
-  const Icon = weatherIcons[condition];
-
-  return (
-    <div className="flex items-center bg-[#272739] rounded-full shadow-[0_4px_12px_rgba(0,0,0,0.5)] px-4 py-2 space-x-2">
-      <div className="text-yellow-400 drop-shadow-[0_0_8px_rgba(0,0,0,0.8)]">
-        {Icon}
-      </div>
-      <span className="text-sm font-semibold text-white drop-shadow-[0_2px_4px_rgba(0,0,0,0.8)]">
-        {temperature}°
-      </span>
-      <span className="text-xs font-medium text-gray-200 capitalize drop-shadow-[0_2px_4px_rgba(0,0,0,0.8)]">
-        {condition}
-      </span>
-    </div>
-  );
-}
-
 export default function Page() {
   const [activeTab, setActiveTab] = useState<Tab>("home");
   const [userName, setUserName] = useState("");
   const [bio, setBio] = useState("");
-  // Remove showBio and use new phase state
   const [phase, setPhase] = useState<"name" | "bio" | "origin" | "loading" | "confirmInterests" | "final">("name");
   const [origin, setOrigin] = useState("");
   const [countrySearch, setCountrySearch] = useState("");
@@ -160,15 +95,12 @@ export default function Page() {
     "Almost there"
   ];
   const [loadingIndex, setLoadingIndex] = useState(0);
-  // Add new states for interests confirmation
   const [apiInterests, setApiInterests] = useState<string[]>([]);
   const [confirmedInterests, setConfirmedInterests] = useState<string[]>([]);
-  // New states to control per-interest confirmation flow
   const [currentInterestIndex, setCurrentInterestIndex] = useState(0);
   const [currentInterestResponse, setCurrentInterestResponse] = useState<boolean | null>(null);
 
   useEffect(() => {
-    // Check for existing name cookie
     const nameCookie = document.cookie
       .split(";")
       .find((c) => c.trim().startsWith("name="));
@@ -180,7 +112,6 @@ export default function Page() {
     setIsLoading(false);
   }, []);
 
-  // Handle multi‐phase submission
   const handleFormSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (phase === "name") {
@@ -200,7 +131,6 @@ export default function Page() {
     }
   };
 
-  // New effect for loading phase: fetch interests from API
   useEffect(() => {
     if (phase === "loading") {
       fetch(`/api/v1/setup/generateInterests?bio=${encodeURIComponent(bio)}&originCountry=${encodeURIComponent(origin)}`)
@@ -215,12 +145,10 @@ export default function Page() {
         })
         .catch((err) => {
           console.error(err);
-          // ...error handling...
         });
     }
   }, [phase, bio, origin]);
 
-  // New effect to update loading phrase every 3 seconds while loading
   useEffect(() => {
     if (phase === "loading") {
       const interval = setInterval(() => {
@@ -456,16 +384,16 @@ export default function Page() {
                 <h1 className="text-white text-3xl font-bold mb-4">
                   Do you like <span className="suggestion-name">{apiInterests[currentInterestIndex]} ?</span>
                 </h1>
-                <div className="flex space-x-4 mb-6">
+                <div className="flex space-x-4 mb-6 mt-5">
                   <button
                     onClick={() => setCurrentInterestResponse(true)}
-                    className={`px-4 py-2 rounded ${currentInterestResponse === true ? "bg-purple-700" : "bg-purple-500"} text-white`}
+                    className={`px-12 py-12 rounded ${currentInterestResponse === true ? "bg-purple-700" : "bg-gray-700"} text-white`}
                   >
                     Yes
                   </button>
                   <button
                     onClick={() => setCurrentInterestResponse(false)}
-                    className={`px-4 py-2 rounded ${currentInterestResponse === false ? "bg-gray-700" : "bg-gray-500"} text-white`}
+                    className={`px-12 py-12 rounded ${currentInterestResponse === false ? "bg-purple-700" : "bg-gray-700"} text-white`}
                   >
                     No
                   </button>
