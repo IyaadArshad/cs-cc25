@@ -382,7 +382,7 @@ const foodPlaces = [
   },
   {
     // Nested folder image: updated with a new valid URL
-    image: "https://upload.wikimedia.org/wikipedia/commons/0/0b/Nando%27s_Restaurant.jpg",
+    image: "https://upload.wikimedia.org/wikipedia/commons/thumb/7/72/Flame-grilled_PERi-PERi_chicken.jpg/440px-Flame-grilled_PERi-PERi_chicken.jpg",
     title: "Nando's",
     description: "Famous for its Peri-Peri chicken in a casual dining atmosphere.",
     longDescription: [
@@ -432,7 +432,7 @@ const foodPlaces = [
   },
   {
     // Nested folder image: updated with a new valid URL
-    image: "https://images.unsplash.com/photo-1572441710579-5a5c7b6d31c9",
+    image: "https://www.mushrifmall.com/media/4035/subway.jpg?anchor=center&mode=crop&width=640&height=460&rnd=133558577160000000",
     title: "Subway",
     description: "Fresh sandwiches and salads with customizable options.",
     longDescription: [
@@ -461,46 +461,46 @@ const foodPlaces = [
 const shoppingPlaces = [
   {
     // Updated with a new valid URL
-    image: "https://upload.wikimedia.org/wikipedia/commons/1/1d/Yas_Mall_Abu_Dhabi.jpg",
+    image: "https://visitabudhabi.ae/-/media/project/vad/galleryimages/things-to-do/shopping/yas-mall/yas-mall.jpg",
     title: "Yas Mall",
     description: "Largest mall in Abu Dhabi with over 370 stores and 60 restaurants.",
   },
   {
     // Updated with a new valid URL
-    image: "https://upload.wikimedia.org/wikipedia/commons/3/30/The_Galleria_Al_Maryah_Island.jpg",
+    image: "https://dynamic-media-cdn.tripadvisor.com/media/photo-o/10/33/3a/bc/the-galleria-on-al-maryah.jpg?w=900&h=500&s=1",
     title: "The Galleria Al Maryah Island",
     description: "Luxury shopping destination with high-end brands and dining options.",
   },
   {
     // Updated with a new valid URL
-    image: "https://upload.wikimedia.org/wikipedia/commons/7/75/Abu_Dhabi_Mall.jpg",
+    image: "https://www.timeoutabudhabi.com/cloud/timeoutabudhabi/2024/03/05/Abu-Dhabi-Mall-1024x768.jpg",
     title: "Abu Dhabi Mall",
     description: "Central mall with a mix of local and international brands.",
   },
   {
     // Updated with a new valid URL
-    image: "https://upload.wikimedia.org/wikipedia/commons/2/2a/Madinat_Zayed_Shopping_Centre.jpg",
+    image: "https://www.lineproperty.com/media/e30dr5by/madinat-zayed-mall-banner.jpg?width=1920&height=900",
     title: "Madinat Zayed Shopping Centre",
     description: "Known for its gold souk and traditional items.",
   },
   {
     // Updated with a new valid URL
-    image: "https://upload.wikimedia.org/wikipedia/commons/8/8f/World_Trade_Center_Mall_Abu_Dhabi.jpg",
+    image: "https://visitabudhabi.ae/-/media/project/vad/things-to-do/shopping-and-lifestyle/the-mall-at-the-world-trade-centre-abu-dhabi/world-trade-center-souk-and-mall.jpg",
     title: "World Trade Center Mall",
     description: "Modern mall in the heart of the city with a traditional souk feel.",
   },
   {
     // Updated with a new valid URL
-    image: "https://upload.wikimedia.org/wikipedia/commons/4/4d/Dalma_Mall_Abu_Dhabi.jpg",
+    image: "https://upload.wikimedia.org/wikipedia/commons/c/ce/Dalma_Exterior.jpg",
     title: "Dalma Mall",
     description: "Large shopping center with a variety of stores and entertainment options.",
   },
   {
     // Updated with a new valid URL
-    image: "https://upload.wikimedia.org/wikipedia/commons/a/a9/Mushrif_Mall_Abu_Dhabi.jpg",
+    image: "https://visitabudhabi.ae/-/media/project/vad/galleryimages/things-to-do/mushrif-mall/4x8a4946.jpg",
     title: "Mushrif Mall",
     description: "Family-friendly mall with a good mix of retail and leisure facilities.",
-  },
+  }
 ];
 
 const essentialServices = [
