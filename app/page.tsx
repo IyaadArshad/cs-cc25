@@ -292,7 +292,7 @@ export default function Page() {
           {/* Content */}
           <div className="flex-1 flex flex-col items-center justify-center gap-5 px-6">
             {phase === "name" || phase === "bio" ? (
-                <div className="relative w-auto min-w-[22rem] h-64 mb-2 flex justify-center items-center">
+                <div className="relative w-auto min-w-[20rem] h-auto min-h-[12rem] mb-2 flex justify-center items-center">
                 <img
                   src="/landing_new.png"
                   alt="Welcome"
@@ -301,7 +301,7 @@ export default function Page() {
                 <img
                   src="/images/default_pfp.png"
                   alt="Profile"
-                  className={`w-48 h-48 absolute object-cover transition-opacity duration-500 rounded-full transform ${phase === "bio" ? "opacity-100 scale-110" : "opacity-0 scale-90"}`}
+                  className={`w-40 h-40 absolute object-cover transition-opacity duration-500 rounded-full transform ${phase === "bio" ? "opacity-100 scale-110" : "opacity-0 scale-90"}`}
                 />
                 </div>
             ) : phase === "origin" ? (
