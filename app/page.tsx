@@ -437,13 +437,13 @@ export default function Page() {
           </div>
 
           {/* Bottom Navigation (disabled state) */}
-            <div className="bg-[#090910] min-h-[96px] flex justify-around items-center border-t border-[#232323] p-4 relative">
+            <div className="bg-[#090910] min-h-[96px] flex justify-evenly gap-x-8 items-center border-t border-[#232323] p-4 relative">
             {/* Active tab indicator (hidden in disabled state) */}
             <div className="absolute top-0 left-0 w-1/5 h-1 bg-[#2563eb] opacity-30"></div>
 
             <button
             disabled
-            className="flex flex-col items-center justify-center gap-1 mx-2 sm:mx-7 opacity-50 cursor-not-allowed"
+            className="flex flex-col items-center justify-center gap-1 opacity-50 cursor-not-allowed"
             >
             <HomeIcon className="w-8 h-8 text-[#ffffff]/50" />
             <span className="text-[12px] text-[#ffffff]/50">
@@ -452,7 +452,7 @@ export default function Page() {
             </button>
             <button
             disabled
-            className="flex flex-col items-center justify-center gap-1 mx-2 sm:mx-7 opacity-50 cursor-not-allowed"
+            className="flex flex-col items-center justify-center gap-1 opacity-50 cursor-not-allowed"
             >
             <MagnifyingGlassIcon className="w-8 h-8 text-[#ffffff]/50" />
             <span className="text-[12px] text-[#ffffff]/50">
@@ -461,7 +461,7 @@ export default function Page() {
             </button>
             <button
             disabled
-            className="flex flex-col items-center justify-center gap-1 mx-2 sm:mx-7 opacity-50 cursor-not-allowed"
+            className="flex flex-col items-center justify-center gap-1 opacity-50 cursor-not-allowed"
             >
             <LightBulbIcon className="w-8 h-8 text-[#ffffff]/50" />
             <span className="text-[12px] text-[#ffffff]/50">
@@ -470,7 +470,7 @@ export default function Page() {
             </button>
             <button
             disabled
-            className="flex flex-col items-center justify-center gap-1 mx-2 sm:mx-7 opacity-50 cursor-not-allowed"
+            className="flex flex-col items-center justify-center gap-1 opacity-50 cursor-not-allowed"
             >
             <RocketLaunchIcon className="w-8 h-8 text-[#ffffff]/50" />
             <span className="text-[12px] text-[#ffffff]/50">
@@ -479,7 +479,7 @@ export default function Page() {
             </button>
             <button
             disabled
-            className="flex flex-col items-center justify-center gap-1 mx-2 sm:mx-7 opacity-50 cursor-not-allowed"
+            className="flex flex-col items-center justify-center gap-1 opacity-50 cursor-not-allowed"
             >
             <UserCircleIcon className="w-8 h-8 text-[#ffffff]/50" />
             <span className="text-[12px] text-[#ffffff]/50">
@@ -502,7 +502,7 @@ export default function Page() {
         {getTabContent(activeTab)}
 
         {/* Bottom Navigation */}
-        <div className="bg-[#090910] min-h-[96px] flex justify-around items-center border-t border-[#232323] p-4 relative">
+        <div className="bg-[#090910] min-h-[96px] flex justify-evenly gap-x-8 items-center border-t border-[#232323] p-4 relative">
           {/* Active tab indicator */}
           <div
             className="absolute top-0 left-0 w-1/5 h-1 bg-[#2563eb] transition-all duration-300 ease-in-out"
@@ -517,7 +517,7 @@ export default function Page() {
 
           <button
             onClick={() => setActiveTab("home")}
-            className="flex flex-col items-center justify-center gap-1 mx-2 sm:mx-7"
+            className="flex flex-col items-center justify-center gap-1"
           >
             {activeTab === "home" ? (
               <HomeIconFilled className="w-8 h-8 text-[#2563eb]" />
@@ -534,7 +534,7 @@ export default function Page() {
           </button>
           <button
             onClick={() => setActiveTab("discover")}
-            className="flex flex-col items-center justify-center gap-1 mx-2 sm:mx-7"
+            className="flex flex-col items-center justify-center gap-1"
           >
             {activeTab === "discover" ? (
               <MagnifyingGlassFilled className="w-8 h-8 text-[#2563eb]" />
@@ -551,7 +551,7 @@ export default function Page() {
           </button>
           <button
             onClick={() => setActiveTab("tips")}
-            className="flex flex-col items-center justify-center gap-1 mx-2 sm:mx-7"
+            className="flex flex-col items-center justify-center gap-1"
           >
             {activeTab === "tips" ? (
               <LightBulbFilled className="w-8 h-8 text-[#2563eb]" />
@@ -568,7 +568,7 @@ export default function Page() {
           </button>
           <button
             onClick={() => setActiveTab("experiences")}
-            className="flex flex-col items-center justify-center gap-1 mx-2 sm:mx-7"
+            className="flex flex-col items-center justify-center gap-1"
           >
             {activeTab === "experiences" ? (
               <RocketLaunchFilled className="w-8 h-8 text-[#2563eb]" />
@@ -585,7 +585,7 @@ export default function Page() {
           </button>
           <button
             onClick={() => setActiveTab("profile")}
-            className="flex flex-col items-center justify-center gap-1 mx-2 sm:mx-7"
+            className="flex flex-col items-center justify-center gap-1"
           >
             {activeTab === "profile" ? (
               <UserCircleFilled className="w-8 h-8 text-[#2563eb]" />
