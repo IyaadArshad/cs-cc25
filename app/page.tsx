@@ -305,7 +305,7 @@ export default function Page() {
                 />
                 </div>
             ) : phase === "origin" ? (
-              <div className="relative w-24 h-24 mb-4">
+              <div className="relative w-24 h-24">
                 <img
                   src="/images/default_pfp.png"
                   alt="Profile"
@@ -367,7 +367,7 @@ export default function Page() {
                 )}
                 {phase === "origin" && (
                   <div className="w-full">
-                    <p className="text-gray-400 text-lg text-center mb-2">
+                    <p className="text-gray-400 text-lg text-center mb-1">
                       Where are you coming from?
                     </p>
                   </div>
