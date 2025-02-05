@@ -1,7 +1,8 @@
 import { Card, CardContent } from "@/components/ui/card"
 import { Carousel, CarouselContent, CarouselItem } from "@/components/ui/carousel"
 import { ArrowLeft, ArrowRight } from "lucide-react"
-import { useState } from "react"
+import { useEffect, useState } from "react"
+import Cookies from "js-cookie"
 
 function ProgressBar({ percentage = 40 }) {
   return (
@@ -61,8 +62,15 @@ function ProgressCircle({ percentage = 40, hideText = false }) {
 
 export default function CaseHome() {
   const [overviewMode, setOverviewMode] = useState(false)
+  const [userName, setUserName] = useState("")
 
-  // Update and reorder the furtherSteps array:
+useEffect(() => {
+  const name = Cookies.get("name")
+  if (name) {
+    setUserName(name)
+  }
+}, [])
+
   const furtherSteps = [
     {
       title: "Confirm visa Appointment",
@@ -161,7 +169,8 @@ export default function CaseHome() {
   return (
     <div className="flex-1 p-6 overflow-y-auto">
       <div className="flex flex-col items-center justify-center space-y-6 mt-8">
-        <h1 className="text-4xl text-white text-center mb-3">Welcome back, TESTNAME</h1>
+
+        <h1 className="text-4xl text-white text-center mb-3">Welcome back, {userName}</h1>
         {/* Wrap ProgressCircle with clickable area with hover and wiggle animation */}
         <div 
           onClick={() => setOverviewMode(true)} 
