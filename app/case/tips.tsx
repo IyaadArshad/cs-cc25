@@ -1,6 +1,9 @@
-import { Card, CardContent, CardDescription, CardHeader, CardTitle, } from "@/components/ui/card";
-import { useEffect, useRef } from 'react';
+import React from "react";
+import { Card, CardHeader, CardFooter, CardTitle, CardDescription, CardContent } from "@/components/ui/card";
+import { useEffect, useRef } from "react";
 import { motion, useAnimation, useInView } from "framer-motion"
+
+
 
 interface cardData {
   title: string,
@@ -9,6 +12,25 @@ interface cardData {
   location: string,
 }
 
+interface emergencyServiceData {
+  title: string,
+  contact: string
+}
+
+const emergencyServices: emergencyServiceData[] = [
+  {
+    title: "Police 👮",
+    contact: "999"
+  },
+  {
+    title: "Ambulance 🚑",
+    contact: "998"
+  },
+  {
+    title: "Fire 🚒",
+    contact: "997"
+  },
+]
 const cardsData: cardData[] = [
 
   {
@@ -100,6 +122,27 @@ export default function CaseTips() {
           </MotionCard>
         ))}
       </div>
+      <div>
+        <h1 className="text-white text-2xl mb-4 mt-10">
+          {" "}
+          <b>Emergency Service Numbers</b>{" "}
+        </h1>
+        <div className="grid grid-cols-3 gap-4 mt-6">
+        {emergencyServices.map((card, index) =>
+          <Card key={index} className=" w-full min-w-[120px] bg-gray-800 border-gray-700 min-h-[50px] select-none cursor-pointer hover:bg-gray-700/50 transition-colors">
+
+              <h3 className="text-lg text-center mb-0 text-whitetext-sm text-center text-white font-semibold whitespace-nowrap">
+                {card.title}
+              </h3>
+
+              <p className="text-base text-center text-gray-400 font-bold">
+                {card.contact}
+              </p>
+          </Card>
+        )}
+      </div>
     </div>
+      </div>
+      
   )
 }
