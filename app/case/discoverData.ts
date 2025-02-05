@@ -59,7 +59,7 @@ export const placesToVisit = [
       "The promenade features cycling and walking paths, children's play areas, and numerous cafes and restaurants, making it a perfect destination for families and fitness enthusiasts alike.",
       "Regular events and festivals are held along the Corniche, bringing the community together for celebrations and entertainment throughout the year.",
     ],
-    externalLink: "https://visitabudhabi.ae/en/where-to-go/corniche-beach",
+    externalLink: "https://visitabudhabi.ae/en/where-to-go/beaches/corniche-beach",
   },
   {
     image: "/images/palace.png", // remains unchanged
@@ -86,7 +86,7 @@ export const placesToVisit = [
       "The park serves as both a natural habitat and a research center, helping scientists study and preserve this unique ecosystem.",
     ],
     externalLink:
-      "https://visitabudhabi.ae/en/where-to-go/mangrove-national-park",
+      "https://visitabudhabi.ae/en/where-to-go/parks-and-zoos/mangrove-national-park",
   },
 ];
 
@@ -102,7 +102,7 @@ export const foodPlaces = [
       "Offers great value meals perfect for lunch breaks or quick dinners.",
       "Multiple convenient locations across the city with consistent quality and fast service.",
     ],
-    externalLink: "https://visitabudhabi.ae/restaurants/shawarmatime",
+    externalLink: "https://sstation.ae",
   },
   {
     // Nested folder image: updated with a new valid URL
@@ -130,7 +130,7 @@ export const foodPlaces = [
       "Comfortable seating and reasonable prices make it perfect for casual meals or coffee meetings.",
       "Popular among families and professionals, with multiple locations across Abu Dhabi.",
     ],
-    externalLink: "https://shakespeare-and-co.com",
+    externalLink: "https://shakespeareandcompany.com",
   },
   {
     image: "/images/mandi.jpg", // remains unchanged
@@ -148,7 +148,7 @@ export const foodPlaces = [
   {
     // Nested folder image: updated with a new valid URL
     image: "/images/lebaneseflower.jpg",
-    title: "Lebanese Flower",
+    title: "Zahrat Lebnan",
     description: "Famous local spot for Lebanese cuisine at reasonable prices.",
     longDescription: [
       "Lebanese Flower is an Abu Dhabi institution, serving delicious Middle Eastern cuisine since 1991.",
@@ -156,20 +156,7 @@ export const foodPlaces = [
       "With multiple locations across the city, it's a go-to spot for both quick bites and family meals.",
       "Their generous portions and consistent quality have made them a local favorite for decades.",
     ],
-    externalLink: "https://lebaneseflower.ae",
-  },
-  {
-    // Nested folder image: updated with a new valid URL
-    image: "/images/subway.jpg",
-    title: "Subway",
-    description: "Fresh sandwiches and salads with customizable options.",
-    longDescription: [
-      "Subway offers fresh, made-to-order sandwiches with a variety of healthy options.",
-      "Customize your meal with a wide selection of fresh vegetables and sauces.",
-      "Great value meal deals and regular promotions make it budget-friendly.",
-      "Perfect for quick lunches or light dinners, with locations throughout Abu Dhabi.",
-    ],
-    externalLink: "https://subway.com/en-AE",
+    externalLink: "https://zahratlebnan.com/",
   },
   {
     // Nested folder image: updated with a new valid URL
@@ -182,7 +169,7 @@ export const foodPlaces = [
       "Reasonable prices and generous portions make it popular with tourists and locals alike.",
       "Great place to try authentic Emirati dishes like Harees and Machboos.",
     ],
-    externalLink: "https://visitabudhabi.ae/restaurants/al-mrzab",
+    externalLink: "https://visitabudhabi.ae/en/where-to-go/dining-and-restaurants/al-mrzab-restaurant",
   },
 ];
 
@@ -314,7 +301,7 @@ export const essentialServices = [
       "The force is known for its smart police stations providing 24/7 services without human intervention.",
       "Their community policing initiatives help maintain strong relationships with residents.",
     ],
-    externalLink: "https://adi.gov.ae",
+    externalLink: "https://es.adpolice.gov.ae/trafficservices/",
   },
   {
     image: "/images/admunandtransport.jpg",
