@@ -3,8 +3,6 @@ import { Card, CardHeader, CardFooter, CardTitle, CardDescription, CardContent }
 import { useEffect, useRef } from "react";
 import { motion, useAnimation, useInView } from "framer-motion"
 
-
-
 interface cardData {
   title: string,
   content: string,
@@ -31,8 +29,8 @@ const emergencyServices: emergencyServiceData[] = [
     contact: "997"
   },
 ]
-const cardsData: cardData[] = [
 
+const cardsData: cardData[] = [
   {
     title: "ADDC",
     content: "Where you can pay your water and electricity bills!",
@@ -41,7 +39,7 @@ const cardsData: cardData[] = [
   },
   {
     title: "DARB",
-    content: "Abu Dhabi’s smart mobility platform for real-time public transport, traffic, and parking information.",
+    content: "Abu Dhabi's smart mobility platform for real-time public transport, traffic, and parking information.",
     externalLink: "https://darb.qmobility.ae/RucWeb/login",
     location: "/images/darb.png"
   },
@@ -57,30 +55,35 @@ const cardsData: cardData[] = [
     externalLink: "https://www.theentertainerme.com/en-ae/abu-dhabi-al-ain",
     location: "/images/entertainer.png"
   }
-
 ]
 
 const MotionCard = motion(Card)
 
 export default function CaseTips() {
   const controls = useAnimation()
-  const ref = useRef(null)
-  const isInView = useInView(ref, { once: true })
+  const mainRef = useRef(null)
+  const emergencyRef = useRef(null)
+  const isMainInView = useInView(mainRef, { once: true })
+  const isEmergencyInView = useInView(emergencyRef, { once: true })
+  const emergencyControls = useAnimation()
 
   useEffect(() => {
-    if (isInView) {
+    if (isMainInView) {
       controls.start("visible")
+      // Start emergency services animation after a delay
+      setTimeout(() => {
+        emergencyControls.start("visible")
+      }, 1000)
     }
-  }, [controls, isInView])
+  }, [controls, isMainInView])
 
   return (
-    <div className="flex-1 p-5 overflow-auto h-screen" ref={ref}>
+    <div className="flex-1 p-5 overflow-auto h-screen">
       <h1 className="text-white text-2xl mb-4">
-        {" "}
-        <b>Tips</b>{" "}
+        <b>Tips</b>
       </h1>
-      <h3 className="text-gray-400 text-l mb-6"> The essentials to navigating the UAE</h3>
-      <div className="grid grid-cols-2 gap-6">
+      <h3 className="text-gray-400 text-l mb-6">The essentials to navigating the UAE</h3>
+      <div className="grid grid-cols-2 gap-6" ref={mainRef}>
         {cardsData.map((card, index) => (
           <MotionCard
             key={index}
@@ -124,25 +127,44 @@ export default function CaseTips() {
       </div>
       <div>
         <h1 className="text-white text-2xl mb-4 mt-10">
-          {" "}
-          <b>Emergency Service Numbers</b>{" "}
+          <b>Emergency Service Numbers</b>
         </h1>
-        <div className="grid grid-cols-3 gap-4 mt-6">
-        {emergencyServices.map((card, index) =>
-          <Card key={index} className=" w-full min-w-[120px] bg-gray-800 border-gray-700 min-h-[50px] select-none cursor-pointer hover:bg-gray-700/50 transition-colors">
-
-              <h3 className="text-lg text-center mb-0 text-whitetext-sm text-center text-white font-semibold whitespace-nowrap">
+        <div className="grid grid-cols-3 gap-4 mt-6" ref={emergencyRef}>
+          {emergencyServices.map((card, index) => (
+            <MotionCard
+              key={index}
+              className="w-full min-w-[120px] bg-gray-800 border-gray-700 min-h-[50px] select-none cursor-pointer hover:bg-gray-700/50 transition-colors"
+              initial="hidden"
+              animate={emergencyControls}
+              variants={{
+                hidden: { opacity: 0, y: 30 },
+                visible: (i) => ({
+                  opacity: 1,
+                  y: 0,
+                  transition: {
+                    delay: i * 0.15,
+                    duration: 0.4,
+                    ease: "easeOut",
+                  },
+                }),
+              }}
+              custom={index}
+              whileHover={{ 
+                scale: 1.05,
+                transition: { duration: 0.2 }
+              }}
+              whileTap={{ scale: 0.95 }}
+            >
+              <h3 className="text-lg text-center mb-0 text-white font-semibold whitespace-nowrap mt-2">
                 {card.title}
               </h3>
-
-              <p className="text-base text-center text-gray-400 font-bold">
+              <p className="text-base text-center text-gray-400 font-bold mb-2">
                 {card.contact}
               </p>
-          </Card>
-        )}
+            </MotionCard>
+          ))}
+        </div>
       </div>
     </div>
-      </div>
-      
-  )
+  );
 }
