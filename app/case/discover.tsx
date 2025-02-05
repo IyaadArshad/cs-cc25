@@ -270,13 +270,13 @@ function PlaceCard({ place, onSelect }: { place: Place; onSelect: () => void }) 
       className="bg-gray-800 border-gray-700 h-[320px] select-none cursor-pointer hover:bg-gray-700/50 transition-colors"
       onClick={onSelect}
     >
-      <CardContent className="p-6 flex flex-col h-full">
+      <CardContent className="p-5 flex flex-col h-full">
         <img
           src={place.image || "/placeholder.svg"}
           alt={place.title}
           className="w-full h-36 object-cover rounded-md mb-4"
         />
-        <h3 className="text-white text-lg font-semibold mb-2 line-clamp-2">{place.title}</h3>
+        <h3 className="text-white text-lg font-semibold mb-2 line-clamp-1">{place.title}</h3>
         <p className="text-gray-400 text-sm line-clamp-3">{place.description}</p>
       </CardContent>
     </Card>
