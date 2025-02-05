@@ -10,7 +10,7 @@ const cardVariants = {
   visible: (custom: number) => ({
     opacity: 1,
     y: 0,
-    transition: { delay: custom * 0.1 }
+    transition: { delay: custom * 0.05 } // Reduced from 0.1 to 0.05
   })
 };
 
@@ -61,7 +61,7 @@ export default function CaseDiscover() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: 20 }}
-            transition={{ duration: 0.3 }}
+            transition={{ duration: 0.2 }} // Reduced from 0.3
           >
             {/* Detail View */}
             <div className="flex items-center gap-4 mb-6">
@@ -79,7 +79,7 @@ export default function CaseDiscover() {
             <motion.h1
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
-              transition={{ delay: 0.2 }}
+              transition={{ delay: 0.1 }} // Reduced from 0.2
               className="text-white text-4xl font-bold mb-8"
             >
               {selectedPlace.title}
@@ -88,7 +88,7 @@ export default function CaseDiscover() {
             <motion.div
               initial={{ opacity: 0, scale: 0.95 }}
               animate={{ opacity: 1, scale: 1 }}
-              transition={{ delay: 0.3 }}
+              transition={{ delay: 0.15 }} // Reduced from 0.3
               className="relative w-full h-[300px] mb-8"
             >
               <img
@@ -101,7 +101,7 @@ export default function CaseDiscover() {
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.4 }}
+              transition={{ delay: 0.2 }} // Reduced from 0.4
               className="space-y-4 mb-8"
             >
               {selectedPlace.longDescription?.map((paragraph, index) => (
@@ -114,7 +114,7 @@ export default function CaseDiscover() {
             <motion.button
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.5 }}
+              transition={{ delay: 0.25 }} // Reduced from 0.5
               whileHover={{ scale: 1.02 }}
               whileTap={{ scale: 0.98 }}
               onClick={() => window.open(selectedPlace.externalLink, '_blank')}
@@ -127,7 +127,7 @@ export default function CaseDiscover() {
             <motion.button
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.6 }}
+              transition={{ delay: 0.3 }} // Reduced from 0.6
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
               onClick={() => setSelectedPlace(null)}
@@ -150,7 +150,7 @@ export default function CaseDiscover() {
             <motion.h1
               initial={isFirstRender.current ? { opacity: 0, y: 20 } : false}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.1 }}
+              transition={{ delay: 0.05 }} // Reduced from 0.1
               className="text-white mt-4 mb-6 text-left text-3xl font-bold"
             >
               Discover Abu Dhabi
@@ -161,7 +161,7 @@ export default function CaseDiscover() {
               <motion.h2
                 initial={isFirstRender.current ? { opacity: 0, y: 20 } : false}
                 animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.3 }}
+                transition={{ delay: 0.05 }} 
                 className="text-white text-xl font-semibold mb-6 flex items-center"
               >
                 <MapPin className="mr-2" /> Places to Visit
@@ -174,8 +174,8 @@ export default function CaseDiscover() {
                         variants={cardVariants}
                         initial={isFirstRender.current ? "hidden" : false}
                         animate="visible"
-                        // Base offset 4: delay = (4 + index) * 0.1 = 0.4, 0.5, ...
-                        custom={index + 4}
+                        // Base offset for Section 1: custom = index + 2
+                        custom={index + 2}
                       >
                         <PlaceCard place={place} onSelect={() => setSelectedPlace(place)} />
                       </motion.div>
@@ -190,8 +190,7 @@ export default function CaseDiscover() {
               <motion.h2
                 initial={isFirstRender.current ? { opacity: 0, y: 20 } : false}
                 animate={{ opacity: 1, y: 0 }}
-                // Header delay set so it appears after Section 1 cards
-                transition={{ delay: 1.2 }}
+                transition={{ delay: 0.25 }} // Wait until Section 1 finished
                 className="text-white text-xl font-semibold mb-6 flex items-center"
               >
                 <Utensils className="mr-2" /> Culinary Delights
@@ -204,8 +203,8 @@ export default function CaseDiscover() {
                         variants={cardVariants}
                         initial={isFirstRender.current ? "hidden" : false}
                         animate="visible"
-                        // Base offset 13: cards start at 1.3s delay
-                        custom={index + 13}
+                        // Base offset for Section 2: custom = index + 12
+                        custom={index + 8}
                       >
                         <PlaceCard place={place} onSelect={() => setSelectedPlace(place)} />
                       </motion.div>
@@ -220,7 +219,7 @@ export default function CaseDiscover() {
               <motion.h2
                 initial={isFirstRender.current ? { opacity: 0, y: 20 } : false}
                 animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 2.0 }}
+                transition={{ delay: 1.0 }} // Next section appears after Section 2
                 className="text-white text-xl font-semibold mb-6 flex items-center"
               >
                 <ShoppingBag className="mr-2" /> Local Markets & Stores
@@ -233,8 +232,8 @@ export default function CaseDiscover() {
                         variants={cardVariants}
                         initial={isFirstRender.current ? "hidden" : false}
                         animate="visible"
-                        // Base offset 21: cards start at 2.1s delay
-                        custom={index + 21}
+                        // Base offset for Section 3: custom = index + 16
+                        custom={index + 16}
                       >
                         <PlaceCard place={place} onSelect={() => setSelectedPlace(place)} />
                       </motion.div>
@@ -249,7 +248,7 @@ export default function CaseDiscover() {
               <motion.h2
                 initial={isFirstRender.current ? { opacity: 0, y: 20 } : false}
                 animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 2.8 }}
+                transition={{ delay: 1.5 }} // Final section appears last
                 className="text-white text-xl font-semibold mb-6 flex items-center"
               >
                 <Landmark className="mr-2" /> Essential Services
@@ -262,8 +261,8 @@ export default function CaseDiscover() {
                         variants={cardVariants}
                         initial={isFirstRender.current ? "hidden" : false}
                         animate="visible"
-                        // Base offset 29: cards start at 2.9s delay
-                        custom={index + 29}
+                        // Base offset for Section 4: custom = index + 20
+                        custom={index + 20}
                       >
                         <PlaceCard place={service} onSelect={() => setSelectedPlace(service)} />
                       </motion.div>
