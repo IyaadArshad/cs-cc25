@@ -4,7 +4,6 @@ import { MapPin, Utensils, ShoppingBag, Landmark, ArrowLeft, ExternalLink } from
 import { useState, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 
-// Animation variants for cards – custom value * 0.1 = delay
 const cardVariants = {
   hidden: { opacity: 0, y: 20 },
   visible: (custom: number) => ({
@@ -28,13 +27,13 @@ export default function CaseDiscover() {
 
   const carouselOptions = {
     loop: true,
-    dragFree: true, // Enables momentum-based dragging
+    dragFree: true,
     draggable: true,
     containScroll: 'trimSnaps' as const,
     axis: 'x' as const,
-    wheelEnabled: true, // Enables mouse wheel scrolling
-    wheelScroll: 1, // Number of slides to scroll with wheel
-    align: 'start' as const, // Align items to start to show partial third item
+    wheelEnabled: true,
+    wheelScroll: 1,
+    align: 'start' as const,
   };
 
   return (
