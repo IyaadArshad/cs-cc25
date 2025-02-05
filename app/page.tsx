@@ -33,10 +33,11 @@ import {
   LockClosedIcon,
   LinkIcon,
 } from "@heroicons/react/24/outline";
-import { Rocket } from "lucide-react";
+import { Rocket, Check } from "lucide-react";
 import CaseHome from "./case/home";
 import CaseDiscover from "./case/discover";
 import CaseTips from "./case/tips";
+import * as Popover from "@radix-ui/react-popover";
 
 export default function Page() {
   const [activeTab, setActiveTab] = useState<Tab>("home");
@@ -59,6 +60,17 @@ export default function Page() {
   const [confirmedInterests, setConfirmedInterests] = useState<string[]>([]);
   const [currentInterestIndex, setCurrentInterestIndex] = useState(0);
   const [currentInterestResponse, setCurrentInterestResponse] = useState<boolean | null>(null);
+  const [inputValue, setInputValue] = useState("");
+  const lookingForOptions = [
+    "Obtaining a visa",
+    "Getting my child's education",
+    "Settling in to my new area",
+    "getting a driving license",
+    "opening a bank account",
+    "registering a SIM",
+    "connecting with expat communities"
+  ];
+  const [highlightedIndex, setHighlightedIndex] = useState(0);
 
   useEffect(() => {
     const nameCookie = document.cookie
@@ -80,8 +92,9 @@ export default function Page() {
         setPhase("bio");
       }
     } else if (phase === "bio") {
-      if (bio.trim()) {
-        document.cookie = `bio=${bio};path=/;max-age=${60 * 60 * 24 * 7}`;
+      const selectedOptions = inputValue.split(",").map(x => x.trim()).filter(Boolean);
+      if (selectedOptions.length > 0) {
+        document.cookie = `lookingFor=${JSON.stringify(selectedOptions)};path=/;max-age=${60 * 60 * 24 * 7}`;
         setPhase("origin");
       }
     } else if (phase === "origin") {
@@ -160,6 +173,17 @@ export default function Page() {
 
   // Interests options for the final page
   const interests = ["Music", "Tech", "Travel", "Sports", "Art", "Food"];
+
+  const addOption = (option: string) => {
+    let parts = inputValue.split(",").map(p => p.trim());
+    // Remove the current (possibly incomplete) fragment.
+    parts.pop();
+    // Append the new option.
+    parts.push(option);
+    // Reassemble the input with a trailing comma and space.
+    setInputValue(parts.join(", ") + ", ");
+    setHighlightedIndex(0);
+  };
 
   const getTabContent = (tab: Tab) => {
     switch (tab) {
@@ -356,13 +380,9 @@ export default function Page() {
                 <h1 className="text-4xl font-bold text-white text-center">
                   {phase === "name" ? "Welcome to the Emirates" : userName}
                 </h1>
-                {phase !== "origin" && (
+                {phase !== "origin" && phase !== "bio" && (
                   <p className="text-gray-400 text-lg mb-4 text-center">
-                    {phase === "name"
-                      ? "Let's start by getting to know you"
-                      : phase === "bio"
-                      ? "How would you describe yourself?"
-                      : null}
+                    {phase === "name" && "Let's start by getting to know you"}
                   </p>
                 )}
                 {phase === "origin" && (
@@ -386,14 +406,62 @@ export default function Page() {
                     required
                   />
                 ) : phase === "bio" ? (
-                  <input
-                    type="text"
-                    value={bio}
-                    onChange={(e) => setBio(e.target.value)}
-                    placeholder="Write your bio"
-                    className="w-full px-4 py-3 bg-[#272739] rounded-lg text-white placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-[#2563eb]"
-                    required
-                  />
+                  <div className="w-full">
+                    <p className="text-gray-400 text-lg mb-2 text-center">
+                      What are you looking for?
+                    </p>
+                    <div className="relative">
+                      <input
+                        type="text"
+                        value={inputValue}
+                        onChange={(e) => {
+                          setInputValue(e.target.value);
+                          setHighlightedIndex(0);
+                        }}
+                        onKeyDown={(e) => {
+                          // Get the last fragment for filtering.
+                          const fragments = inputValue.split(",");
+                          const currentFragment = fragments[fragments.length - 1].trim();
+                          const filteredOptions = lookingForOptions.filter((option) =>
+                            option.toLowerCase().includes(currentFragment.toLowerCase())
+                          );
+                          if (e.key === "ArrowDown") {
+                            e.preventDefault();
+                            setHighlightedIndex(filteredOptions.length > 0 ? (highlightedIndex + 1) % filteredOptions.length : 0);
+                          } else if (e.key === "ArrowUp") {
+                            e.preventDefault();
+                            setHighlightedIndex(filteredOptions.length > 0 ? (highlightedIndex - 1 + filteredOptions.length) % filteredOptions.length : 0);
+                          } else if (e.key === "Enter") {
+                            e.preventDefault();
+                            const option = filteredOptions[highlightedIndex];
+                            if (option) {
+                              addOption(option);
+                            }
+                          }
+                        }}
+                        placeholder="Type to search..."
+                        className="w-full px-4 py-3 bg-[#272739] rounded-lg text-white placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-[#2563eb]"
+                      />
+                      {inputValue.split(",").pop()?.trim() !== "" && (
+                        <div className="absolute z-10 mt-1 w-full bg-black bg-opacity-80 backdrop-blur-sm rounded-lg shadow-lg max-h-48 overflow-y-auto">
+                          {lookingForOptions
+                            .filter((option) => {
+                              const currentFragment = inputValue.split(",").pop()?.trim() || "";
+                              return option.toLowerCase().includes(currentFragment.toLowerCase());
+                            })
+                            .map((option, index) => (
+                              <div
+                                key={option}
+                                onClick={() => addOption(option)}
+                                className={`flex items-center justify-between px-4 py-2 cursor-pointer hover:bg-[#2563eb] ${index === highlightedIndex ? "bg-[#2563eb]" : ""}`}
+                              >
+                                <span className="text-white">{option}</span>
+                              </div>
+                            ))}
+                        </div>
+                      )}
+                    </div>
+                  </div>
                 ) : phase === "origin" ? (
                   <>
                     <input
