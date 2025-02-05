@@ -37,7 +37,7 @@ const cardsData: cardData[] = [
     title: "ADDC",
     content: "Where you can pay your water and electricity bills!",
     externalLink: "https://www.addc.ae/en-US/home/pages/AboutUs.aspx",
-    location: "/images/addc.jpg"
+    location: "/images/addc.png"
   },
   {
     title: "DARB",
@@ -49,13 +49,13 @@ const cardsData: cardData[] = [
     title: "Abu Dhabi Police",
     content: "The law enforcement agency responsible for maintaining security, traffic regulation, and public safety in Abu Dhabi.",
     externalLink: "https://es.adpolice.gov.ae/trafficservices/",
-    location: "/images/adpolice.jpg"
+    location: "/images/adpolice.png"
   },
   {
     title: "The Entertainer",
     content: "A lifestyle app offering discounts and buy-one-get-one-free deals on dining, entertainment, and leisure activities",
     externalLink: "https://www.theentertainerme.com/en-ae/abu-dhabi-al-ain",
-    location: "/images/entertainer.jpg"
+    location: "/images/entertainer.png"
   }
 
 ]
