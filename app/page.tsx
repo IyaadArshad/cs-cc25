@@ -285,7 +285,7 @@ export default function Page() {
     return (
       <div
         style={{ backgroundImage: `url(${randomBackground})` }}
-        className="min-h-screen bg-cover bg-center flex items-center justify-center p-4 font-['Segoe_UI'] sm:p-4 p-0"
+        className="min-h-screen bg-cover bg-center flex items-center justify-center p-4 font-['Segoe_UI'] sm:p-4"
       >
         <div className="w-full h-screen sm:w-[490px] sm:max-w-lg sm:h-[780px] bg-gradient-to-b from-[#12121d]/80 to-[#12121d]/95 backdrop-blur-xl main-card sm:rounded-[18px] overflow-hidden flex flex-col">
 
@@ -495,7 +495,7 @@ export default function Page() {
   return (
     <div
       style={{ backgroundImage: `url(${randomBackground})` }}
-      className="min-h-screen bg-cover bg-center flex items-center justify-center p-4 font-['Segoe_UI'] sm:p-4 p-0"
+      className="min-h-screen bg-cover bg-center flex items-center justify-center p-4 font-['Segoe_UI'] sm:p-4"
     >
       <div className="w-full h-screen sm:w-[490px] sm:max-w-lg sm:h-[780px] bg-gradient-to-b from-[#12121d]/80 to-[#12121d]/95 backdrop-blur-xl main-card sm:rounded-[18px] overflow-hidden flex flex-col">
         {/* Main Content Area */}
