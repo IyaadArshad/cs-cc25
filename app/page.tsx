@@ -411,36 +411,49 @@ export default function Page() {
                       What are you looking for?
                     </p>
                     <div className="relative">
-                      <input
-                        type="text"
+                      <textarea
                         value={inputValue}
                         onChange={(e) => {
                           setInputValue(e.target.value);
                           setHighlightedIndex(0);
+                          // Adjust height automatically
+                          e.target.style.height = 'auto';
+                          e.target.style.height = e.target.scrollHeight + 'px';
                         }}
                         onKeyDown={(e) => {
-                          // Get the last fragment for filtering.
-                          const fragments = inputValue.split(",");
-                          const currentFragment = fragments[fragments.length - 1].trim();
+                          const currentFragment = inputValue.split(",").pop()?.trim() || "";
                           const filteredOptions = lookingForOptions.filter((option) =>
                             option.toLowerCase().includes(currentFragment.toLowerCase())
                           );
-                          if (e.key === "ArrowDown") {
+
+                          if (e.key === "Enter") {
                             e.preventDefault();
-                            setHighlightedIndex(filteredOptions.length > 0 ? (highlightedIndex + 1) % filteredOptions.length : 0);
+                            if (filteredOptions.length > 0) {
+                              const selectedOption = filteredOptions[highlightedIndex];
+                              if (selectedOption) {
+                                // Remove the partial input and add the complete option
+                                const parts = inputValue.split(",").map(p => p.trim());
+                                parts.pop(); // Remove current incomplete fragment
+                                parts.push(selectedOption); // Add selected option
+                                setInputValue(parts.join(", ") + ", ");
+                                setHighlightedIndex(0);
+                              }
+                            }
+                          } else if (e.key === "ArrowDown") {
+                            e.preventDefault();
+                            setHighlightedIndex((prev) =>
+                              filteredOptions.length > 0 ? (prev + 1) % filteredOptions.length : 0
+                            );
                           } else if (e.key === "ArrowUp") {
                             e.preventDefault();
-                            setHighlightedIndex(filteredOptions.length > 0 ? (highlightedIndex - 1 + filteredOptions.length) % filteredOptions.length : 0);
-                          } else if (e.key === "Enter") {
-                            e.preventDefault();
-                            const option = filteredOptions[highlightedIndex];
-                            if (option) {
-                              addOption(option);
-                            }
+                            setHighlightedIndex((prev) =>
+                              filteredOptions.length > 0 ? (prev - 1 + filteredOptions.length) % filteredOptions.length : 0
+                            );
                           }
                         }}
                         placeholder="Type to search..."
-                        className="w-full px-4 py-3 bg-[#272739] rounded-lg text-white placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-[#2563eb]"
+                        className="w-full px-4 py-3 bg-[#272739] rounded-lg text-white placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-[#2563eb] resize-none min-h-[48px] overflow-hidden"
+                        rows={1}
                       />
                       {inputValue.split(",").pop()?.trim() !== "" && (
                         <div className="absolute z-10 mt-1 w-full bg-black bg-opacity-80 backdrop-blur-sm rounded-lg shadow-lg max-h-48 overflow-y-auto">
