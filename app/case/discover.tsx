@@ -1,7 +1,7 @@
 import { Carousel, CarouselContent, CarouselItem } from "@/components/ui/carousel";
 import { Card, CardContent } from "@/components/ui/card";
 import { MapPin, Utensils, ShoppingBag, Landmark, ArrowLeft, ExternalLink } from "lucide-react";
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { placesToVisit, foodPlaces, shoppingPlaces, essentialServices } from "./discoverData";
 
@@ -25,6 +25,21 @@ interface Place {
 export default function CaseDiscover() {
   const [selectedPlace, setSelectedPlace] = useState<Place | null>(null);
   const isFirstRender = useRef(true);
+  const containerRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    // Wait for animations to start before scrolling
+    const timeoutId = setTimeout(() => {
+      if (containerRef.current) {
+        containerRef.current.scrollTo({
+          top: 0,
+          behavior: 'smooth'
+        });
+      }
+    }, 350); // Increased delay to let animations settle
+
+    return () => clearTimeout(timeoutId);
+  }, [selectedPlace]);
 
   const carouselOptions = {
     loop: true,
@@ -38,7 +53,7 @@ export default function CaseDiscover() {
   };
 
   return (
-    <div className="flex-1 p-5 overflow-y-auto">
+    <div ref={containerRef} className="flex-1 p-5 overflow-y-auto">
       <AnimatePresence mode="wait">
         {selectedPlace ? (
           <motion.div
@@ -270,7 +285,7 @@ function PlaceCard({ place, onSelect }: { place: Place; onSelect: () => void }) 
       className="bg-gray-800 border-gray-700 h-[320px] select-none cursor-pointer hover:bg-gray-700/50 transition-colors"
       onClick={onSelect}
     >
-      <CardContent className="p-5 flex flex-col h-full">
+      <CardContent className="p-6 flex flex-col h-full">
         <img
           src={place.image || "/placeholder.svg"}
           alt={place.title}
