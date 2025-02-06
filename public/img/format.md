@@ -1,0 +1,3 @@
+- All files/folders use camelcase format
+- Use full names (No abbreviations)
+- All images are .png
