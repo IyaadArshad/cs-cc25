@@ -50,13 +50,9 @@ export default function Page() {
   const [isLoading, setIsLoading] = useState(true);
   const [inputValue, setInputValue] = useState("");
   const lookingForOptions = [
-    "Obtaining a visa",
-    "Getting my child's education",
-    "Settling in to my new area",
-    "getting a driving license",
-    "opening a bank account",
-    "registering a SIM",
-    "connecting with expat communities"
+    "Find Job & Employment Opportunities",
+    "Explore Local Transportation Options",
+    "Manage Utilities Services"
   ];
   const [highlightedIndex, setHighlightedIndex] = useState(0);
 
@@ -237,9 +233,9 @@ export default function Page() {
         <div className="w-full h-screen sm:w-[490px] sm:max-w-lg sm:h-[780px] bg-gradient-to-b from-[#12121d]/80 to-[#12121d]/95 backdrop-blur-xl main-card sm:rounded-[18px] overflow-hidden flex flex-col">
 
           {/* Content */}
-          <div className="flex-1 flex flex-col items-center justify-center gap-5 px-6">
+          <div className="flex-1 flex flex-col items-center justify-center gap-3 px-6">
             {phase === "name" || phase === "bio" ? (
-                <div className="relative w-auto min-w-[20rem] h-auto min-h-[12rem] mb-2 flex justify-center items-center">
+                <div className="relative w-auto min-w-[20rem] h-auto min-h-[12rem] mb-0 flex justify-center items-center">
                 <img
                   src="/landing_new.png"
                   alt="Welcome"
@@ -292,72 +288,31 @@ export default function Page() {
                   />
                 ) : phase === "bio" ? (
                   <div className="w-full">
-                    <p className="text-gray-400 text-lg mb-2 text-center">
+                    <p className="text-gray-400 text-lg mb-4 text-center">
                       What are you looking for?
                     </p>
-                    <div className="relative">
-                      <textarea
-                        value={inputValue}
-                        onChange={(e) => {
-                          setInputValue(e.target.value);
-                          setHighlightedIndex(0);
-                          // Adjust height automatically
-                          e.target.style.height = 'auto';
-                          e.target.style.height = e.target.scrollHeight + 'px';
-                        }}
-                        onKeyDown={(e) => {
-                          const currentFragment = inputValue.split(",").pop()?.trim() || "";
-                          const filteredOptions = lookingForOptions.filter((option) =>
-                            option.toLowerCase().includes(currentFragment.toLowerCase())
-                          );
-
-                          if (e.key === "Enter") {
-                            e.preventDefault();
-                            if (filteredOptions.length > 0) {
-                              const selectedOption = filteredOptions[highlightedIndex];
-                              if (selectedOption) {
-                                // Remove the partial input and add the complete option
-                                const parts = inputValue.split(",").map(p => p.trim());
-                                parts.pop(); // Remove current incomplete fragment
-                                parts.push(selectedOption); // Add selected option
-                                setInputValue(parts.join(", ") + ", ");
-                                setHighlightedIndex(0);
+                    <div className="space-y-3">
+                      {lookingForOptions.map((option) => (
+                        <label key={option} className="flex items-start gap-3 bg-[#272739] p-3 rounded-lg cursor-pointer hover:bg-[#272739]/80">
+                          <input
+                            type="checkbox"
+                            value={option}
+                            checked={inputValue.includes(option)}
+                            onChange={(e) => {
+                              const selectedOptions = inputValue ? inputValue.split(',').map(x => x.trim()) : [];
+                              if (e.target.checked) {
+                                selectedOptions.push(option);
+                              } else {
+                                const index = selectedOptions.indexOf(option);
+                                if (index > -1) selectedOptions.splice(index, 1);
                               }
-                            }
-                          } else if (e.key === "ArrowDown") {
-                            e.preventDefault();
-                            setHighlightedIndex((prev) =>
-                              filteredOptions.length > 0 ? (prev + 1) % filteredOptions.length : 0
-                            );
-                          } else if (e.key === "ArrowUp") {
-                            e.preventDefault();
-                            setHighlightedIndex((prev) =>
-                              filteredOptions.length > 0 ? (prev - 1 + filteredOptions.length) % filteredOptions.length : 0
-                            );
-                          }
-                        }}
-                        placeholder="Type to search..."
-                        className="w-full px-4 py-3 bg-[#272739] rounded-lg text-white placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-[#2563eb] resize-none min-h-[48px] overflow-hidden"
-                        rows={1}
-                      />
-                      {inputValue.split(",").pop()?.trim() !== "" && (
-                        <div className="absolute z-10 mt-1 w-full bg-black bg-opacity-80 backdrop-blur-sm rounded-lg shadow-lg max-h-48 overflow-y-auto">
-                          {lookingForOptions
-                            .filter((option) => {
-                              const currentFragment = inputValue.split(",").pop()?.trim() || "";
-                              return option.toLowerCase().includes(currentFragment.toLowerCase());
-                            })
-                            .map((option, index) => (
-                              <div
-                                key={option}
-                                onClick={() => addOption(option)}
-                                className={`flex items-center justify-between px-4 py-2 cursor-pointer hover:bg-[#2563eb] ${index === highlightedIndex ? "bg-[#2563eb]" : ""}`}
-                              >
-                                <span className="text-white">{option}</span>
-                              </div>
-                            ))}
-                        </div>
-                      )}
+                              setInputValue(selectedOptions.join(', '));
+                            }}
+                            className="mt-1 w-4 h-4 accent-[#2563eb]"
+                          />
+                          <span className="text-white">{option}</span>
+                        </label>
+                      ))}
                     </div>
                   </div>
                 ) : phase === "origin" ? (
