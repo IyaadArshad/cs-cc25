@@ -36,8 +36,8 @@ import {
 import { Rocket, Check } from "lucide-react";
 import CaseHome from "./case/home";
 import CaseDiscover from "./case/discover";
-import CaseTips from "./case/tips";
 import * as Popover from "@radix-ui/react-popover";
+import CaseApps from "./case/apps";
 
 export default function Page() {
   const [activeTab, setActiveTab] = useState<Tab>("home");
@@ -201,9 +201,9 @@ export default function Page() {
             <h2 className="text-white text-2xl">$tips Trading</h2>
           </div>
         );
-      case "tips":
+      case "apps":
         return (
-          <CaseTips />
+          <CaseApps />
         );
       case "profile":
         return (
@@ -589,7 +589,7 @@ export default function Page() {
             className="absolute top-0 left-0 w-1/5 h-1 bg-[#2563eb] transition-all duration-300 ease-in-out"
             style={{
               transform: `translateX(${
-                ["home", "discover", "tips", "experiences", "profile"].indexOf(
+                ["home", "discover", "apps", "experiences", "profile"].indexOf(
                   activeTab
                 ) * 100
               }%)`,
@@ -631,20 +631,20 @@ export default function Page() {
             </span>
           </button>
           <button
-            onClick={() => setActiveTab("tips")}
+            onClick={() => setActiveTab("apps")}
             className="flex flex-col items-center justify-center gap-1"
           >
-            {activeTab === "tips" ? (
+            {activeTab === "apps" ? (
               <LightBulbFilled className="w-8 h-8 text-[#2563eb]" />
             ) : (
               <LightBulbIcon className="w-8 h-8 text-[#ffffff]" />
             )}
             <span
               className={`text-[12px] ${
-                activeTab === "tips" ? "text-[#2563eb]" : "text-[#ffffff]"
+                activeTab === "apps" ? "text-[#2563eb]" : "text-[#ffffff]"
               }`}
             >
-              Tips
+              Apps
             </span>
           </button>
           <button
