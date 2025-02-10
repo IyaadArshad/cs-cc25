@@ -1,3 +1,4 @@
+import { useState } from "react";
 import {
   Card,
   CardContent,
@@ -5,8 +6,8 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { motion } from "framer-motion"; // added import
-import { ExternalLink, MapPin } from "lucide-react"; // updated import to include MapPin
+import { motion, AnimatePresence } from "framer-motion";
+import { ExternalLink, MapPin } from "lucide-react";
 
 interface cardData {
   title: string;
@@ -45,7 +46,6 @@ const cardsData: cardData[] = [
   },
 ];
 
-// Updated cardVariants with sequential delay offset (starting at 0.15 for the first card)
 const cardVariants = {
   hidden: { opacity: 0, y: 20 },
   visible: (custom: number) => ({
@@ -56,6 +56,8 @@ const cardVariants = {
 };
 
 export default function CaseTips() {
+  const [showLocationDialog, setShowLocationDialog] = useState(false);
+
   return (
     <div className="flex-1 p-6 overflow-auto h-screen">
       <motion.h1
@@ -73,7 +75,10 @@ export default function CaseTips() {
         className="text-gray-400 text-l mb-6"
       >
         The essentials to navigating{" "}
-        <span className="inline-flex items-center bg-gray-800 hover:bg-gray-700/50 transition-colors text-white text-md font-medium px-3 py-1 rounded-full">
+        <span
+          onClick={() => setShowLocationDialog(true)}
+          className="inline-flex items-center bg-gray-800 hover:bg-gray-700/50 transition-colors text-white text-md font-medium px-3 py-1 rounded-full cursor-pointer"
+        >
           <span className="text-[13px]">Abu Dhabi</span>
           <MapPin className="ml-1 w-3 h-3" />
         </span>
@@ -87,18 +92,19 @@ export default function CaseTips() {
             animate="visible"
             custom={index}
           >
+            <a href={card.externalLink} target="_blank" rel="noreferrer">
             <Card className="w-full min-w-[120px] bg-gray-800 border-gray-700 min-h-[280px] select-none cursor-pointer hover:bg-gray-700/50 transition-colors flex flex-col">
               <CardHeader className="relative text-white text-lg font-semibold line-clamp-2 pb-2">
-                <a
-                  href={card.externalLink}
-                  target="_blank"
+                <span
                   rel="noreferrer"
                   className="absolute top-3 right-3"
                 >
                   <ExternalLink className="w-4 h-4 text-gray-100/70" />
-                </a>
+                </span>
                 <a
                   href={card.externalLink}
+                  target="_blank"
+                  rel="noreferrer"
                   className="flex justify-center items-center"
                 >
                   <img
@@ -116,9 +122,40 @@ export default function CaseTips() {
                 <p className="line-clamp-4">{card.content}</p>
               </CardContent>
             </Card>
+            </a>
           </motion.div>
         ))}
       </div>
+      <AnimatePresence>
+        {showLocationDialog && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="fixed inset-0 flex justify-center items-center bg-black bg-opacity-50 z-50"
+          >
+            <motion.div
+              initial={{ opacity: 0, scale: 0.8 }}
+              animate={{ opacity: 1, scale: 1 }}
+              exit={{ opacity: 0, scale: 0.8, transition: { duration: 0.15 } }}
+              transition={{ type: "spring", stiffness: 300, damping: 20 }}
+              className="bg-gray-800 p-8 rounded-lg text-center mx-4 max-w-xs"
+            >
+              <MapPin className="w-16 h-16 text-[#2563eb] mx-auto" />
+              <h2 className="mt-4 text-2xl font-bold text-white">Curated Content</h2>
+              <p className="mt-2 text-gray-300">
+                The results have been curated based on your location.
+              </p>
+              <button
+                onClick={() => setShowLocationDialog(false)}
+                className="mt-6 px-4 py-2 bg-gray-700/50 hover:bg-[#2563eb] transition-colors text-white rounded-lg"
+              >
+                Got it 👍
+              </button>
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </div>
   );
 }
