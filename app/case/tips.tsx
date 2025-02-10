@@ -1,6 +1,5 @@
-import { Card, CardContent, CardDescription, CardHeader, CardTitle, } from "@/components/ui/card";
-import { useEffect, useRef } from 'react';
-import { motion, useAnimation, useInView } from "framer-motion"
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { motion } from "framer-motion"; // added import
 
 interface cardData {
   title: string,
@@ -24,7 +23,7 @@ const cardsData: cardData[] = [
     location: "/img/tips/darb.png"
   },
   {
-    title: "Abu Dhabi Police",
+    title: "AD Police",
     content: "The law enforcement agency responsible for maintaining security, traffic regulation, and public safety in Abu Dhabi.",
     externalLink: "https://es.adpolice.gov.ae/trafficservices/",
     location: "/img/tips/abuDhabiPolice.png"
@@ -38,66 +37,64 @@ const cardsData: cardData[] = [
 
 ]
 
-const MotionCard = motion(Card)
+const cardVariants = {
+  hidden: { opacity: 0, y: 20 },
+  visible: (custom: number) => ({
+    opacity: 1,
+    y: 0,
+    transition: { delay: custom * 0.05 }
+  })
+};
 
 export default function CaseTips() {
-  const controls = useAnimation()
-  const ref = useRef(null)
-  const isInView = useInView(ref, { once: true })
-
-  useEffect(() => {
-    if (isInView) {
-      controls.start("visible")
-    }
-  }, [controls, isInView])
-
   return (
-    <div className="flex-1 p-6 overflow-auto h-screen" ref={ref}>
-      <h1 className="text-white text-2xl mb-4">
-        {" "}
-        <b>Tips</b>{" "}
-      </h1>
-      <h3 className="text-gray-400 text-l mb-6"> The essentials to navigating the UAE</h3>
+    <div className="flex-1 p-6 overflow-auto h-screen">
+      <motion.h1
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ delay: 0.05 }}
+        className="text-white text-2xl mb-4"
+      >
+        <b>Tips</b>
+      </motion.h1>
+      <motion.h3
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ delay: 0.1 }}
+        className="text-gray-400 text-l mb-6"
+      >
+        The essentials to navigating the UAE
+      </motion.h3>
       <div className="grid grid-cols-2 gap-6">
         {cardsData.map((card, index) => (
-          <MotionCard
+          <motion.div
             key={index}
-            className="w-full min-w-[120px] bg-gray-800 border-gray-700 min-h-[200px] select-none cursor-pointer hover:bg-gray-700/50 transition-colors"
+            variants={cardVariants}
             initial="hidden"
-            animate={controls}
-            variants={{
-              hidden: { opacity: 0, y: 50 },
-              visible: (i) => ({
-                opacity: 1,
-                y: 0,
-                transition: {
-                  delay: i * 0.1,
-                  duration: 0.5,
-                  ease: "easeOut",
-                },
-              }),
-            }}
+            animate="visible"
             custom={index}
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}
           >
-            <CardHeader className="text-white text-lg font-semibold line-clamp-2">
+            <Card
+              className="w-full min-w-[120px] bg-gray-800 border-gray-700 min-h-[280px] select-none cursor-pointer hover:bg-gray-700/50 transition-colors flex flex-col"
+            >
+              <CardHeader className="text-white text-lg font-semibold line-clamp-2 pb-2">
                 <a href={card.externalLink} className="flex justify-center items-center">
-                <img
-                  src={card.location}
-                  className="object-cover mb-3"
-                  width={"72px"}
-                  height={"72px"}
-                />
+                  <img
+                    src={card.location}
+                    className="object-cover mb-2"
+                    width={"72px"}
+                    height={"72px"}
+                  />
                 </a>
-              <CardTitle className="text-lg text-center">
-                <p>{card.title}</p>
-              </CardTitle>
-            </CardHeader>
-            <CardContent className="mt-1 text-gray-400 text-sm line-clamp-3 text-center">
-              <p>{card.content}</p>
-            </CardContent>
-          </MotionCard>
+                <CardTitle className="text-lg text-center">
+                  {card.title}
+                </CardTitle>
+              </CardHeader>
+              <CardContent className="text-gray-400 text-sm text-center pt-0 flex-1 flex items-center justify-center px-4">
+                <p className="line-clamp-4">{card.content}</p>
+              </CardContent>
+            </Card>
+          </motion.div>
         ))}
       </div>
     </div>
