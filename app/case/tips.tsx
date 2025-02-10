@@ -10,32 +10,30 @@ interface cardData {
 }
 
 const cardsData: cardData[] = [
-
   {
     title: "ADDC",
-    content: "Where you can pay your water and electricity bills!",
+    content: "Pay your water and electricity bills quickly and securely.",
     externalLink: "https://www.addc.ae/en-US/home/pages/AboutUs.aspx",
     location: "/img/tips/abuDhabiDistributionCompany.png"
   },
   {
     title: "DARB",
-    content: "Abu Dhabi’s smart mobility platform for real-time public transport, traffic, and parking information.",
+    content: "Access real-time public transport and traffic information with ease.",
     externalLink: "https://darb.qmobility.ae/RucWeb/login",
     location: "/img/tips/darb.png"
   },
   {
     title: "AD Police",
-    content: "The law enforcement agency responsible for maintaining security, traffic regulation, and public safety in Abu Dhabi.",
+    content: "Connect with Abu Dhabi's trusted police services for prompt assistance.",
     externalLink: "https://es.adpolice.gov.ae/trafficservices/",
     location: "/img/tips/abuDhabiPolice.png"
   },
   {
     title: "The Entertainer",
-    content: "A lifestyle app offering discounts and buy-one-get-one-free deals on dining, entertainment, and leisure activities",
+    content: "Discover exclusive discounts on dining, leisure, and entertainment activities.",
     externalLink: "https://www.theentertainerme.com/en-ae/abu-dhabi-al-ain",
     location: "/img/tips/entertainer.png"
   }
-
 ]
 
 // Updated cardVariants with sequential delay offset (starting at 0.15 for the first card)
@@ -76,7 +74,7 @@ export default function CaseTips() {
             animate="visible"
             custom={index}
           >
-            <Card className="w-full min-w-[120px] bg-gray-800 border-gray-700 min-h-[305px] max-h-[305px] select-none cursor-pointer hover:bg-gray-700/50 transition-colors flex flex-col">
+            <Card className="w-full min-w-[120px] bg-gray-800 border-gray-700 min-h-[280px] select-none cursor-pointer hover:bg-gray-700/50 transition-colors flex flex-col">
               <CardHeader className="relative text-white text-lg font-semibold line-clamp-2 pb-2">
                 <a 
                   href={card.externalLink} 
