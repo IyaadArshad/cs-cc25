@@ -37,12 +37,13 @@ const cardsData: cardData[] = [
 
 ]
 
+// Updated cardVariants with sequential delay offset (starting at 0.15 for the first card)
 const cardVariants = {
   hidden: { opacity: 0, y: 20 },
   visible: (custom: number) => ({
     opacity: 1,
     y: 0,
-    transition: { delay: custom * 0.05 }
+    transition: { delay: 0.15 + custom * 0.05 }
   })
 };
 
@@ -74,9 +75,7 @@ export default function CaseTips() {
             animate="visible"
             custom={index}
           >
-            <Card
-              className="w-full min-w-[120px] bg-gray-800 border-gray-700 min-h-[280px] select-none cursor-pointer hover:bg-gray-700/50 transition-colors flex flex-col"
-            >
+            <Card className="w-full min-w-[120px] bg-gray-800 border-gray-700 min-h-[280px] select-none cursor-pointer hover:bg-gray-700/50 transition-colors flex flex-col">
               <CardHeader className="text-white text-lg font-semibold line-clamp-2 pb-2">
                 <a href={card.externalLink} className="flex justify-center items-center">
                   <img
