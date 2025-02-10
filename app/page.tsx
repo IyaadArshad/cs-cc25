@@ -3,7 +3,7 @@
 import { useState, useEffect } from "react";
 import type React from "react";
 import { countries } from "./countries";
-import { Tab, WeatherCondition, SettingsItemProps, WeatherPillProps } from "../types/types"
+import { Tab, WeatherCondition, SettingsItemProps, WeatherPillProps } from "../types/types";
 import SettingsItem from "@/components/SettingsItem";
 import { backgrounds } from "../variables/backgrouds";
 import WeatherPill from "@/components/WeatherPill";
@@ -43,23 +43,11 @@ export default function Page() {
   const [activeTab, setActiveTab] = useState<Tab>("home");
   const [userName, setUserName] = useState("");
   const [bio, setBio] = useState("");
-  const [phase, setPhase] = useState<"name" | "bio" | "origin" | "loading" | "confirmInterests" | "final">("name");
+  const [phase, setPhase] = useState<"name" | "bio" | "origin" | "final">("name");
   const [origin, setOrigin] = useState("");
   const [countrySearch, setCountrySearch] = useState("");
   const [hasUserCookie, setHasUserCookie] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
-  const loadingPhrases = [
-    "AI is identifying your personality",
-    "Matching your traits",
-    "Analyzing your profile",
-    "Gathering insights",
-    "Almost there"
-  ];
-  const [loadingIndex, setLoadingIndex] = useState(0);
-  const [apiInterests, setApiInterests] = useState<string[]>([]);
-  const [confirmedInterests, setConfirmedInterests] = useState<string[]>([]);
-  const [currentInterestIndex, setCurrentInterestIndex] = useState(0);
-  const [currentInterestResponse, setCurrentInterestResponse] = useState<boolean | null>(null);
   const [inputValue, setInputValue] = useState("");
   const lookingForOptions = [
     "Obtaining a visa",
@@ -99,80 +87,15 @@ export default function Page() {
       }
     } else if (phase === "origin") {
       if (origin.trim()) {
-        setPhase("loading");
+        document.cookie = `country=${origin};path=/;max-age=${60 * 60 * 24 * 7}`;
+        setPhase("final");
       }
-    }
-  };
-
-  useEffect(() => {
-    if (phase === "loading") {
-      fetch(`/api/v1/setup/generateInterests?bio=${encodeURIComponent(bio)}&originCountry=${encodeURIComponent(origin)}`)
-        .then((res) => res.json())
-        .then((data) => {
-          const suggestions = data.interests || [];
-          // If there are more than 12 suggestions, only take the first 12
-          setApiInterests(suggestions.slice(0, 12));
-          setPhase("confirmInterests");
-          setCurrentInterestIndex(0);
-          setCurrentInterestResponse(null);
-        })
-        .catch((err) => {
-          console.error(err);
-        });
-    }
-  }, [phase, bio, origin]);
-
-  useEffect(() => {
-    if (phase === "loading") {
-      const interval = setInterval(() => {
-        setLoadingIndex(prev => (prev + 1) % loadingPhrases.length);
-      }, 3000);
-      return () => clearInterval(interval);
-    }
-  }, [phase, loadingPhrases.length]);
-
-  // Handlers for confirming interests
-  const handleInterestConfirmation = (interest: string, confirmed: boolean) => {
-    if (confirmed) {
-      if (!confirmedInterests.includes(interest)) {
-        setConfirmedInterests((prev) => [...prev, interest]);
-      }
-    } else {
-      setConfirmedInterests((prev) => prev.filter((i) => i !== interest));
-    }
-  };
-
-  const handleConfirmFinalInterests = () => {
-    document.cookie = `interests=${JSON.stringify(confirmedInterests)};path=/;max-age=${60 * 60 * 24 * 7}`;
-    document.cookie = `country=${origin};path=/;max-age=${60 * 60 * 24 * 7}`;
-    setPhase("final");
-  };
-
-  // New handler for processing each interest
-  const handleNextInterest = () => {
-    if (currentInterestResponse === true) {
-      setConfirmedInterests((prev) => [...prev, apiInterests[currentInterestIndex]]);
-    }
-    // Reset response for next interest
-    setCurrentInterestResponse(null);
-    if (currentInterestIndex < apiInterests.length - 1) {
-      setCurrentInterestIndex((prev) => prev + 1);
-    } else {
-      // Finished process – save cookies
-      document.cookie = `interests=${JSON.stringify(confirmedInterests.concat(
-        currentInterestResponse === true ? [apiInterests[currentInterestIndex]] : []
-      ))};path=/;max-age=${60 * 60 * 24 * 7}`;
-      document.cookie = `country=${origin};path=/;max-age=${60 * 60 * 24 * 7}`;
-      setPhase("final");
     }
   };
 
   // Generate a random background URL
   const randomBackground =
     backgrounds[Math.floor(Math.random() * backgrounds.length)];
-
-  // Interests options for the final page
-  const interests = ["Music", "Tech", "Travel", "Sports", "Art", "Food"];
 
   const addOption = (option: string) => {
     let parts = inputValue.split(",").map(p => p.trim());
@@ -337,45 +260,7 @@ export default function Page() {
                 />
               </div>
             ) : null}
-            {phase === "loading" ? (
-              <div className="flex flex-col items-center">
-                {/* Simple spinner */}
-                <div className="animate-spin rounded-full h-12 w-12 border-t-4 border-b-4 border-[#2563eb]"></div>
-                <h1 className="mt-4 text-2xl font-bold text-white">Loading...</h1>
-                <p className="mt-2 text-lg text-gray-300">
-                  {loadingPhrases[loadingIndex]}
-                </p>
-              </div>
-            ) : phase === "confirmInterests" ? (
-              <div className="p-6 flex flex-col items-center">
-                {/* Profile picture at top */}
-                <img src="/images/default_pfp.png" alt="Profile" className="w-48 h-48 rounded-full mb-12" />
-                <h1 className="text-white text-3xl font-bold mb-4">
-                  Do you like <span className="suggestion-name">{apiInterests[currentInterestIndex]} ?</span>
-                </h1>
-                <div className="flex space-x-4 mb-6 mt-5">
-                  <button
-                    onClick={() => setCurrentInterestResponse(true)}
-                    className={`px-12 py-12 rounded ${currentInterestResponse === true ? "bg-purple-700" : "bg-gray-700"} text-white`}
-                  >
-                    Yes
-                  </button>
-                  <button
-                    onClick={() => setCurrentInterestResponse(false)}
-                    className={`px-12 py-12 rounded ${currentInterestResponse === false ? "bg-purple-700" : "bg-gray-700"} text-white`}
-                  >
-                    No
-                  </button>
-                </div>
-                <button
-                  onClick={handleNextInterest}
-                  disabled={currentInterestResponse === null}
-                  className="px-6 py-3 rounded bg-purple-600 text-white disabled:opacity-50"
-                >
-                  Next
-                </button>
-              </div>
-            ) : (
+            {phase !== "final" && (
               <>
                 <h1 className="text-4xl font-bold text-white text-center">
                   {phase === "name" ? "Welcome to the Emirates" : userName}
@@ -506,7 +391,7 @@ export default function Page() {
                   </>
                 ) : null}
               </div>
-              {phase !== "loading" && phase !== "confirmInterests" && (
+              {phase !== "final" && (
                 <button
                   type="submit"
                   className="w-full py-3 bg-[#2563eb] hover:bg-[#2563eb]/90 text-white font-medium rounded-lg transition-colors"
