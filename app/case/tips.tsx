@@ -1,12 +1,18 @@
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
 import { motion } from "framer-motion"; // added import
-import { ExternalLink } from "lucide-react"; // added import
+import { ExternalLink, MapPin } from "lucide-react"; // updated import to include MapPin
 
 interface cardData {
-  title: string,
-  content: string,
-  externalLink: string,
-  location: string,
+  title: string;
+  content: string;
+  externalLink: string;
+  location: string;
 }
 
 const cardsData: cardData[] = [
@@ -14,27 +20,30 @@ const cardsData: cardData[] = [
     title: "ADDC",
     content: "Pay your water and electricity bills quickly and securely.",
     externalLink: "https://www.addc.ae/en-US/home/pages/AboutUs.aspx",
-    location: "/img/tips/abuDhabiDistributionCompany.png"
+    location: "/img/tips/abuDhabiDistributionCompany.png",
   },
   {
     title: "DARB",
-    content: "Access real-time public transport and traffic information with ease.",
+    content:
+      "Access real-time public transport and traffic information with ease.",
     externalLink: "https://darb.qmobility.ae/RucWeb/login",
-    location: "/img/tips/darb.png"
+    location: "/img/tips/darb.png",
   },
   {
     title: "AD Police",
-    content: "Connect with Abu Dhabi's trusted police services for prompt assistance.",
+    content:
+      "Connect with Abu Dhabi's trusted police services for prompt assistance.",
     externalLink: "https://es.adpolice.gov.ae/trafficservices/",
-    location: "/img/tips/abuDhabiPolice.png"
+    location: "/img/tips/abuDhabiPolice.png",
   },
   {
     title: "The Entertainer",
-    content: "Discover exclusive discounts on dining, leisure, and entertainment activities.",
+    content:
+      "Discover exclusive discounts on dining, leisure, and entertainment activities.",
     externalLink: "https://www.theentertainerme.com/en-ae/abu-dhabi-al-ain",
-    location: "/img/tips/entertainer.png"
-  }
-]
+    location: "/img/tips/entertainer.png",
+  },
+];
 
 // Updated cardVariants with sequential delay offset (starting at 0.15 for the first card)
 const cardVariants = {
@@ -42,8 +51,8 @@ const cardVariants = {
   visible: (custom: number) => ({
     opacity: 1,
     y: 0,
-    transition: { delay: 0.15 + custom * 0.05 }
-  })
+    transition: { delay: 0.15 + custom * 0.05 },
+  }),
 };
 
 export default function CaseTips() {
@@ -63,7 +72,11 @@ export default function CaseTips() {
         transition={{ delay: 0.1 }}
         className="text-gray-400 text-l mb-6"
       >
-        The essentials to navigating the UAE
+        The essentials to navigating{" "}
+        <span className="inline-flex items-center bg-gray-800 hover:bg-gray-700/50 transition-colors text-white text-md font-medium px-3 py-1 rounded-full">
+          <span className="text-[13px]">Abu Dhabi</span>
+          <MapPin className="ml-1 w-3 h-3" />
+        </span>
       </motion.h3>
       <div className="grid grid-cols-2 gap-6">
         {cardsData.map((card, index) => (
@@ -76,15 +89,18 @@ export default function CaseTips() {
           >
             <Card className="w-full min-w-[120px] bg-gray-800 border-gray-700 min-h-[280px] select-none cursor-pointer hover:bg-gray-700/50 transition-colors flex flex-col">
               <CardHeader className="relative text-white text-lg font-semibold line-clamp-2 pb-2">
-                <a 
-                  href={card.externalLink} 
-                  target="_blank" 
-                  rel="noreferrer" 
+                <a
+                  href={card.externalLink}
+                  target="_blank"
+                  rel="noreferrer"
                   className="absolute top-3 right-3"
                 >
                   <ExternalLink className="w-4 h-4 text-gray-100/70" />
                 </a>
-                <a href={card.externalLink} className="flex justify-center items-center">
+                <a
+                  href={card.externalLink}
+                  className="flex justify-center items-center"
+                >
                   <img
                     src={card.location}
                     className="object-cover mb-2"
@@ -104,5 +120,5 @@ export default function CaseTips() {
         ))}
       </div>
     </div>
-  )
+  );
 }
