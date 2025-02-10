@@ -10,7 +10,7 @@ import WeatherPill from "@/components/WeatherPill";
 import {
   HomeIcon as HomeIconFilled,
   MagnifyingGlassIcon as MagnifyingGlassFilled,
-  LightBulbIcon as LightBulbFilled,
+  Squares2X2Icon as Squares2X2Filled,
   UserCircleIcon as UserCircleFilled,
   RocketLaunchIcon as RocketLaunchFilled,
   ChevronLeftIcon as ChevronLeftFilled,
@@ -23,7 +23,7 @@ import {
 import {
   HomeIcon,
   MagnifyingGlassIcon,
-  LightBulbIcon,
+  Squares2X2Icon,
   UserCircleIcon,
   RocketLaunchIcon,
   ChevronLeftIcon,
@@ -544,7 +544,7 @@ export default function Page() {
             disabled
             className="flex flex-col items-center justify-center gap-1 opacity-50 cursor-not-allowed"
             >
-            <LightBulbIcon className="w-8 h-8 text-[#ffffff]/50" />
+            <Squares2X2Filled className="w-8 h-8 text-[#ffffff]/50" />
             <span className="text-[12px] text-[#ffffff]/50">
               Tips
             </span>
@@ -635,9 +635,9 @@ export default function Page() {
             className="flex flex-col items-center justify-center gap-1"
           >
             {activeTab === "apps" ? (
-              <LightBulbFilled className="w-8 h-8 text-[#2563eb]" />
+              <Squares2X2Filled className="w-8 h-8 text-[#2563eb]" />
             ) : (
-              <LightBulbIcon className="w-8 h-8 text-[#ffffff]" />
+              <Squares2X2Icon className="w-8 h-8 text-[#ffffff]" />
             )}
             <span
               className={`text-[12px] ${
