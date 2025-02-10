@@ -142,9 +142,9 @@ export default function CaseApps() {
               className="bg-gray-800 p-8 rounded-lg text-center mx-4 max-w-xs"
             >
               <MapPin className="w-16 h-16 text-[#2563eb] mx-auto" />
-              <h2 className="mt-4 text-2xl font-bold text-white">Curated Content</h2>
+              <h2 className="mt-4 text-2xl font-bold text-white">Location Curation</h2>
               <p className="mt-2 text-gray-300">
-                The results have been curated based on your location.
+                We have curated these results based on details including your location data.
               </p>
               <button
                 onClick={() => setShowLocationDialog(false)}
