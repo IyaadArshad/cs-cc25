@@ -1,5 +1,6 @@
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { motion } from "framer-motion"; // added import
+import { ExternalLink } from "lucide-react"; // added import
 
 interface cardData {
   title: string,
@@ -75,8 +76,16 @@ export default function CaseTips() {
             animate="visible"
             custom={index}
           >
-            <Card className="w-full min-w-[120px] bg-gray-800 border-gray-700 min-h-[280px] max-h-[280px] select-none cursor-pointer hover:bg-gray-700/50 transition-colors flex flex-col">
-              <CardHeader className="text-white text-lg font-semibold line-clamp-2 pb-2">
+            <Card className="w-full min-w-[120px] bg-gray-800 border-gray-700 min-h-[305px] max-h-[305px] select-none cursor-pointer hover:bg-gray-700/50 transition-colors flex flex-col">
+              <CardHeader className="relative text-white text-lg font-semibold line-clamp-2 pb-2">
+                <a 
+                  href={card.externalLink} 
+                  target="_blank" 
+                  rel="noreferrer" 
+                  className="absolute top-3 right-3"
+                >
+                  <ExternalLink className="w-4 h-4 text-gray-100/70" />
+                </a>
                 <a href={card.externalLink} className="flex justify-center items-center">
                   <img
                     src={card.location}
