@@ -1,6 +1,6 @@
 export const placesToVisit = [
   {
-    image: "/images/mosque.png", // remains unchanged
+    image: "/img/discover/placesToVisit/sheikhZayedGrandMosque.png", // remains unchanged
     title: "Sheikh Zayed Grand Mosque",
     description:
       "Iconic mosque known for its stunning white domes and intricate Islamic architecture.",
@@ -12,7 +12,7 @@ export const placesToVisit = [
     externalLink: "https://www.szgmc.gov.ae/en",
   },
   {
-    image: "/images/louvre.png", // remains unchanged
+    image: "/img/discover/placesToVisit/louvre.png", // remains unchanged
     title: "Louvre Abu Dhabi",
     description:
       "World-class museum showcasing art and artifacts from around the globe.",
@@ -24,7 +24,7 @@ export const placesToVisit = [
     externalLink: "https://www.louvreabudhabi.ae",
   },
   {
-    image: "/images/qasr.png", // remains unchanged
+    image: "/img/discover/placesToVisit/QasrAlWatan.png", // remains unchanged
     title: "Qasr Al Watan",
     description:
       "Presidential palace offering insights into UAE's culture and governance.",
@@ -36,7 +36,7 @@ export const placesToVisit = [
     externalLink: "https://www.qasralwatan.ae",
   },
   {
-    image: "/images/yas.png", // remains unchanged
+    image: "/img/discover/placesToVisit/yas.png", // remains unchanged
     title: "Yas Island",
     description:
       "Entertainment hub featuring Ferrari World, Yas Waterworld, and Warner Bros. World.",
@@ -49,7 +49,7 @@ export const placesToVisit = [
     externalLink: "https://www.yasisland.ae",
   },
   {
-    image: "/images/corniche.png", // remains unchanged
+    image: "/img/discover/placesToVisit/cornicheBeach.png", // remains unchanged
     title: "Corniche Beach",
     description:
       "Beautiful waterfront promenade perfect for relaxation and outdoor activities.",
@@ -62,7 +62,7 @@ export const placesToVisit = [
     externalLink: "https://visitabudhabi.ae/en/where-to-go/corniche-beach",
   },
   {
-    image: "/images/palace.png", // remains unchanged
+    image: "/img/discover/placesToVisit/EmiratesPalace.png", // remains unchanged
     title: "Emirates Palace",
     description:
       "Luxurious hotel known for its opulent architecture and gold leaf interiors.",
@@ -75,7 +75,7 @@ export const placesToVisit = [
     externalLink: "https://www.mandarinoriental.com/abu-dhabi/emirates-palace",
   },
   {
-    image: "/images/mangrove.png", // remains unchanged
+    image: "/img/discover/placesToVisit/mangroveNationalPark.png", // remains unchanged
     title: "Mangrove National Park",
     description:
       "Natural reserve offering kayaking tours through lush mangrove forests.",
@@ -92,7 +92,7 @@ export const placesToVisit = [
 
 export const foodPlaces = [
   {
-    image: "/images/shawarmaS.jpg", // remains unchanged
+    image: "/img/discover/culinaryDelights/shawarmaStation.png", // remains unchanged
     title: "Shawarma Station",
     description:
       "Popular chain known for fresh shawarmas and Middle Eastern street food.",
@@ -120,7 +120,7 @@ export const foodPlaces = [
     externalLink: "https://www.nandos.ae",
   },
   {
-    image: "/images/shakespeare.png", // remains unchanged
+    image: "/img/discover/culinaryDelights/shakespeareAndCo.png", // remains unchanged
     title: "Shakespeare & Co.",
     description:
       "Casual dining café with international menu and charming atmosphere.",
@@ -133,7 +133,7 @@ export const foodPlaces = [
     externalLink: "https://shakespeare-and-co.com",
   },
   {
-    image: "/images/mandi.jpg", // remains unchanged
+    image: "/img/discover/culinaryDelights/alMandi.png", // remains unchanged
     title: "Al Mandi and Al Madhbi House",
     description:
       "Authentic Yemeni restaurant specializing in Mandi and Madhbi dishes.",
@@ -147,7 +147,7 @@ export const foodPlaces = [
   },
   {
     // Nested folder image: updated with a new valid URL
-    image: "/images/lebaneseflower.jpg",
+    image: "/img/discover/culinaryDelights/lebaneseFlower.png",
     title: "Lebanese Flower",
     description: "Famous local spot for Lebanese cuisine at reasonable prices.",
     longDescription: [
@@ -160,7 +160,7 @@ export const foodPlaces = [
   },
   {
     // Nested folder image: updated with a new valid URL
-    image: "/images/subway.jpg",
+    image: "/img/discover/culinaryDelights/subway.png",
     title: "Subway",
     description: "Fresh sandwiches and salads with customizable options.",
     longDescription: [
@@ -173,7 +173,7 @@ export const foodPlaces = [
   },
   {
     // Nested folder image: updated with a new valid URL
-    image: "/images/almrzab.jpg",
+    image: "/img/discover/culinaryDelights/alMzrab.png",
     title: "Al Mrzab",
     description: "Authentic Emirati cuisine in a modern casual setting.",
     longDescription: [
@@ -188,7 +188,7 @@ export const foodPlaces = [
 
 export const shoppingPlaces = [
   {
-    image: "/images/yasmall.jpg",
+    image: "/img/discover/localMarketsAndStores/theGalleria.png",
     title: "Yas Mall",
     description:
       "Largest mall in Abu Dhabi with over 370 stores and 60 restaurants.",
@@ -201,7 +201,7 @@ export const shoppingPlaces = [
     externalLink: "https://yasmall.ae",
   },
   {
-    image: "/images/galleria.jpg",
+    image: "/img/discover/localMarketsAndStores/theGalleria.png",
     title: "The Galleria Al Maryah Island",
     description:
       "Luxury shopping destination with high-end brands and dining options.",
@@ -214,7 +214,7 @@ export const shoppingPlaces = [
     externalLink: "https://thegalleria.ae",
   },
   {
-    image: "/images/admall.jpg",
+    image: "/img/discover/localMarketsAndStores/AbuDhabiMall.png",
     title: "Abu Dhabi Mall",
     description: "Central mall with a mix of local and international brands.",
     longDescription: [
@@ -226,7 +226,7 @@ export const shoppingPlaces = [
     externalLink: "https://abudhabi-mall.com",
   },
   {
-    image: "/images/madinatzayed.jpg",
+    image: "/img/discover/localMarketsAndStores/madinatZayed.png",
     title: "Madinat Zayed Shopping Centre",
     description: "Known for its gold souk and traditional items.",
     longDescription: [
@@ -238,7 +238,7 @@ export const shoppingPlaces = [
     externalLink: "https://madinatzayed-mall.com",
   },
   {
-    image: "/images/wtcmall.jpg",
+    image: "/img/discover/localMarketsAndStores/dalmaMall.png",
     title: "World Trade Center Mall",
     description:
       "Modern mall in the heart of the city with a traditional souk feel.",
@@ -251,7 +251,7 @@ export const shoppingPlaces = [
     externalLink: "https://wtcad.ae",
   },
   {
-    image: "/images/dalma.jpg",
+    image: "/img/discover/localMarketsAndStores/dalmaMall.png",
     title: "Dalma Mall",
     description:
       "Large shopping center with a variety of stores and entertainment options.",
@@ -264,7 +264,7 @@ export const shoppingPlaces = [
     externalLink: "https://dalmamall.ae",
   },
   {
-    image: "/images/mushrifmall.jpg",
+    image: "/img/discover/localMarketsAndStores/MushrifMall.png",
     title: "Mushrif Mall",
     description:
       "Family-friendly mall with a good mix of retail and leisure facilities.",
@@ -280,7 +280,7 @@ export const shoppingPlaces = [
 
 export const essentialServices = [
   {
-    image: "/images/tamm.jpg",
+    image: "/img/discover/essentialServices/abuDhabiDepartmentOfMunicipalitiesAndTransport.png",
     title: "TAMM Service Centre",
     description: "One-stop shop for government services in Abu Dhabi.",
     longDescription: [
@@ -292,7 +292,7 @@ export const essentialServices = [
     externalLink: "https://tamm.abudhabi",
   },
   {
-    image: "/images/seha.jpg",
+    image: "/img/discover/essentialServices/abuDhabiDepartmentOfMunicipalitiesAndTransport.png",
     title: "Abu Dhabi Health Services (SEHA)",
     description: "Network of public hospitals and clinics in Abu Dhabi.",
     longDescription: [
@@ -304,7 +304,7 @@ export const essentialServices = [
     externalLink: "https://seha.ae",
   },
   {
-    image: "/images/adpolice.jpg",
+    image: "/img/discover/essentialServices/abuDhabiChamber.png",
     title: "Abu Dhabi Police",
     description:
       "Main law enforcement agency, offering various services including traffic-related matters.",
@@ -317,7 +317,7 @@ export const essentialServices = [
     externalLink: "https://adi.gov.ae",
   },
   {
-    image: "/images/admunandtransport.jpg",
+    image: "/img/discover/essentialServices/abuDhabiDepartmentOfMunicipalitiesAndTransport.png",
     title: "Department of Municipalities and Transport",
     description:
       "Handles city planning, transportation, and municipal affairs.",
@@ -330,7 +330,7 @@ export const essentialServices = [
     externalLink: "https://dmt.gov.ae",
   },
   {
-    image: "/images/addc.jpg",
+    image: "/img/discover/essentialServices/abuDhabiDepartmentOfMunicipalitiesAndTransport.png",
     title: "Abu Dhabi Distribution Company",
     description: "Manages electricity and water services for residents.",
     longDescription: [
@@ -342,7 +342,7 @@ export const essentialServices = [
     externalLink: "https://addc.ae",
   },
   {
-    image: "/images/adchamber.jpg",
+    image: "/img/discover/essentialServices/abuDhabiChamber.png",
     title: "Abu Dhabi Chamber",
     description:
       "Supports businesses and provides various commercial services.",
@@ -355,7 +355,7 @@ export const essentialServices = [
     externalLink: "https://abudhabichamber.ae",
   },
   {
-    image: "/images/adjudicial.jpg",
+    image: "/img/discover/essentialServices/abuDhabiJudicialDepartment.png",
     title: "Abu Dhabi Judicial Department",
     description: "Handles legal matters and court services in the emirate.",
     longDescription: [
