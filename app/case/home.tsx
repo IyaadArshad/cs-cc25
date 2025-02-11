@@ -57,11 +57,11 @@ function TaskQuestion({ question, options, onSave, onExit }: TaskQuestionProps) 
         <span className="text-white">Back</span>
       </div>
       <div className="absolute top-6 right-6">
-        {/* Retain existing progress bar or similar element as needed */}
+        <ProgressBar percentage={40} />
       </div>
       <div className="flex flex-col items-center justify-center space-y-6 mt-14">
         <div className="self-start">
-          <h2 className="text-6xl font-bold text-white mb-4 ml-3 text-start leading-tight max-w-2xl">
+          <h2 className="text-5xl font-bold text-white mb-4 ml-3 text-start leading-tight max-w-2xl">
             {question}
           </h2>
         </div>
