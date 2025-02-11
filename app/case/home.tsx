@@ -166,12 +166,12 @@ function VisaSelection({ onSave, onExit }: VisaSelectionProps) {
             <Button
               key={option.id}
               variant="outline"
-              className={`flex flex-col items-center justify-center gap-4 p-6 border-2 transition-all
+              className={`flex bg-gray-800 border-gray-700 text-[#fff] hover:bg-gray-700/50 transition-colors flex-col items-center justify-center gap-4 p-6 border-2
                 ${option.isWide ? "col-span-2 h-24" : "h-32"}
                 ${
                   selectedVisa === option.id
-                    ? "border-blue-500 bg-blue-500/10"
-                    : "border-zinc-700 hover:border-zinc-600 hover:bg-zinc-800/50"
+                    ? "border-blue-500 bg-blue-500/10 hover:text-[fff]"
+                    : "hover:text-[#fff]"
                 }`}
               onClick={() => setSelectedVisa(option.id)}
             >
