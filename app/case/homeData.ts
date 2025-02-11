@@ -1,5 +1,6 @@
 export const furtherSteps = [
     {
+      id: 'visa',
       title: "Confirm visa Appointment",
       description: "Confirm your secured residency permit",
     },
