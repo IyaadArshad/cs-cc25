@@ -139,7 +139,7 @@ function VisaSelection({ onSave, onExit }: VisaSelectionProps) {
   ];
 
   const handleVisaSelect = (visaId: string) => {
-    setSelectedVisa(currentVisa => currentVisa === visaId ? "" : visaId);
+    setSelectedVisa((currentVisa) => (currentVisa === visaId ? "" : visaId));
   };
 
   return (
@@ -187,9 +187,10 @@ function VisaSelection({ onSave, onExit }: VisaSelectionProps) {
 
         <Button
           className={`mt-12 w-full px-8 text-white border border-gray-700
-            ${selectedVisa 
-              ? 'bg-gray-800 hover:bg-[#2563eb] transition-colors' 
-              : 'bg-gray-800/50 text-gray-500'
+            ${
+              selectedVisa
+                ? "bg-gray-800 hover:bg-[#2563eb] transition-colors"
+                : "bg-gray-800/50 text-gray-500"
             }`}
           disabled={!selectedVisa}
           onClick={() => onSave(selectedVisa)}
@@ -351,12 +352,12 @@ export default function CaseHome() {
 
   return (
     <div className="flex-1 p-6 overflow-y-auto">
-      <motion.div 
+      <motion.div
         className="flex flex-col items-center justify-center space-y-6 mt-8"
         animate={{ opacity: isTransitioning ? 0 : 1 }}
         transition={{ duration: 0.03 }} // Reduced from 0.05
       >
-        <motion.h1 
+        <motion.h1
           className="text-4xl text-white text-center mb-3"
           animate={{ opacity: isTransitioning ? 0 : 1 }}
           transition={{ duration: 0.05 }} // Reduced from 0.2 to 0.1
@@ -369,7 +370,7 @@ export default function CaseHome() {
         >
           <ProgressCircle />
         </div>
-        <motion.div 
+        <motion.div
           className="w-full max-w-xl"
           animate={{ opacity: isTransitioning ? 0 : 1 }}
           transition={{ duration: 0.05 }} // Reduced from 0.2 to 0.1
@@ -377,7 +378,10 @@ export default function CaseHome() {
           <Carousel className="w-full max-w-sm mt-4">
             <CarouselContent className="-ml-2">
               {cardData.map((item, index) => (
-                <CarouselItem key={index} className="pl-2 basis-3/4 sm:basis-2/3">
+                <CarouselItem
+                  key={index}
+                  className="pl-2 basis-3/4 sm:basis-2/3"
+                >
                   <Card className="bg-zinc-800/50 border-zinc-700">
                     <CardContent className="flex flex-col items-start justify-center p-4 h-48">
                       <h2 className="text-xl font-normal text-zinc-200 mb-2">
