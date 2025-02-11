@@ -157,7 +157,7 @@ function VisaSelection({ onSave, onExit }: VisaSelectionProps) {
 
       <div className="flex flex-col items-center justify-center space-y-6 mt-14">
         <div className="self-start">
-          <h2 className="text-6xl font-bold text-white mb-5 ml-3 text-start leading-tight max-w-2xl">
+          <h2 className="text-6xl font-bold text-white mb-4 ml-3 text-start leading-tight max-w-2xl">
             Select your
             <br />
             <span className="text-[#2563eb]">visa</span>{" "}
@@ -170,7 +170,7 @@ function VisaSelection({ onSave, onExit }: VisaSelectionProps) {
             <Button
               key={option.id}
               variant="outline"
-              className={`flex bg-gray-800 border-gray-700 text-[#fff] hover:bg-gray-700/50 transition-colors flex-col items-center justify-center gap-4 p-6 border-2
+              className={`flex bg-gray-800 border-gray-700 text-[#fff] hover:bg-gray-700/50 transition-colors flex-col items-center justify-center gap-4 p-6 border
                 ${option.isWide ? "col-span-2 h-24" : "h-32"}
                 ${
                   selectedVisa === option.id
@@ -186,11 +186,15 @@ function VisaSelection({ onSave, onExit }: VisaSelectionProps) {
         </div>
 
         <Button
-          className="mt-12 px-8"
+          className={`mt-12 w-full px-8 text-white border border-gray-700
+            ${selectedVisa 
+              ? 'bg-gray-800 hover:bg-[#2563eb] transition-colors' 
+              : 'bg-gray-800/50 text-gray-500'
+            }`}
           disabled={!selectedVisa}
           onClick={() => onSave(selectedVisa)}
         >
-          Save Selection
+          Save Selection <span className="ml-[0.1rem]">✅</span>
         </Button>
       </div>
 
