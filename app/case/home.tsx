@@ -279,11 +279,11 @@ export default function CaseHome() {
 
   const handleOverviewClick = () => {
     setIsTransitioning(true);
-    // Reduced timeout from 300ms to 150ms
+    // Reduced from 100ms to 60ms
     setTimeout(() => {
       setOverviewMode(true);
       setIsTransitioning(false);
-    }, 100);
+    }, 60);
   };
 
   if (visaSelectionMode) {
@@ -304,7 +304,7 @@ export default function CaseHome() {
         <motion.div
           initial={{ opacity: 0, x: -20 }}
           animate={{ opacity: 1, x: 0 }}
-          transition={{ delay: 0.3 }}
+          transition={{ delay: 0.18 }} // Reduced from 0.3
           onClick={() => setOverviewMode(false)}
           className="absolute top-6 left-6 cursor-pointer flex items-center gap-4 hover:text-gray-300"
         >
@@ -314,7 +314,7 @@ export default function CaseHome() {
         <motion.div
           initial={{ opacity: 0, x: 20 }}
           animate={{ opacity: 1, x: 0 }}
-          transition={{ delay: 0.4 }}
+          transition={{ delay: 0.24 }} // Reduced from 0.4
           className="absolute top-6 right-6"
         >
           <ProgressBar percentage={40} />
@@ -326,7 +326,7 @@ export default function CaseHome() {
                 key={index}
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.5 + index * 0.1 }}
+                transition={{ delay: 0.3 + index * 0.06 }} // Reduced from 0.5 + index * 0.1
                 className="group hover:cursor-pointer flex items-center justify-between p-4 rounded-lg bg-zinc-900/50 hover:bg-zinc-800 transition-colors"
                 onClick={() => step.id && handleTaskClick(step.id)}
               >
@@ -354,7 +354,7 @@ export default function CaseHome() {
       <motion.div 
         className="flex flex-col items-center justify-center space-y-6 mt-8"
         animate={{ opacity: isTransitioning ? 0 : 1 }}
-        transition={{ duration: 0.05 }} // Reduced from 0.2 to 0.1
+        transition={{ duration: 0.03 }} // Reduced from 0.05
       >
         <motion.h1 
           className="text-4xl text-white text-center mb-3"
