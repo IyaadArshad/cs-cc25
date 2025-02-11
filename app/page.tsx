@@ -400,7 +400,7 @@ export default function Page() {
             >
             <Squares2X2Filled className="w-8 h-8 text-[#ffffff]/50" />
             <span className="text-[12px] text-[#ffffff]/50">
-              Tips
+              Apps
             </span>
             </button>
             <button
