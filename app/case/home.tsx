@@ -26,7 +26,7 @@ import {
 import { useEffect, useState } from "react";
 import Cookies from "js-cookie";
 import { cardData, furtherSteps } from "./homeData";
-import { motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 
 function ProgressBar({ percentage = 40 }) {
   return (
@@ -107,6 +107,16 @@ function VisaSelection({ onSave, onExit }: VisaSelectionProps) {
     }
   };
 
+  const handleDialogClose = () => {
+    setShowDialog(false);
+  };
+
+  const handleExitAnyway = () => {
+    setShowDialog(false);
+    // Small delay to allow animation to complete
+    setTimeout(onExit, 200);
+  };
+
   const visaOptions = [
     {
       id: "work",
@@ -180,44 +190,46 @@ function VisaSelection({ onSave, onExit }: VisaSelectionProps) {
         </Button>
       </div>
 
-      {showDialog && (
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          exit={{ opacity: 0 }}
-          className="fixed inset-0 flex justify-center items-center bg-black bg-opacity-50 z-50"
-        >
+      <AnimatePresence>
+        {showDialog && (
           <motion.div
-            initial={{ opacity: 0, scale: 0.8 }}
-            animate={{ opacity: 1, scale: 1 }}
-            exit={{ opacity: 0, scale: 0.8, transition: { duration: 0.15 } }}
-            transition={{ type: "spring", stiffness: 300, damping: 20 }}
-            className="bg-gray-800 p-8 rounded-lg text-center mx-4 max-w-xs"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="fixed inset-0 flex justify-center items-center bg-black bg-opacity-50 z-50"
           >
-            <X className="w-16 h-16 text-[#2563eb] mx-auto" />
-            <h2 className="mt-4 text-2xl font-bold text-white">
-              You have unsaved changes
-            </h2>
-            <p className="mt-2 text-gray-300">
-              Do you want to exit without saving your visa selection?
-            </p>
-            <div className="mt-6 flex justify-center gap-4">
-              <button
-                onClick={() => setShowDialog(false)}
-                className="px-4 py-2 bg-gray-700/50 hover:bg-gray-600 transition-colors text-white rounded-lg"
-              >
-                Cancel
-              </button>
-              <button
-                onClick={onExit}
-                className="px-4 py-2 bg-blue-600 hover:bg-blue-500 transition-colors text-white rounded-lg"
-              >
-                Exit anyway
-              </button>
-            </div>
+            <motion.div
+              initial={{ opacity: 0, scale: 0.8 }}
+              animate={{ opacity: 1, scale: 1 }}
+              exit={{ opacity: 0, scale: 0.8 }}
+              transition={{ type: "spring", stiffness: 300, damping: 20 }}
+              className="bg-gray-800 p-8 rounded-lg text-center mx-4 max-w-xs"
+            >
+              <X className="w-16 h-16 text-[#2563eb] mx-auto" />
+              <h2 className="mt-4 text-2xl font-bold text-white">
+                You have unsaved changes
+              </h2>
+              <p className="mt-2 text-gray-300">
+                Do you want to exit without saving your visa selection?
+              </p>
+              <div className="mt-6 flex justify-center gap-4">
+                <button
+                  onClick={handleDialogClose}
+                  className="px-4 py-2 bg-gray-700/50 hover:bg-gray-600 transition-colors text-white rounded-lg"
+                >
+                  Cancel
+                </button>
+                <button
+                  onClick={handleExitAnyway}
+                  className="px-4 py-2 bg-blue-600 hover:bg-blue-500 transition-colors text-white rounded-lg"
+                >
+                  Exit anyway
+                </button>
+              </div>
+            </motion.div>
           </motion.div>
-        </motion.div>
-      )}
+        )}
+      </AnimatePresence>
 
       <style jsx global>{`
         .hide-scrollbar {
