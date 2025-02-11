@@ -72,7 +72,12 @@ function ProgressCircle({ percentage = 40, hideText = false }) {
   )
 }
 
-function VisaSelection({ onSave, onExit }) {
+interface VisaSelectionProps {
+  onSave: (visa: string) => void;
+  onExit: () => void;
+}
+
+function VisaSelection({ onSave, onExit }: VisaSelectionProps) {
   const [selectedVisa, setSelectedVisa] = useState("")
   const [showDialog, setShowDialog] = useState(false)
 
