@@ -138,6 +138,10 @@ function VisaSelection({ onSave, onExit }: VisaSelectionProps) {
     },
   ];
 
+  const handleVisaSelect = (visaId: string) => {
+    setSelectedVisa(currentVisa => currentVisa === visaId ? "" : visaId);
+  };
+
   return (
     <div className="relative flex-1 p-6 overflow-y-auto hide-scrollbar">
       <div
@@ -170,10 +174,10 @@ function VisaSelection({ onSave, onExit }: VisaSelectionProps) {
                 ${option.isWide ? "col-span-2 h-24" : "h-32"}
                 ${
                   selectedVisa === option.id
-                    ? "border-blue-500 bg-blue-500/10 hover:text-[fff]"
+                    ? "border-[#2563eb] bg-blue-500/10 hover:text-[fff]"
                     : "hover:text-[#fff]"
                 }`}
-              onClick={() => setSelectedVisa(option.id)}
+              onClick={() => handleVisaSelect(option.id)}
             >
               {option.icon}
               <span className="text-lg font-light">{option.label}</span>
