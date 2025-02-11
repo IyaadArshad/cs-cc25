@@ -1,6 +1,17 @@
 import { Card, CardContent } from "@/components/ui/card"
 import { Carousel, CarouselContent, CarouselItem } from "@/components/ui/carousel"
-import { ArrowLeft, ArrowRight } from "lucide-react"
+import { Button } from "@/components/ui/button"
+import { ArrowLeft, ArrowRight, X, Briefcase, Plane, FileQuestion } from "lucide-react"
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+} from "@/components/ui/alert-dialog"
 import { useEffect, useState } from "react"
 import Cookies from "js-cookie"
 import { cardData, furtherSteps } from "./homeData"
@@ -61,16 +72,128 @@ function ProgressCircle({ percentage = 40, hideText = false }) {
   )
 }
 
+function VisaSelection({ onSave, onExit }) {
+  const [selectedVisa, setSelectedVisa] = useState("")
+  const [showDialog, setShowDialog] = useState(false)
+
+  const handleExit = () => {
+    if (selectedVisa) {
+      setShowDialog(true)
+    } else {
+      onExit()
+    }
+  }
+
+  const visaOptions = [
+    { id: 'work', label: 'Work Visa', icon: <Briefcase className="w-6 h-6" /> },
+    { id: 'tourist', label: 'Tourist Visa', icon: <Plane className="w-6 h-6" /> },
+    { id: 'other', label: 'Other', icon: <FileQuestion className="w-6 h-6" /> },
+  ]
+
+  return (
+    <div className="relative flex-1 p-6 overflow-y-auto">
+      <div 
+        onClick={handleExit}
+        className="absolute top-6 left-6 cursor-pointer flex items-center gap-4 hover:text-gray-300"
+      >
+        <ArrowLeft className="w-5 h-5 text-white" />
+        <span className="text-white">Back</span>
+      </div>
+      <div className="absolute top-6 right-6">
+        <ProgressBar percentage={40} />
+      </div>
+
+      <div className="flex flex-col items-center justify-center space-y-6 mt-16">
+        <div className="self-start">
+            <h2 className="text-6xl font-bold text-white mb-8 ml-3 text-start leading-tight max-w-2xl">
+            Select your<br /><span className="text-[#2563eb]">visa</span> <span className="text-[#2563eb]">status</span>
+            </h2>
+        </div>
+
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 w-full max-w-4xl">
+          {visaOptions.map((option) => (
+            <Button
+              key={option.id}
+              variant="outline"
+              className={`h-32 flex flex-col items-center justify-center gap-4 p-6 border-2 transition-all
+                ${selectedVisa === option.id 
+                  ? 'border-blue-500 bg-blue-500/10' 
+                  : 'border-zinc-700 hover:border-zinc-600 hover:bg-zinc-800/50'}`}
+              onClick={() => setSelectedVisa(option.id)}
+            >
+              {option.icon}
+              <span className="text-lg font-light">{option.label}</span>
+            </Button>
+          ))}
+        </div>
+
+        <Button
+          className="mt-12 px-8"
+          disabled={!selectedVisa}
+          onClick={() => onSave(selectedVisa)}
+        >
+          Save Selection
+        </Button>
+      </div>
+
+      <AlertDialog open={showDialog} onOpenChange={setShowDialog}>
+        <AlertDialogContent className="bg-zinc-900 border border-zinc-800">
+          <AlertDialogHeader>
+            <AlertDialogTitle>You have unsaved changes</AlertDialogTitle>
+            <AlertDialogDescription>
+              Do you want to exit without saving your visa selection?
+            </AlertDialogDescription>
+          </AlertDialogHeader>
+          <AlertDialogFooter>
+            <AlertDialogCancel className="bg-zinc-800 hover:bg-zinc-700">Cancel</AlertDialogCancel>
+            <AlertDialogAction
+              className="bg-blue-600 hover:bg-blue-500"
+              onClick={onExit}
+            >
+              Exit anyway
+            </AlertDialogAction>
+          </AlertDialogFooter>
+        </AlertDialogContent>
+      </AlertDialog>
+    </div>
+  )
+}
+
 export default function CaseHome() {
   const [overviewMode, setOverviewMode] = useState(false)
+  const [visaSelectionMode, setVisaSelectionMode] = useState(false)
   const [userName, setUserName] = useState("")
 
-useEffect(() => {
-  const name = Cookies.get("name")
-  if (name) {
-    setUserName(name)
+  useEffect(() => {
+    const name = Cookies.get("name")
+    if (name) {
+      setUserName(name)
+    }
+  }, [])
+
+  interface Task {
+    id: string;
+    title: string;
+    description: string;
   }
-}, [])
+
+  const handleTaskClick = (taskId: string) => {
+    if (taskId === "visa") {
+      setVisaSelectionMode(true)
+    }
+  }
+
+  if (visaSelectionMode) {
+    return (
+      <VisaSelection
+        onSave={(visa) => {
+          // Handle visa save logic here
+          setVisaSelectionMode(false)
+        }}
+        onExit={() => setVisaSelectionMode(false)}
+      />
+    )
+  }
 
   if (overviewMode) {
     return (
@@ -90,7 +213,8 @@ useEffect(() => {
             {furtherSteps.map((step, index) => (
               <div
                 key={index}
-                className="group flex items-center justify-between p-4 rounded-lg bg-zinc-900/50 hover:bg-zinc-800 transition-colors"
+                className="group hover:cursor-pointer flex items-center justify-between p-4 rounded-lg bg-zinc-900/50 hover:bg-zinc-800 transition-colors"
+                onClick={() => step.id && handleTaskClick(step.id)}
               >
                 <div className="flex flex-col">
                   <h3 className="text-lg font-medium text-zinc-200">{step.title}</h3>
