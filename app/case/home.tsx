@@ -96,7 +96,7 @@ function VisaSelection({ onSave, onExit }: VisaSelectionProps) {
   ]
 
   return (
-    <div className="relative flex-1 p-6 overflow-y-auto">
+    <div className="relative flex-1 p-6 overflow-y-auto hide-scrollbar">
       <div 
         onClick={handleExit}
         className="absolute top-6 left-6 cursor-pointer flex items-center gap-4 hover:text-gray-300"
@@ -161,6 +161,16 @@ function VisaSelection({ onSave, onExit }: VisaSelectionProps) {
           </AlertDialogFooter>
         </AlertDialogContent>
       </AlertDialog>
+
+      <style jsx global>{`
+        .hide-scrollbar {
+          -ms-overflow-style: none;  /* IE and Edge */
+          scrollbar-width: none;     /* Firefox */
+        }
+        .hide-scrollbar::-webkit-scrollbar {
+          display: none;             /* Chrome, Safari and Opera */
+        }
+      `}</style>
     </div>
   )
 }
