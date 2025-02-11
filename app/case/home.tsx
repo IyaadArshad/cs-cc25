@@ -256,6 +256,7 @@ export default function CaseHome() {
   const [overviewMode, setOverviewMode] = useState(false);
   const [visaSelectionMode, setVisaSelectionMode] = useState(false);
   const [userName, setUserName] = useState("");
+  const [isTransitioning, setIsTransitioning] = useState(false);
 
   useEffect(() => {
     const name = Cookies.get("name");
@@ -276,6 +277,15 @@ export default function CaseHome() {
     }
   };
 
+  const handleOverviewClick = () => {
+    setIsTransitioning(true);
+    // Reduced timeout from 300ms to 150ms
+    setTimeout(() => {
+      setOverviewMode(true);
+      setIsTransitioning(false);
+    }, 100);
+  };
+
   if (visaSelectionMode) {
     return (
       <VisaSelection
@@ -291,21 +301,32 @@ export default function CaseHome() {
   if (overviewMode) {
     return (
       <div className="relative flex-1 p-6 overflow-y-auto">
-        <div
+        <motion.div
+          initial={{ opacity: 0, x: -20 }}
+          animate={{ opacity: 1, x: 0 }}
+          transition={{ delay: 0.3 }}
           onClick={() => setOverviewMode(false)}
           className="absolute top-6 left-6 cursor-pointer flex items-center gap-4 hover:text-gray-300"
         >
           <ArrowLeft className="w-5 h-5 text-white" />
           <span className="text-white">Back</span>
-        </div>
-        <div className="absolute top-6 right-6">
+        </motion.div>
+        <motion.div
+          initial={{ opacity: 0, x: 20 }}
+          animate={{ opacity: 1, x: 0 }}
+          transition={{ delay: 0.4 }}
+          className="absolute top-6 right-6"
+        >
           <ProgressBar percentage={40} />
-        </div>
+        </motion.div>
         <div className="flex flex-col items-center justify-center space-y-6 mt-6">
           <div className="w-full max-w-xl mt-6 space-y-4">
             {furtherSteps.map((step, index) => (
-              <div
+              <motion.div
                 key={index}
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.5 + index * 0.1 }}
                 className="group hover:cursor-pointer flex items-center justify-between p-4 rounded-lg bg-zinc-900/50 hover:bg-zinc-800 transition-colors"
                 onClick={() => step.id && handleTaskClick(step.id)}
               >
@@ -320,7 +341,7 @@ export default function CaseHome() {
                   {/*bg-white/10 group-hover:bg-white/20 */}
                   <ArrowRight className="w-5 h-5 transform transition-transform group-hover:translate-x-1" />
                 </button>
-              </div>
+              </motion.div>
             ))}
           </div>
         </div>
@@ -330,37 +351,49 @@ export default function CaseHome() {
 
   return (
     <div className="flex-1 p-6 overflow-y-auto">
-      <div className="flex flex-col items-center justify-center space-y-6 mt-8">
-        <h1 className="text-4xl text-white text-center mb-3">
+      <motion.div 
+        className="flex flex-col items-center justify-center space-y-6 mt-8"
+        animate={{ opacity: isTransitioning ? 0 : 1 }}
+        transition={{ duration: 0.05 }} // Reduced from 0.2 to 0.1
+      >
+        <motion.h1 
+          className="text-4xl text-white text-center mb-3"
+          animate={{ opacity: isTransitioning ? 0 : 1 }}
+          transition={{ duration: 0.05 }} // Reduced from 0.2 to 0.1
+        >
           Welcome back, {userName}
-        </h1>
-        {/* Wrap ProgressCircle with clickable area with hover and wiggle animation */}
+        </motion.h1>
         <div
-          onClick={() => setOverviewMode(true)}
+          onClick={handleOverviewClick}
           className="cursor-pointer transform transition-transform hover:scale-105 animate-wiggle"
         >
           <ProgressCircle />
         </div>
-        <div className="w-full max-w-xl">{/* ...existing code... */}</div>
-        <Carousel className="w-full max-w-sm mt-4">
-          <CarouselContent className="-ml-2">
-            {cardData.map((item, index) => (
-              <CarouselItem key={index} className="pl-2 basis-3/4 sm:basis-2/3">
-                <Card className="bg-zinc-800/50 border-zinc-700">
-                  <CardContent className="flex flex-col items-start justify-center p-4 h-48">
-                    <h2 className="text-xl font-normal text-zinc-200 mb-2">
-                      {item.title}
-                    </h2>
-                    <p className="text-sm text-zinc-400 leading-relaxed">
-                      {item.content}
-                    </p>
-                  </CardContent>
-                </Card>
-              </CarouselItem>
-            ))}
-          </CarouselContent>
-        </Carousel>
-      </div>
+        <motion.div 
+          className="w-full max-w-xl"
+          animate={{ opacity: isTransitioning ? 0 : 1 }}
+          transition={{ duration: 0.05 }} // Reduced from 0.2 to 0.1
+        >
+          <Carousel className="w-full max-w-sm mt-4">
+            <CarouselContent className="-ml-2">
+              {cardData.map((item, index) => (
+                <CarouselItem key={index} className="pl-2 basis-3/4 sm:basis-2/3">
+                  <Card className="bg-zinc-800/50 border-zinc-700">
+                    <CardContent className="flex flex-col items-start justify-center p-4 h-48">
+                      <h2 className="text-xl font-normal text-zinc-200 mb-2">
+                        {item.title}
+                      </h2>
+                      <p className="text-sm text-zinc-400 leading-relaxed">
+                        {item.content}
+                      </p>
+                    </CardContent>
+                  </Card>
+                </CarouselItem>
+              ))}
+            </CarouselContent>
+          </Carousel>
+        </motion.div>
+      </motion.div>
       {/* Add custom keyframes for wiggle animation */}
       <style jsx global>{`
         @keyframes wiggle {
