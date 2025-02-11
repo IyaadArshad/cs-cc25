@@ -6,9 +6,7 @@ import {
 } from "@/components/ui/carousel";
 import { Button } from "@/components/ui/button";
 import {
-  ArrowLeft,
   ArrowRight,
-  X,
   Briefcase,
   Plane,
   FileQuestion,
@@ -17,6 +15,126 @@ import { useEffect, useState } from "react";
 import Cookies from "js-cookie";
 import { cardData, furtherSteps } from "./homeData";
 import { motion, AnimatePresence } from "framer-motion";
+import { ArrowLeft, X } from "lucide-react";
+import React from 'react';
+
+export interface Option {
+  id: string;
+  label: string;
+  icon: React.JSX.Element;
+  isWide: boolean;
+}
+
+export interface TaskQuestionProps {
+  question: string;
+  options: Option[];
+  onSave: (selectedId: string) => void;
+  onExit: () => void;
+}
+
+function TaskQuestion({ question, options, onSave, onExit }: TaskQuestionProps) {
+  const [selectedOption, setSelectedOption] = useState("");
+  const [showDialog, setShowDialog] = useState(false);
+
+  const handleExit = () => {
+    if (selectedOption) {
+      setShowDialog(true);
+    } else {
+      onExit();
+    }
+  };
+
+  const handleDialogClose = () => setShowDialog(false);
+  const handleExitAnyway = () => {
+    setShowDialog(false);
+    setTimeout(onExit, 200);
+  };
+
+  return (
+    <div className="relative flex-1 p-6 overflow-y-auto hide-scrollbar">
+      <div onClick={handleExit} className="absolute top-6 left-6 cursor-pointer flex items-center gap-4 hover:text-gray-300">
+        <ArrowLeft className="w-5 h-5 text-white" />
+        <span className="text-white">Back</span>
+      </div>
+      <div className="absolute top-6 right-6">
+        {/* Retain existing progress bar or similar element as needed */}
+      </div>
+      <div className="flex flex-col items-center justify-center space-y-6 mt-14">
+        <div className="self-start">
+          <h2 className="text-6xl font-bold text-white mb-4 ml-3 text-start leading-tight max-w-2xl">
+            {question}
+          </h2>
+        </div>
+        <div className="grid grid-cols-2 gap-6 w-full max-w-4xl">
+          {options.map((option) => (
+            <Button
+              key={option.id}
+              variant="outline"
+              className={`flex bg-gray-800 border-gray-700 text-white hover:bg-gray-700/50 transition-colors flex-col items-center justify-center gap-4 p-6 border
+                ${option.isWide ? "col-span-2 h-24" : "h-32"}
+                ${selectedOption === option.id ? "border-[#2563eb] bg-blue-500/10" : "hover:text-white"}`}
+              onClick={() => setSelectedOption((curr) => (curr === option.id ? "" : option.id))}
+            >
+              {option.icon}
+              <span className="text-lg font-light">{option.label}</span>
+            </Button>
+          ))}
+        </div>
+        <Button
+          className={`mt-12 w-full px-8 text-white border border-gray-700 ${selectedOption ? "bg-gray-800 hover:bg-[#2563eb] transition-colors" : "bg-gray-800/50 text-gray-500"}`}
+          disabled={!selectedOption}
+          onClick={() => onSave(selectedOption)}
+        >
+          Save Selection <span className="ml-[0.1rem]">✅</span>
+        </Button>
+      </div>
+      <AnimatePresence>
+        {showDialog && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="fixed inset-0 flex justify-center items-center bg-black bg-opacity-50 z-50"
+          >
+            <motion.div
+              initial={{ opacity: 0, scale: 0.8 }}
+              animate={{ opacity: 1, scale: 1 }}
+              exit={{ opacity: 0, scale: 0.8 }}
+              transition={{ type: "spring", stiffness: 300, damping: 20 }}
+              className="bg-gray-800 p-8 rounded-lg text-center mx-4 max-w-xs"
+            >
+              <X className="w-16 h-16 text-[#2563eb] mx-auto" />
+              <h2 className="mt-4 text-2xl font-bold text-white">
+                You have unsaved changes
+              </h2>
+              <p className="mt-2 text-gray-300">
+                Do you want to exit without saving your selection?
+              </p>
+              <div className="mt-6 flex justify-center gap-4">
+                <button onClick={handleDialogClose} className="px-4 py-2 bg-gray-700/50 hover:bg-gray-600 text-white rounded-lg">
+                  Cancel
+                </button>
+                <button onClick={handleExitAnyway} className="px-4 py-2 bg-blue-600 hover:bg-blue-500 text-white rounded-lg">
+                  Exit anyway
+                </button>
+              </div>
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+      <style jsx global>{`
+        .hide-scrollbar {
+          -ms-overflow-style: none;
+          scrollbar-width: none;
+        }
+        .hide-scrollbar::-webkit-scrollbar {
+          display: none;
+        }
+      `}</style>
+    </div>
+  );
+}
+
 
 function ProgressBar({ percentage = 40 }) {
   return (
@@ -83,164 +201,6 @@ function ProgressCircle({ percentage = 40, hideText = false }) {
 interface VisaSelectionProps {
   onSave: (visa: string) => void;
   onExit: () => void;
-}
-
-function VisaSelection({ onSave, onExit }: VisaSelectionProps) {
-  const [selectedVisa, setSelectedVisa] = useState("");
-  const [showDialog, setShowDialog] = useState(false);
-
-  const handleExit = () => {
-    if (selectedVisa) {
-      setShowDialog(true);
-    } else {
-      onExit();
-    }
-  };
-
-  const handleDialogClose = () => {
-    setShowDialog(false);
-  };
-
-  const handleExitAnyway = () => {
-    setShowDialog(false);
-    // Small delay to allow animation to complete
-    setTimeout(onExit, 200);
-  };
-
-  const visaOptions = [
-    {
-      id: "work",
-      label: "Work Visa",
-      icon: <Briefcase className="w-6 h-6" />,
-      isWide: false,
-    },
-    {
-      id: "tourist",
-      label: "Tourist Visa",
-      icon: <Plane className="w-6 h-6" />,
-      isWide: false,
-    },
-    {
-      id: "other",
-      label: "Other",
-      icon: <FileQuestion className="w-6 h-6" />,
-      isWide: true,
-    },
-  ];
-
-  const handleVisaSelect = (visaId: string) => {
-    setSelectedVisa((currentVisa) => (currentVisa === visaId ? "" : visaId));
-  };
-
-  return (
-    <div className="relative flex-1 p-6 overflow-y-auto hide-scrollbar">
-      <div
-        onClick={handleExit}
-        className="absolute top-6 left-6 cursor-pointer flex items-center gap-4 hover:text-gray-300"
-      >
-        <ArrowLeft className="w-5 h-5 text-white" />
-        <span className="text-white">Back</span>
-      </div>
-      <div className="absolute top-6 right-6">
-        <ProgressBar percentage={40} />
-      </div>
-
-      <div className="flex flex-col items-center justify-center space-y-6 mt-14">
-        <div className="self-start">
-          <h2 className="text-6xl font-bold text-white mb-4 ml-3 text-start leading-tight max-w-2xl">
-            Select your
-            <br />
-            <span className="text-[#2563eb]">visa</span>{" "}
-            <span className="text-[#2563eb]">status</span>
-          </h2>
-        </div>
-
-        <div className="grid grid-cols-2 gap-6 w-full max-w-4xl">
-          {visaOptions.map((option) => (
-            <Button
-              key={option.id}
-              variant="outline"
-              className={`flex bg-gray-800 border-gray-700 text-[#fff] hover:bg-gray-700/50 transition-colors flex-col items-center justify-center gap-4 p-6 border
-                ${option.isWide ? "col-span-2 h-24" : "h-32"}
-                ${
-                  selectedVisa === option.id
-                    ? "border-[#2563eb] bg-blue-500/10 hover:text-[fff]"
-                    : "hover:text-[#fff]"
-                }`}
-              onClick={() => handleVisaSelect(option.id)}
-            >
-              {option.icon}
-              <span className="text-lg font-light">{option.label}</span>
-            </Button>
-          ))}
-        </div>
-
-        <Button
-          className={`mt-12 w-full px-8 text-white border border-gray-700
-            ${
-              selectedVisa
-                ? "bg-gray-800 hover:bg-[#2563eb] transition-colors"
-                : "bg-gray-800/50 text-gray-500"
-            }`}
-          disabled={!selectedVisa}
-          onClick={() => onSave(selectedVisa)}
-        >
-          Save Selection <span className="ml-[0.1rem]">✅</span>
-        </Button>
-      </div>
-
-      <AnimatePresence>
-        {showDialog && (
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            className="fixed inset-0 flex justify-center items-center bg-black bg-opacity-50 z-50"
-          >
-            <motion.div
-              initial={{ opacity: 0, scale: 0.8 }}
-              animate={{ opacity: 1, scale: 1 }}
-              exit={{ opacity: 0, scale: 0.8 }}
-              transition={{ type: "spring", stiffness: 300, damping: 20 }}
-              className="bg-gray-800 p-8 rounded-lg text-center mx-4 max-w-xs"
-            >
-              <X className="w-16 h-16 text-[#2563eb] mx-auto" />
-              <h2 className="mt-4 text-2xl font-bold text-white">
-                You have unsaved changes
-              </h2>
-              <p className="mt-2 text-gray-300">
-                Do you want to exit without saving your visa selection?
-              </p>
-              <div className="mt-6 flex justify-center gap-4">
-                <button
-                  onClick={handleDialogClose}
-                  className="px-4 py-2 bg-gray-700/50 hover:bg-gray-600 transition-colors text-white rounded-lg"
-                >
-                  Cancel
-                </button>
-                <button
-                  onClick={handleExitAnyway}
-                  className="px-4 py-2 bg-blue-600 hover:bg-blue-500 transition-colors text-white rounded-lg"
-                >
-                  Exit anyway
-                </button>
-              </div>
-            </motion.div>
-          </motion.div>
-        )}
-      </AnimatePresence>
-
-      <style jsx global>{`
-        .hide-scrollbar {
-          -ms-overflow-style: none; /* IE and Edge */
-          scrollbar-width: none; /* Firefox */
-        }
-        .hide-scrollbar::-webkit-scrollbar {
-          display: none; /* Chrome, Safari and Opera */
-        }
-      `}</style>
-    </div>
-  );
 }
 
 function LoadingSpinner() {
@@ -325,10 +285,37 @@ export default function CaseHome() {
   }
 
   if (visaSelectionMode) {
+    // Use TaskQuestion with visa data so it remains visually unchanged.
+    const visaOptions = [
+      {
+        id: "work",
+        label: "Work Visa",
+        icon: <Briefcase className="w-6 h-6" />,
+        isWide: false,
+      },
+      {
+        id: "tourist",
+        label: "Tourist Visa",
+        icon: <Plane className="w-6 h-6" />,
+        isWide: false,
+      },
+      {
+        id: "other",
+        label: "Other",
+        icon: <FileQuestion className="w-6 h-6" />,
+        isWide: true,
+      },
+    ];
+
+    // Retrieve the visa question from homeData (or hardcode to match previous text).
+    const visaQuestion = "Select your visa status";
+
     return (
-      <VisaSelection
-        onSave={(visa) => {
-          // Handle visa save logic here
+      <TaskQuestion
+        question={visaQuestion}
+        options={visaOptions}
+        onSave={(selected) => {
+          // Handle visa save logic here.
           setVisaSelectionMode(false);
         }}
         onExit={() => setVisaSelectionMode(false)}
