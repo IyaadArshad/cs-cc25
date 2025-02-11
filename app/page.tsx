@@ -293,24 +293,38 @@ export default function Page() {
                     </p>
                     <div className="space-y-3">
                       {lookingForOptions.map((option) => (
-                        <label key={option} className="flex items-start gap-3 bg-[#272739] p-3 rounded-lg cursor-pointer hover:bg-[#272739]/80">
-                          <input
-                            type="checkbox"
-                            value={option}
-                            checked={inputValue.includes(option)}
-                            onChange={(e) => {
-                              const selectedOptions = inputValue ? inputValue.split(',').map(x => x.trim()) : [];
-                              if (e.target.checked) {
-                                selectedOptions.push(option);
-                              } else {
-                                const index = selectedOptions.indexOf(option);
-                                if (index > -1) selectedOptions.splice(index, 1);
-                              }
-                              setInputValue(selectedOptions.join(', '));
-                            }}
-                            className="mt-1 w-4 h-4 accent-[#2563eb]"
+                        <label 
+                          key={option} 
+                          className="flex items-center gap-4 bg-[#272739] p-4 rounded-lg cursor-pointer hover:bg-[#272739]/80 transition-all duration-200 group relative"
+                        >
+                          <div className="relative flex items-center justify-center">
+                            <input
+                              type="checkbox"
+                              value={option}
+                              checked={inputValue.includes(option)}
+                              onChange={(e) => {
+                                const selectedOptions = inputValue ? inputValue.split(',').map(x => x.trim()) : [];
+                                if (e.target.checked) {
+                                  selectedOptions.push(option);
+                                } else {
+                                  const index = selectedOptions.indexOf(option);
+                                  if (index > -1) selectedOptions.splice(index, 1);
+                                }
+                                setInputValue(selectedOptions.join(', '));
+                              }}
+                              className="appearance-none w-5 h-5 border-2 border-[#2563eb] rounded transition-all duration-200 
+                                checked:bg-[#2563eb] checked:border-transparent
+                                focus:outline-none focus:ring-2 focus:ring-[#2563eb] focus:ring-offset-2 focus:ring-offset-[#12121d]"
+                            />
+                            <Check 
+                              className={`absolute w-3 h-3 text-white pointer-events-none transition-opacity duration-200 
+                                ${inputValue.includes(option) ? 'opacity-100' : 'opacity-0'}`}
+                            />
+                          </div>
+                          <span className="text-white text-lg font-medium">{option}</span>
+                          <div className={`absolute inset-0 border-2 border-transparent rounded-lg transition-all duration-200 
+                            ${inputValue.includes(option) ? 'border-[#2563eb]/50' : 'group-hover:border-[#2563eb]/20'}`} 
                           />
-                          <span className="text-white">{option}</span>
                         </label>
                       ))}
                     </div>
