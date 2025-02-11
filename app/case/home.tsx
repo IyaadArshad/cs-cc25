@@ -253,16 +253,54 @@ function VisaSelection({ onSave, onExit }: VisaSelectionProps) {
   );
 }
 
+function LoadingSpinner() {
+  return (
+    <motion.div
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      exit={{ opacity: 0 }}
+      className="flex items-center justify-center h-full"
+    >
+      <motion.div
+        className="w-12 h-12 border-4 border-[#2563eb] border-t-transparent rounded-full"
+        animate={{ rotate: 360 }}
+        transition={{ duration: 1, repeat: Infinity, ease: "linear" }}
+      />
+    </motion.div>
+  );
+}
+
 export default function CaseHome() {
   const [overviewMode, setOverviewMode] = useState(false);
   const [visaSelectionMode, setVisaSelectionMode] = useState(false);
   const [userName, setUserName] = useState("");
   const [isTransitioning, setIsTransitioning] = useState(false);
 
+  // New animation states
+  const [isReturning, setIsReturning] = useState(false);
+  const [mainViewReady, setMainViewReady] = useState(false);
+  const [isInitialLoading, setIsInitialLoading] = useState(true);
+
   useEffect(() => {
     const name = Cookies.get("name");
     if (name) {
       setUserName(name);
+    }
+    // Check if the dashboard has loaded before via cookie
+    const hasLoadedDashboard = Cookies.get("hasLoadedDashboard") === "true";
+    setIsReturning(hasLoadedDashboard);
+    if (!hasLoadedDashboard) {
+      setIsInitialLoading(true);
+      setTimeout(() => {
+        setIsInitialLoading(false);
+        Cookies.set("hasLoadedDashboard", "true", { path: "/", expires: 7 });
+        setTimeout(() => {
+          setMainViewReady(true);
+        }, 100);
+      }, 1500);
+    } else {
+      setIsInitialLoading(false);
+      setMainViewReady(true);
     }
   }, []);
 
@@ -286,6 +324,15 @@ export default function CaseHome() {
       setIsTransitioning(false);
     }, 60);
   };
+
+  // Show spinner during initial load
+  if (isInitialLoading) {
+    return (
+      <div className="flex-1 p-6 overflow-y-auto">
+        <LoadingSpinner />
+      </div>
+    );
+  }
 
   if (visaSelectionMode) {
     return (
@@ -352,52 +399,68 @@ export default function CaseHome() {
 
   return (
     <div className="flex-1 p-6 overflow-y-auto">
-      <motion.div
-        className="flex flex-col items-center justify-center space-y-6 mt-8"
-        animate={{ opacity: isTransitioning ? 0 : 1 }}
-        transition={{ duration: 0.03 }} // Reduced from 0.05
-      >
-        <motion.h1
-          className="text-4xl text-white text-center mb-3"
-          animate={{ opacity: isTransitioning ? 0 : 1 }}
-          transition={{ duration: 0.05 }} // Reduced from 0.2 to 0.1
-        >
-          Welcome back, {userName}
-        </motion.h1>
-        <div
-          onClick={handleOverviewClick}
-          className="cursor-pointer transform transition-transform hover:scale-105 animate-wiggle"
-        >
-          <ProgressCircle />
+      <AnimatePresence>
+        <div className="flex flex-col items-center justify-center space-y-6 mt-8">
+          <motion.h1 
+            initial={{ opacity: 0, y: -20 }}
+            animate={{ opacity: mainViewReady ? 1 : 0, y: mainViewReady ? 0 : -20 }}
+            transition={{ duration: 0.4, delay: 0.2 }}
+            className="text-4xl text-white text-center mb-3"
+          >
+            { isReturning 
+              ? `Welcome back, ${userName}` 
+              : `Welcome, ${userName}` }
+          </motion.h1>
+          
+          <motion.div
+            initial={{ opacity: 0, scale: 0.9 }}
+            animate={{ 
+              opacity: mainViewReady ? (isTransitioning ? 0 : 1) : 0,
+              scale: mainViewReady ? (isTransitioning ? 0.9 : 1) : 0.9
+            }}
+            transition={{ duration: 0.4, delay: 0.4 }}
+            onClick={handleOverviewClick}
+            className="cursor-pointer transform transition-transform hover:scale-105 animate-wiggle"
+          >
+            <ProgressCircle />
+          </motion.div>
+
+          <motion.div 
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ 
+              opacity: mainViewReady ? (isTransitioning ? 0 : 1) : 0,
+              y: mainViewReady ? 0 : 20
+            }}
+            transition={{ duration: 0.4, delay: 0.6 }}
+            className="w-full max-w-xl"
+          >
+            <Carousel className="w-full max-w-sm mt-4">
+              <CarouselContent className="-ml-2">
+                {cardData.map((item, index) => (
+                  <CarouselItem key={index} className="pl-2 basis-3/4 sm:basis-2/3">
+                    <Card className="bg-zinc-800/50 border-zinc-700">
+                      <CardContent className="flex flex-col items-start justify-center p-4 h-48">
+                        <motion.div
+                          initial={{ opacity: 0, x: 20 }}
+                          animate={{ opacity: mainViewReady ? 1 : 0, x: mainViewReady ? 0 : 20 }}
+                          transition={{ duration: 0.4, delay: 0.8 + index * 0.1 }}
+                        >
+                          <h2 className="text-xl font-normal text-zinc-200 mb-2">
+                            {item.title}
+                          </h2>
+                          <p className="text-sm text-zinc-400 leading-relaxed">
+                            {item.content}
+                          </p>
+                        </motion.div>
+                      </CardContent>
+                    </Card>
+                  </CarouselItem>
+                ))}
+              </CarouselContent>
+            </Carousel>
+          </motion.div>
         </div>
-        <motion.div
-          className="w-full max-w-xl"
-          animate={{ opacity: isTransitioning ? 0 : 1 }}
-          transition={{ duration: 0.05 }} // Reduced from 0.2 to 0.1
-        >
-          <Carousel className="w-full max-w-sm mt-4">
-            <CarouselContent className="-ml-2">
-              {cardData.map((item, index) => (
-                <CarouselItem
-                  key={index}
-                  className="pl-2 basis-3/4 sm:basis-2/3"
-                >
-                  <Card className="bg-zinc-800/50 border-zinc-700">
-                    <CardContent className="flex flex-col items-start justify-center p-4 h-48">
-                      <h2 className="text-xl font-normal text-zinc-200 mb-2">
-                        {item.title}
-                      </h2>
-                      <p className="text-sm text-zinc-400 leading-relaxed">
-                        {item.content}
-                      </p>
-                    </CardContent>
-                  </Card>
-                </CarouselItem>
-              ))}
-            </CarouselContent>
-          </Carousel>
-        </motion.div>
-      </motion.div>
+      </AnimatePresence>
       {/* Add custom keyframes for wiggle animation */}
       <style jsx global>{`
         @keyframes wiggle {
