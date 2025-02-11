@@ -13,16 +13,6 @@ import {
   Plane,
   FileQuestion,
 } from "lucide-react";
-import {
-  AlertDialog,
-  AlertDialogAction,
-  AlertDialogCancel,
-  AlertDialogContent,
-  AlertDialogDescription,
-  AlertDialogFooter,
-  AlertDialogHeader,
-  AlertDialogTitle,
-} from "@/components/ui/alert-dialog";
 import { useEffect, useState } from "react";
 import Cookies from "js-cookie";
 import { cardData, furtherSteps } from "./homeData";
