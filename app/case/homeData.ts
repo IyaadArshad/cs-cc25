@@ -3,10 +3,8 @@ import {
   Plane, 
   FileQuestion, 
   GraduationCap,
-  School,
   Building2,
   Car,
-  Bus,
   Heart,
   HeartPulse,
   Stethoscope,
@@ -19,10 +17,8 @@ import {
   UserPlus,
   UsersRound,
   BookOpen,
-  GalleryVerticalEnd,
   Languages,
   MapPin,
-  Map,
   Train,
   PiggyBank
 } from "lucide-react";
@@ -32,87 +28,82 @@ export const furtherSteps = [
     id: 'visa',
     title: "Confirm visa Appointment",
     description: "Confirm your secured residency permit",
-    question: "Select your visa status",
+    question: "Select your",
+    emphasisText: "visa status",
     answers: [
-      { id: "workVisa", label: "Work Visa", icon: Briefcase },
-      { id: "touristVisa", label: "Tourist Visa", icon: Plane },
-      { id: "other", label: "Other", icon: FileQuestion, isWide: true }
+      { id: "visa-work", label: "Work Visa", icon: Briefcase },
+      { id: "visa-tourist", label: "Tourist Visa", icon: Plane },
+      { id: "visa-other", label: "Other", icon: FileQuestion, isWide: true }
     ]
   },
   {
-    id: 'education',
+    id: 'school',
     title: "Confirm School Setup",
     description: "Set up enrollment details for your children's schooling in Abu Dhabi",
-    question: "Select education level",
+    question: "How is your",
+    emphasisText: "child's education",
     answers: [
-      { id: "primary", label: "Primary School", icon: School },
-      { id: "secondary", label: "Secondary School", icon: GraduationCap },
-      { id: "other", label: "Other Institution", icon: Building2, isWide: true }
+      { id: "school-confirmed", label: "School Confirmed", icon: GraduationCap },
+      { id: "school-nochild", label: "I don't have a child", icon: Users },
     ]
   },
   {
-    id: 'transport',
-    title: "Apply for a Driver's License",
+    id: 'dlicense',
+    title: "Confirm Driver's License",
     description: "Start the process to get your official UAE driving license",
-    question: "Select transport need",
+    question: "Got a",
+    emphasisText: "drivers license?",
     answers: [
-      { id: "car", label: "Personal Car", icon: Car },
-      { id: "publicTransport", label: "Public Transport", icon: Bus },
-      { id: "both", label: "Both Options", icon: Car, isWide: true }
+      { id: "dlicense-confimed", label: "Yes, I have a license", icon: Car },
+      { id: "dlicense-none", label: "No, I don't have a license", icon: FileQuestion },
+      { id: "dlicense-inprogress", label: "No, but I'm in the process of getting one", icon: UserPlus, isWide: true }
     ]
   },
   {
-    id: 'health',
-    title: "Obtain Medical Insurance",
+    id: 'insurance',
+    title: "Confirm Medical Insurance",
     description: "Ensure you have adequate health coverage in the UAE",
-    question: "Select coverage type",
+    question: "Select your",
+    emphasisText: "insurance status",
     answers: [
-      { id: "individual", label: "Individual Plan", icon: Heart },
-      { id: "family", label: "Family Plan", icon: HeartPulse },
-      { id: "corporate", label: "Corporate Plan", icon: Stethoscope, isWide: true },
+      { id: "insurance-confirmed", label: "I have insurance", icon: HeartPulse },
+      { id: "insurance-none", label: "I'm getting insurance", icon: Heart },
+      { id: "insurance-other", label: "other", icon: Stethoscope, isWide: true },
     ],
   },
   {
-    id: 'communication',
-    title: "Register for a Mobile SIM Card",
+    id: 'sim',
+    title: "Confirm your Mobile SIM Card",
     description: "Stay connected by choosing the best telecom provider in the UAE",
-    question: "Select plan type",
+    question: "Select your",
+    emphasisText: "SIM type",
     answers: [
-      { id: "prepaid", label: "Prepaid SIM", icon: Smartphone },
-      { id: "postpaid", label: "Postpaid Plan", icon: Phone },
-      { id: "internet", label: "Internet Bundle", icon: Tablet, isWide: true }
+      { id: "sim-confirmed", label: "I have coverage", icon: Phone },
+      { id: "sim-none", label: "I don't have coverage", icon: Smartphone },
+      { id: "sim-wouldlike", label: "I would like to get coverage", icon: Tablet, isWide: true }
     ]
   },
   {
-    id: 'banking',
-    title: "Set up a Bank Account",
-    description: "Open a UAE bank account for seamless financial transactions",
-    question: "Select account type",
+    id: 'bank',
+    title: "Confirm your Bank Account",
+    description: "Confirm your UAE bank account for financial transactions",
+    question: "Select your",
+    emphasisText: "financial status",
     answers: [
-      { id: "savings", label: "Savings Account", icon: PiggyBank },
-      { id: "current", label: "Current Account", icon: CreditCard },
-      { id: "both", label: "Both Accounts", icon: Wallet, isWide: true }
-    ]
-  },
-  {
-    id: 'community',
-    title: "Connect with Expat Communities",
-    description: "Join local groups to share experiences and receive support",
-    question: "Select community type",
-    answers: [
-      { id: "local", label: "Local Groups", icon: Users },
-      { id: "online", label: "Online Forums", icon: UserPlus },
-      { id: "both", label: "Both Networks", icon: UsersRound, isWide: true }
+      { id: "bank-confirmed", label: "I have setup my accounts", icon: CreditCard },
+      { id: "bank-mid", label: "I have partially setup my accounts", icon: Wallet },
+      { id: "bank-none", label: "I don't have an account", icon: PiggyBank, isWide: true }
     ]
   },
   {
     id: 'culture',
     title: "Learn about Emirati Culture",
     description: "Discover local customs and traditions specific to Abu Dhabi",
-    question: "Select learning path",
+    question: "Select your",
+    emphasisText: "learning path",
     answers: [
-      { id: "workshops", label: "Cultural Workshops", icon: BookOpen },
-      { id: "events", label: "Cultural Events", icon: GalleryVerticalEnd },
+      { id: "workshops", label: "Cultural Workshops", icon: UsersRound },
+      { id: "events", label: "Cultural Events", icon: BookOpen },
       { id: "both", label: "Combined Learning", icon: Languages, isWide: true }
     ]
   },
@@ -120,10 +111,11 @@ export const furtherSteps = [
     id: 'infrastructure',
     title: "Explore UAE Infrastructure",
     description: "Get informed about public transport, utilities, and connectivity services",
-    question: "Select area focus",
+    question: "Select your",
+    emphasisText: "area focus",
     answers: [
       { id: "local", label: "Local Area", icon: MapPin },
-      { id: "city", label: "Whole City", icon: Map },
+      { id: "city", label: "Whole City", icon: Building2 },
       { id: "transport", label: "Transport Routes", icon: Train, isWide: true }
     ]
   }
