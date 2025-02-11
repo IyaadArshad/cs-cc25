@@ -90,9 +90,9 @@ function VisaSelection({ onSave, onExit }: VisaSelectionProps) {
   }
 
   const visaOptions = [
-    { id: 'work', label: 'Work Visa', icon: <Briefcase className="w-6 h-6" /> },
-    { id: 'tourist', label: 'Tourist Visa', icon: <Plane className="w-6 h-6" /> },
-    { id: 'other', label: 'Other', icon: <FileQuestion className="w-6 h-6" /> },
+    { id: 'work', label: 'Work Visa', icon: <Briefcase className="w-6 h-6" />, isWide: false },
+    { id: 'tourist', label: 'Tourist Visa', icon: <Plane className="w-6 h-6" />, isWide: false },
+    { id: 'other', label: 'Other', icon: <FileQuestion className="w-6 h-6" />, isWide: true },
   ]
 
   return (
@@ -108,19 +108,20 @@ function VisaSelection({ onSave, onExit }: VisaSelectionProps) {
         <ProgressBar percentage={40} />
       </div>
 
-      <div className="flex flex-col items-center justify-center space-y-6 mt-16">
+      <div className="flex flex-col items-center justify-center space-y-6 mt-14">
         <div className="self-start">
-            <h2 className="text-6xl font-bold text-white mb-8 ml-3 text-start leading-tight max-w-2xl">
+            <h2 className="text-6xl font-bold text-white mb-5 ml-3 text-start leading-tight max-w-2xl">
             Select your<br /><span className="text-[#2563eb]">visa</span> <span className="text-[#2563eb]">status</span>
             </h2>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 w-full max-w-4xl">
+        <div className="grid grid-cols-2 gap-6 w-full max-w-4xl">
           {visaOptions.map((option) => (
             <Button
               key={option.id}
               variant="outline"
-              className={`h-32 flex flex-col items-center justify-center gap-4 p-6 border-2 transition-all
+              className={`flex flex-col items-center justify-center gap-4 p-6 border-2 transition-all
+                ${option.isWide ? 'col-span-2 h-24' : 'h-32'}
                 ${selectedVisa === option.id 
                   ? 'border-blue-500 bg-blue-500/10' 
                   : 'border-zinc-700 hover:border-zinc-600 hover:bg-zinc-800/50'}`}
