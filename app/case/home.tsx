@@ -37,6 +37,19 @@ function TaskQuestion({ question, emphasisText, options, onSave, onExit }: TaskQ
   const [selectedOption, setSelectedOption] = useState("");
   const [showDialog, setShowDialog] = useState(false);
 
+  // Define container and item variants for staggered entrance.
+  const containerVariants = {
+    hidden: { opacity: 0 },
+    show: {
+      opacity: 1,
+      transition: { staggerChildren: 0.15, delayChildren: 0.3 }
+    }
+  };
+  const itemVariants = {
+    hidden: { opacity: 0, y: 20 },
+    show: { opacity: 1, y: 0 }
+  };
+
   const handleExit = () => {
     if (selectedOption) {
       setShowDialog(true);
@@ -60,8 +73,14 @@ function TaskQuestion({ question, emphasisText, options, onSave, onExit }: TaskQ
       <div className="absolute top-6 right-6">
         <ProgressBar percentage={40} />
       </div>
-      <div className="flex flex-col items-center justify-center space-y-6 mt-14">
-        <div className="self-start">
+      {/* Wrap main content with motion.div for delayed staggered entrance */}
+      <motion.div
+        initial="hidden"
+        animate="show"
+        variants={containerVariants}
+        className="flex flex-col items-center justify-center space-y-6 mt-12"
+      >
+        <motion.div variants={itemVariants} className="self-start">
           <h2 className="text-6xl font-extrabold text-white mb-4 ml-3 text-start leading-tight max-w-2xl">
             {question}
             {emphasisText && (
@@ -71,8 +90,8 @@ function TaskQuestion({ question, emphasisText, options, onSave, onExit }: TaskQ
               </>
             )}
           </h2>
-        </div>
-        <div className="grid grid-cols-2 gap-6 w-full max-w-4xl">
+        </motion.div>
+        <motion.div variants={itemVariants} className="grid grid-cols-2 gap-6 w-full max-w-4xl">
           {options.map((option) => (
             <Button
               key={option.id}
@@ -86,15 +105,17 @@ function TaskQuestion({ question, emphasisText, options, onSave, onExit }: TaskQ
               <span className="text-lg font-light">{option.label}</span>
             </Button>
           ))}
-        </div>
-        <Button
-          className={`mt-12 w-full px-8 text-white border border-gray-700 ${selectedOption ? "bg-gray-800 hover:bg-[#2563eb] transition-colors" : "bg-gray-800/50 text-gray-500"}`}
-          disabled={!selectedOption}
-          onClick={() => onSave(selectedOption)}
-        >
-          Save Selection <span className="ml-[0.1rem]">✅</span>
-        </Button>
-      </div>
+        </motion.div>
+        <motion.div variants={itemVariants} className="w-full">
+          <Button
+            className={`mt-2 w-full px-8 text-white border border-gray-700 ${selectedOption ? "bg-gray-800 hover:bg-[#2563eb] transition-colors" : "bg-gray-800/50 text-gray-500"}`}
+            disabled={!selectedOption}
+            onClick={() => onSave(selectedOption)}
+          >
+            Save Selection <span className="ml-[0.1rem]">✅</span>
+          </Button>
+        </motion.div>
+      </motion.div>
       <AnimatePresence>
         {showDialog && (
           <motion.div
