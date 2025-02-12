@@ -1,3 +1,4 @@
+import { BanknotesIcon } from "@heroicons/react/24/outline";
 import { 
   Briefcase, 
   Plane, 
@@ -20,7 +21,8 @@ import {
   Languages,
   MapPin,
   Train,
-  PiggyBank
+  PiggyBank,
+  LucideBanknote
 } from "lucide-react";
 
 export const furtherSteps = [
@@ -40,22 +42,23 @@ export const furtherSteps = [
     id: 'school',
     title: "Confirm School Setup",
     description: "Set up enrollment details for your children's schooling in Abu Dhabi",
-    question: "How is your",
-    emphasisText: "child's education",
+    question: "Confirm",
+    emphasisText: "schooling",
     answers: [
       { id: "school-confirmed", label: "School Confirmed", icon: GraduationCap },
       { id: "school-nochild", label: "I don't have a child", icon: Users },
+      { id: "school-inprogress", label: "Finding a school", icon: UserPlus, isWide: true }
     ]
   },
   {
     id: 'dlicense',
     title: "Confirm Driver's License",
     description: "Start the process to get your official UAE driving license",
-    question: "Got a",
-    emphasisText: "drivers license?",
+    question: "Driving",
+    emphasisText: "license?",
     answers: [
       { id: "dlicense-confimed", label: "Yes, I have a license", icon: Car },
-      { id: "dlicense-none", label: "No, I don't have a license", icon: FileQuestion },
+      { id: "dlicense-none", label: "No, I don't have one", icon: FileQuestion },
       { id: "dlicense-inprogress", label: "No, but I'm in the process of getting one", icon: UserPlus, isWide: true }
     ]
   },
@@ -67,8 +70,7 @@ export const furtherSteps = [
     emphasisText: "insurance status",
     answers: [
       { id: "insurance-confirmed", label: "I have insurance", icon: HeartPulse },
-      { id: "insurance-none", label: "I'm getting insurance", icon: Heart },
-      { id: "insurance-other", label: "other", icon: Stethoscope, isWide: true },
+      { id: "insurance-none", label: "I'm not covered", icon: LucideBanknote },
     ],
   },
   {
@@ -87,12 +89,12 @@ export const furtherSteps = [
     id: 'bank',
     title: "Confirm your Bank Account",
     description: "Confirm your UAE bank account for financial transactions",
-    question: "Select your",
-    emphasisText: "financial status",
+    question: "Got a bank",
+    emphasisText: "account  ?",
     answers: [
-      { id: "bank-confirmed", label: "I have setup my accounts", icon: CreditCard },
-      { id: "bank-mid", label: "I have partially setup my accounts", icon: Wallet },
-      { id: "bank-none", label: "I don't have an account", icon: PiggyBank, isWide: true }
+      { id: "bank-confirmed", label: "Yes, I have my bank", icon: PiggyBank },
+      { id: "bank-mid", label: "I don't have one", icon: BanknotesIcon },
+      { id: "bank-none", label: "I'm in the process of getting one", icon: Building2, isWide: true }
     ]
   },
   {
