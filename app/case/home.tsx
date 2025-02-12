@@ -14,6 +14,7 @@ import { cardData, furtherSteps } from "./homeData";
 import { motion, AnimatePresence } from "framer-motion";
 import { ArrowLeft, X } from "lucide-react";
 import React from 'react';
+import JSConfetti from 'js-confetti' // Add this import at the top
 
 export interface Option {
   id: string;
@@ -316,6 +317,7 @@ export default function CaseHome() {
   const [firstQuestionCompleted, setFirstQuestionCompleted] = useState(false);
   // New ref for scrolling the overview container
   const overviewContainerRef = useRef<HTMLDivElement>(null);
+  const [hasShownCelebration, setHasShownCelebration] = useState(false);
 
   useEffect(() => {
     const name = Cookies.get("name");
@@ -356,7 +358,28 @@ export default function CaseHome() {
       setIsInitialLoading(false);
       setMainViewReady(true);
     }
+    // Add this check for the celebration cookie
+    const hasSeenCelebration = Cookies.get("hasSeenCelebration") === "true";
+    setHasShownCelebration(hasSeenCelebration);
   }, []);
+
+  // Add this new effect for handling the celebration
+  useEffect(() => {
+    const progress = calculateProgress(taskAnswers, furtherSteps);
+    
+    if (progress === 100 && !hasShownCelebration && !overviewMode) {
+      const confetti = new JSConfetti();
+      confetti.addConfetti({
+        emojis: ['🎉', '🎊', '✨', '⭐️', '🌟'],
+        emojiSize: 50,
+        confettiNumber: 100,
+      });
+      
+      // Set the celebration cookie
+      Cookies.set("hasSeenCelebration", "true", { path: "/", expires: 7 });
+      setHasShownCelebration(true);
+    }
+  }, [taskAnswers, hasShownCelebration, overviewMode]);
 
   interface Task {
     id: string;
@@ -529,8 +552,10 @@ export default function CaseHome() {
               scale: mainViewReady ? (isTransitioning ? 0.9 : 1) : 0.9
             }}
             transition={{ duration: 0.4, delay: 0.4 }}
-            onClick={handleOverviewClick}
-            className="cursor-pointer transform transition-transform hover:scale-105 animate-wiggle"
+            onClick={calculateProgress(taskAnswers, furtherSteps) === 100 ? undefined : handleOverviewClick}
+            className={`cursor-pointer transform transition-transform hover:scale-105 ${
+              calculateProgress(taskAnswers, furtherSteps) === 100 ? '' : 'animate-wiggle'
+            }`}
           >
             <ProgressCircle percentage={calculateProgress(taskAnswers, furtherSteps)} />
           </motion.div>
