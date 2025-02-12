@@ -1,16 +1,13 @@
 import { Card, CardContent } from "@/components/ui/card";
-import {
-  Carousel,
-  CarouselContent,
-  CarouselItem,
-} from "@/components/ui/carousel";
+import { Carousel, CarouselContent, CarouselItem } from "@/components/ui/carousel";
 import { Button } from "@/components/ui/button";
 import {
   ArrowRight,
   Briefcase,
   Plane,
   FileQuestion,
-} from "lucide-react";
+  Check
+} from "lucide-react"; // <-- Added Check icon
 import { useEffect, useState } from "react";
 import Cookies from "js-cookie";
 import { cardData, furtherSteps } from "./homeData";
@@ -287,13 +284,15 @@ export default function CaseHome() {
   // Remove visaSelectionMode and add generic task state:
   // const [visaSelectionMode, setVisaSelectionMode] = useState(false);
   const [currentTaskStep, setCurrentTaskStep] = useState<string | null>(null);
+  // New state for task answers as saved in cookie
+  const [taskAnswers, setTaskAnswers] = useState<Record<string, string>>({});
 
   useEffect(() => {
     const name = Cookies.get("name");
     if (name) {
       setUserName(name);
     }
-    // Initialize tasks cookie if not present
+    // Initialize tasks cookie if not present and update taskAnswers state:
     if (!Cookies.get("tasks")) {
       const taskDefaults: Record<string, string> = {};
       furtherSteps.forEach((step) => {
@@ -301,6 +300,9 @@ export default function CaseHome() {
         taskDefaults[step.id] = defaultAnswer;
       });
       Cookies.set("tasks", JSON.stringify(taskDefaults), { path: "/", expires: 7 });
+      setTaskAnswers(taskDefaults);
+    } else {
+      setTaskAnswers(JSON.parse(Cookies.get("tasks") as string));
     }
     // Check if the dashboard has loaded before via cookie
     const hasLoadedDashboard = Cookies.get("hasLoadedDashboard") === "true";
@@ -340,13 +342,13 @@ export default function CaseHome() {
     }, 60);
   };
 
-  // Update task save to update the tasks cookie:
+  // Update task save to update the tasks cookie and taskAnswers state:
   const handleTaskSave = (taskId: string, selected: string) => {
-    // Update cookie tasks with the new answer for the specified task id
     const tasksCookie = Cookies.get("tasks");
     let tasks = tasksCookie ? JSON.parse(tasksCookie) : {};
     tasks[taskId] = selected;
     Cookies.set("tasks", JSON.stringify(tasks), { path: "/", expires: 7 });
+    setTaskAnswers(tasks);
     setCurrentTaskStep(null);
   };
 
@@ -382,6 +384,15 @@ export default function CaseHome() {
   }
 
   if (overviewMode) {
+    // Sort tasks: unanswered first, answered (where saved answer differs from default) go last.
+    const sortedSteps = [...furtherSteps].sort((a, b) => {
+      const defaultA = a.answers.find(ans => ans.id.includes("none"))?.id || "";
+      const defaultB = b.answers.find(ans => ans.id.includes("none"))?.id || "";
+      const answeredA = taskAnswers[a.id] && taskAnswers[a.id] !== defaultA;
+      const answeredB = taskAnswers[b.id] && taskAnswers[b.id] !== defaultB;
+      if (answeredA === answeredB) return 0;
+      return answeredA ? 1 : -1;
+    });
     return (
       <div className="relative flex-1 p-6 overflow-y-auto">
         <div
@@ -396,28 +407,47 @@ export default function CaseHome() {
         </div>
         <div className="flex flex-col items-center justify-center space-y-6 mt-6">
           <div className="w-full max-w-xl mt-6 space-y-4">
-            {furtherSteps.map((step, index) => (
-              <motion.div
-                key={index}
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.3 + index * 0.06 }} // Reduced from 0.5 + index * 0.1
-                className="group hover:cursor-pointer flex items-center justify-between p-4 rounded-lg bg-zinc-900/50 hover:bg-zinc-800 transition-colors"
-                onClick={() => step.id && handleTaskClick(step.id)}
-              >
-                <div className="flex flex-col">
-                  <h3 className="text-lg font-medium text-zinc-200">
-                    {step.title}
-                  </h3>
-                  <p className="text-sm text-zinc-400">{step.description}</p>
-                </div>
-                <button className="p-2 rounded text-white">
-                  {" "}
-                  {/*bg-white/10 group-hover:bg-white/20 */}
-                  <ArrowRight className="w-5 h-5 transform transition-transform group-hover:translate-x-1" />
-                </button>
-              </motion.div>
-            ))}
+            {sortedSteps.map((step, index) => {
+              const defaultAnswer = step.answers.find(ans => ans.id.includes("none"))?.id || "";
+              const answered = taskAnswers[step.id] && taskAnswers[step.id] !== defaultAnswer;
+              return (
+                <motion.div
+                  key={index}
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 0.3 + index * 0.06 }}
+                  // Disable pointer events if answered
+                  onClick={() => !answered && step.id && handleTaskClick(step.id)}
+                  className={`group flex items-center justify-between p-4 rounded-lg transition-colors ${
+                    answered 
+                      ? "bg-zinc-700 pointer-events-none"
+                      : "bg-zinc-900/50 hover:bg-zinc-800"
+                  }`}
+                >
+                  <div className="flex flex-col">
+                    <motion.h3
+                      animate={answered ? { textDecoration: "line-through", color: "#9ca3af" } : {}}
+                      className="text-lg font-medium text-zinc-200"
+                    >
+                      {step.title}
+                    </motion.h3>
+                    <motion.p
+                      animate={answered ? { textDecoration: "line-through", color: "#9ca3af" } : {}}
+                      className="text-sm text-zinc-400"
+                    >
+                      {step.description}
+                    </motion.p>
+                  </div>
+                  <button className="p-2 rounded text-white">
+                    {answered ? (
+                      <Check className="w-5 h-5 text-green-500" />
+                    ) : (
+                      <ArrowRight className="w-5 h-5 transform transition-transform group-hover:translate-x-1" />
+                    )}
+                  </button>
+                </motion.div>
+              );
+            })}
           </div>
         </div>
       </div>
