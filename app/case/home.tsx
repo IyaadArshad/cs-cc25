@@ -276,7 +276,6 @@ function LoadingSpinner() {
 
 export default function CaseHome() {
   const [overviewMode, setOverviewMode] = useState(false);
-  const [visaSelectionMode, setVisaSelectionMode] = useState(false);
   const [userName, setUserName] = useState("");
   const [isTransitioning, setIsTransitioning] = useState(false);
 
@@ -284,6 +283,10 @@ export default function CaseHome() {
   const [isReturning, setIsReturning] = useState(false);
   const [mainViewReady, setMainViewReady] = useState(false);
   const [isInitialLoading, setIsInitialLoading] = useState(true);
+
+  // Remove visaSelectionMode and add generic task state:
+  // const [visaSelectionMode, setVisaSelectionMode] = useState(false);
+  const [currentTaskStep, setCurrentTaskStep] = useState<string | null>(null);
 
   useEffect(() => {
     const name = Cookies.get("name");
@@ -314,10 +317,9 @@ export default function CaseHome() {
     description: string;
   }
 
+  // Update task click to open any question:
   const handleTaskClick = (taskId: string) => {
-    if (taskId === "visa") {
-      setVisaSelectionMode(true);
-    }
+    setCurrentTaskStep(taskId);
   };
 
   const handleOverviewClick = () => {
@@ -329,9 +331,10 @@ export default function CaseHome() {
     }, 60);
   };
 
+  // Update task save to close the open question:
   const handleTaskSave = (taskId: string, selected: string) => {
     // Handle save logic here
-    setVisaSelectionMode(false);
+    setCurrentTaskStep(null);
   };
 
   // Show spinner during initial load
@@ -343,22 +346,24 @@ export default function CaseHome() {
     );
   }
 
-  if (visaSelectionMode) {
-    const visaStep = furtherSteps.find((step) => step.id === "visa");
-    if (!visaStep) return null;
-    const visaOptions = visaStep.answers.map((opt) => ({
+  // Replace single visaSelectionMode block with generic task question:
+  if (currentTaskStep) {
+    const taskStep = furtherSteps.find((step) => step.id === currentTaskStep);
+    if (!taskStep) return null;
+    const taskOptions = taskStep.answers.map((opt) => ({
       id: opt.id,
       label: opt.label,
       icon: React.createElement(opt.icon, { className: "w-6 h-6" }),
       isWide: !!opt.isWide,
     }));
+
     return (
       <TaskQuestion
-        question={visaStep.question}
-        emphasisText={visaStep.emphasisText}
-        options={visaOptions}
-        onSave={(selected) => handleTaskSave("visa", selected)}
-        onExit={() => setVisaSelectionMode(false)}
+        question={taskStep.question}
+        emphasisText={taskStep.emphasisText}
+        options={taskOptions}
+        onSave={(selected) => handleTaskSave(currentTaskStep, selected)}
+        onExit={() => setCurrentTaskStep(null)}
       />
     );
   }
