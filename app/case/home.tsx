@@ -186,8 +186,26 @@ function TaskQuestion({ question, emphasisText, options, onSave, onExit }: TaskQ
   );
 }
 
+// Add this helper function near the top of the file, after imports
+function calculateProgress(taskAnswers: Record<string, string>, steps: typeof furtherSteps): number {
+  if (!taskAnswers || !steps) return 0;
+  
+  const totalTasks = steps.length;
+  let completedTasks = 0;
 
-function ProgressBar({ percentage = 40 }) {
+  steps.forEach(step => {
+    const answer = taskAnswers[step.id];
+    const defaultAnswer = step.answers.find(ans => ans.id.includes("none"))?.id || "";
+    if (answer && answer !== defaultAnswer) {
+      completedTasks++;
+    }
+  });
+
+  return Math.round((completedTasks / totalTasks) * 100);
+}
+
+// Update ProgressBar to accept children prop
+function ProgressBar({ percentage }: { percentage?: number }) {
   return (
     <div className="flex items-center">
       <div className="w-24 bg-gray-700 rounded-full h-2">
@@ -201,10 +219,11 @@ function ProgressBar({ percentage = 40 }) {
   );
 }
 
-function ProgressCircle({ percentage = 40, hideText = false }) {
+// Update ProgressCircle
+function ProgressCircle({ percentage, hideText = false }: { percentage?: number, hideText?: boolean }) {
   const radius = 90;
   const circumference = 2 * Math.PI * radius;
-  const strokeDashoffset = circumference - (percentage / 100) * circumference;
+  const strokeDashoffset = circumference - ((percentage || 0) / 100) * circumference;
   return (
     <div className="relative bg-[#27272a] rounded-full inline-flex items-center justify-center">
       <svg
@@ -405,6 +424,7 @@ export default function CaseHome() {
   }
 
   if (overviewMode) {
+    const progress = calculateProgress(taskAnswers, furtherSteps);
     // Sort tasks: unanswered first, answered (where saved answer differs from default) go last.
     const sortedSteps = [...furtherSteps].sort((a, b) => {
       const defaultA = a.answers.find(ans => ans.id.includes("none"))?.id || "";
@@ -424,7 +444,7 @@ export default function CaseHome() {
           <span className="text-white">Back</span>
         </div>
         <div className="absolute top-6 right-6">
-          <ProgressBar percentage={40} />
+          <ProgressBar percentage={progress} />
         </div>
         <div className="flex flex-col items-center justify-center space-y-6 mt-6">
           <div className="w-full max-w-xl mt-6 space-y-4">
@@ -501,7 +521,7 @@ export default function CaseHome() {
             onClick={handleOverviewClick}
             className="cursor-pointer transform transition-transform hover:scale-105 animate-wiggle"
           >
-            <ProgressCircle />
+            <ProgressCircle percentage={calculateProgress(taskAnswers, furtherSteps)} />
           </motion.div>
 
           <motion.div 
