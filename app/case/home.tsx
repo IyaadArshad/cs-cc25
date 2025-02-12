@@ -293,6 +293,15 @@ export default function CaseHome() {
     if (name) {
       setUserName(name);
     }
+    // Initialize tasks cookie if not present
+    if (!Cookies.get("tasks")) {
+      const taskDefaults: Record<string, string> = {};
+      furtherSteps.forEach((step) => {
+        const defaultAnswer = step.answers.find(ans => ans.id.includes("none"))?.id || "";
+        taskDefaults[step.id] = defaultAnswer;
+      });
+      Cookies.set("tasks", JSON.stringify(taskDefaults), { path: "/", expires: 7 });
+    }
     // Check if the dashboard has loaded before via cookie
     const hasLoadedDashboard = Cookies.get("hasLoadedDashboard") === "true";
     setIsReturning(hasLoadedDashboard);
@@ -331,9 +340,13 @@ export default function CaseHome() {
     }, 60);
   };
 
-  // Update task save to close the open question:
+  // Update task save to update the tasks cookie:
   const handleTaskSave = (taskId: string, selected: string) => {
-    // Handle save logic here
+    // Update cookie tasks with the new answer for the specified task id
+    const tasksCookie = Cookies.get("tasks");
+    let tasks = tasksCookie ? JSON.parse(tasksCookie) : {};
+    tasks[taskId] = selected;
+    Cookies.set("tasks", JSON.stringify(tasks), { path: "/", expires: 7 });
     setCurrentTaskStep(null);
   };
 
