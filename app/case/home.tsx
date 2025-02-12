@@ -1,20 +1,24 @@
 import { Card, CardContent } from "@/components/ui/card";
-import { Carousel, CarouselContent, CarouselItem } from "@/components/ui/carousel";
+import {
+  Carousel,
+  CarouselContent,
+  CarouselItem,
+} from "@/components/ui/carousel";
 import { Button } from "@/components/ui/button";
 import {
   ArrowRight,
   Briefcase,
   Plane,
   FileQuestion,
-  Check
+  Check,
 } from "lucide-react"; // <-- Added Check icon
 import { useEffect, useState, useRef } from "react";
 import Cookies from "js-cookie";
 import { cardData, furtherSteps } from "./homeData";
 import { motion, AnimatePresence } from "framer-motion";
 import { ArrowLeft, X } from "lucide-react";
-import React from 'react';
-import JSConfetti from 'js-confetti' // Add this import at the top
+import React from "react";
+import JSConfetti from "js-confetti"; // Add this import at the top
 
 export interface Option {
   id: string;
@@ -32,13 +36,13 @@ export interface TaskQuestionProps {
   progress: number; // Add this new prop
 }
 
-function TaskQuestion({ 
-  question, 
-  emphasisText, 
-  options, 
-  onSave, 
+function TaskQuestion({
+  question,
+  emphasisText,
+  options,
+  onSave,
   onExit,
-  progress  // Add this new prop
+  progress, // Add this new prop
 }: TaskQuestionProps) {
   const [selectedOption, setSelectedOption] = useState("");
   const [showDialog, setShowDialog] = useState(false);
@@ -48,16 +52,16 @@ function TaskQuestion({
     hidden: { opacity: 0 },
     show: {
       opacity: 1,
-      transition: { staggerChildren: 0.15, delayChildren: 0.3 }
+      transition: { staggerChildren: 0.15, delayChildren: 0.3 },
     },
     exit: {
       opacity: 0,
-      transition: { duration: 0.2 }
-    }
+      transition: { duration: 0.2 },
+    },
   };
   const itemVariants = {
     hidden: { opacity: 0, y: 20 },
-    show: { opacity: 1, y: 0 }
+    show: { opacity: 1, y: 0 },
   };
 
   const handleExit = () => {
@@ -94,7 +98,10 @@ function TaskQuestion({
   return (
     <div className="relative flex-1 p-6 overflow-y-auto hide-scrollbar">
       {/* Update progress bar to use the passed progress */}
-      <div onClick={handleExit} className="absolute top-6 left-6 cursor-pointer flex items-center gap-4 hover:text-gray-300">
+      <div
+        onClick={handleExit}
+        className="absolute top-6 left-6 cursor-pointer flex items-center gap-4 hover:text-gray-300"
+      >
         <ArrowLeft className="w-5 h-5 text-white" />
         <span className="text-white">Back</span>
       </div>
@@ -122,15 +129,26 @@ function TaskQuestion({
               )}
             </h2>
           </motion.div>
-          <motion.div variants={itemVariants} className="grid grid-cols-2 gap-6 w-full max-w-4xl">
+          <motion.div
+            variants={itemVariants}
+            className="grid grid-cols-2 gap-6 w-full max-w-4xl"
+          >
             {options.map((option) => (
               <Button
                 key={option.id}
                 variant="outline"
                 className={`flex bg-gray-800 border-gray-700 text-white hover:bg-gray-700/50 transition-colors flex-col items-center justify-center gap-4 p-6 border
                   ${option.isWide ? "col-span-2 h-24" : "h-32"}
-                  ${selectedOption === option.id ? "border-[#2563eb] bg-blue-500/10 hover:text-white" : "hover:text-white"}`}
-                onClick={() => setSelectedOption((curr) => (curr === option.id ? "" : option.id))}
+                  ${
+                    selectedOption === option.id
+                      ? "border-[#2563eb] bg-blue-500/10 hover:text-white"
+                      : "hover:text-white"
+                  }`}
+                onClick={() =>
+                  setSelectedOption((curr) =>
+                    curr === option.id ? "" : option.id
+                  )
+                }
               >
                 {option.icon}
                 <span className="text-lg font-light">{option.label}</span>
@@ -139,7 +157,11 @@ function TaskQuestion({
           </motion.div>
           <motion.div variants={itemVariants} className="w-full">
             <Button
-              className={`mt-2 w-full px-8 text-white border border-gray-700 ${selectedOption ? "bg-gray-800 hover:bg-[#2563eb] transition-colors" : "bg-gray-800/50 text-gray-500"}`}
+              className={`mt-2 w-full px-8 text-white border border-gray-700 ${
+                selectedOption
+                  ? "bg-gray-800 hover:bg-[#2563eb] transition-colors"
+                  : "bg-gray-800/50 text-gray-500"
+              }`}
               disabled={!selectedOption}
               onClick={() => handleSave(selectedOption)}
             >
@@ -165,16 +187,22 @@ function TaskQuestion({
             >
               <X className="w-16 h-16 text-[#2563eb] mx-auto" />
               <h2 className="mt-4 text-2xl font-bold text-white">
-                You have unsaved changes  
+                You have unsaved changes
               </h2>
               <p className="mt-2 text-gray-300">
                 Do you want to exit without saving your selection?
               </p>
               <div className="mt-6 flex justify-center gap-4">
-                <button onClick={handleDialogClose} className="px-4 py-2 bg-gray-700/50 hover:bg-gray-600 text-white rounded-lg">
+                <button
+                  onClick={handleDialogClose}
+                  className="px-4 py-2 bg-gray-700/50 hover:bg-gray-600 text-white rounded-lg"
+                >
                   Cancel
                 </button>
-                <button onClick={handleExitAnyway} className="px-4 py-2 bg-blue-600 hover:bg-blue-500 text-white rounded-lg">
+                <button
+                  onClick={handleExitAnyway}
+                  className="px-4 py-2 bg-blue-600 hover:bg-blue-500 text-white rounded-lg"
+                >
                   Exit anyway
                 </button>
               </div>
@@ -196,15 +224,19 @@ function TaskQuestion({
 }
 
 // Add this helper function near the top of the file, after imports
-function calculateProgress(taskAnswers: Record<string, string>, steps: typeof furtherSteps): number {
+function calculateProgress(
+  taskAnswers: Record<string, string>,
+  steps: typeof furtherSteps
+): number {
   if (!taskAnswers || !steps) return 0;
-  
+
   const totalTasks = steps.length;
   let completedTasks = 0;
 
-  steps.forEach(step => {
+  steps.forEach((step) => {
     const answer = taskAnswers[step.id];
-    const defaultAnswer = step.answers.find(ans => ans.id.includes("none"))?.id || "";
+    const defaultAnswer =
+      step.answers.find((ans) => ans.id.includes("none"))?.id || "";
     if (answer && answer !== defaultAnswer) {
       completedTasks++;
     }
@@ -229,10 +261,17 @@ function ProgressBar({ percentage }: { percentage?: number }) {
 }
 
 // Update ProgressCircle
-function ProgressCircle({ percentage, hideText = false }: { percentage?: number, hideText?: boolean }) {
+function ProgressCircle({
+  percentage,
+  hideText = false,
+}: {
+  percentage?: number;
+  hideText?: boolean;
+}) {
   const radius = 90;
   const circumference = 2 * Math.PI * radius;
-  const strokeDashoffset = circumference - ((percentage || 0) / 100) * circumference;
+  const strokeDashoffset =
+    circumference - ((percentage || 0) / 100) * circumference;
   return (
     <div className="relative bg-[#27272a] rounded-full inline-flex items-center justify-center">
       <svg
@@ -326,7 +365,7 @@ export default function CaseHome() {
       // Update the tasks cookie to mark setup as complete if name exists
       const tasksCookie = Cookies.get("tasks");
       let tasks = tasksCookie ? JSON.parse(tasksCookie) : {};
-      tasks['setup'] = 'setup-complete';
+      tasks["setup"] = "setup-complete";
       Cookies.set("tasks", JSON.stringify(tasks), { path: "/", expires: 7 });
       setTaskAnswers(tasks);
     }
@@ -334,10 +373,14 @@ export default function CaseHome() {
     if (!Cookies.get("tasks")) {
       const taskDefaults: Record<string, string> = {};
       furtherSteps.forEach((step) => {
-        const defaultAnswer = step.answers.find(ans => ans.id.includes("none"))?.id || "";
+        const defaultAnswer =
+          step.answers.find((ans) => ans.id.includes("none"))?.id || "";
         taskDefaults[step.id] = defaultAnswer;
       });
-      Cookies.set("tasks", JSON.stringify(taskDefaults), { path: "/", expires: 7 });
+      Cookies.set("tasks", JSON.stringify(taskDefaults), {
+        path: "/",
+        expires: 7,
+      });
       setTaskAnswers(taskDefaults);
     } else {
       setTaskAnswers(JSON.parse(Cookies.get("tasks") as string));
@@ -366,15 +409,15 @@ export default function CaseHome() {
   // Add this new effect for handling the celebration
   useEffect(() => {
     const progress = calculateProgress(taskAnswers, furtherSteps);
-    
+
     if (progress === 100 && !hasShownCelebration && !overviewMode) {
       const confetti = new JSConfetti();
       confetti.addConfetti({
-        emojis: ['🎉', '🎊', '✨', '⭐️', '🌟'],
+        emojis: ["🎉", "🎊", "✨", "⭐️", "🌟"],
         emojiSize: 50,
         confettiNumber: 100,
       });
-      
+
       // Set the celebration cookie
       Cookies.set("hasSeenCelebration", "true", { path: "/", expires: 7 });
       setHasShownCelebration(true);
@@ -415,7 +458,10 @@ export default function CaseHome() {
         if (taskElem) {
           taskElem.scrollIntoView({ behavior: "smooth", block: "center" });
           setTimeout(() => {
-            overviewContainerRef.current?.scrollTo({ top: 0, behavior: "smooth" });
+            overviewContainerRef.current?.scrollTo({
+              top: 0,
+              behavior: "smooth",
+            });
           }, 1500);
         }
       }, 100);
@@ -461,15 +507,20 @@ export default function CaseHome() {
     const progress = calculateProgress(taskAnswers, furtherSteps);
     // Sort tasks: unanswered first, answered (where saved answer differs from default) go last.
     const sortedSteps = [...furtherSteps].sort((a, b) => {
-      const defaultA = a.answers.find(ans => ans.id.includes("none"))?.id || "";
-      const defaultB = b.answers.find(ans => ans.id.includes("none"))?.id || "";
+      const defaultA =
+        a.answers.find((ans) => ans.id.includes("none"))?.id || "";
+      const defaultB =
+        b.answers.find((ans) => ans.id.includes("none"))?.id || "";
       const answeredA = taskAnswers[a.id] && taskAnswers[a.id] !== defaultA;
       const answeredB = taskAnswers[b.id] && taskAnswers[b.id] !== defaultB;
       if (answeredA === answeredB) return 0;
       return answeredA ? 1 : -1;
     });
     return (
-      <div ref={overviewContainerRef} className="relative flex-1 p-6 overflow-y-auto">
+      <div
+        ref={overviewContainerRef}
+        className="relative flex-1 p-6 overflow-y-auto"
+      >
         <div
           onClick={() => setOverviewMode(false)}
           className="absolute top-6 left-6 cursor-pointer flex items-center gap-4 hover:text-gray-300"
@@ -483,8 +534,10 @@ export default function CaseHome() {
         <div className="flex flex-col items-center justify-center space-y-6 mt-6">
           <div className="w-full max-w-xl mt-6 space-y-4">
             {sortedSteps.map((step, index) => {
-              const defaultAnswer = step.answers.find(ans => ans.id.includes("none"))?.id || "";
-              const answered = taskAnswers[step.id] && taskAnswers[step.id] !== defaultAnswer;
+              const defaultAnswer =
+                step.answers.find((ans) => ans.id.includes("none"))?.id || "";
+              const answered =
+                taskAnswers[step.id] && taskAnswers[step.id] !== defaultAnswer;
               return (
                 <motion.div
                   id={`task-${step.id}`} // <-- Added id for scrolling
@@ -493,22 +546,32 @@ export default function CaseHome() {
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: 0.3 + index * 0.06 }}
                   // Disable pointer events if answered
-                  onClick={() => !answered && step.id && handleTaskClick(step.id)}
+                  onClick={() =>
+                    !answered && step.id && handleTaskClick(step.id)
+                  }
                   className={`group flex items-center justify-between p-4 rounded-lg transition-colors ${
-                    answered 
+                    answered
                       ? "bg-zinc-700 pointer-events-none"
                       : "bg-zinc-900/50 hover:bg-zinc-800 cursor-pointer"
                   }`}
                 >
                   <div className="flex flex-col">
                     <motion.h3
-                      animate={answered ? { textDecoration: "line-through", color: "#9ca3af" } : {}}
+                      animate={
+                        answered
+                          ? { textDecoration: "line-through", color: "#9ca3af" }
+                          : {}
+                      }
                       className="text-lg font-medium text-zinc-200"
                     >
                       {step.title}
                     </motion.h3>
                     <motion.p
-                      animate={answered ? { textDecoration: "line-through", color: "#9ca3af" } : {}}
+                      animate={
+                        answered
+                          ? { textDecoration: "line-through", color: "#9ca3af" }
+                          : {}
+                      }
                       className="text-sm text-zinc-400"
                     >
                       {step.description}
@@ -534,37 +597,46 @@ export default function CaseHome() {
     <div className="flex-1 p-6 overflow-y-auto">
       <AnimatePresence>
         <div className="flex flex-col items-center justify-center space-y-6 mt-8">
-          <motion.h1 
+          <motion.h1
             initial={{ opacity: 0, y: -20 }}
-            animate={{ opacity: mainViewReady ? 1 : 0, y: mainViewReady ? 0 : -20 }}
+            animate={{
+              opacity: mainViewReady ? 1 : 0,
+              y: mainViewReady ? 0 : -20,
+            }}
             transition={{ duration: 0.4, delay: 0.2 }}
             className="text-4xl text-white text-center mb-3"
           >
-            { isReturning 
-              ? `Welcome back, ${userName}` 
-              : `Welcome, ${userName}` }
+            {isReturning ? `Welcome back, ${userName}` : `Welcome, ${userName}`}
           </motion.h1>
-          
+
           <motion.div
             initial={{ opacity: 0, scale: 0.9 }}
-            animate={{ 
+            animate={{
               opacity: mainViewReady ? (isTransitioning ? 0 : 1) : 0,
-              scale: mainViewReady ? (isTransitioning ? 0.9 : 1) : 0.9
+              scale: mainViewReady ? (isTransitioning ? 0.9 : 1) : 0.9,
             }}
             transition={{ duration: 0.4, delay: 0.4 }}
-            onClick={calculateProgress(taskAnswers, furtherSteps) === 100 ? undefined : handleOverviewClick}
+            onClick={
+              calculateProgress(taskAnswers, furtherSteps) === 100
+                ? undefined
+                : handleOverviewClick
+            }
             className={`cursor-pointer transform transition-transform hover:scale-105 ${
-              calculateProgress(taskAnswers, furtherSteps) === 100 ? '' : 'animate-wiggle'
+              calculateProgress(taskAnswers, furtherSteps) === 100
+                ? ""
+                : "animate-wiggle"
             }`}
           >
-            <ProgressCircle percentage={calculateProgress(taskAnswers, furtherSteps)} />
+            <ProgressCircle
+              percentage={calculateProgress(taskAnswers, furtherSteps)}
+            />
           </motion.div>
 
-          <motion.div 
+          <motion.div
             initial={{ opacity: 0, y: 20 }}
-            animate={{ 
+            animate={{
               opacity: mainViewReady ? (isTransitioning ? 0 : 1) : 0,
-              y: mainViewReady ? 0 : 20
+              y: mainViewReady ? 0 : 20,
             }}
             transition={{ duration: 0.4, delay: 0.6 }}
             className="w-full max-w-xl"
@@ -572,13 +644,22 @@ export default function CaseHome() {
             <Carousel className="w-full max-w-sm mt-4">
               <CarouselContent className="-ml-2">
                 {cardData.map((item, index) => (
-                  <CarouselItem key={index} className="pl-2 basis-3/4 sm:basis-2/3">
+                  <CarouselItem
+                    key={index}
+                    className="pl-2 basis-3/4 sm:basis-2/3"
+                  >
                     <Card className="bg-zinc-800/50 border-zinc-700">
                       <CardContent className="flex flex-col items-start justify-center p-4 h-48">
                         <motion.div
                           initial={{ opacity: 0, x: 20 }}
-                          animate={{ opacity: mainViewReady ? 1 : 0, x: mainViewReady ? 0 : 20 }}
-                          transition={{ duration: 0.4, delay: 0.8 + index * 0.1 }}
+                          animate={{
+                            opacity: mainViewReady ? 1 : 0,
+                            x: mainViewReady ? 0 : 20,
+                          }}
+                          transition={{
+                            duration: 0.4,
+                            delay: 0.8 + index * 0.1,
+                          }}
                         >
                           <h2 className="text-xl font-normal text-zinc-200 mb-2">
                             {item.title}
