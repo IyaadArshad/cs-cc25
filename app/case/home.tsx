@@ -28,9 +28,17 @@ export interface TaskQuestionProps {
   options: Option[];
   onSave: (selectedId: string) => void;
   onExit: () => void;
+  progress: number; // Add this new prop
 }
 
-function TaskQuestion({ question, emphasisText, options, onSave, onExit }: TaskQuestionProps) {
+function TaskQuestion({ 
+  question, 
+  emphasisText, 
+  options, 
+  onSave, 
+  onExit,
+  progress  // Add this new prop
+}: TaskQuestionProps) {
   const [selectedOption, setSelectedOption] = useState("");
   const [showDialog, setShowDialog] = useState(false);
   const [isExiting, setIsExiting] = useState(false);
@@ -84,13 +92,13 @@ function TaskQuestion({ question, emphasisText, options, onSave, onExit }: TaskQ
 
   return (
     <div className="relative flex-1 p-6 overflow-y-auto hide-scrollbar">
-      {/* Back button and progress bar stay outside animation scope */}
+      {/* Update progress bar to use the passed progress */}
       <div onClick={handleExit} className="absolute top-6 left-6 cursor-pointer flex items-center gap-4 hover:text-gray-300">
         <ArrowLeft className="w-5 h-5 text-white" />
         <span className="text-white">Back</span>
       </div>
       <div className="absolute top-6 right-6">
-        <ProgressBar percentage={40} />
+        <ProgressBar percentage={progress} />
       </div>
 
       <AnimatePresence mode="wait">
@@ -412,6 +420,8 @@ export default function CaseHome() {
       isWide: !!opt.isWide,
     }));
 
+    const progress = calculateProgress(taskAnswers, furtherSteps);
+
     return (
       <TaskQuestion
         question={taskStep.question}
@@ -419,6 +429,7 @@ export default function CaseHome() {
         options={taskOptions}
         onSave={(selected) => handleTaskSave(currentTaskStep, selected)}
         onExit={() => setCurrentTaskStep(null)}
+        progress={progress}
       />
     );
   }
