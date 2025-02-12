@@ -8,7 +8,7 @@ import {
   FileQuestion,
   Check
 } from "lucide-react"; // <-- Added Check icon
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import Cookies from "js-cookie";
 import { cardData, furtherSteps } from "./homeData";
 import { motion, AnimatePresence } from "framer-motion";
@@ -286,6 +286,9 @@ export default function CaseHome() {
   const [currentTaskStep, setCurrentTaskStep] = useState<string | null>(null);
   // New state for task answers as saved in cookie
   const [taskAnswers, setTaskAnswers] = useState<Record<string, string>>({});
+  const [firstQuestionCompleted, setFirstQuestionCompleted] = useState(false);
+  // New ref for scrolling the overview container
+  const overviewContainerRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const name = Cookies.get("name");
@@ -350,6 +353,18 @@ export default function CaseHome() {
     Cookies.set("tasks", JSON.stringify(tasks), { path: "/", expires: 7 });
     setTaskAnswers(tasks);
     setCurrentTaskStep(null);
+    if (!firstQuestionCompleted) {
+      setTimeout(() => {
+        const taskElem = document.getElementById(`task-${taskId}`);
+        if (taskElem) {
+          taskElem.scrollIntoView({ behavior: "smooth", block: "center" });
+          setTimeout(() => {
+            overviewContainerRef.current?.scrollTo({ top: 0, behavior: "smooth" });
+          }, 1500);
+        }
+      }, 100);
+      setFirstQuestionCompleted(true);
+    }
   };
 
   // Show spinner during initial load
@@ -394,7 +409,7 @@ export default function CaseHome() {
       return answeredA ? 1 : -1;
     });
     return (
-      <div className="relative flex-1 p-6 overflow-y-auto">
+      <div ref={overviewContainerRef} className="relative flex-1 p-6 overflow-y-auto">
         <div
           onClick={() => setOverviewMode(false)}
           className="absolute top-6 left-6 cursor-pointer flex items-center gap-4 hover:text-gray-300"
@@ -412,6 +427,7 @@ export default function CaseHome() {
               const answered = taskAnswers[step.id] && taskAnswers[step.id] !== defaultAnswer;
               return (
                 <motion.div
+                  id={`task-${step.id}`} // <-- Added id for scrolling
                   key={index}
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
