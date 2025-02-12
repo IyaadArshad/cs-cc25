@@ -437,7 +437,7 @@ export default function CaseHome() {
                   className={`group flex items-center justify-between p-4 rounded-lg transition-colors ${
                     answered 
                       ? "bg-zinc-700 pointer-events-none"
-                      : "bg-zinc-900/50 hover:bg-zinc-800"
+                      : "bg-zinc-900/50 hover:bg-zinc-800 cursor-pointer"
                   }`}
                 >
                   <div className="flex flex-col">
