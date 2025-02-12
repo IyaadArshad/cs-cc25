@@ -5,7 +5,7 @@ import type React from "react";
 import { countries } from "./countries";
 import { Tab, WeatherCondition, SettingsItemProps, WeatherPillProps } from "../types/types";
 import SettingsItem from "@/components/SettingsItem";
-import { backgrounds } from "../variables/backgrouds";
+import { backgrounds } from "../variables/backgrounds";
 import WeatherPill from "@/components/WeatherPill";
 import {
   HomeIcon as HomeIconFilled,
