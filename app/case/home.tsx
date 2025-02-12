@@ -294,6 +294,12 @@ export default function CaseHome() {
     const name = Cookies.get("name");
     if (name) {
       setUserName(name);
+      // Update the tasks cookie to mark setup as complete if name exists
+      const tasksCookie = Cookies.get("tasks");
+      let tasks = tasksCookie ? JSON.parse(tasksCookie) : {};
+      tasks['setup'] = 'setup-complete';
+      Cookies.set("tasks", JSON.stringify(tasks), { path: "/", expires: 7 });
+      setTaskAnswers(tasks);
     }
     // Initialize tasks cookie if not present and update taskAnswers state:
     if (!Cookies.get("tasks")) {

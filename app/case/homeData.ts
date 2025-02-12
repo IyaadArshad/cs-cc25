@@ -22,10 +22,22 @@ import {
   MapPin,
   Train,
   PiggyBank,
-  LucideBanknote
+  LucideBanknote,
+  UserCheck
 } from "lucide-react";
 
 export const furtherSteps = [
+  {
+    id: 'setup',
+    title: "Setup Account",
+    description: "Complete your profile setup",
+    question: "Setup your",
+    emphasisText: "account",
+    answers: [
+      { id: "setup-complete", label: "Already Completed", icon: UserCheck },
+      { id: "setup-none", label: "Not Started", icon: UserPlus },
+    ]
+  },
   {
     id: 'visa',
     title: "Confirm visa Appointment",
