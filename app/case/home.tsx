@@ -36,13 +36,17 @@ export interface TaskQuestionProps {
 function TaskQuestion({ question, emphasisText, options, onSave, onExit }: TaskQuestionProps) {
   const [selectedOption, setSelectedOption] = useState("");
   const [showDialog, setShowDialog] = useState(false);
+  const [isExiting, setIsExiting] = useState(false);
 
-  // Define container and item variants for staggered entrance.
   const containerVariants = {
     hidden: { opacity: 0 },
     show: {
       opacity: 1,
       transition: { staggerChildren: 0.15, delayChildren: 0.3 }
+    },
+    exit: {
+      opacity: 0,
+      transition: { duration: 0.2 }
     }
   };
   const itemVariants = {
@@ -54,18 +58,36 @@ function TaskQuestion({ question, emphasisText, options, onSave, onExit }: TaskQ
     if (selectedOption) {
       setShowDialog(true);
     } else {
-      onExit();
+      handleExitWithAnimation();
     }
   };
 
-  const handleDialogClose = () => setShowDialog(false);
+  const handleExitWithAnimation = () => {
+    setIsExiting(true);
+    setTimeout(() => {
+      onExit();
+    }, 300); // Matches the exit animation duration
+  };
+
+  const handleSave = (selected: string) => {
+    setIsExiting(true);
+    setTimeout(() => {
+      onSave(selected);
+    }, 300);
+  };
+
   const handleExitAnyway = () => {
     setShowDialog(false);
-    setTimeout(onExit, 200);
+    handleExitWithAnimation();
+  };
+
+  const handleDialogClose = () => {
+    setShowDialog(false);
   };
 
   return (
     <div className="relative flex-1 p-6 overflow-y-auto hide-scrollbar">
+      {/* Back button and progress bar stay outside animation scope */}
       <div onClick={handleExit} className="absolute top-6 left-6 cursor-pointer flex items-center gap-4 hover:text-gray-300">
         <ArrowLeft className="w-5 h-5 text-white" />
         <span className="text-white">Back</span>
@@ -73,49 +95,53 @@ function TaskQuestion({ question, emphasisText, options, onSave, onExit }: TaskQ
       <div className="absolute top-6 right-6">
         <ProgressBar percentage={40} />
       </div>
-      {/* Wrap main content with motion.div for delayed staggered entrance */}
-      <motion.div
-        initial="hidden"
-        animate="show"
-        variants={containerVariants}
-        className="flex flex-col items-center justify-center space-y-6 mt-12"
-      >
-        <motion.div variants={itemVariants} className="self-start">
-          <h2 className="text-6xl font-extrabold text-white mb-4 ml-3 text-start leading-tight max-w-2xl">
-            {question}
-            {emphasisText && (
-              <>
-                <br />
-                <span style={{ color: "#2563eb" }}>{emphasisText}</span>
-              </>
-            )}
-          </h2>
-        </motion.div>
-        <motion.div variants={itemVariants} className="grid grid-cols-2 gap-6 w-full max-w-4xl">
-          {options.map((option) => (
+
+      <AnimatePresence mode="wait">
+        <motion.div
+          key="content"
+          initial="hidden"
+          animate={isExiting ? "exit" : "show"}
+          exit="exit"
+          variants={containerVariants}
+          className="flex flex-col items-center justify-center space-y-6 mt-12"
+        >
+          <motion.div variants={itemVariants} className="self-start">
+            <h2 className="text-6xl font-extrabold text-white mb-4 ml-3 text-start leading-tight max-w-2xl">
+              {question}
+              {emphasisText && (
+                <>
+                  <br />
+                  <span style={{ color: "#2563eb" }}>{emphasisText}</span>
+                </>
+              )}
+            </h2>
+          </motion.div>
+          <motion.div variants={itemVariants} className="grid grid-cols-2 gap-6 w-full max-w-4xl">
+            {options.map((option) => (
+              <Button
+                key={option.id}
+                variant="outline"
+                className={`flex bg-gray-800 border-gray-700 text-white hover:bg-gray-700/50 transition-colors flex-col items-center justify-center gap-4 p-6 border
+                  ${option.isWide ? "col-span-2 h-24" : "h-32"}
+                  ${selectedOption === option.id ? "border-[#2563eb] bg-blue-500/10 hover:text-white" : "hover:text-white"}`}
+                onClick={() => setSelectedOption((curr) => (curr === option.id ? "" : option.id))}
+              >
+                {option.icon}
+                <span className="text-lg font-light">{option.label}</span>
+              </Button>
+            ))}
+          </motion.div>
+          <motion.div variants={itemVariants} className="w-full">
             <Button
-              key={option.id}
-              variant="outline"
-              className={`flex bg-gray-800 border-gray-700 text-white hover:bg-gray-700/50 transition-colors flex-col items-center justify-center gap-4 p-6 border
-                ${option.isWide ? "col-span-2 h-24" : "h-32"}
-                ${selectedOption === option.id ? "border-[#2563eb] bg-blue-500/10 hover:text-white" : "hover:text-white"}`}
-              onClick={() => setSelectedOption((curr) => (curr === option.id ? "" : option.id))}
+              className={`mt-2 w-full px-8 text-white border border-gray-700 ${selectedOption ? "bg-gray-800 hover:bg-[#2563eb] transition-colors" : "bg-gray-800/50 text-gray-500"}`}
+              disabled={!selectedOption}
+              onClick={() => handleSave(selectedOption)}
             >
-              {option.icon}
-              <span className="text-lg font-light">{option.label}</span>
+              Save Selection <span className="ml-[0.1rem]">✅</span>
             </Button>
-          ))}
+          </motion.div>
         </motion.div>
-        <motion.div variants={itemVariants} className="w-full">
-          <Button
-            className={`mt-2 w-full px-8 text-white border border-gray-700 ${selectedOption ? "bg-gray-800 hover:bg-[#2563eb] transition-colors" : "bg-gray-800/50 text-gray-500"}`}
-            disabled={!selectedOption}
-            onClick={() => onSave(selectedOption)}
-          >
-            Save Selection <span className="ml-[0.1rem]">✅</span>
-          </Button>
-        </motion.div>
-      </motion.div>
+      </AnimatePresence>
       <AnimatePresence>
         {showDialog && (
           <motion.div
@@ -303,6 +329,11 @@ export default function CaseHome() {
     }, 60);
   };
 
+  const handleTaskSave = (taskId: string, selected: string) => {
+    // Handle save logic here
+    setVisaSelectionMode(false);
+  };
+
   // Show spinner during initial load
   if (isInitialLoading) {
     return (
@@ -326,10 +357,7 @@ export default function CaseHome() {
         question={visaStep.question}
         emphasisText={visaStep.emphasisText}
         options={visaOptions}
-        onSave={(selected) => {
-          // Handle visa save logic here.
-          setVisaSelectionMode(false);
-        }}
+        onSave={(selected) => handleTaskSave("visa", selected)}
         onExit={() => setVisaSelectionMode(false)}
       />
     );
@@ -338,24 +366,16 @@ export default function CaseHome() {
   if (overviewMode) {
     return (
       <div className="relative flex-1 p-6 overflow-y-auto">
-        <motion.div
-          initial={{ opacity: 0, x: -20 }}
-          animate={{ opacity: 1, x: 0 }}
-          transition={{ delay: 0.18 }} // Reduced from 0.3
+        <div
           onClick={() => setOverviewMode(false)}
           className="absolute top-6 left-6 cursor-pointer flex items-center gap-4 hover:text-gray-300"
         >
           <ArrowLeft className="w-5 h-5 text-white" />
           <span className="text-white">Back</span>
-        </motion.div>
-        <motion.div
-          initial={{ opacity: 0, x: 20 }}
-          animate={{ opacity: 1, x: 0 }}
-          transition={{ delay: 0.24 }} // Reduced from 0.4
-          className="absolute top-6 right-6"
-        >
+        </div>
+        <div className="absolute top-6 right-6">
           <ProgressBar percentage={40} />
-        </motion.div>
+        </div>
         <div className="flex flex-col items-center justify-center space-y-6 mt-6">
           <div className="w-full max-w-xl mt-6 space-y-4">
             {furtherSteps.map((step, index) => (
