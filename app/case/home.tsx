@@ -27,12 +27,13 @@ export interface Option {
 
 export interface TaskQuestionProps {
   question: string;
+  emphasisText?: string;
   options: Option[];
   onSave: (selectedId: string) => void;
   onExit: () => void;
 }
 
-function TaskQuestion({ question, options, onSave, onExit }: TaskQuestionProps) {
+function TaskQuestion({ question, emphasisText, options, onSave, onExit }: TaskQuestionProps) {
   const [selectedOption, setSelectedOption] = useState("");
   const [showDialog, setShowDialog] = useState(false);
 
@@ -61,8 +62,14 @@ function TaskQuestion({ question, options, onSave, onExit }: TaskQuestionProps) 
       </div>
       <div className="flex flex-col items-center justify-center space-y-6 mt-14">
         <div className="self-start">
-          <h2 className="text-5xl font-bold text-white mb-4 ml-3 text-start leading-tight max-w-2xl">
+          <h2 className="text-6xl font-extrabold text-white mb-4 ml-3 text-start leading-tight max-w-2xl">
             {question}
+            {emphasisText && (
+              <>
+                <br />
+                <span style={{ color: "#2563eb" }}>{emphasisText}</span>
+              </>
+            )}
           </h2>
         </div>
         <div className="grid grid-cols-2 gap-6 w-full max-w-4xl">
@@ -72,7 +79,7 @@ function TaskQuestion({ question, options, onSave, onExit }: TaskQuestionProps) 
               variant="outline"
               className={`flex bg-gray-800 border-gray-700 text-white hover:bg-gray-700/50 transition-colors flex-col items-center justify-center gap-4 p-6 border
                 ${option.isWide ? "col-span-2 h-24" : "h-32"}
-                ${selectedOption === option.id ? "border-[#2563eb] bg-blue-500/10" : "hover:text-white"}`}
+                ${selectedOption === option.id ? "border-[#2563eb] bg-blue-500/10 hover:text-white" : "hover:text-white"}`}
               onClick={() => setSelectedOption((curr) => (curr === option.id ? "" : option.id))}
             >
               {option.icon}
@@ -105,7 +112,7 @@ function TaskQuestion({ question, options, onSave, onExit }: TaskQuestionProps) 
             >
               <X className="w-16 h-16 text-[#2563eb] mx-auto" />
               <h2 className="mt-4 text-2xl font-bold text-white">
-                You have unsaved changes
+                You have unsaved changes  
               </h2>
               <p className="mt-2 text-gray-300">
                 Do you want to exit without saving your selection?
@@ -285,34 +292,18 @@ export default function CaseHome() {
   }
 
   if (visaSelectionMode) {
-    // Use TaskQuestion with visa data so it remains visually unchanged.
-    const visaOptions = [
-      {
-        id: "work",
-        label: "Work Visa",
-        icon: <Briefcase className="w-6 h-6" />,
-        isWide: false,
-      },
-      {
-        id: "tourist",
-        label: "Tourist Visa",
-        icon: <Plane className="w-6 h-6" />,
-        isWide: false,
-      },
-      {
-        id: "other",
-        label: "Other",
-        icon: <FileQuestion className="w-6 h-6" />,
-        isWide: true,
-      },
-    ];
-
-    // Retrieve the visa question from homeData (or hardcode to match previous text).
-    const visaQuestion = "Select your visa status";
-
+    const visaStep = furtherSteps.find((step) => step.id === "visa");
+    if (!visaStep) return null;
+    const visaOptions = visaStep.answers.map((opt) => ({
+      id: opt.id,
+      label: opt.label,
+      icon: React.createElement(opt.icon, { className: "w-6 h-6" }),
+      isWide: !!opt.isWide,
+    }));
     return (
       <TaskQuestion
-        question={visaQuestion}
+        question={visaStep.question}
+        emphasisText={visaStep.emphasisText}
         options={visaOptions}
         onSave={(selected) => {
           // Handle visa save logic here.
