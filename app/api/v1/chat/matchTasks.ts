@@ -11,6 +11,7 @@ export const matchTasks = {
     },
     "dlicense": {
         "dlicense-confirmed": "The user has a driving license",
+        "dlicense-confimed": "The user has a driving license", // alias added for typo correction
         "dlicense-none": "The user does not have a driving license",
         "dlicense-inprogress": "The user is in the process of getting a driving license"
     },
