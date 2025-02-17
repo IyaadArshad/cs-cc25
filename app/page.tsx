@@ -114,7 +114,7 @@ export default function Page() {
         return (
           <CaseDiscover />
         );
-      case "experiences":
+      case "chat":
         return (
           <div className="flex-1 p-5">
             <h2 className="text-white text-2xl">$tips Trading</h2>
@@ -409,7 +409,7 @@ export default function Page() {
             >
             <RocketLaunchIcon className="w-8 h-8 text-[#ffffff]/50" />
             <span className="text-[12px] text-[#ffffff]/50">
-              Experiences
+              Chat
             </span>
             </button>
             <button
@@ -443,7 +443,7 @@ export default function Page() {
             className="absolute top-0 left-0 w-1/5 h-1 bg-[#2563eb] transition-all duration-300 ease-in-out"
             style={{
               transform: `translateX(${
-                ["home", "discover", "apps", "experiences", "profile"].indexOf(
+                ["home", "discover", "apps", "chat", "profile"].indexOf(
                   activeTab
                 ) * 100
               }%)`,
@@ -502,20 +502,20 @@ export default function Page() {
             </span>
           </button>
           <button
-            onClick={() => setActiveTab("experiences")}
+            onClick={() => setActiveTab("chat")}
             className="flex flex-col items-center justify-center gap-1"
           >
-            {activeTab === "experiences" ? (
+            {activeTab === "chat" ? (
               <RocketLaunchFilled className="w-8 h-8 text-[#2563eb]" />
             ) : (
               <RocketLaunchIcon className="w-8 h-8 text-[#ffffff]" />
             )}
             <span
               className={`text-[12px] ${
-                activeTab === "experiences" ? "text-[#2563eb]" : "text-[#ffffff]"
+                activeTab === "chat" ? "text-[#2563eb]" : "text-[#ffffff]"
               }`}
             >
-              Explore
+              Chat
             </span>
           </button>
           <button
