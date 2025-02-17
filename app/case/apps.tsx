@@ -131,19 +131,12 @@ export default function CaseApps() {
                 >
                   <ExternalLink className="w-4 h-4 text-gray-100/70" />
                 </span>
-                <a
-                  href={card.externalLink}
-                  target="_blank"
-                  rel="noreferrer"
-                  className="flex justify-center items-center"
-                >
-                  <img
+                    <img
                     src={card.location}
-                    className="object-cover mb-2"
+                    className="object-cover mb-2 mx-auto"
                     width={"72px"}
                     height={"72px"}
-                  />
-                </a>
+                    />
                 <CardTitle className="text-lg text-center">
                   {card.title}
                 </CardTitle>
