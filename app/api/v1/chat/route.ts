@@ -2,7 +2,20 @@ import { matchTasks } from "./matchTasks";
 
 export async function POST(request: Request) {
   const { cookies } = await request.json();
-  const { id, tasks }: { id: { name: string; location: string; comingFrom: string }, tasks: { visa: keyof typeof matchTasks.visa, school: keyof typeof matchTasks.school, dlicense: keyof typeof matchTasks.dlicense, insurance: keyof typeof matchTasks.insurance, sim: keyof typeof matchTasks.sim, bank: keyof typeof matchTasks.bank } } = cookies;
+  const {
+    id,
+    tasks,
+  }: {
+    id: { name: string; location: string; comingFrom: string };
+    tasks: {
+      visa: keyof typeof matchTasks.visa;
+      school: keyof typeof matchTasks.school;
+      dlicense: keyof typeof matchTasks.dlicense;
+      insurance: keyof typeof matchTasks.insurance;
+      sim: keyof typeof matchTasks.sim;
+      bank: keyof typeof matchTasks.bank;
+    };
+  } = cookies;
 
   const taskDescriptions: Record<string, string> = {
     visa: matchTasks.visa[tasks.visa],
@@ -25,10 +38,10 @@ export async function POST(request: Request) {
     - SIM: ${taskDescriptions.sim}
     - Bank account: ${taskDescriptions.bank}`;
 
-    return new Response(responseText, {
-        status: 200,
-        headers: {
-            "Content-Type": "text/plain",
-        },
-    });
+  return new Response(responseText, {
+    status: 200,
+    headers: {
+      "Content-Type": "text/plain",
+    },
+  });
 }
