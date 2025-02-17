@@ -44,6 +44,36 @@ const cardsData: cardData[] = [
     externalLink: "https://www.theentertainerme.com/en-ae/abu-dhabi-al-ain",
     location: "/img/tips/entertainer.png",
   },
+  {
+    title: "Tripadvisor",
+    content: "Read reviews and find the best places in Abu Dhabi.",
+    externalLink: "https://www.tripadvisor.com",
+    location: "/img/tips/tripadvisor.png",
+  },
+  {
+    title: "Zomato",
+    content: "Discover top restaurants and cafes in Abu Dhabi.",
+    externalLink: "https://www.zomato.com",
+    location: "/img/tips/zomato.png",
+  },
+  {
+    title: "Careem",
+    content: "Book rides quickly and conveniently across the city.",
+    externalLink: "https://www.careem.com",
+    location: "/img/tips/careem.png",
+  },
+  {
+    title: "Talabat",
+    content: "Order food from popular restaurants across Abu Dhabi.",
+    externalLink: "https://www.talabat.com",
+    location: "/img/tips/talabat.png",
+  },
+  {
+    title: "Visit Abu Dhabi",
+    content: "Plan your trip and explore attractions in Abu Dhabi.",
+    externalLink: "https://visitabudhabi.ae",
+    location: "/img/tips/visitAbuDhabi.png",
+  },
 ];
 
 const cardVariants = {
