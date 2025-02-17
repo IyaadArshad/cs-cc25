@@ -1,6 +1,6 @@
 export const placesToVisit = [
   {
-    image: "/img/discover/placesToVisit/sheikhZayedGrandMosque.png", // remains unchanged
+    image: "/img/discover/placesToVisit/sheikhZayedGrandMosque.png",
     title: "Sheikh Zayed Grand Mosque",
     description:
       "Iconic mosque known for its stunning white domes and intricate Islamic architecture.",
@@ -12,7 +12,7 @@ export const placesToVisit = [
     externalLink: "https://www.szgmc.gov.ae/en",
   },
   {
-    image: "/img/discover/placesToVisit/louvre.png", // remains unchanged
+    image: "/img/discover/placesToVisit/louvre.png",
     title: "Louvre Abu Dhabi",
     description:
       "World-class museum showcasing art and artifacts from around the globe.",
@@ -24,7 +24,7 @@ export const placesToVisit = [
     externalLink: "https://www.louvreabudhabi.ae",
   },
   {
-    image: "/img/discover/placesToVisit/QasrAlWatan.png", // remains unchanged
+    image: "/img/discover/placesToVisit/QasrAlWatan.png",
     title: "Qasr Al Watan",
     description:
       "Presidential palace offering insights into UAE's culture and governance.",
@@ -36,7 +36,7 @@ export const placesToVisit = [
     externalLink: "https://www.qasralwatan.ae",
   },
   {
-    image: "/img/discover/placesToVisit/yas.png", // remains unchanged
+    image: "/img/discover/placesToVisit/yas.png",
     title: "Yas Island",
     description:
       "Entertainment hub featuring Ferrari World, Yas Waterworld, and Warner Bros. World.",
@@ -49,7 +49,7 @@ export const placesToVisit = [
     externalLink: "https://www.yasisland.ae",
   },
   {
-    image: "/img/discover/placesToVisit/cornicheBeach.png", // remains unchanged
+    image: "/img/discover/placesToVisit/cornicheBeach.png",
     title: "Corniche Beach",
     description:
       "Beautiful waterfront promenade perfect for relaxation and outdoor activities.",
@@ -62,7 +62,7 @@ export const placesToVisit = [
     externalLink: "https://visitabudhabi.ae/en/where-to-go/corniche-beach",
   },
   {
-    image: "/img/discover/placesToVisit/EmiratesPalace.png", // remains unchanged
+    image: "/img/discover/placesToVisit/EmiratesPalace.png",
     title: "Emirates Palace",
     description:
       "Luxurious hotel known for its opulent architecture and gold leaf interiors.",
@@ -75,7 +75,7 @@ export const placesToVisit = [
     externalLink: "https://www.mandarinoriental.com/abu-dhabi/emirates-palace",
   },
   {
-    image: "/img/discover/placesToVisit/mangroveNationalPark.png", // remains unchanged
+    image: "/img/discover/placesToVisit/mangroveNationalPark.png",
     title: "Mangrove National Park",
     description:
       "Natural reserve offering kayaking tours through lush mangrove forests.",
@@ -92,7 +92,7 @@ export const placesToVisit = [
 
 export const foodPlaces = [
   {
-    image: "/img/discover/culinaryDelights/shawarmaStation.png", // remains unchanged
+    image: "/img/discover/culinaryDelights/shawarmaStation.png",
     title: "Shawarma Station",
     description:
       "Popular chain known for fresh shawarmas and Middle Eastern street food.",
@@ -120,7 +120,7 @@ export const foodPlaces = [
     externalLink: "https://www.nandos.ae",
   },
   {
-    image: "/img/discover/culinaryDelights/shakespeareAndCo.png", // remains unchanged
+    image: "/img/discover/culinaryDelights/shakespeareAndCo.png",
     title: "Shakespeare & Co.",
     description:
       "Casual dining café with international menu and charming atmosphere.",
@@ -133,7 +133,7 @@ export const foodPlaces = [
     externalLink: "https://shakespeare-and-co.com",
   },
   {
-    image: "/img/discover/culinaryDelights/alMandi.png", // remains unchanged
+    image: "/img/discover/culinaryDelights/alMandi.png",
     title: "Al Mandi and Al Madhbi House",
     description:
       "Authentic Yemeni restaurant specializing in Mandi and Madhbi dishes.",
@@ -143,10 +143,9 @@ export const foodPlaces = [
       "A cozy and welcoming atmosphere, perfect for families and groups.",
       "Popular for both dine-in and takeaway, with generous portions at affordable prices.",
     ],
-    externalLink: "https://almandi-house.ae/", // Replace with the actual link if available
+    externalLink: "https://almandi-house.ae/",
   },
   {
-    // Nested folder image: updated with a new valid URL
     image: "/img/discover/culinaryDelights/lebaneseFlower.png",
     title: "Lebanese Flower",
     description: "Famous local spot for Lebanese cuisine at reasonable prices.",
@@ -159,7 +158,6 @@ export const foodPlaces = [
     externalLink: "https://lebaneseflower.ae",
   },
   {
-    // Nested folder image: updated with a new valid URL
     image: "/img/discover/culinaryDelights/subway.png",
     title: "Subway",
     description: "Fresh sandwiches and salads with customizable options.",
@@ -172,7 +170,6 @@ export const foodPlaces = [
     externalLink: "https://subway.com/en-AE",
   },
   {
-    // Nested folder image: updated with a new valid URL
     image: "/img/discover/culinaryDelights/alMzrab.png",
     title: "Al Mrzab",
     description: "Authentic Emirati cuisine in a modern casual setting.",
