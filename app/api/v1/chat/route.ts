@@ -25,5 +25,10 @@ export async function POST(request: Request) {
     - SIM: ${taskDescriptions.sim}
     - Bank account: ${taskDescriptions.bank}`;
 
-
+    return new Response(responseText, {
+        status: 200,
+        headers: {
+            "Content-Type": "text/plain",
+        },
+    });
 }
