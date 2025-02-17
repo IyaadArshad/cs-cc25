@@ -31,6 +31,7 @@ import { Check } from "lucide-react";
 import CaseHome from "./case/home";
 import CaseDiscover from "./case/discover";
 import CaseApps from "./case/apps";
+import CaseChat from "./case/chat";
 
 export default function Page() {
   const [activeTab, setActiveTab] = useState<Tab>("home");
@@ -109,9 +110,7 @@ export default function Page() {
         );
       case "chat":
         return (
-          <div className="flex-1 p-5">
-            <h2 className="text-white text-2xl">$tips Trading</h2>
-          </div>
+          <CaseChat />
         );
       case "apps":
         return (
