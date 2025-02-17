@@ -1,0 +1,18 @@
+{
+    "message": "Hello, Mutasil!",
+    "cookies": {
+        "id": {
+            "name": "Iyaad",
+            "location": "Abu Dhabi, UAE",
+            "comingFrom": "Sri Lanka"
+        },
+        "tasks": {
+            "visa": "visa-work", // or visa-tourist or visa-other
+            "school": "school-confirmed", // or school-nochild or school-inprogress
+            "dlicense": "dlicense-confimed", // or dlicense-none or dlicense-inprogress
+            "insurance": "insurance-confirmed", // or insurance-none
+            "sim": "sim-confirmed", // or sim-none or sim-wouldlike
+            "bank": "bank-confirmed", // or bank-mid or bank-none
+        }
+    }
+}
