@@ -1,0 +1,17 @@
+{
+    "response": "The models response",
+    "function_calls": [
+        // the model can call functions like
+        "open_app_talabat", // talabat is a food delivery service, opening it allows the user to order food
+        "open_app_careem", // careem is a ride hailing service, opening it allows the user to book a ride
+        "open_app_zomato", // zomato is a food delivery service, opening it allows the user to order food
+        "open_app_entertainer", // entertainer is a discount app, opening it allows the user to view discounts
+        "open_app_tripadvisor", // tripadvisor is a travel app, opening it allows the user to view travel destinations
+        "open_app_visitabudhabi", // visitabudhabi is a travel app, opening it allows the user to view travel destinations in abu dhabi
+        "open_app_adpolice", // adpolice is the abu dhabi police app, opening it allows the user to view traffic fines and other police services
+        "open_app_darb", // darb is toll gate app, opening it allows the user to view toll gate information and topup their account
+        "open_discover_page", // open the discover places page
+        "open_apps", // view apps that the user can use
+        "open_home", // go back to the homepage of the app
+    ]
+}
