@@ -1,18 +1,22 @@
 export function getSystemPrompt(id, taskDescriptions) {
-    const currentTime = new Date().toLocaleTimeString('en-US', { hour: 'numeric', minute: 'numeric', hour12: true });
-    console.log(currentTime);
-    let currentTimeStatus;
-    const hour = new Date().getHours();
-    if (hour >= 5 && hour < 12) {
-        currentTimeStatus = 'morning';
-    } else if (hour >= 12 && hour < 17) {
-        currentTimeStatus = 'afternoon';
-    } else if (hour >= 17 && hour < 20) {
-        currentTimeStatus = 'evening';
-    } else {
-        currentTimeStatus = 'night';
-    }
-    console.log(currentTimeStatus);
+  const currentTime = new Date().toLocaleTimeString("en-US", {
+    hour: "numeric",
+    minute: "numeric",
+    hour12: true,
+  });
+  console.log(currentTime);
+  let currentTimeStatus;
+  const hour = new Date().getHours();
+  if (hour >= 5 && hour < 12) {
+    currentTimeStatus = "morning";
+  } else if (hour >= 12 && hour < 17) {
+    currentTimeStatus = "afternoon";
+  } else if (hour >= 17 && hour < 20) {
+    currentTimeStatus = "evening";
+  } else {
+    currentTimeStatus = "night";
+  }
+  console.log(currentTimeStatus);
 
   return (
     `You are a friendly chat assistant to help new residents of the uae settle in. The user is currently in Abu Dhabi, make sure your responses are relevant to the user. ` +
