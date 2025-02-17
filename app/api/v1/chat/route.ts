@@ -8,7 +8,7 @@ const openai = new OpenAI({
 
 export async function POST(request: Request) {
   try {
-    const { cookies } = await request.json();
+    const { messages, cookies } = await request.json();
     const {
       id,
       tasks,
@@ -36,19 +36,14 @@ export async function POST(request: Request) {
     const systemPrompt = getSystemPrompt(id, taskDescriptions);
     console.log(systemPrompt);
 
+    const allMessages = [
+      { role: "system", content: systemPrompt },
+      ...messages
+    ];
+
     const response = await openai.chat.completions.create({
       model: "gpt-4o-mini",
-      messages: [
-        {
-          role: "system",
-          content: [
-            {
-              text: systemPrompt,
-              type: "text",
-            },
-          ],
-        },
-      ],
+      messages: allMessages,
       response_format: {
         type: "json_schema",
         json_schema: {

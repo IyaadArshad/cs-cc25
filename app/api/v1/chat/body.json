@@ -1,5 +1,14 @@
 {
-    "message": "Hello, Mutasil!",
+    "messages": [
+        {
+            "role": "user",
+            "content": "Hello, Mutasil!"
+        },
+        {
+            "role": "assistant",
+            "content": "Hi, how may I assist you today?"
+        }
+    ],
     "cookies": {
         "id": {
             "name": "Iyaad",
@@ -12,7 +21,7 @@
             "dlicense": "dlicense-confimed", // or dlicense-none or dlicense-inprogress
             "insurance": "insurance-confirmed", // or insurance-none
             "sim": "sim-confirmed", // or sim-none or sim-wouldlike
-            "bank": "bank-confirmed", // or bank-mid or bank-none
+            "bank": "bank-confirmed" // or bank-mid or bank-none
         }
     }
 }
