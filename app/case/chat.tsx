@@ -18,7 +18,7 @@ interface Message {
 const initialMessage: Message = {
   role: "assistant",
   content:
-    "Welcome to Abu Dhabi! I'm here to assist you with your relocation process. Whether you need information about visas, housing, schools, or any other aspect of settling in, I'm here to help. What would you like to know about first? Feel free to ask about the visa process, finding accommodation, enrolling in schools, healthcare options, or any other topics related to your move to Abu Dhabi.",
+    "Welcome to Abu Dhabi! I'm here to assist you with your settlement process. Whether you need information about visas, housing, schools, or any other aspect of settling in, I'm here to help. What would you like to know about first? Feel free to ask about the visa process, finding accommodation, enrolling in schools, healthcare options, or any other topics related to your move to Abu Dhabi.",
   timestamp: new Date().toLocaleTimeString(),
 };
 
@@ -143,17 +143,14 @@ export default function ChatInterface() {
                     message.role === "user" ? "flex-row-reverse" : "flex-row"
                   }`}
                 >
-                  <Avatar className="w-8 h-8">
+                  <Avatar className="w-auto h-8">
                     <AvatarImage
                       src={
                         message.role === "user"
-                          ? "/user-avatar.png"
-                          : "/assistant-avatar.png"
+                          ? "http://localhost:3000/images/default_pfp.png"
+                          : "http://localhost:3000/images/assistant.png"
                       }
                     />
-                    <AvatarFallback>
-                      {message.role === "user" ? "U" : "A"}
-                    </AvatarFallback>
                   </Avatar>
                   <div
                     className={`flex flex-col ${
@@ -169,9 +166,6 @@ export default function ChatInterface() {
                     >
                       <p className="text-sm">{message.content}</p>
                     </div>
-                    <span className="text-xs text-muted-foreground mt-1">
-                      {message.timestamp}
-                    </span>
                   </div>
                 </div>
               </motion.div>
