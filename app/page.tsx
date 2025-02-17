@@ -37,7 +37,9 @@ export default function Page() {
   const [activeTab, setActiveTab] = useState<Tab>("home");
   const [userName, setUserName] = useState("");
   const [bio, setBio] = useState("");
-  const [phase, setPhase] = useState<"name" | "bio" | "origin" | "final">("name");
+  const [phase, setPhase] = useState<"name" | "bio" | "origin" | "final">(
+    "name"
+  );
   const [origin, setOrigin] = useState("");
   const [countrySearch, setCountrySearch] = useState("");
   const [hasUserCookie, setHasUserCookie] = useState(false);
@@ -46,7 +48,7 @@ export default function Page() {
   const lookingForOptions = [
     "Find Job & Employment Opportunities",
     "Explore Local Transportation Options",
-    "Manage Utilities Services"
+    "Manage Utilities Services",
   ];
   const [highlightedIndex, setHighlightedIndex] = useState(0);
 
@@ -70,14 +72,21 @@ export default function Page() {
         setPhase("bio");
       }
     } else if (phase === "bio") {
-      const selectedOptions = inputValue.split(",").map(x => x.trim()).filter(Boolean);
+      const selectedOptions = inputValue
+        .split(",")
+        .map((x) => x.trim())
+        .filter(Boolean);
       if (selectedOptions.length > 0) {
-        document.cookie = `lookingFor=${JSON.stringify(selectedOptions)};path=/;max-age=${60 * 60 * 24 * 7}`;
+        document.cookie = `lookingFor=${JSON.stringify(
+          selectedOptions
+        )};path=/;max-age=${60 * 60 * 24 * 7}`;
         setPhase("origin");
       }
     } else if (phase === "origin") {
       if (origin.trim()) {
-        document.cookie = `country=${origin};path=/;max-age=${60 * 60 * 24 * 7}`;
+        document.cookie = `country=${origin};path=/;max-age=${
+          60 * 60 * 24 * 7
+        }`;
         setPhase("final");
       }
     }
@@ -88,7 +97,7 @@ export default function Page() {
     backgrounds[Math.floor(Math.random() * backgrounds.length)];
 
   const addOption = (option: string) => {
-    let parts = inputValue.split(",").map(p => p.trim());
+    let parts = inputValue.split(",").map((p) => p.trim());
     // Remove the current (possibly incomplete) fragment.
     parts.pop();
     // Append the new option.
@@ -101,21 +110,13 @@ export default function Page() {
   const getTabContent = (tab: Tab) => {
     switch (tab) {
       case "home":
-        return (
-          <CaseHome />
-        );
+        return <CaseHome />;
       case "discover":
-        return (
-          <CaseDiscover />
-        );
+        return <CaseDiscover />;
       case "chat":
-        return (
-          <CaseChat />
-        );
+        return <CaseChat />;
       case "apps":
-        return (
-          <CaseApps />
-        );
+        return <CaseApps />;
       case "profile":
         return (
           <div className="flex-1 p-5 overflow-y-auto">
@@ -151,8 +152,7 @@ export default function Page() {
                   Crypto, for good. $DONOR allows people to donate more with...
                 </p>
               </div>
-              <button className="w-8 h-8 flex items-center justify-center rounded-full bg-[#272739]">
-              </button>
+              <button className="w-8 h-8 flex items-center justify-center rounded-full bg-[#272739]"></button>
             </div>
 
             {/* Wallet Settings Section */}
@@ -223,22 +223,27 @@ export default function Page() {
         className="min-h-screen bg-cover bg-center flex items-center justify-center p-4 font-['Segoe_UI'] sm:p-4"
       >
         <div className="w-full h-screen sm:w-[490px] sm:max-w-lg sm:h-[780px] bg-gradient-to-b from-[#12121d]/80 to-[#12121d]/95 backdrop-blur-xl main-card fixed sm:relative sm:rounded-[18px] overflow-hidden flex flex-col">
-
           {/* Content */}
           <div className="flex-1 flex flex-col items-center justify-center gap-3 px-6">
             {phase === "name" || phase === "bio" ? (
-                <div className="relative w-auto min-w-[20rem] h-auto min-h-[12rem] mb-0 flex justify-center items-center">
+              <div className="relative w-auto min-w-[20rem] h-auto min-h-[12rem] mb-0 flex justify-center items-center">
                 <img
                   src="/landing_new.png"
                   alt="Welcome"
-                  className={`absolute inset-0 object-cover w-full h-full transition-opacity duration-500 ${phase === "name" ? "opacity-100" : "opacity-0"}`}
+                  className={`absolute inset-0 object-cover w-full h-full transition-opacity duration-500 ${
+                    phase === "name" ? "opacity-100" : "opacity-0"
+                  }`}
                 />
                 <img
                   src="/images/default_pfp.png"
                   alt="Profile"
-                  className={`w-40 h-40 absolute object-cover transition-opacity duration-500 rounded-full transform ${phase === "bio" ? "opacity-100 scale-110" : "opacity-0 scale-90"}`}
+                  className={`w-40 h-40 absolute object-cover transition-opacity duration-500 rounded-full transform ${
+                    phase === "bio"
+                      ? "opacity-100 scale-110"
+                      : "opacity-0 scale-90"
+                  }`}
                 />
-                </div>
+              </div>
             ) : phase === "origin" ? (
               <div className="relative w-24 h-24">
                 <img
@@ -267,7 +272,10 @@ export default function Page() {
                 )}
               </>
             )}
-            <form onSubmit={handleFormSubmit} className="w-full max-w-sm space-y-6">
+            <form
+              onSubmit={handleFormSubmit}
+              className="w-full max-w-sm space-y-6"
+            >
               <div className="space-y-2">
                 {phase === "name" ? (
                   <input
@@ -285,8 +293,8 @@ export default function Page() {
                     </p>
                     <div className="space-y-3">
                       {lookingForOptions.map((option) => (
-                        <label 
-                          key={option} 
+                        <label
+                          key={option}
                           className="flex items-center gap-4 bg-[#272739] p-4 rounded-lg cursor-pointer hover:bg-[#272739]/80 transition-all duration-200 group relative"
                         >
                           <div className="relative flex items-center justify-center">
@@ -295,27 +303,41 @@ export default function Page() {
                               value={option}
                               checked={inputValue.includes(option)}
                               onChange={(e) => {
-                                const selectedOptions = inputValue ? inputValue.split(',').map(x => x.trim()) : [];
+                                const selectedOptions = inputValue
+                                  ? inputValue.split(",").map((x) => x.trim())
+                                  : [];
                                 if (e.target.checked) {
                                   selectedOptions.push(option);
                                 } else {
                                   const index = selectedOptions.indexOf(option);
-                                  if (index > -1) selectedOptions.splice(index, 1);
+                                  if (index > -1)
+                                    selectedOptions.splice(index, 1);
                                 }
-                                setInputValue(selectedOptions.join(', '));
+                                setInputValue(selectedOptions.join(", "));
                               }}
                               className="appearance-none w-5 h-5 border-2 border-[#2563eb] rounded transition-all duration-200 
                                 checked:bg-[#2563eb] checked:border-transparent
                                 focus:outline-none focus:ring-2 focus:ring-[#2563eb] focus:ring-offset-2 focus:ring-offset-[#12121d]"
                             />
-                            <Check 
+                            <Check
                               className={`absolute w-3 h-3 text-white pointer-events-none transition-opacity duration-200 
-                                ${inputValue.includes(option) ? 'opacity-100' : 'opacity-0'}`}
+                                ${
+                                  inputValue.includes(option)
+                                    ? "opacity-100"
+                                    : "opacity-0"
+                                }`}
                             />
                           </div>
-                          <span className="text-white text-lg font-medium">{option}</span>
-                          <div className={`absolute inset-0 border-2 border-transparent rounded-lg transition-all duration-200 
-                            ${inputValue.includes(option) ? 'border-[#2563eb]/50' : 'group-hover:border-[#2563eb]/20'}`} 
+                          <span className="text-white text-lg font-medium">
+                            {option}
+                          </span>
+                          <div
+                            className={`absolute inset-0 border-2 border-transparent rounded-lg transition-all duration-200 
+                            ${
+                              inputValue.includes(option)
+                                ? "border-[#2563eb]/50"
+                                : "group-hover:border-[#2563eb]/20"
+                            }`}
                           />
                         </label>
                       ))}
@@ -333,20 +355,24 @@ export default function Page() {
                     <div className="max-h-48 overflow-y-scroll w-full grid grid-cols-2 gap-2">
                       {countries
                         .filter((c) =>
-                          c.name.toLowerCase().includes(countrySearch.toLowerCase())
+                          c.name
+                            .toLowerCase()
+                            .includes(countrySearch.toLowerCase())
                         )
                         .map((c) => (
-                            <button
+                          <button
                             key={c.name}
                             onClick={() => {
                               setOrigin(c.name);
                               setCountrySearch(c.name);
                             }}
                             className="flex items-center gap-2 p-2 bg-[#272739] rounded-lg hover:bg-[#2563eb] transition-colors"
-                            >
+                          >
                             <span className="text-xl">{c.flag}</span>
-                            <span className="text-sm text-white truncate">{c.name}</span>
-                            </button>
+                            <span className="text-sm text-white truncate">
+                              {c.name}
+                            </span>
+                          </button>
                         ))}
                     </div>
                   </>
@@ -364,54 +390,44 @@ export default function Page() {
           </div>
 
           {/* Bottom Navigation (disabled state) */}
-            <div className="bg-[#090910] min-h-[96px] flex justify-evenly gap-x-8 items-center border-t border-[#232323] p-4 relative">
+          <div className="bg-[#090910] min-h-[96px] flex justify-evenly gap-x-8 items-center border-t border-[#232323] p-4 relative">
             {/* Active tab indicator (hidden in disabled state) */}
             <div className="absolute top-0 left-0 w-1/5 h-1 bg-[#2563eb] opacity-30"></div>
 
             <button
-            disabled
-            className="flex flex-col items-center justify-center gap-1 opacity-50 cursor-not-allowed"
+              disabled
+              className="flex flex-col items-center justify-center gap-1 opacity-50 cursor-not-allowed"
             >
-            <HomeIcon className="w-8 h-8 text-[#ffffff]/50" />
-            <span className="text-[12px] text-[#ffffff]/50">
-              Home
-            </span>
+              <HomeIcon className="w-8 h-8 text-[#ffffff]/50" />
+              <span className="text-[12px] text-[#ffffff]/50">Home</span>
             </button>
             <button
-            disabled
-            className="flex flex-col items-center justify-center gap-1 opacity-50 cursor-not-allowed"
+              disabled
+              className="flex flex-col items-center justify-center gap-1 opacity-50 cursor-not-allowed"
             >
-            <MagnifyingGlassIcon className="w-8 h-8 text-[#ffffff]/50" />
-            <span className="text-[12px] text-[#ffffff]/50">
-              Discover
-            </span>
+              <MagnifyingGlassIcon className="w-8 h-8 text-[#ffffff]/50" />
+              <span className="text-[12px] text-[#ffffff]/50">Discover</span>
             </button>
             <button
-            disabled
-            className="flex flex-col items-center justify-center gap-1 opacity-50 cursor-not-allowed"
+              disabled
+              className="flex flex-col items-center justify-center gap-1 opacity-50 cursor-not-allowed"
             >
-            <Squares2X2Filled className="w-8 h-8 text-[#ffffff]/50" />
-            <span className="text-[12px] text-[#ffffff]/50">
-              Apps
-            </span>
+              <Squares2X2Filled className="w-8 h-8 text-[#ffffff]/50" />
+              <span className="text-[12px] text-[#ffffff]/50">Apps</span>
             </button>
             <button
-            disabled
-            className="flex flex-col items-center justify-center gap-1 opacity-50 cursor-not-allowed"
+              disabled
+              className="flex flex-col items-center justify-center gap-1 opacity-50 cursor-not-allowed"
             >
-            <ChatBubbleLeftRightIcon className="w-8 h-8 text-[#ffffff]/50" />
-            <span className="text-[12px] text-[#ffffff]/50">
-              Chat
-            </span>
+              <ChatBubbleLeftRightIcon className="w-8 h-8 text-[#ffffff]/50" />
+              <span className="text-[12px] text-[#ffffff]/50">Chat</span>
             </button>
             <button
-            disabled
-            className="flex flex-col items-center justify-center gap-1 opacity-50 cursor-not-allowed"
+              disabled
+              className="flex flex-col items-center justify-center gap-1 opacity-50 cursor-not-allowed"
             >
-            <UserCircleIcon className="w-8 h-8 text-[#ffffff]/50" />
-            <span className="text-[12px] text-[#ffffff]/50">
-              Profile
-            </span>
+              <UserCircleIcon className="w-8 h-8 text-[#ffffff]/50" />
+              <span className="text-[12px] text-[#ffffff]/50">Profile</span>
             </button>
           </div>
         </div>
