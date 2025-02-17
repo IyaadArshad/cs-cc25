@@ -161,7 +161,7 @@ export default function ChatInterface() {
                       className={`rounded-lg p-3 ${
                         message.role === "user"
                           ? "bg-primary text-primary-foreground"
-                          : "bg-muted text-white"
+                          : "bg-muted"
                       }`}
                     >
                       <p className="text-sm">{message.content}</p>
@@ -178,16 +178,16 @@ export default function ChatInterface() {
               className="flex items-start gap-2"
             >
               <Avatar className="w-8 h-8">
-                <AvatarImage src="/assistant-avatar.png" />
+                <AvatarImage src="http://localhost:3000/images/assistant.png" />
                 <AvatarFallback>A</AvatarFallback>
               </Avatar>
               <div className="flex flex-col items-start">
-                <div className="rounded-lg p-3 bg-muted text-white">
+                <div className="rounded-lg p-3 bg-muted">
                   <p className="text-sm">
                     {typedText}
                     {isTyping && (
                       <motion.span
-                        className="inline-block w-2 h-2 ml-1 bg-white rounded-full"
+                        className="inline-block w-2 h-2 ml-1 rounded-full"
                         animate={{ opacity: [1, 0, 1] }}
                         transition={{
                           repeat: Number.POSITIVE_INFINITY,
@@ -212,7 +212,7 @@ export default function ChatInterface() {
             value={input}
             onChange={(e) => setInput(e.target.value)}
             placeholder="Type your message..."
-            className="flex-1 bg-transparent text-white border-white/20"
+            className="flex-1 bg-transparent  border-white/20"
           />
           <Button
             size="icon"
@@ -220,7 +220,7 @@ export default function ChatInterface() {
             variant="outline"
             className="border-white/20"
           >
-            <Send className="h-4 w-4 text-white" />
+            <Send className="h-4 w-4" />
             <span className="sr-only">Send message</span>
           </Button>
         </form>
