@@ -14,7 +14,7 @@ import {
   ChevronLeftIcon as ChevronLeftFilled,
   ExclamationCircleIcon,
   UserGroupIcon,
-  ChatBubbleLeftRightIcon as ChatBubbleLeftRightFilled, // added for chat active
+  ChatBubbleLeftRightIcon as ChatBubbleLeftRightFilled,
 } from "@heroicons/react/24/solid";
 import {
   HomeIcon,
@@ -25,7 +25,7 @@ import {
   TrashIcon,
   LockClosedIcon,
   LinkIcon,
-  ChatBubbleLeftRightIcon, // added for chat inactive
+  ChatBubbleLeftRightIcon,
 } from "@heroicons/react/24/outline";
 import { Check } from "lucide-react";
 import CaseHome from "./case/home";
