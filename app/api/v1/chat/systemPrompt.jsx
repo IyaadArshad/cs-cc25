@@ -1,4 +1,12 @@
 export function getSystemPrompt(id, taskDescriptions) {
+    const currentTime = new Date().toLocaleTimeString('en-US', { hour: 'numeric', minute: 'numeric', hour12: true });
+    console.log(currentTime);
+    let currentTimeStatus;
+    currentTimeStatus = currentTime.includes('AM') && parseInt(currentTime) < 12 ? "Morning" :
+        currentTime.includes('AM') && parseInt(currentTime) < 12 ? "Morning" :
+        currentTime.includes('PM') && parseInt(currentTime) < 5 ? "Afternoon" :
+        currentTime.includes('PM') && parseInt(currentTime) < 8 ? "Evening" : "Night";
+
   return (
     `You are a friendly chat assistant to help new residents of the uae settle in. The user is currently in Abu Dhabi, make sure your responses are relevant to the user. ` +
     `\nThe user's details:\n- Name: ${id.name}\n- Location: ${id.location}\n- Coming from ${id.comingFrom}\n` +
