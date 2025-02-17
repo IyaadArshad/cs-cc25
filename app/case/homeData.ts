@@ -134,20 +134,3 @@ export const furtherSteps = [
     ]
   }
 ];
-
-export const cardData = [
-  {
-    title: "Get an Emirates ID",
-    content:
-      "An Emirates ID grants residents of the UAE a proof of identification and is required for most things in dubai ",
-  },
-  {
-    title: "Open a new bank account",
-    content:
-      "You will need a UAE bank account for essential daily transactions, Some banks offer free international transfers for the first few months!",
-  },
-  {
-    title: "Set up a mobile SIM card",
-    content: "A UAE SIM card is essential for local calls, mobile payments, and OTP verifications",
-  },
-];

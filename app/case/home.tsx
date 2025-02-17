@@ -14,7 +14,7 @@ import {
 } from "lucide-react"; // <-- Added Check icon
 import { useEffect, useState, useRef } from "react";
 import Cookies from "js-cookie";
-import { cardData, furtherSteps } from "./homeData";
+import { furtherSteps } from "./homeData";
 import { motion, AnimatePresence } from "framer-motion";
 import { ArrowLeft, X } from "lucide-react";
 import React from "react";
@@ -630,50 +630,6 @@ export default function CaseHome() {
             <ProgressCircle
               percentage={calculateProgress(taskAnswers, furtherSteps)}
             />
-          </motion.div>
-
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{
-              opacity: mainViewReady ? (isTransitioning ? 0 : 1) : 0,
-              y: mainViewReady ? 0 : 20,
-            }}
-            transition={{ duration: 0.4, delay: 0.6 }}
-            className="w-full max-w-xl"
-          >
-            <Carousel className="w-full max-w-sm mt-4">
-              <CarouselContent className="-ml-2">
-                {cardData.map((item, index) => (
-                  <CarouselItem
-                    key={index}
-                    className="pl-2 basis-3/4 sm:basis-2/3"
-                  >
-                    <Card className="bg-zinc-800/50 border-zinc-700">
-                      <CardContent className="flex flex-col items-start justify-center p-4 h-48">
-                        <motion.div
-                          initial={{ opacity: 0, x: 20 }}
-                          animate={{
-                            opacity: mainViewReady ? 1 : 0,
-                            x: mainViewReady ? 0 : 20,
-                          }}
-                          transition={{
-                            duration: 0.4,
-                            delay: 0.8 + index * 0.1,
-                          }}
-                        >
-                          <h2 className="text-xl font-normal text-zinc-200 mb-2">
-                            {item.title}
-                          </h2>
-                          <p className="text-sm text-zinc-400 leading-relaxed">
-                            {item.content}
-                          </p>
-                        </motion.div>
-                      </CardContent>
-                    </Card>
-                  </CarouselItem>
-                ))}
-              </CarouselContent>
-            </Carousel>
           </motion.div>
         </div>
       </AnimatePresence>
