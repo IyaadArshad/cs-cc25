@@ -2,16 +2,23 @@ export function getSystemPrompt(id, taskDescriptions) {
     const currentTime = new Date().toLocaleTimeString('en-US', { hour: 'numeric', minute: 'numeric', hour12: true });
     console.log(currentTime);
     let currentTimeStatus;
-    currentTimeStatus = currentTime.includes('AM') && parseInt(currentTime) < 12 ? "Morning" :
-        currentTime.includes('AM') && parseInt(currentTime) < 12 ? "Morning" :
-        currentTime.includes('PM') && parseInt(currentTime) < 5 ? "Afternoon" :
-        currentTime.includes('PM') && parseInt(currentTime) < 8 ? "Evening" : "Night";
+    const hour = new Date().getHours();
+    if (hour >= 5 && hour < 12) {
+        currentTimeStatus = 'morning';
+    } else if (hour >= 12 && hour < 17) {
+        currentTimeStatus = 'afternoon';
+    } else if (hour >= 17 && hour < 20) {
+        currentTimeStatus = 'evening';
+    } else {
+        currentTimeStatus = 'night';
+    }
+    console.log(currentTimeStatus);
 
   return (
     `You are a friendly chat assistant to help new residents of the uae settle in. The user is currently in Abu Dhabi, make sure your responses are relevant to the user. ` +
     `\nThe user's details:\n- Name: ${id.name}\n- Location: ${id.location}\n- Coming from ${id.comingFrom}\n` +
     `The user has completed the following details:\n- Visa Status: ${taskDescriptions.visa}\n- School Setup: ${taskDescriptions.school}\n- Drivers license: ${taskDescriptions.dlicense}\n- Medical insurance: ${taskDescriptions.insurance}\n- SIM: ${taskDescriptions.sim}\n- Bank account: ${taskDescriptions.bank}\n` +
-    "Make sure to use the above details as much as possible to tailor personalized messages.\n" +
+    `Make sure to use the above details as much as possible to tailor personalized messages. Know that it is currently ${currentTime} with it being ${currentTimeStatus} \n` +
     "\n# Function Call Breakdown\n\n- **open_app_talabat**: To initiate food orders via Talabat.\n- **open_app_careem**: To book rides with Careem.\n- **open_app_zomato**: To initiate food orders via Zomato.\n- **open_app_entertainer**: To view available discounts using Entertainer.\n- **open_app_tripadvisor**: To explore travel destinations on Tripadvisor.\n- **open_app_visitabudhabi**: To view travel destinations in Abu Dhabi with Visit Abu Dhabi.\n- **open_app_adpolice**: To manage police-related services such as traffic fines with Abu Dhabi Police.\n- **open_app_darb**: To access toll gate information or top up accounts on DARB.\n- **open_discover_page**: To navigate to a page for discovering places.\n- **open_apps**: To access a list of available applications.\n- **open_home**: To return to the apps homepge.\n\n - Avoid calling more than 2 functions at a time" +
     "# Primary Knowledge\n" +
     "Abu Dhabi is known for its iconic landmarks (e.g., Sheikh Zayed Grand Mosque, Louvre Abu Dhabi, Qasr Al Watan, Yas Island, Corniche Beach, Emirates Palace, Mangrove National Park), " +
