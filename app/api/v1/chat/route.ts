@@ -32,20 +32,8 @@ export async function POST(request: Request) {
     bank: matchTasks.bank[tasks.bank],
   };
 
-  const responseText = `The user's details:
-    - Name: ${id.name}
-    - Location: ${id.location}
-    - Coming from ${id.comingFrom}
-    The user has completed the following tasks:
-    - Visa Status: ${taskDescriptions.visa}
-    - School Setup: ${taskDescriptions.school}
-    - Drivers license: ${taskDescriptions.dlicense}
-    - Medical insurance: ${taskDescriptions.insurance}
-    - SIM: ${taskDescriptions.sim}
-    - Bank account: ${taskDescriptions.bank}`;
-
-    const systemPrompt = getSystemPrompt(id, taskDescriptions);
-    console.log(systemPrompt)
+  const systemPrompt = getSystemPrompt(id, taskDescriptions);
+  console.log(systemPrompt);
 
   return new Response(systemPrompt, {
     status: 200,
