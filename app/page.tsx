@@ -3,40 +3,33 @@
 import { useState, useEffect } from "react";
 import type React from "react";
 import { countries } from "./countries";
-import { Tab, WeatherCondition, SettingsItemProps, WeatherPillProps } from "../types/types";
+import { Tab } from "../types/types";
 import SettingsItem from "@/components/SettingsItem";
 import { backgrounds } from "../variables/backgrounds";
-import WeatherPill from "@/components/WeatherPill";
 import {
   HomeIcon as HomeIconFilled,
   MagnifyingGlassIcon as MagnifyingGlassFilled,
   Squares2X2Icon as Squares2X2Filled,
   UserCircleIcon as UserCircleFilled,
-  RocketLaunchIcon as RocketLaunchFilled,
   ChevronLeftIcon as ChevronLeftFilled,
-  ChevronRightIcon as ChevronRightFilled,
-  ShieldCheckIcon as ShieldCheckFilled,
-  TrashIcon as TrashFilled,
   ExclamationCircleIcon,
   UserGroupIcon,
+  ChatBubbleLeftRightIcon as ChatBubbleLeftRightFilled, // added for chat active
 } from "@heroicons/react/24/solid";
 import {
   HomeIcon,
   MagnifyingGlassIcon,
   Squares2X2Icon,
   UserCircleIcon,
-  RocketLaunchIcon,
-  ChevronLeftIcon,
-  ChevronRightIcon,
   ShieldCheckIcon,
   TrashIcon,
   LockClosedIcon,
   LinkIcon,
+  ChatBubbleLeftRightIcon, // added for chat inactive
 } from "@heroicons/react/24/outline";
-import { Rocket, Check } from "lucide-react";
+import { Check } from "lucide-react";
 import CaseHome from "./case/home";
 import CaseDiscover from "./case/discover";
-import * as Popover from "@radix-ui/react-popover";
 import CaseApps from "./case/apps";
 
 export default function Page() {
@@ -407,7 +400,7 @@ export default function Page() {
             disabled
             className="flex flex-col items-center justify-center gap-1 opacity-50 cursor-not-allowed"
             >
-            <RocketLaunchIcon className="w-8 h-8 text-[#ffffff]/50" />
+            <ChatBubbleLeftRightIcon className="w-8 h-8 text-[#ffffff]/50" />
             <span className="text-[12px] text-[#ffffff]/50">
               Chat
             </span>
@@ -506,9 +499,9 @@ export default function Page() {
             className="flex flex-col items-center justify-center gap-1"
           >
             {activeTab === "chat" ? (
-              <RocketLaunchFilled className="w-8 h-8 text-[#2563eb]" />
+              <ChatBubbleLeftRightFilled className="w-8 h-8 text-[#2563eb]" />
             ) : (
-              <RocketLaunchIcon className="w-8 h-8 text-[#ffffff]" />
+              <ChatBubbleLeftRightIcon className="w-8 h-8 text-[#ffffff]" />
             )}
             <span
               className={`text-[12px] ${
