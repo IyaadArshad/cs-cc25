@@ -1,4 +1,4 @@
-{
+export const matchTasks = {
     "visa": {
         "visa-work": "Work Visa",
         "visa-tourist": "Tourist Visa",
