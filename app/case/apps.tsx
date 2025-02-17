@@ -18,26 +18,6 @@ interface cardData {
 
 const cardsData: cardData[] = [
   {
-    title: "ADDC",
-    content: "Pay your water and electricity bills quickly and securely.",
-    externalLink: "https://www.addc.ae/en-US/home/pages/AboutUs.aspx",
-    location: "/img/tips/abuDhabiDistributionCompany.png",
-  },
-  {
-    title: "DARB",
-    content:
-      "Access real-time public transport and traffic information with ease.",
-    externalLink: "https://darb.qmobility.ae/RucWeb/login",
-    location: "/img/tips/darb.png",
-  },
-  {
-    title: "AD Police",
-    content:
-      "Connect with Abu Dhabi's trusted police services for prompt assistance.",
-    externalLink: "https://es.adpolice.gov.ae/trafficservices/",
-    location: "/img/tips/abuDhabiPolice.png",
-  },
-  {
     title: "The Entertainer",
     content:
       "Discover exclusive discounts on dining, leisure, and entertainment activities.",
@@ -63,10 +43,24 @@ const cardsData: cardData[] = [
     location: "/img/tips/careem.png",
   },
   {
-    title: "Talabat",
-    content: "Order food from popular restaurants across Abu Dhabi.",
-    externalLink: "https://www.talabat.com",
-    location: "/img/tips/talabat.png",
+    title: "ADDC",
+    content: "Pay your water and electricity bills quickly and securely.",
+    externalLink: "https://www.addc.ae/en-US/home/pages/AboutUs.aspx",
+    location: "/img/tips/abuDhabiDistributionCompany.png",
+  },
+  {
+    title: "DARB",
+    content:
+      "Access real-time public transport and traffic information with ease.",
+    externalLink: "https://darb.qmobility.ae/RucWeb/login",
+    location: "/img/tips/darb.png",
+  },
+  {
+    title: "AD Police",
+    content:
+      "Connect with Abu Dhabi's trusted police services for prompt assistance.",
+    externalLink: "https://es.adpolice.gov.ae/trafficservices/",
+    location: "/img/tips/abuDhabiPolice.png",
   },
   {
     title: "Visit Abu Dhabi",
