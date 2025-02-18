@@ -33,8 +33,51 @@ import CaseDiscover from "./case/discover";
 import CaseApps from "./case/apps";
 import CaseChat from "./case/chat";
 import { motion, AnimatePresence } from "framer-motion";
-import ModeTransition from "@/components/mode-transition";
-import CardTransition from "@/components/card-transition";
+
+interface ModeTransitionProps {
+  mode: "expanding" | "minimizing";
+}
+
+function ModeTransition({ mode }: ModeTransitionProps) {
+  return (
+    <div className="flex-1 flex flex-col items-center justify-center gap-6"></div>
+  );
+}
+
+const sizeVariants = {
+  minimized: {
+    width: "490px",
+    height: "780px",
+    transition: { duration: 0.5, ease: "easeInOut" },
+  },
+  expanded: {
+    width: "75vw",
+    height: "90vh",
+    transition: { duration: 0.5, ease: "easeInOut" },
+  },
+};
+
+interface CardTransitionProps {
+  isExpanded: boolean;
+  children: React.ReactNode;
+  className?: string;
+}
+
+function CardTransition({
+  isExpanded,
+  children,
+  className = "",
+}: CardTransitionProps) {
+  return (
+    <motion.div
+      variants={sizeVariants}
+      animate={isExpanded ? "expanded" : "minimized"}
+      className={`bg-gradient-to-b from-[#12121d]/80 to-[#12121d]/95 backdrop-blur-xl main-card fixed sm:relative sm:rounded-[18px] overflow-hidden flex flex-col ${className}`}
+    >
+      {children}
+    </motion.div>
+  );
+}
 
 export default function Page() {
   const [activeTab, setActiveTab] = useState<Tab>("home");
@@ -56,17 +99,19 @@ export default function Page() {
   const [highlightedIndex, setHighlightedIndex] = useState(0);
   const [cardExpanded, setCardExpanded] = useState(false); // New state
   const [isTransitioning, setIsTransitioning] = useState(false);
-  const [transitionMode, setTransitionMode] = useState<"expanding" | "minimizing">("expanding");
+  const [transitionMode, setTransitionMode] = useState<
+    "expanding" | "minimizing"
+  >("expanding");
   const [contentVisible, setContentVisible] = useState(true);
 
   const handleExpand = () => {
     setContentVisible(false); // Fade out content
     setTransitionMode(cardExpanded ? "minimizing" : "expanding");
     setIsTransitioning(true);
-    
+
     // Wait for fade out
     setTimeout(() => {
-      setCardExpanded(prev => !prev);
+      setCardExpanded((prev) => !prev);
       // Wait for size transition then show content
       setTimeout(() => {
         setIsTransitioning(false);
@@ -468,7 +513,7 @@ export default function Page() {
       className="min-h-screen bg-cover bg-center flex items-center justify-center p-4 font-['Segoe_UI'] sm:p-4"
     >
       <CardTransition isExpanded={cardExpanded}>
-        <motion.div 
+        <motion.div
           animate={{ opacity: contentVisible ? 1 : 0 }}
           transition={{ duration: 0.2 }}
           className="flex-1 flex flex-col"
@@ -506,7 +551,9 @@ export default function Page() {
                     )}
                     <span
                       className={`text-[12px] ${
-                        activeTab === "home" ? "text-[#2563eb]" : "text-[#ffffff]"
+                        activeTab === "home"
+                          ? "text-[#2563eb]"
+                          : "text-[#ffffff]"
                       }`}
                     >
                       Home
@@ -542,7 +589,9 @@ export default function Page() {
                     )}
                     <span
                       className={`text-[12px] ${
-                        activeTab === "apps" ? "text-[#2563eb]" : "text-[#ffffff]"
+                        activeTab === "apps"
+                          ? "text-[#2563eb]"
+                          : "text-[#ffffff]"
                       }`}
                     >
                       Apps
@@ -559,7 +608,9 @@ export default function Page() {
                     )}
                     <span
                       className={`text-[12px] ${
-                        activeTab === "chat" ? "text-[#2563eb]" : "text-[#ffffff]"
+                        activeTab === "chat"
+                          ? "text-[#2563eb]"
+                          : "text-[#ffffff]"
                       }`}
                     >
                       Chat
