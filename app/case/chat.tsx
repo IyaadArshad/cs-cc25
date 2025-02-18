@@ -28,6 +28,7 @@ export default function ChatInterface() {
     content: "",
     timestamp: new Date().toLocaleTimeString(),
   }]);
+  const [typingWords, setTypingWords] = useState<string[]>([]);
   const [input, setInput] = useState("");
   const [isTyping, setIsTyping] = useState(true);
   const scrollAreaRef = useRef<HTMLDivElement>(null);
@@ -37,25 +38,46 @@ export default function ChatInterface() {
     if (hasRun.current) return;
     hasRun.current = true;
 
-    let index = 0;
     const words = initialMessage.content.split(" ");
+    let index = 0;
+    let typedWords: string[] = [];
+    let charCount = 0;
+    let additionalCharCount = 0;
 
     const typeWord = () => {
       if (index < words.length) {
         const word = words[index];
+        typedWords.push(word);
+        setTypingWords([...typedWords]);
+        charCount += word.length + 1; // +1 for the space
+
+        index++;
+        let delay = 100; // Adjust speed here
+
+        // Check if we should pause
+        if (charCount >= 149) {
+          const lastWord = typedWords[typedWords.length - 1];
+          if (/[.,!?;:]/.test(lastWord.slice(-1))) {
+            delay = 1000; // Pause for 1 second
+            charCount = 0; // Reset character count after pause
+            additionalCharCount = 0; // Reset additional character count
+          } else {
+            additionalCharCount += word.length + 1;
+            if (additionalCharCount >= 50) { // Force pause if no punctuation found within next 50 characters
+              delay = 1000; // Pause for 1 second
+              charCount = 0; // Reset character count after pause
+              additionalCharCount = 0; // Reset additional character count
+            }
+          }
+        }
+
+        setTimeout(typeWord, delay);
+      } else {
         setMessages(prev => {
           const updated = [...prev];
-          updated[0] = {
-            ...updated[0],
-            content: updated[0].content
-              ? `${updated[0].content} ${word}`
-              : word,
-          };
+          updated[0] = { ...updated[0], content: typedWords.join(" ") };
           return updated;
         });
-        index++;
-        setTimeout(typeWord, 100); // Adjust speed here
-      } else {
         setTimeout(() => setIsTyping(false), 1000); // Remove cursor after 1 second
       }
     };
@@ -67,7 +89,7 @@ export default function ChatInterface() {
     if (scrollAreaRef.current) {
       scrollAreaRef.current.scrollTop = scrollAreaRef.current.scrollHeight;
     }
-  }, [scrollAreaRef]); // Removed typedText from dependencies
+  }, [scrollAreaRef]);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -193,9 +215,22 @@ export default function ChatInterface() {
                       }`}
                     >
                       <p className="text-sm">
-                        {message.content}
-                        {isTyping && message.role === "assistant" && index === 0 && (
-                          <span className="inline-block w-3 h-3 bg-white rounded-full ml-1 animate-pulse" />
+                        {isTyping && message.role === "assistant" && index === 0 ? (
+                          <>
+                            {typingWords.map((word, i) => (
+                              <motion.span
+                                key={i}
+                                initial={{ opacity: 0 }}
+                                animate={{ opacity: 1 }}
+                                transition={{ duration: 0.3 }}
+                              >
+                                {word}{i < typingWords.length - 1 ? " " : ""}
+                              </motion.span>
+                            ))}
+                            <span className="inline-block w-3 h-3 bg-white rounded-full ml-1 animate-pulse" />
+                          </>
+                        ) : (
+                          message.content
                         )}
                       </p>
                     </div>
