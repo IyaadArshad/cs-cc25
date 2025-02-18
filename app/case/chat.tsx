@@ -212,16 +212,16 @@ export default function ChatInterface() {
             value={input}
             onChange={(e) => setInput(e.target.value)}
             placeholder="Type your message..."
-            className="flex-1 bg-transparent chat-input  border-white/20"
+            className="flex-1 bg-gray-800/60 chat-input focus:cursor-text border-white/20"
           />
-          <Button
+            <Button
             size="icon"
             type="submit"
-            className="border-white/20 bg-[#2563eb] hover:bg-[#2156c9]"
-          >
+            className="border-white/20 bg-[#2563eb]/90 hover:bg-[#2156c9]/80"
+            >
             <Send className="h-4 text-white w-4" />
             <span className="sr-only">Send message</span>
-          </Button>
+            </Button>
         </form>
       </div>
     </div>
