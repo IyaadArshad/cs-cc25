@@ -6,7 +6,7 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Send, Sparkles, Maximize2, Minimize2 } from "lucide-react";
+import { Send, Sparkles, Maximize2, Minimize2, Loader2 } from "lucide-react";
 import { useEffect, useState, useRef } from "react";
 import CustomMarkdown from "@/components/custom-markdown";
 
@@ -105,6 +105,13 @@ export default function ChatInterface({
   const [isTyping, setIsTyping] = useState(true);
   const scrollAreaRef = useRef<HTMLDivElement>(null);
   const hasRun = useRef(false);
+  const [isContentLoading, setIsContentLoading] = useState(true);
+
+  useEffect(() => {
+    setIsContentLoading(true);
+    const timer = setTimeout(() => setIsContentLoading(false), 2000);
+    return () => clearTimeout(timer);
+  }, [isExpanded]);
 
   useEffect(() => {
     if (hasRun.current) return;
@@ -282,100 +289,112 @@ export default function ChatInterface({
 
       {/* Main content area */}
       <div className="relative flex-1 flex flex-col">
-        <ScrollArea
-          className={`flex-1 ${isExpanded ? "pt-4" : "pt-2"} px-4 pb-4`}
-          ref={scrollAreaRef}
-        >
-          <div
-            className={`space-y-4 ${
-              !isExpanded ? "max-w-[600px] mx-auto" : ""
-            }`}
-          >
-            <AnimatePresence mode="popLayout">
-              {messages.map((message, index) => (
-                <motion.div
-                  key={`message-${index}-${message.timestamp}`}
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0, y: -20 }}
-                  className={`flex ${
-                    message.role === "user" ? "justify-end" : "justify-start"
-                  } ${isExpanded && index === 0 ? "mt-8" : ""}`}
-                >
-                  <div
-                    className={`flex items-start gap-2 ${
-                      !isExpanded
-                        ? "max-w-[80%]"
-                        : message.role === "assistant"
-                        ? "max-w-[85%] pr-12"
-                        : "max-w-[75%]"
-                    } ${
-                      message.role === "user" ? "flex-row-reverse" : "flex-row"
-                    }`}
-                  >
-                    <Avatar className="w-auto h-8">
-                      <AvatarImage
-                        src={
-                          message.role === "user"
-                            ? "http://localhost:3000/images/default_pfp.png"
-                            : "http://localhost:3000/images/assistant.png"
-                        }
-                      />
-                    </Avatar>
-                    <div
-                      className={`flex flex-col ${
-                        message.role === "user" ? "items-end" : "items-start"
-                      }`}
+        {isContentLoading ? (
+    <div className="flex-1 flex flex-col items-center justify-center gap-6">
+    <Loader2 className="h-8 w-8 text-[#2563eb] animate-spin" />
+    <div className="text-center space-y-2 max-w-sm px-4">
+      <h3 className="text-white text-lg font-medium">
+        {isExpanded ? "Switching to desktop view" : "Switching to mobile view"}
+      </h3>
+      <p className="text-gray-400 text-sm">
+        {isExpanded 
+          ? "Expanding the chat interface for a better desktop experience..."
+          : "Optimizing the interface for mobile view..."}
+      </p>
+    </div>
+  </div>
+        ) : (
+          <>
+            <ScrollArea
+              className={`flex-1 ${isExpanded ? "pt-4" : "pt-2"} px-4 pb-4`}
+              ref={scrollAreaRef}
+            >
+              <div className={`space-y-4 ${!isExpanded ? "max-w-[600px] mx-auto" : ""}`}>
+                <AnimatePresence mode="popLayout">
+                  {messages.map((message, index) => (
+                    <motion.div
+                      key={`message-${index}-${message.timestamp}`}
+                      initial={{ opacity: 0, y: 20 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      exit={{ opacity: 0, y: -20 }}
+                      className={`flex ${message.role === "user" ? "justify-end" : "justify-start"} ${isExpanded && index === 0 ? "mt-8" : ""}`}
                     >
                       <div
-                        className={`rounded-lg p-3 ${
-                          message.role === "user"
-                            ? "bg-primary text-primary-foreground"
-                            : "bg-gradient-to-br from-[#2563eb] to-[#4C1D95] text-white"
+                        className={`flex items-start gap-2 ${
+                          !isExpanded
+                            ? "max-w-[80%]"
+                            : message.role === "assistant"
+                            ? "max-w-[85%] pr-12"
+                            : "max-w-[75%]"
+                        } ${
+                          message.role === "user" ? "flex-row-reverse" : "flex-row"
                         }`}
                       >
-                        <div className="text-sm">
-                          {isTyping &&
-                          message.role === "assistant" &&
-                          index === 0 ? (
-                            <>
-                              <CustomMarkdown isTyping>
-                                {typingWords.join(" ")}
-                              </CustomMarkdown>
-                              <span className="inline-block w-3 h-3 bg-white rounded-full ml-1 animate-pulse"></span>
-                            </>
-                          ) : (
-                            <CustomMarkdown>{message.content}</CustomMarkdown>
-                          )}
+                        <Avatar className="w-auto h-8">
+                          <AvatarImage
+                            src={
+                              message.role === "user"
+                                ? "http://localhost:3000/images/default_pfp.png"
+                                : "http://localhost:3000/images/assistant.png"
+                            }
+                          />
+                        </Avatar>
+                        <div
+                          className={`flex flex-col ${
+                            message.role === "user" ? "items-end" : "items-start"
+                          }`}
+                        >
+                          <div
+                            className={`rounded-lg p-3 ${
+                              message.role === "user"
+                                ? "bg-primary text-primary-foreground"
+                                : "bg-gradient-to-br from-[#2563eb] to-[#4C1D95] text-white"
+                            }`}
+                          >
+                            <div className="text-sm">
+                              {isTyping &&
+                              message.role === "assistant" &&
+                              index === 0 ? (
+                                <>
+                                  <CustomMarkdown isTyping>
+                                    {typingWords.join(" ")}
+                                  </CustomMarkdown>
+                                  <span className="inline-block w-3 h-3 bg-white rounded-full ml-1 animate-pulse"></span>
+                                </>
+                              ) : (
+                                <CustomMarkdown>{message.content}</CustomMarkdown>
+                              )}
+                            </div>
+                          </div>
                         </div>
                       </div>
-                    </div>
-                  </div>
-                </motion.div>
-              ))}
-            </AnimatePresence>
-          </div>
-        </ScrollArea>
-
-        {/* Input area */}
-        <div className="p-4 bg-[#12121d] sticky bottom-0">
-          <form onSubmit={handleSubmit} className="flex gap-2">
-            <Input
-              value={input}
-              onChange={(e) => setInput(e.target.value)}
-              placeholder="Type your message..."
-              className="flex-1 bg-gray-800/60 chat-input focus:cursor-text border-white/20"
-            />
-            <Button
-              size="icon"
-              type="submit"
-              className="border-white/20 bg-[#2563eb]/90 hover:bg-[#2156c9]/80"
-            >
-              <Send className="h-4 text-white w-4" />
-              <span className="sr-only">Send message</span>
-            </Button>
-          </form>
-        </div>
+                    </motion.div>
+                  ))}
+                </AnimatePresence>
+              </div>
+            </ScrollArea>
+  
+            {/* Input area */}
+            <div className="p-4 bg-[#12121d] sticky bottom-0">
+              <form onSubmit={handleSubmit} className="flex gap-2">
+                <Input
+                  value={input}
+                  onChange={(e) => setInput(e.target.value)}
+                  placeholder="Type your message..."
+                  className="flex-1 bg-gray-800/60 chat-input focus:cursor-text border-white/20"
+                />
+                <Button
+                  size="icon"
+                  type="submit"
+                  className="border-white/20 bg-[#2563eb]/90 hover:bg-[#2156c9]/80"
+                >
+                  <Send className="h-4 text-white w-4" />
+                  <span className="sr-only">Send message</span>
+                </Button>
+              </form>
+            </div>
+          </>
+        )}
       </div>
     </motion.div>
   );
