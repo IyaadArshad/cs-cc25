@@ -19,6 +19,18 @@ interface Message {
 const initialMessage: Message = {
   role: "assistant",
   content:
+    "# Heading 1\n" +
+    "## Heading 2\n" +
+    "### Heading 3\n" +
+    "#### Heading 4\n" +
+    "##### Heading 5\n" +
+    "###### Heading 6\n" +
+    "This is a **bold** text.\n" +
+    "This is an *italic* text.\n" +
+    "This is a ***bold and italic*** text.\n" +
+    "- Bullet point item 1\n" +
+    "- Bullet point item 2\n" +
+    "- Bullet point item 3\n" +
     "Welcome to **Abu Dhabi! I'm here to assist you with** your settlement process. Whether you need information about visas, housing, schools, or any other aspect of settling in, I'm here to help. What would you like to know about first? Feel free to ask about the visa process, finding accommodation, enrolling in schools, healthcare options, or any other topics related to your move to Abu Dhabi.",
   timestamp: new Date().toLocaleTimeString(),
 };
