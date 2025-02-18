@@ -51,6 +51,9 @@ export default function Page() {
     "Manage Utilities Services",
   ];
   const [highlightedIndex, setHighlightedIndex] = useState(0);
+  const [cardExpanded, setCardExpanded] = useState(false); // New state
+
+  const handleExpand = () => setCardExpanded((prev) => !prev); // Toggle handler
 
   useEffect(() => {
     const nameCookie = document.cookie
@@ -114,7 +117,7 @@ export default function Page() {
       case "discover":
         return <CaseDiscover />;
       case "chat":
-        return <CaseChat />;
+        return <CaseChat onExpand={handleExpand} />; // Pass prop to chat.tsx
       case "apps":
         return <CaseApps />;
       case "profile":
@@ -222,7 +225,11 @@ export default function Page() {
         style={{ backgroundImage: `url(${randomBackground})` }}
         className="min-h-screen bg-cover bg-center flex items-center justify-center p-4 font-['Segoe_UI'] sm:p-4"
       >
-        <div className="w-full h-screen sm:w-[490px] sm:max-w-lg sm:h-[780px] bg-gradient-to-b from-[#12121d]/80 to-[#12121d]/95 backdrop-blur-xl main-card fixed sm:relative sm:rounded-[18px] overflow-hidden flex flex-col">
+        <div
+          className={`w-full h-screen ${
+            cardExpanded ? "sm:w-[700px]" : "sm:w-[490px]"
+          } sm:max-w-lg sm:h-[780px] bg-gradient-to-b from-[#12121d]/80 to-[#12121d]/95 backdrop-blur-xl main-card fixed sm:relative sm:rounded-[18px] overflow-hidden flex flex-col`}
+        >
           {/* Content */}
           <div className="flex-1 flex flex-col items-center justify-center gap-3 px-6">
             {phase === "name" || phase === "bio" ? (
@@ -440,7 +447,11 @@ export default function Page() {
       style={{ backgroundImage: `url(${randomBackground})` }}
       className="min-h-screen bg-cover bg-center flex items-center justify-center p-4 font-['Segoe_UI'] sm:p-4"
     >
-      <div className="w-full h-screen sm:w-[490px] sm:max-w-lg sm:h-[780px] bg-gradient-to-b from-[#12121d]/80 to-[#12121d]/95 backdrop-blur-xl main-card fixed sm:relative sm:rounded-[18px] overflow-hidden flex flex-col">
+      <div
+        className={`w-full h-screen ${
+          cardExpanded ? "sm:w-[700px]" : "sm:w-[490px]"
+        } sm:max-w-lg sm:h-[780px] bg-gradient-to-b from-[#12121d]/80 to-[#12121d]/95 backdrop-blur-xl main-card fixed sm:relative sm:rounded-[18px] overflow-hidden flex flex-col`}
+      >
         {/* Main Content Area */}
         {getTabContent(activeTab)}
 

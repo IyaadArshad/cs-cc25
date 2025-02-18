@@ -84,7 +84,11 @@ const initialMessage: Message = {
   timestamp: new Date().toLocaleTimeString(),
 };
 
-export default function ChatInterface() {
+interface ChatInterfaceProps {
+  onExpand: () => void;
+}
+
+export default function ChatInterface({ onExpand }: ChatInterfaceProps) {
   const [messages, setMessages] = useState<Message[]>([{
     role: "assistant",
     content: "",
@@ -235,6 +239,11 @@ export default function ChatInterface() {
             </defs>
           </svg>
         </h1>
+        <div className="flex-grow" />
+        {/* Expand button - hidden on mobile */}
+        <button onClick={onExpand} className="hidden sm:block px-2 py-1 bg-blue-500 hover:bg-blue-600 rounded text-white ml-4">
+          Expand
+        </button>
       </motion.div>
 
       <ScrollArea className="flex-1 p-4" ref={scrollAreaRef}>
