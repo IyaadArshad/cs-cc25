@@ -94,10 +94,10 @@ const headerVariants = {
   hidden: { y: -50, transition: { duration: 0.5 } },
 };
 
-// Variants for the toggle button
+// Define variants for the toggle button in each state
 const toggleButtonVariants = {
-  minimized: { top: 0, right: 0, scale: 1, transition: { duration: 0.5 } },
-  expanded: { top: 4, right: 4, scale: 0.8, transition: { duration: 0.5 } },
+  minimized: { position: "relative" as "relative" },
+  expanded: { position: "absolute" as "absolute", top: 10, right: 10, scale: 0.8 },
 };
 
 export default function ChatInterface({ onExpand, isExpanded }: ChatInterfaceProps) {
@@ -232,51 +232,61 @@ export default function ChatInterface({ onExpand, isExpanded }: ChatInterfacePro
   };
 
   return (
-    <div className="flex overflow-y-auto flex-col h-full">
-      {/* Header - Only show when not expanded */}
-      <AnimatePresence mode="wait">
-        {!isExpanded && (
-          <motion.div
-            key="header"
-            variants={headerVariants}
-            initial="visible"
-            animate="visible"
-            exit="hidden"
-            className="flex items-center p-4"
-          >
-            <motion.div 
-              key="header-content"
-              className="flex items-center"
-            >
-              <h1 className="text-2xl font-bold text-white flex items-center">
-                Mutasil AI Chat
-                <Sparkles className="ml-2 h-6 w-6 [&>path]:fill-transparent [&>path]:stroke-[url(#sparkleGradient)]" />
-                <svg width="0" height="0">
-                  <defs>
-                    <linearGradient id="sparkleGradient" x1="0%" y1="0%" x2="100%">
-                      <stop offset="0%" stopColor="#fff" />
-                      <stop offset="50%" stopColor="#e0f0ff" />
-                      <stop offset="100%" stopColor="#ffe0f0" />
-                    </linearGradient>
-                  </defs>
-                </svg>
-              </h1>
-            </motion.div>
-            <div className="flex-grow" />
+    <div className="flex overflow-y-auto flex-col h-full relative">
+      {/* Header: Only shown in minimized state, including the toggle button */}
+      {!isExpanded && (
+        <motion.div
+          key="header"
+          variants={headerVariants}
+          initial="visible"
+          animate="visible"
+          exit="hidden"
+          className="flex items-center p-4"
+        >
+          {/* Header content */}
+          <motion.div key="header-content" className="flex items-center">
+            <h1 className="text-2xl font-bold text-white flex items-center">
+              Mutasil AI Chat
+              <Sparkles className="ml-2 h-6 w-6 [&>path]:fill-transparent [&>path]:stroke-[url(#sparkleGradient)]" />
+              <svg width="0" height="0">
+                <defs>
+                  <linearGradient id="sparkleGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                    <stop offset="0%" stopColor="#fff" />
+                    <stop offset="50%" stopColor="#e0f0ff" />
+                    <stop offset="100%" stopColor="#ffe0f0" />
+                  </linearGradient>
+                </defs>
+              </svg>
+            </h1>
           </motion.div>
-        )}
-      </AnimatePresence>
+          <div className="ml-auto" />
+          {/* Single Toggle Button rendered inside header */}
+          <motion.button
+            key="toggle-button"
+            onClick={onExpand}
+            variants={toggleButtonVariants}
+            initial="minimized"
+            animate="minimized"
+            className="hidden sm:flex items-center justify-center text-white hover:opacity-70 transition-opacity"
+          >
+            <Maximize2 className="h-5 w-5" />
+          </motion.button>
+        </motion.div>
+      )}
 
-      {/* Single Toggle Button – always present */}
-      <motion.button
-        key="toggle-button"
-        onClick={onExpand}
-        variants={toggleButtonVariants}
-        animate={isExpanded ? "expanded" : "minimized"}
-        className="hidden sm:flex absolute text-white hover:opacity-70 transition-opacity z-10"
-      >
-        <Maximize2 className="h-5 w-5" />
-      </motion.button>
+      {/* When expanded, render only the toggle button absolutely */}
+      {isExpanded && (
+        <motion.button
+          key="toggle-button-expanded"
+          onClick={onExpand}
+          variants={toggleButtonVariants}
+          initial="expanded"
+          animate="expanded"
+          className="hidden sm:flex absolute text-white hover:opacity-70 transition-opacity z-10"
+        >
+          <Maximize2 className="h-5 w-5" />
+        </motion.button>
+      )}
 
       {/* Main content area */}
       <div className="relative flex-1 flex flex-col">
