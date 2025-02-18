@@ -325,7 +325,7 @@ export default function ChatInterface({
                   exit={{ opacity: 0, y: -20 }}
                   className={`flex ${
                     message.role === "user" ? "justify-end" : "justify-start"
-                  } ${index === 0 ? "mt-8" : ""}`}
+                  } ${isExpanded && index === 0 ? "mt-8" : ""}`}
                 >
                   <div
                     className={`flex items-start gap-2 ${
