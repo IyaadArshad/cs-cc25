@@ -6,7 +6,7 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Send } from "lucide-react";
+import { Send, Sparkles } from "lucide-react";
 import { useEffect, useState, useRef } from "react";
 
 interface Message {
@@ -122,7 +122,19 @@ export default function ChatInterface() {
         animate={{ opacity: 1, y: 0 }}
         className="flex items-center p-4"
       >
-        <h1 className="text-2xl font-bold text-white">Chat</h1>
+        <h1 className="text-2xl font-bold text-white flex items-center">
+          Mutasil AI Chat
+          <Sparkles className="ml-2 h-6 w-6 [&>path]:fill-transparent [&>path]:stroke-[url(#sparkleGradient)]" />
+          <svg width="0" height="0">
+            <defs>
+              <linearGradient id="sparkleGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+          <stop offset="0%" stopColor="#fff" />
+          <stop offset="50%" stopColor="#e0f0ff" />
+          <stop offset="100%" stopColor="#ffe0f0" />
+              </linearGradient>
+            </defs>
+          </svg>
+        </h1>
       </motion.div>
 
       <ScrollArea className="flex-1 p-4" ref={scrollAreaRef}>
@@ -161,7 +173,7 @@ export default function ChatInterface() {
                       className={`rounded-lg p-3 ${
                         message.role === "user"
                           ? "bg-primary text-primary-foreground"
-                          : "bg-muted"
+                          : "bg-gradient-to-br from-[#2563eb] to-[#4C1D95] text-white"
                       }`}
                     >
                       <p className="text-sm">{message.content}</p>
@@ -182,7 +194,7 @@ export default function ChatInterface() {
                 <AvatarFallback>A</AvatarFallback>
               </Avatar>
               <div className="flex flex-col items-start">
-                <div className="rounded-lg p-3 bg-muted">
+                <div className="rounded-lg p-3 bg-gradient-to-br from-[#2563eb] to-[#4C1D95] text-white">
                   <p className="text-sm">
                     {typedText}
                     {isTyping && (
