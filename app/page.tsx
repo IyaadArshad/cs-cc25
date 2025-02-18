@@ -40,7 +40,7 @@ const cardVariants = {
   expanded: {
     width: "75vw",
     height: "90vh",
-    transition: { delay: 0.6, duration: 0.8 }
+    transition: { delay: 0.6, duration: 0.8 },
   },
 };
 
@@ -518,7 +518,9 @@ export default function Page() {
                 )}
                 <span
                   className={`text-[12px] ${
-                    activeTab === "discover" ? "text-[#2563eb]" : "text-[#ffffff]"
+                    activeTab === "discover"
+                      ? "text-[#2563eb]"
+                      : "text-[#ffffff]"
                   }`}
                 >
                   Discover
@@ -569,7 +571,9 @@ export default function Page() {
                 )}
                 <span
                   className={`text-[12px] ${
-                    activeTab === "profile" ? "text-[#2563eb]" : "text-[#ffffff]"
+                    activeTab === "profile"
+                      ? "text-[#2563eb]"
+                      : "text-[#ffffff]"
                   }`}
                 >
                   Settings
