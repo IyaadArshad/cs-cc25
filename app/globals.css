@@ -104,3 +104,9 @@ body {
 .boldy {
   font-weight: 1000;
 }
+
+.chat-input {
+  box-shadow: none !important;
+  caret-color: white;
+  color: #cfcfcf;
+}

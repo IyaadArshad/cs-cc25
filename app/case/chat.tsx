@@ -212,7 +212,7 @@ export default function ChatInterface() {
             value={input}
             onChange={(e) => setInput(e.target.value)}
             placeholder="Type your message..."
-            className="flex-1 bg-transparent  border-white/20"
+            className="flex-1 bg-transparent chat-input  border-white/20"
           />
           <Button
             size="icon"
