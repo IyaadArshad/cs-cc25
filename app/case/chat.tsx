@@ -217,10 +217,9 @@ export default function ChatInterface() {
           <Button
             size="icon"
             type="submit"
-            variant="outline"
-            className="border-white/20"
+            className="border-white/20 bg-[#2563eb] hover:bg-[#2156c9]"
           >
-            <Send className="h-4 w-4" />
+            <Send className="h-4 text-white w-4" />
             <span className="sr-only">Send message</span>
           </Button>
         </form>
