@@ -195,7 +195,7 @@ export default function ChatInterface() {
                       <p className="text-sm">
                         {message.content}
                         {isTyping && message.role === "assistant" && index === 0 && (
-                          <span className="inline-block w-2 h-2 bg-white rounded-full ml-1 animate-pulse" />
+                          <span className="inline-block w-3 h-3 bg-white rounded-full ml-1 animate-pulse" />
                         )}
                       </p>
                     </div>
