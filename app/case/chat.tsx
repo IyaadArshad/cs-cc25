@@ -192,7 +192,12 @@ export default function ChatInterface() {
                           : "bg-gradient-to-br from-[#2563eb] to-[#4C1D95] text-white"
                       }`}
                     >
-                      <p className="text-sm">{message.content}</p>
+                      <p className="text-sm">
+                        {message.content}
+                        {isTyping && message.role === "assistant" && index === 0 && (
+                          <span className="inline-block w-2 h-2 bg-white rounded-full ml-1 animate-pulse" />
+                        )}
+                      </p>
                     </div>
                   </div>
                 </div>
