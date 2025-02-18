@@ -66,7 +66,7 @@ const parseMarkdownLine = (line: string, isTyping: boolean): React.ReactNode => 
 		return <hr />;
 	}
 
-	// Handle headings (# up to ######) and add font size classes
+	// Handle headings (# up to ######) with font size classes
 	const headingMatch = line.match(/^(#{1,6})\s+(.*)/);
 	if (headingMatch) {
 		const level = headingMatch[1].length;
@@ -83,29 +83,45 @@ const parseMarkdownLine = (line: string, isTyping: boolean): React.ReactNode => 
 		return React.createElement(HeadingTag, { className: classes[level] }, content);
 	}
 
-	// Handle bullet points (- or *) at beginning of line
-	const bulletMatch = line.match(/^\s*([-*])\s+(.*)/);
-	if (bulletMatch) {
-		const content = parseInlineTokens(bulletMatch[2]);
-		return <li>{content}</li>;
-	}
-
-	// Default inline tokenization for normal lines
+	// For non-bullet lines, default rendering
 	const content = parseInlineTokens(line);
 	return isTyping ? <>{content}</> : <p>{content}</p>;
 };
 
 const CustomMarkdown: React.FC<CustomMarkdownProps> = ({ children, isTyping }) => {
 	const lines = children.split("\n");
-	return (
-		<>
-			{lines.map((line, idx) => (
+	const elements: React.ReactNode[] = [];
+	let bulletGroup: React.ReactNode[] = [];
+
+	lines.forEach((line, idx) => {
+		const bulletMatch = line.match(/^\s*([-*])\s+(.*)/);
+		if (bulletMatch) {
+			bulletGroup.push(<li key={idx}>{parseInlineTokens(bulletMatch[2])}</li>);
+		} else {
+			if (bulletGroup.length) {
+				elements.push(
+					<ul key={`ul-${idx}`} className="list-disc ml-5">
+						{bulletGroup}
+					</ul>
+				);
+				bulletGroup = [];
+			}
+			elements.push(
 				<React.Fragment key={idx}>
 					{parseMarkdownLine(line, !!isTyping)}
 				</React.Fragment>
-			))}
-		</>
-	);
+			);
+		}
+	});
+	if (bulletGroup.length) {
+		elements.push(
+			<ul key="ul-last" className="list-disc ml-5">
+				{bulletGroup}
+			</ul>
+		);
+	}
+
+	return <>{elements}</>;
 };
 
 export default CustomMarkdown;
