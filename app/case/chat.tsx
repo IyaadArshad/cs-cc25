@@ -89,6 +89,11 @@ interface ChatInterfaceProps {
   isExpanded: boolean;
 }
 
+const headerVariants = {
+  visible: { y: 0, transition: { delay: 0.3, duration: 0.5 } },
+  hidden: { y: -50, transition: { duration: 0.5 } },
+};
+
 export default function ChatInterface({ onExpand, isExpanded }: ChatInterfaceProps) {
   const [messages, setMessages] = useState<Message[]>([{
     role: "assistant",
@@ -227,16 +232,14 @@ export default function ChatInterface({ onExpand, isExpanded }: ChatInterfacePro
         {!isExpanded && (
           <motion.div
             key="header"
-            initial={{ opacity: 0, height: 0 }}
-            animate={{ opacity: 1, height: "auto" }}
-            exit={{ opacity: 0, height: 0 }}
+            variants={headerVariants}
+            initial="visible"
+            animate="visible"
+            exit="hidden"
             className="flex items-center p-4"
           >
             <motion.div 
               key="header-content"
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
               className="flex items-center"
             >
               <h1 className="text-2xl font-bold text-white flex items-center">
@@ -256,11 +259,11 @@ export default function ChatInterface({ onExpand, isExpanded }: ChatInterfacePro
             <div className="flex-grow" />
             <motion.button
               key="expand-button"
-              initial={{ opacity: 0, scale: 0.9 }}
-              animate={{ opacity: 1, scale: 1 }}
-              exit={{ opacity: 0, scale: 0.9 }}
+              initial={{ scale: 0.9 }}
+              animate={{ scale: 1 }}
+              exit={{ scale: 0.9 }}
               onClick={onExpand}
-              className="hidden sm:flex items-center justify-center w-8 h-8 rounded-full bg-[#272739]/50 hover:bg-[#272739] transition-colors"
+              className="hidden sm:flex items-center justify-center text-white hover:opacity-70 transition-opacity"
             >
               <Maximize2 className="h-5 w-5" />
             </motion.button>
@@ -274,11 +277,11 @@ export default function ChatInterface({ onExpand, isExpanded }: ChatInterfacePro
           {isExpanded && (
             <motion.button
               key="minimize-button"
-              initial={{ opacity: 0, scale: 0.9 }}
-              animate={{ opacity: 1, scale: 1 }}
-              exit={{ opacity: 0, scale: 0.9 }}
+              initial={{ scale: 0.9 }}
+              animate={{ scale: 1 }}
+              exit={{ scale: 0.9 }}
               onClick={onExpand}
-              className="hidden sm:flex absolute top-4 right-4 items-center justify-center w-7 h-7 rounded-full bg-[#272739]/50 hover:bg-[#272739] transition-colors z-10"
+              className="hidden sm:flex absolute top-4 right-4 text-white hover:opacity-70 transition-opacity z-10"
             >
               <Minimize2 className="h-4 w-4" />
             </motion.button>
@@ -289,7 +292,7 @@ export default function ChatInterface({ onExpand, isExpanded }: ChatInterfacePro
           className={`flex-1 ${isExpanded ? 'pt-4' : 'pt-2'} px-4 pb-4`}
           ref={scrollAreaRef}
         >
-          <div className="space-y-4">
+          <div className={`space-y-4 ${!isExpanded ? 'max-w-[600px] mx-auto' : ''}`}>
             <AnimatePresence mode="popLayout">
               {messages.map((message, index) => (
                 <motion.div
@@ -299,10 +302,12 @@ export default function ChatInterface({ onExpand, isExpanded }: ChatInterfacePro
                   exit={{ opacity: 0, y: -20 }}
                   className={`flex ${
                     message.role === "user" ? "justify-end" : "justify-start"
-                  }`}
+                  } ${index === 0 ? "mt-8" : ""}`}
                 >
                   <div
-                    className={`flex items-start gap-2 max-w-[80%] ${
+                    className={`flex items-start gap-2 ${
+                      !isExpanded ? 'max-w-[80%]' : message.role === "assistant" ? 'max-w-[85%] pr-12' : 'max-w-[75%]'
+                    } ${
                       message.role === "user" ? "flex-row-reverse" : "flex-row"
                     }`}
                   >
