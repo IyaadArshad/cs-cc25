@@ -23,24 +23,40 @@ const initialMessage: Message = {
 };
 
 export default function ChatInterface() {
-  const [messages, setMessages] = useState<Message[]>([]);
+  const [messages, setMessages] = useState<Message[]>([{
+    role: "assistant",
+    content: "",
+    timestamp: new Date().toLocaleTimeString(),
+  }]);
   const [input, setInput] = useState("");
   const [isTyping, setIsTyping] = useState(true);
-  const [typedText, setTypedText] = useState("");
   const scrollAreaRef = useRef<HTMLDivElement>(null);
+  const hasRun = useRef(false);
 
   useEffect(() => {
+    if (hasRun.current) return;
+    hasRun.current = true;
+
     let index = 0;
     const words = initialMessage.content.split(" ");
 
     const typeWord = () => {
       if (index < words.length) {
-        setTypedText((prev) => `${prev}${prev ? " " : ""}${words[index]}`);
+        const word = words[index];
+        setMessages(prev => {
+          const updated = [...prev];
+          updated[0] = {
+            ...updated[0],
+            content: updated[0].content
+              ? `${updated[0].content} ${word}`
+              : word,
+          };
+          return updated;
+        });
         index++;
         setTimeout(typeWord, 100); // Adjust speed here
       } else {
         setTimeout(() => setIsTyping(false), 1000); // Remove cursor after 1 second
-        setMessages([initialMessage]);
       }
     };
 
@@ -183,38 +199,6 @@ export default function ChatInterface() {
               </motion.div>
             ))}
           </AnimatePresence>
-          {isTyping && (
-            <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              className="flex items-start gap-2"
-            >
-              <Avatar className="w-8 h-8">
-                <AvatarImage src="http://localhost:3000/images/assistant.png" />
-                <AvatarFallback>A</AvatarFallback>
-              </Avatar>
-              <div className="flex flex-col items-start">
-                <div className="rounded-lg p-3 bg-gradient-to-br from-[#2563eb] to-[#4C1D95] text-white">
-                  <p className="text-sm">
-                    {typedText}
-                    {isTyping && (
-                      <motion.span
-                        className="inline-block w-2 h-2 ml-1 rounded-full"
-                        animate={{ opacity: [1, 0, 1] }}
-                        transition={{
-                          repeat: Number.POSITIVE_INFINITY,
-                          duration: 1,
-                        }}
-                      />
-                    )}
-                  </p>
-                </div>
-                <span className="text-xs text-muted-foreground mt-1">
-                  {initialMessage.timestamp}
-                </span>
-              </div>
-            </motion.div>
-          )}
         </div>
       </ScrollArea>
 
