@@ -2,7 +2,7 @@
 
 import type React from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { Avatar, AvatarImage } from "@/components/ui/avatar";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -239,7 +239,7 @@ export default function ChatInterface({
   };
 
   return (
-    <motion.div 
+    <motion.div
       className="flex overflow-y-auto flex-col h-full relative"
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
@@ -255,7 +255,13 @@ export default function ChatInterface({
               <Sparkles className="ml-2 h-6 w-6 [&>path]:fill-transparent [&>path]:stroke-[url(#sparkleGradient)]" />
               <svg width="0" height="0">
                 <defs>
-                  <linearGradient id="sparkleGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                  <linearGradient
+                    id="sparkleGradient"
+                    x1="0%"
+                    y1="0%"
+                    x2="100%"
+                    y2="100%"
+                  >
                     <stop offset="0%" stopColor="#fff" />
                     <stop offset="50%" stopColor="#e0f0ff" />
                     <stop offset="100%" stopColor="#ffe0f0" />
@@ -290,26 +296,32 @@ export default function ChatInterface({
       {/* Main content area */}
       <div className="relative flex-1 flex flex-col">
         {isContentLoading ? (
-    <div className="flex-1 flex flex-col items-center justify-center gap-6">
-    <Loader2 className="h-8 w-8 text-[#2563eb] animate-spin" />
-    <div className="text-center space-y-2 max-w-sm px-4">
-      <h3 className="text-white text-lg font-medium">
-        {isExpanded ? "Switching to desktop view" : "Switching to mobile view"}
-      </h3>
-      <p className="text-gray-400 text-sm">
-        {isExpanded 
-          ? "Expanding the chat interface for a better desktop experience..."
-          : "Optimizing the interface for mobile view..."}
-      </p>
-    </div>
-  </div>
+          <div className="flex-1 flex flex-col items-center justify-center gap-6">
+            <Loader2 className="h-8 w-8 text-[#2563eb] animate-spin" />
+            <div className="text-center space-y-2 max-w-sm px-4">
+              <h3 className="text-white text-lg font-medium">
+                {isExpanded
+                  ? "Switching to desktop view"
+                  : "Switching to mobile view"}
+              </h3>
+              <p className="text-gray-400 text-sm">
+                {isExpanded
+                  ? "Expanding the chat interface for a better desktop experience..."
+                  : "Optimizing the interface for mobile view..."}
+              </p>
+            </div>
+          </div>
         ) : (
           <>
             <ScrollArea
               className={`flex-1 ${isExpanded ? "pt-4" : "pt-2"} px-4 pb-4`}
               ref={scrollAreaRef}
             >
-              <div className={`space-y-4 ${!isExpanded ? "max-w-[600px] mx-auto" : ""}`}>
+              <div
+                className={`space-y-4 ${
+                  !isExpanded ? "max-w-[600px] mx-auto" : ""
+                }`}
+              >
                 <AnimatePresence mode="popLayout">
                   {messages.map((message, index) => (
                     <motion.div
@@ -317,7 +329,11 @@ export default function ChatInterface({
                       initial={{ opacity: 0, y: 20 }}
                       animate={{ opacity: 1, y: 0 }}
                       exit={{ opacity: 0, y: -20 }}
-                      className={`flex ${message.role === "user" ? "justify-end" : "justify-start"} ${isExpanded && index === 0 ? "mt-8" : ""}`}
+                      className={`flex ${
+                        message.role === "user"
+                          ? "justify-end"
+                          : "justify-start"
+                      } ${isExpanded && index === 0 ? "mt-8" : ""}`}
                     >
                       <div
                         className={`flex items-start gap-2 ${
@@ -327,7 +343,9 @@ export default function ChatInterface({
                             ? "max-w-[85%] pr-12"
                             : "max-w-[75%]"
                         } ${
-                          message.role === "user" ? "flex-row-reverse" : "flex-row"
+                          message.role === "user"
+                            ? "flex-row-reverse"
+                            : "flex-row"
                         }`}
                       >
                         <Avatar className="w-auto h-8">
@@ -341,7 +359,9 @@ export default function ChatInterface({
                         </Avatar>
                         <div
                           className={`flex flex-col ${
-                            message.role === "user" ? "items-end" : "items-start"
+                            message.role === "user"
+                              ? "items-end"
+                              : "items-start"
                           }`}
                         >
                           <div
@@ -362,7 +382,9 @@ export default function ChatInterface({
                                   <span className="inline-block w-3 h-3 bg-white rounded-full ml-1 animate-pulse"></span>
                                 </>
                               ) : (
-                                <CustomMarkdown>{message.content}</CustomMarkdown>
+                                <CustomMarkdown>
+                                  {message.content}
+                                </CustomMarkdown>
                               )}
                             </div>
                           </div>
@@ -373,7 +395,7 @@ export default function ChatInterface({
                 </AnimatePresence>
               </div>
             </ScrollArea>
-  
+
             {/* Input area */}
             <div className="p-4 bg-[#12121d] sticky bottom-0">
               <form onSubmit={handleSubmit} className="flex gap-2">
