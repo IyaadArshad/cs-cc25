@@ -226,8 +226,19 @@ export default function ChatInterface({
     }
   };
 
+  const handleExpand = () => {
+    scrollAreaRef.current?.scrollTo(0, 0); // Reset scroll position before transition
+    onExpand();
+  };
+
   return (
-    <div className="flex overflow-y-auto flex-col h-full relative">
+    <motion.div 
+      className="flex overflow-y-auto flex-col h-full relative"
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      exit={{ opacity: 0 }}
+      transition={{ duration: 0.2 }}
+    >
       {/* Header - Only show when not expanded */}
       {!isExpanded && (
         <div className="flex items-center p-4">
@@ -248,7 +259,7 @@ export default function ChatInterface({
           </div>
           <div className="ml-auto" />
           <button
-            onClick={onExpand}
+            onClick={handleExpand}
             className="hidden sm:flex items-center justify-center text-white hover:opacity-70 transition-opacity"
           >
             <Maximize2 className="h-5 w-5" />
@@ -258,12 +269,15 @@ export default function ChatInterface({
 
       {/* Minimize button when expanded */}
       {isExpanded && (
-        <button
-          onClick={onExpand}
+        <motion.button
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          exit={{ opacity: 0 }}
+          onClick={handleExpand}
           className="hidden sm:flex absolute top-10 right-10 text-white hover:opacity-70 transition-opacity z-10"
         >
-          <Maximize2 className="h-5 w-5" />
-        </button>
+          <Minimize2 className="h-5 w-5" />
+        </motion.button>
       )}
 
       {/* Main content area */}
@@ -363,6 +377,6 @@ export default function ChatInterface({
           </form>
         </div>
       </div>
-    </div>
+    </motion.div>
   );
 }
