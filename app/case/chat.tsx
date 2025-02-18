@@ -215,7 +215,7 @@ export default function ChatInterface() {
                           : "bg-gradient-to-br from-[#2563eb] to-[#4C1D95] text-white"
                       }`}
                     >
-                      <p className="text-sm">
+                      <div className="text-sm">
                         {isTyping && message.role === "assistant" && index === 0 ? (
                           <>
                             <CustomMarkdown isTyping>
@@ -226,7 +226,7 @@ export default function ChatInterface() {
                         ) : (
                           <CustomMarkdown>{message.content}</CustomMarkdown>
                         )}
-                      </p>
+                      </div>
                     </div>
                   </div>
                 </div>
