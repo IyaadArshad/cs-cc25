@@ -19,7 +19,7 @@ interface Message {
 const initialMessage: Message = {
   role: "assistant",
   content:
-    "Welcome to **Abu** Dhabi! I'm here to assist you with your settlement process. Whether you need information about visas, housing, schools, or any other aspect of settling in, I'm here to help. What would you like to know about first? Feel free to ask about the visa process, finding accommodation, enrolling in schools, healthcare options, or any other topics related to your move to Abu Dhabi.",
+    "Welcome to **Abu Dhabi! I'm here to assist you with** your settlement process. Whether you need information about visas, housing, schools, or any other aspect of settling in, I'm here to help. What would you like to know about first? Feel free to ask about the visa process, finding accommodation, enrolling in schools, healthcare options, or any other topics related to your move to Abu Dhabi.",
   timestamp: new Date().toLocaleTimeString(),
 };
 
@@ -218,17 +218,9 @@ export default function ChatInterface() {
                       <p className="text-sm">
                         {isTyping && message.role === "assistant" && index === 0 ? (
                           <>
-                            {typingWords.map((word, i) => (
-                              <motion.span
-                                key={i}
-                                initial={{ opacity: 0 }}
-                                animate={{ opacity: 1 }}
-                                transition={{ duration: 0.3 }}
-                              >
-                                {word}{i < typingWords.length - 1 ? " " : ""}
-                              </motion.span>
-                            ))}
                             <span className="inline-block w-3 h-3 bg-white rounded-full ml-1 animate-pulse" />
+
+                            <CustomMarkdown>{typingWords.join(" ")}</CustomMarkdown>
                           </>
                         ) : (
                           <CustomMarkdown>{message.content}</CustomMarkdown>
