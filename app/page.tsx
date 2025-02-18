@@ -34,18 +34,6 @@ import CaseApps from "./case/apps";
 import CaseChat from "./case/chat";
 import { motion, AnimatePresence } from "framer-motion";
 
-// Update card variants with delays and navbar exit with only y animation
-const cardVariants = {
-  minimized: { width: "490px", height: "780px", transition: { duration: 0.5 } },
-  expanded: {
-    width: "75vw",
-    height: "90vh",
-    transition: { delay: 0.6, duration: 0.8 },
-  },
-};
-
-const navbarExit = { y: 100, transition: { delay: 0.2, duration: 0.5 } };
-
 export default function Page() {
   const [activeTab, setActiveTab] = useState<Tab>("home");
   const [userName, setUserName] = useState("");
@@ -460,129 +448,123 @@ export default function Page() {
       style={{ backgroundImage: `url(${randomBackground})` }}
       className="min-h-screen bg-cover bg-center flex items-center justify-center p-4 font-['Segoe_UI'] sm:p-4"
     >
-      <motion.div
-        variants={cardVariants}
-        animate={cardExpanded ? "expanded" : "minimized"}
+      <div 
+        style={{
+          width: cardExpanded ? "75vw" : "490px",
+          height: cardExpanded ? "90vh" : "780px",
+        }}
         className="bg-gradient-to-b from-[#12121d]/80 to-[#12121d]/95 backdrop-blur-xl main-card fixed sm:relative sm:rounded-[18px] overflow-hidden flex flex-col"
       >
         {/* Main Content Area */}
         {getTabContent(activeTab)}
 
-        {/* Navbar slides down (no fade) */}
-        <AnimatePresence>
-          {!cardExpanded && (
-            <motion.div
-              key="navbar"
-              initial={{ y: 0 }}
-              animate={{ y: 0 }}
-              exit={navbarExit}
-              className="bg-[#090910] min-h-[96px] flex justify-evenly gap-x-8 items-center border-t border-[#232323] p-4 relative"
-            >
-              {/* Active tab indicator */}
-              <div
-                className="absolute top-0 left-0 w-1/5 h-1 bg-[#2563eb] transition-all duration-300 ease-in-out"
-                style={{
-                  transform: `translateX(${
-                    ["home", "discover", "apps", "chat", "profile"].indexOf(
-                      activeTab
-                    ) * 100
-                  }%)`,
-                }}
-              ></div>
+        {/* Bottom Navigation - Only show when not expanded */}
+        {!cardExpanded && (
+          <div className="bg-[#090910] min-h-[96px] flex justify-evenly gap-x-8 items-center border-t border-[#232323] p-4 relative">
+            {/* Active tab indicator */}
+            <div
+              className="absolute top-0 left-0 w-1/5 h-1 bg-[#2563eb] transition-all duration-300 ease-in-out"
+              style={{
+                transform: `translateX(${
+                  ["home", "discover", "apps", "chat", "profile"].indexOf(
+                    activeTab
+                  ) * 100
+                }%)`,
+              }}
+            ></div>
 
-              <button
-                onClick={() => setActiveTab("home")}
-                className="flex flex-col items-center justify-center gap-1"
+            <button
+              onClick={() => setActiveTab("home")}
+              className="flex flex-col items-center justify-center gap-1"
+            >
+              {activeTab === "home" ? (
+                <HomeIconFilled className="w-8 h-8 text-[#2563eb]" />
+              ) : (
+                <HomeIcon className="w-8 h-8 text-[#ffffff]" />
+              )}
+              <span
+                className={`text-[12px] ${
+                  activeTab === "home" ? "text-[#2563eb]" : "text-[#ffffff]"
+                }`}
               >
-                {activeTab === "home" ? (
-                  <HomeIconFilled className="w-8 h-8 text-[#2563eb]" />
-                ) : (
-                  <HomeIcon className="w-8 h-8 text-[#ffffff]" />
-                )}
-                <span
-                  className={`text-[12px] ${
-                    activeTab === "home" ? "text-[#2563eb]" : "text-[#ffffff]"
-                  }`}
-                >
-                  Home
-                </span>
-              </button>
-              <button
-                onClick={() => setActiveTab("discover")}
-                className="flex flex-col items-center justify-center gap-1"
+                Home
+              </span>
+            </button>
+            <button
+              onClick={() => setActiveTab("discover")}
+              className="flex flex-col items-center justify-center gap-1"
+            >
+              {activeTab === "discover" ? (
+                <MagnifyingGlassFilled className="w-8 h-8 text-[#2563eb]" />
+              ) : (
+                <MagnifyingGlassIcon className="w-8 h-8 text-[#ffffff]" />
+              )}
+              <span
+                className={`text-[12px] ${
+                  activeTab === "discover"
+                    ? "text-[#2563eb]"
+                    : "text-[#ffffff]"
+                }`}
               >
-                {activeTab === "discover" ? (
-                  <MagnifyingGlassFilled className="w-8 h-8 text-[#2563eb]" />
-                ) : (
-                  <MagnifyingGlassIcon className="w-8 h-8 text-[#ffffff]" />
-                )}
-                <span
-                  className={`text-[12px] ${
-                    activeTab === "discover"
-                      ? "text-[#2563eb]"
-                      : "text-[#ffffff]"
-                  }`}
-                >
-                  Discover
-                </span>
-              </button>
-              <button
-                onClick={() => setActiveTab("apps")}
-                className="flex flex-col items-center justify-center gap-1"
+                Discover
+              </span>
+            </button>
+            <button
+              onClick={() => setActiveTab("apps")}
+              className="flex flex-col items-center justify-center gap-1"
+            >
+              {activeTab === "apps" ? (
+                <Squares2X2Filled className="w-8 h-8 text-[#2563eb]" />
+              ) : (
+                <Squares2X2Icon className="w-8 h-8 text-[#ffffff]" />
+              )}
+              <span
+                className={`text-[12px] ${
+                  activeTab === "apps" ? "text-[#2563eb]" : "text-[#ffffff]"
+                }`}
               >
-                {activeTab === "apps" ? (
-                  <Squares2X2Filled className="w-8 h-8 text-[#2563eb]" />
-                ) : (
-                  <Squares2X2Icon className="w-8 h-8 text-[#ffffff]" />
-                )}
-                <span
-                  className={`text-[12px] ${
-                    activeTab === "apps" ? "text-[#2563eb]" : "text-[#ffffff]"
-                  }`}
-                >
-                  Apps
-                </span>
-              </button>
-              <button
-                onClick={() => setActiveTab("chat")}
-                className="flex flex-col items-center justify-center gap-1"
+                Apps
+              </span>
+            </button>
+            <button
+              onClick={() => setActiveTab("chat")}
+              className="flex flex-col items-center justify-center gap-1"
+            >
+              {activeTab === "chat" ? (
+                <ChatBubbleLeftRightFilled className="w-8 h-8 text-[#2563eb]" />
+              ) : (
+                <ChatBubbleLeftRightIcon className="w-8 h-8 text-[#ffffff]" />
+              )}
+              <span
+                className={`text-[12px] ${
+                  activeTab === "chat" ? "text-[#2563eb]" : "text-[#ffffff]"
+                }`}
               >
-                {activeTab === "chat" ? (
-                  <ChatBubbleLeftRightFilled className="w-8 h-8 text-[#2563eb]" />
-                ) : (
-                  <ChatBubbleLeftRightIcon className="w-8 h-8 text-[#ffffff]" />
-                )}
-                <span
-                  className={`text-[12px] ${
-                    activeTab === "chat" ? "text-[#2563eb]" : "text-[#ffffff]"
-                  }`}
-                >
-                  Chat
-                </span>
-              </button>
-              <button
-                onClick={() => setActiveTab("profile")}
-                className="flex flex-col items-center justify-center gap-1"
+                Chat
+              </span>
+            </button>
+            <button
+              onClick={() => setActiveTab("profile")}
+              className="flex flex-col items-center justify-center gap-1"
+            >
+              {activeTab === "profile" ? (
+                <UserCircleFilled className="w-8 h-8 text-[#2563eb]" />
+              ) : (
+                <UserCircleIcon className="w-8 h-8 text-[#ffffff]" />
+              )}
+              <span
+                className={`text-[12px] ${
+                  activeTab === "profile"
+                    ? "text-[#2563eb]"
+                    : "text-[#ffffff]"
+                }`}
               >
-                {activeTab === "profile" ? (
-                  <UserCircleFilled className="w-8 h-8 text-[#2563eb]" />
-                ) : (
-                  <UserCircleIcon className="w-8 h-8 text-[#ffffff]" />
-                )}
-                <span
-                  className={`text-[12px] ${
-                    activeTab === "profile"
-                      ? "text-[#2563eb]"
-                      : "text-[#ffffff]"
-                  }`}
-                >
-                  Settings
-                </span>
-              </button>
-            </motion.div>
-          )}
-        </AnimatePresence>
-      </motion.div>
+                Settings
+              </span>
+            </button>
+          </div>
+        )}
+      </div>
     </div>
   );
 }

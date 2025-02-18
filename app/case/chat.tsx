@@ -89,22 +89,6 @@ interface ChatInterfaceProps {
   isExpanded: boolean;
 }
 
-const headerVariants = {
-  visible: { y: 0, transition: { delay: 0.3, duration: 0.5 } },
-  hidden: { y: -50, transition: { duration: 0.5 } },
-};
-
-// Define variants for the toggle button in each state
-const toggleButtonVariants = {
-  minimized: { position: "relative" as "relative" },
-  expanded: {
-    position: "absolute" as "absolute",
-    top: 10,
-    right: 10,
-    scale: 0.8,
-  },
-};
-
 export default function ChatInterface({
   onExpand,
   isExpanded,
@@ -244,30 +228,16 @@ export default function ChatInterface({
 
   return (
     <div className="flex overflow-y-auto flex-col h-full relative">
-      {/* Header: Only shown in minimized state, including the toggle button */}
+      {/* Header - Only show when not expanded */}
       {!isExpanded && (
-        <motion.div
-          key="header"
-          variants={headerVariants}
-          initial="visible"
-          animate="visible"
-          exit="hidden"
-          className="flex items-center p-4"
-        >
-          {/* Header content */}
-          <motion.div key="header-content" className="flex items-center">
+        <div className="flex items-center p-4">
+          <div className="flex items-center">
             <h1 className="text-2xl font-bold text-white flex items-center">
               Mutasil AI Chat
               <Sparkles className="ml-2 h-6 w-6 [&>path]:fill-transparent [&>path]:stroke-[url(#sparkleGradient)]" />
               <svg width="0" height="0">
                 <defs>
-                  <linearGradient
-                    id="sparkleGradient"
-                    x1="0%"
-                    y1="0%"
-                    x2="100%"
-                    y2="100%"
-                  >
+                  <linearGradient id="sparkleGradient" x1="0%" y1="0%" x2="100%" y2="100%">
                     <stop offset="0%" stopColor="#fff" />
                     <stop offset="50%" stopColor="#e0f0ff" />
                     <stop offset="100%" stopColor="#ffe0f0" />
@@ -275,34 +245,25 @@ export default function ChatInterface({
                 </defs>
               </svg>
             </h1>
-          </motion.div>
+          </div>
           <div className="ml-auto" />
-          {/* Single Toggle Button rendered inside header */}
-          <motion.button
-            key="toggle-button"
+          <button
             onClick={onExpand}
-            variants={toggleButtonVariants}
-            initial="minimized"
-            animate="minimized"
             className="hidden sm:flex items-center justify-center text-white hover:opacity-70 transition-opacity"
           >
             <Maximize2 className="h-5 w-5" />
-          </motion.button>
-        </motion.div>
+          </button>
+        </div>
       )}
 
-      {/* When expanded, render only the toggle button absolutely */}
+      {/* Minimize button when expanded */}
       {isExpanded && (
-        <motion.button
-          key="toggle-button-expanded"
+        <button
           onClick={onExpand}
-          variants={toggleButtonVariants}
-          initial="expanded"
-          animate="expanded"
-          className="hidden sm:flex absolute text-white hover:opacity-70 transition-opacity z-10"
+          className="hidden sm:flex absolute top-10 right-10 text-white hover:opacity-70 transition-opacity z-10"
         >
           <Maximize2 className="h-5 w-5" />
-        </motion.button>
+        </button>
       )}
 
       {/* Main content area */}
