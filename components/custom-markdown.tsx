@@ -11,7 +11,6 @@ interface Token {
 	content: string;
 }
 
-// New helper to parse inline tokens for any text content.
 const parseInlineTokens = (text: string): React.ReactNode[] => {
 	const tokens: Token[] = [];
 	const regex = /(\*\*\*([^*]+)\*\*\*\)|\*\*([^*]+)\*\*|\*([^*]+)\*)/g;
@@ -60,67 +59,167 @@ const parseInlineTokens = (text: string): React.ReactNode[] => {
 	});
 };
 
-const parseMarkdownLine = (line: string, isTyping: boolean): React.ReactNode => {
-	// Check for a horizontal rule
-	if (/^[-]{3,}$/.test(line.trim())) {
-		return <hr />;
-	}
-
-	// Handle headings (# up to ######) with font size classes
-	const headingMatch = line.match(/^(#{1,6})\s+(.*)/);
-	if (headingMatch) {
-		const level = headingMatch[1].length;
-		const content = parseInlineTokens(headingMatch[2]);
-		const HeadingTag = `h${level}` as keyof JSX.IntrinsicElements;
-		const classes: { [key: number]: string } = {
-			1: "text-4xl font-bold",
-			2: "text-3xl font-bold",
-			3: "text-2xl font-bold",
-			4: "text-xl font-semibold",
-			5: "text-lg font-semibold",
-			6: "text-base font-medium",
-		};
-		return React.createElement(HeadingTag, { className: classes[level] }, content);
-	}
-
-	// For non-bullet lines, default rendering
-	const content = parseInlineTokens(line);
-	return isTyping ? <>{content}</> : <p>{content}</p>;
-};
-
-const CustomMarkdown: React.FC<CustomMarkdownProps> = ({ children, isTyping }) => {
-	const lines = children.split("\n");
+const parseMarkdownBlocks = (text: string, isTyping: boolean): React.ReactNode[] => {
+	const lines = text.split("\n");
 	const elements: React.ReactNode[] = [];
 	let bulletGroup: React.ReactNode[] = [];
+	let numberGroup: React.ReactNode[] = [];
+	let tableGroup: string[] = [];
+	let codeBlock: string[] = [];
+	let inCodeBlock = false;
+	let codeLang: string | null = null;
+	let quoteGroup: React.ReactNode[] = [];
 
-	lines.forEach((line, idx) => {
+	for (let i = 0; i < lines.length; i++) {
+		let line = lines[i];
+
+		// Code block handling (fenced with ```)
+		if (inCodeBlock) {
+			if (line.startsWith("```")) {
+				elements.push(
+					<pre key={`code-${i}`} className="bg-gray-800 text-white p-2 rounded">
+						<code>{codeBlock.join("\n")}</code>
+					</pre>
+				);
+				inCodeBlock = false;
+				codeBlock = [];
+				codeLang = null;
+			} else {
+				codeBlock.push(line);
+			}
+			continue;
+		}
+		if (line.startsWith("```")) {
+			inCodeBlock = true;
+			codeLang = line.replace("```", "").trim();
+			continue;
+		}
+
+		// Math block handling (fenced with $$)
+		if (line.startsWith("$$")) {
+			let mathContent: string[] = [];
+			let j = i + 1;
+			while (j < lines.length && !lines[j].startsWith("$$")) {
+				mathContent.push(lines[j]);
+				j++;
+			}
+			elements.push(
+				<div key={`math-${i}`} className="math-block bg-gray-100 p-2 rounded my-2">
+					{`$$\n${mathContent.join("\n")}\n$$`}
+				</div>
+			);
+			i = j; // Skip processed lines
+			continue;
+		}
+
+		// Table handling: group rows that start with |
+		if (line.trim().startsWith("|")) {
+			tableGroup.push(line);
+			if (i === lines.length - 1 || !lines[i + 1].trim().startsWith("|")) {
+				// Process tableGroup assuming first row header, second separator, rest body
+				const header = tableGroup[0].split("|").map(s => s.trim()).filter(Boolean);
+				const bodyRows = tableGroup.slice(2).map(row => row.split("|").map(s => s.trim()).filter(Boolean));
+				elements.push(
+					<table key={`table-${i}`} className="table-auto border-collapse border border-gray-300 my-2">
+						<thead>
+							<tr>
+								{header.map((cell, idx) => (
+									<th key={idx} className="border border-gray-300 px-2 py-1">{cell}</th>
+								))}
+							</tr>
+						</thead>
+						<tbody>
+							{bodyRows.map((row, ridx) => (
+								<tr key={ridx}>
+									{row.map((cell, cidx) => (
+										<td key={cidx} className="border border-gray-300 px-2 py-1">{cell}</td>
+									))}
+								</tr>
+							))}
+						</tbody>
+					</table>
+				);
+				tableGroup = [];
+			}
+			continue;
+		}
+
+		// Bullet list handling
 		const bulletMatch = line.match(/^\s*([-*])\s+(.*)/);
 		if (bulletMatch) {
-			bulletGroup.push(<li key={idx}>{parseInlineTokens(bulletMatch[2])}</li>);
-		} else {
-			if (bulletGroup.length) {
+			bulletGroup.push(<li key={i}>{parseInlineTokens(bulletMatch[2])}</li>);
+			if (i === lines.length - 1 || !lines[i + 1].match(/^\s*([-*])\s+(.*)/)) {
 				elements.push(
-					<ul key={`ul-${idx}`} className="list-disc ml-5">
+					<ul key={`ul-${i}`} className="list-disc ml-5 my-2">
 						{bulletGroup}
 					</ul>
 				);
 				bulletGroup = [];
 			}
-			elements.push(
-				<React.Fragment key={idx}>
-					{parseMarkdownLine(line, !!isTyping)}
-				</React.Fragment>
-			);
+			continue;
 		}
-	});
-	if (bulletGroup.length) {
-		elements.push(
-			<ul key="ul-last" className="list-disc ml-5">
-				{bulletGroup}
-			</ul>
-		);
+
+		// Numbered list handling
+		const numberMatch = line.match(/^\s*\d+\.\s+(.*)/);
+		if (numberMatch) {
+			numberGroup.push(<li key={i}>{parseInlineTokens(numberMatch[1])}</li>);
+			if (i === lines.length - 1 || !lines[i + 1].match(/^\s*\d+\.\s+(.*)/)) {
+				elements.push(
+					<ol key={`ol-${i}`} className="list-decimal ml-5 my-2">
+						{numberGroup}
+					</ol>
+				);
+				numberGroup = [];
+			}
+			continue;
+		}
+
+		// Blockquote handling
+		const quoteMatch = line.match(/^>\s+(.*)/);
+		if (quoteMatch) {
+			quoteGroup.push(<p key={i}>{parseInlineTokens(quoteMatch[1])}</p>);
+			if (i === lines.length - 1 || !lines[i + 1].match(/^>\s+(.*)/)) {
+				elements.push(
+					<blockquote key={`quote-${i}`} className="border-l-4 pl-4 italic text-gray-700 my-2">
+						{quoteGroup}
+					</blockquote>
+				);
+				quoteGroup = [];
+			}
+			continue;
+		}
+
+		// Headings handling
+		const headingMatch = line.match(/^(#{1,6})\s+(.*)/);
+		if (headingMatch) {
+			const level = headingMatch[1].length;
+			const content = parseInlineTokens(headingMatch[2]);
+			const HeadingTag = `h${level}` as keyof JSX.IntrinsicElements;
+			const classes: { [key: number]: string } = {
+				1: "text-4xl font-bold",
+				2: "text-3xl font-bold",
+				3: "text-2xl font-bold",
+				4: "text-xl font-semibold",
+				5: "text-lg font-semibold",
+				6: "text-base font-medium",
+			};
+			elements.push(React.createElement(HeadingTag, { key: i, className: classes[level] }, content));
+			continue;
+		}
+
+		// Regular paragraph or empty line
+		if (line.trim() === "") {
+			elements.push(<br key={i} />);
+		} else {
+			elements.push(<p key={i}>{parseInlineTokens(line)}</p>);
+		}
 	}
 
+	return elements;
+};
+
+const CustomMarkdown: React.FC<CustomMarkdownProps> = ({ children, isTyping }) => {
+	const elements = parseMarkdownBlocks(children, !!isTyping);
 	return <>{elements}</>;
 };
 
