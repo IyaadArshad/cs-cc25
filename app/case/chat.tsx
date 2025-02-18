@@ -31,6 +31,55 @@ const initialMessage: Message = {
     "- Bullet point item 1\n" +
     "- Bullet point item 2\n" +
     "- Bullet point item 3\n" +
+    "1. Numbered list item 1\n" +
+    "2. Numbered list item 2\n" +
+    "3. Numbered list item 3\n" +
+    "This is a [link](https://example.com).\n" +
+    "This is an image: ![Image](https://example.com/image.png)\n" +
+    "> This is a blockquote.\n" +
+    "```js\n" +
+    "console.log('This is a code block.');\n" +
+    "```\n" +
+    "This is a table:\n" +
+    "| Header 1 | Header 2 | Header 3 |\n" +
+    "|----------|----------|----------|\n" +
+    "| Row 1    | Row 1    | Row 1    |\n" +
+    "| Row 2    | Row 2    | Row 2    |\n" +
+    "| Row 3    | Row 3    | Row 3    |\n" +
+    "This is a ~~strikethrough~~ text.\n" +
+    "This is a text with a footnote[^1].\n" +
+    "[^1]: This is the footnote.\n" +
+    "This is a text with a superscript: 2^10^.\n" +
+    "This is a text with a subscript: H~2~O.\n" +
+    "This is a text with an abbreviation: HTML.\n" +
+    "This is a text with a mark: ==mark==.\n" +
+    "This is a text with a definition: Apple:: A fruit.\n" +
+    "This is a text with a math block:\n" +
+    "$$\n" +
+    "\\frac{1}{2}\n" +
+    "$$\n" +
+    "This is a text with a inline math: $\\frac{1}{2}$\n" +
+    "This is a text with a mermaid diagram:\n" +
+    "```mermaid\n" +
+    "graph TD\n" +
+    "    A[Christmas] -->|Get money| B(Go shopping)\n" +
+    "    B --> C{Let me think}\n" +
+    "    C -->|One| D[Laptop]\n" +
+    "    C -->|Two| E[iPhone]\n" +
+    "    C -->|Three| F[Car]\n" +
+    "```\n" +
+    "This is a text with a flowchart:\n" +
+    "```flow\n" +
+    "st=>start: Start\n" +
+    "e=>end: End\n" +
+    "op1=>operation: Operation 1\n" +
+    "op2=>operation: Operation 2\n" +
+    "op3=>operation: Operation 3\n" +
+    "cond=>condition: Yes or No?\n" +
+    "st->op1->cond\n" +
+    "cond(yes)->op2->e\n" +
+    "cond(no)->op3->e\n" +
+    "```\n" +
     "Welcome to **Abu Dhabi! I'm here to assist you with** your settlement process. Whether you need information about visas, housing, schools, or any other aspect of settling in, I'm here to help. What would you like to know about first? Feel free to ask about the visa process, finding accommodation, enrolling in schools, healthcare options, or any other topics related to your move to Abu Dhabi.",
   timestamp: new Date().toLocaleTimeString(),
 };
