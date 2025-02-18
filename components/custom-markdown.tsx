@@ -66,13 +66,21 @@ const parseMarkdownLine = (line: string, isTyping: boolean): React.ReactNode => 
 		return <hr />;
 	}
 
-	// Handle headings (# up to ######)
+	// Handle headings (# up to ######) and add font size classes
 	const headingMatch = line.match(/^(#{1,6})\s+(.*)/);
 	if (headingMatch) {
 		const level = headingMatch[1].length;
 		const content = parseInlineTokens(headingMatch[2]);
 		const HeadingTag = `h${level}` as keyof JSX.IntrinsicElements;
-		return React.createElement(HeadingTag, null, content);
+		const classes: { [key: number]: string } = {
+			1: "text-4xl font-bold",
+			2: "text-3xl font-bold",
+			3: "text-2xl font-bold",
+			4: "text-xl font-semibold",
+			5: "text-lg font-semibold",
+			6: "text-base font-medium",
+		};
+		return React.createElement(HeadingTag, { className: classes[level] }, content);
 	}
 
 	// Handle bullet points (- or *) at beginning of line
