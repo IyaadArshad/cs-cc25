@@ -94,6 +94,12 @@ const headerVariants = {
   hidden: { y: -50, transition: { duration: 0.5 } },
 };
 
+// Variants for the toggle button
+const toggleButtonVariants = {
+  minimized: { top: 0, right: 0, scale: 1, transition: { duration: 0.5 } },
+  expanded: { top: 4, right: 4, scale: 0.8, transition: { duration: 0.5 } },
+};
+
 export default function ChatInterface({ onExpand, isExpanded }: ChatInterfaceProps) {
   const [messages, setMessages] = useState<Message[]>([{
     role: "assistant",
@@ -247,7 +253,7 @@ export default function ChatInterface({ onExpand, isExpanded }: ChatInterfacePro
                 <Sparkles className="ml-2 h-6 w-6 [&>path]:fill-transparent [&>path]:stroke-[url(#sparkleGradient)]" />
                 <svg width="0" height="0">
                   <defs>
-                    <linearGradient id="sparkleGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                    <linearGradient id="sparkleGradient" x1="0%" y1="0%" x2="100%">
                       <stop offset="0%" stopColor="#fff" />
                       <stop offset="50%" stopColor="#e0f0ff" />
                       <stop offset="100%" stopColor="#ffe0f0" />
@@ -257,37 +263,23 @@ export default function ChatInterface({ onExpand, isExpanded }: ChatInterfacePro
               </h1>
             </motion.div>
             <div className="flex-grow" />
-            <motion.button
-              key="expand-button"
-              initial={{ scale: 0.9 }}
-              animate={{ scale: 1 }}
-              exit={{ scale: 0.9 }}
-              onClick={onExpand}
-              className="hidden sm:flex items-center justify-center text-white hover:opacity-70 transition-opacity"
-            >
-              <Maximize2 className="h-5 w-5" />
-            </motion.button>
           </motion.div>
         )}
       </AnimatePresence>
 
+      {/* Single Toggle Button – always present */}
+      <motion.button
+        key="toggle-button"
+        onClick={onExpand}
+        variants={toggleButtonVariants}
+        animate={isExpanded ? "expanded" : "minimized"}
+        className="hidden sm:flex absolute text-white hover:opacity-70 transition-opacity z-10"
+      >
+        <Maximize2 className="h-5 w-5" />
+      </motion.button>
+
       {/* Main content area */}
       <div className="relative flex-1 flex flex-col">
-        <AnimatePresence mode="wait">
-          {isExpanded && (
-            <motion.button
-              key="minimize-button"
-              initial={{ scale: 0.9 }}
-              animate={{ scale: 1 }}
-              exit={{ scale: 0.9 }}
-              onClick={onExpand}
-              className="hidden sm:flex absolute top-4 right-4 text-white hover:opacity-70 transition-opacity z-10"
-            >
-              <Minimize2 className="h-4 w-4" />
-            </motion.button>
-          )}
-        </AnimatePresence>
-
         <ScrollArea 
           className={`flex-1 ${isExpanded ? 'pt-4' : 'pt-2'} px-4 pb-4`}
           ref={scrollAreaRef}
