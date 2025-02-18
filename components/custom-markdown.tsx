@@ -3,6 +3,7 @@ import { motion } from "framer-motion";
 
 interface CustomMarkdownProps {
 	children: string;
+	isTyping?: boolean;
 }
 
 interface Token {
@@ -10,7 +11,7 @@ interface Token {
 	content: string;
 }
 
-const parseMarkdownLine = (line: string): React.ReactNode => {
+const parseMarkdownLine = (line: string, isTyping: boolean): React.ReactNode => {
 	// Check for a horizontal rule
 	if (/^[-]{3,}$/.test(line.trim())) {
 		return <hr />;
@@ -18,7 +19,7 @@ const parseMarkdownLine = (line: string): React.ReactNode => {
 
 	const tokens: Token[] = [];
 	// Regex for ***text***, **text**, or *text*
-	const regex = /(\*\*\*([^*]+)\*\*\*|\*\*([^*]+)\*\*|\*([^*]+)\*)/g;
+	const regex = /(\*\*\*([^*]+)\*\*\*\)|\*\*([^*]+)\*\*|\*([^*]+)\*)/g;
 	let lastIndex = 0;
 	let match;
 
@@ -41,40 +42,38 @@ const parseMarkdownLine = (line: string): React.ReactNode => {
 		tokens.push({ type: "text", content: line.slice(lastIndex) });
 	}
 
-	return (
-		<p>
-			{tokens.map((token, idx) => {
-				const animatedContent = (
-					<motion.span
-						key={idx}
-						initial={{ opacity: 0 }}
-						animate={{ opacity: 1 }}
-						transition={{ duration: 0.3 }}
-					>
-						{token.content}
-					</motion.span>
-				);
-				switch (token.type) {
-					case "bolditalic":
-						return <strong key={idx}><em>{animatedContent}</em></strong>;
-					case "bold":
-						return <strong key={idx}>{animatedContent}</strong>;
-					case "italic":
-						return <em key={idx}>{animatedContent}</em>;
-					default:
-						return <span key={idx}>{animatedContent}</span>;
-				}
-			})}
-		</p>
-	);
+	const content = tokens.map((token, idx) => {
+		const animatedContent = (
+			<motion.span
+				key={idx}
+				initial={{ opacity: 0 }}
+				animate={{ opacity: 1 }}
+				transition={{ duration: 0.3 }}
+			>
+				{token.content}
+			</motion.span>
+		);
+		switch (token.type) {
+			case "bolditalic":
+				return <strong key={idx}><em>{animatedContent}</em></strong>;
+			case "bold":
+				return <strong key={idx}>{animatedContent}</strong>;
+			case "italic":
+				return <em key={idx}>{animatedContent}</em>;
+			default:
+				return <span key={idx}>{animatedContent}</span>;
+		}
+	});
+
+	return isTyping ? <>{content}</> : <p>{content}</p>;
 };
 
-const CustomMarkdown: React.FC<CustomMarkdownProps> = ({ children }) => {
+const CustomMarkdown: React.FC<CustomMarkdownProps> = ({ children, isTyping }) => {
 	const lines = children.split("\n");
 	return (
 		<>
 			{lines.map((line, idx) => (
-				<React.Fragment key={idx}>{parseMarkdownLine(line)}</React.Fragment>
+				<React.Fragment key={idx}>{parseMarkdownLine(line, !!isTyping)}</React.Fragment>
 			))}
 		</>
 	);

@@ -218,9 +218,10 @@ export default function ChatInterface() {
                       <p className="text-sm">
                         {isTyping && message.role === "assistant" && index === 0 ? (
                           <>
-                            <span className="inline-block w-3 h-3 bg-white rounded-full ml-1 animate-pulse" />
-
-                            <CustomMarkdown>{typingWords.join(" ")}</CustomMarkdown>
+                            <CustomMarkdown isTyping>
+                              {typingWords.join(" ")}
+                            </CustomMarkdown>
+                            <span className="inline-block w-3 h-3 bg-white rounded-full ml-1 animate-pulse"></span>
                           </>
                         ) : (
                           <CustomMarkdown>{message.content}</CustomMarkdown>
