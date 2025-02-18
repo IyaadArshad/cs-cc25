@@ -1,4 +1,4 @@
-import React from "react";
+import React, { JSX } from "react";
 import { motion } from "framer-motion";
 
 interface CustomMarkdownProps {
@@ -11,21 +11,15 @@ interface Token {
 	content: string;
 }
 
-const parseMarkdownLine = (line: string, isTyping: boolean): React.ReactNode => {
-	// Check for a horizontal rule
-	if (/^[-]{3,}$/.test(line.trim())) {
-		return <hr />;
-	}
-
+// New helper to parse inline tokens for any text content.
+const parseInlineTokens = (text: string): React.ReactNode[] => {
 	const tokens: Token[] = [];
-	// Regex for ***text***, **text**, or *text*
 	const regex = /(\*\*\*([^*]+)\*\*\*\)|\*\*([^*]+)\*\*|\*([^*]+)\*)/g;
 	let lastIndex = 0;
 	let match;
-
-	while ((match = regex.exec(line)) !== null) {
+	while ((match = regex.exec(text)) !== null) {
 		if (match.index > lastIndex) {
-			tokens.push({ type: "text", content: line.slice(lastIndex, match.index) });
+			tokens.push({ type: "text", content: text.slice(lastIndex, match.index) });
 		}
 		if (match[1]) {
 			if (match[2] !== undefined) {
@@ -38,11 +32,11 @@ const parseMarkdownLine = (line: string, isTyping: boolean): React.ReactNode => 
 		}
 		lastIndex = regex.lastIndex;
 	}
-	if (lastIndex < line.length) {
-		tokens.push({ type: "text", content: line.slice(lastIndex) });
+	if (lastIndex < text.length) {
+		tokens.push({ type: "text", content: text.slice(lastIndex) });
 	}
 
-	const content = tokens.map((token, idx) => {
+	return tokens.map((token, idx) => {
 		const animatedContent = (
 			<motion.span
 				key={idx}
@@ -64,7 +58,32 @@ const parseMarkdownLine = (line: string, isTyping: boolean): React.ReactNode => 
 				return <span key={idx}>{animatedContent}</span>;
 		}
 	});
+};
 
+const parseMarkdownLine = (line: string, isTyping: boolean): React.ReactNode => {
+	// Check for a horizontal rule
+	if (/^[-]{3,}$/.test(line.trim())) {
+		return <hr />;
+	}
+
+	// Handle headings (# up to ######)
+	const headingMatch = line.match(/^(#{1,6})\s+(.*)/);
+	if (headingMatch) {
+		const level = headingMatch[1].length;
+		const content = parseInlineTokens(headingMatch[2]);
+		const HeadingTag = `h${level}` as keyof JSX.IntrinsicElements;
+		return React.createElement(HeadingTag, null, content);
+	}
+
+	// Handle bullet points (- or *) at beginning of line
+	const bulletMatch = line.match(/^\s*([-*])\s+(.*)/);
+	if (bulletMatch) {
+		const content = parseInlineTokens(bulletMatch[2]);
+		return <li>{content}</li>;
+	}
+
+	// Default inline tokenization for normal lines
+	const content = parseInlineTokens(line);
 	return isTyping ? <>{content}</> : <p>{content}</p>;
 };
 
@@ -73,7 +92,9 @@ const CustomMarkdown: React.FC<CustomMarkdownProps> = ({ children, isTyping }) =
 	return (
 		<>
 			{lines.map((line, idx) => (
-				<React.Fragment key={idx}>{parseMarkdownLine(line, !!isTyping)}</React.Fragment>
+				<React.Fragment key={idx}>
+					{parseMarkdownLine(line, !!isTyping)}
+				</React.Fragment>
 			))}
 		</>
 	);
