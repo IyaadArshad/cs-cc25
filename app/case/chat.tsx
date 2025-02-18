@@ -8,6 +8,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Send, Sparkles } from "lucide-react";
 import { useEffect, useState, useRef } from "react";
+import CustomMarkdown from "@/components/custom-markdown";
 
 interface Message {
   role: "user" | "assistant";
@@ -18,18 +19,16 @@ interface Message {
 const initialMessage: Message = {
   role: "assistant",
   content:
-    "Welcome to Abu Dhabi! I'm here to assist you with your settlement process. Whether you need information about visas, housing, schools, or any other aspect of settling in, I'm here to help. What would you like to know about first? Feel free to ask about the visa process, finding accommodation, enrolling in schools, healthcare options, or any other topics related to your move to Abu Dhabi.",
+    "Welcome to **Abu** Dhabi! I'm here to assist you with your settlement process. Whether you need information about visas, housing, schools, or any other aspect of settling in, I'm here to help. What would you like to know about first? Feel free to ask about the visa process, finding accommodation, enrolling in schools, healthcare options, or any other topics related to your move to Abu Dhabi.",
   timestamp: new Date().toLocaleTimeString(),
 };
 
 export default function ChatInterface() {
-  const [messages, setMessages] = useState<Message[]>([
-    {
-      role: "assistant",
-      content: "",
-      timestamp: new Date().toLocaleTimeString(),
-    },
-  ]);
+  const [messages, setMessages] = useState<Message[]>([{
+    role: "assistant",
+    content: "",
+    timestamp: new Date().toLocaleTimeString(),
+  }]);
   const [typingWords, setTypingWords] = useState<string[]>([]);
   const [input, setInput] = useState("");
   const [isTyping, setIsTyping] = useState(true);
@@ -65,8 +64,7 @@ export default function ChatInterface() {
             additionalCharCount = 0; // Reset additional character count
           } else {
             additionalCharCount += word.length + 1;
-            if (additionalCharCount >= 50) {
-              // Force pause if no punctuation found within next 50 characters
+            if (additionalCharCount >= 50) { // Force pause if no punctuation found within next 50 characters
               delay = 1000; // Pause for 1 second
               charCount = 0; // Reset character count after pause
               additionalCharCount = 0; // Reset additional character count
@@ -76,7 +74,7 @@ export default function ChatInterface() {
 
         setTimeout(typeWord, delay);
       } else {
-        setMessages((prev) => {
+        setMessages(prev => {
           const updated = [...prev];
           updated[0] = { ...updated[0], content: typedWords.join(" ") };
           return updated;
@@ -168,16 +166,10 @@ export default function ChatInterface() {
           <Sparkles className="ml-2 h-6 w-6 [&>path]:fill-transparent [&>path]:stroke-[url(#sparkleGradient)]" />
           <svg width="0" height="0">
             <defs>
-              <linearGradient
-                id="sparkleGradient"
-                x1="0%"
-                y1="0%"
-                x2="100%"
-                y2="100%"
-              >
-                <stop offset="0%" stopColor="#fff" />
-                <stop offset="50%" stopColor="#e0f0ff" />
-                <stop offset="100%" stopColor="#ffe0f0" />
+              <linearGradient id="sparkleGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+          <stop offset="0%" stopColor="#fff" />
+          <stop offset="50%" stopColor="#e0f0ff" />
+          <stop offset="100%" stopColor="#ffe0f0" />
               </linearGradient>
             </defs>
           </svg>
@@ -224,9 +216,7 @@ export default function ChatInterface() {
                       }`}
                     >
                       <p className="text-sm">
-                        {isTyping &&
-                        message.role === "assistant" &&
-                        index === 0 ? (
+                        {isTyping && message.role === "assistant" && index === 0 ? (
                           <>
                             {typingWords.map((word, i) => (
                               <motion.span
@@ -235,14 +225,13 @@ export default function ChatInterface() {
                                 animate={{ opacity: 1 }}
                                 transition={{ duration: 0.3 }}
                               >
-                                {word}
-                                {i < typingWords.length - 1 ? " " : ""}
+                                {word}{i < typingWords.length - 1 ? " " : ""}
                               </motion.span>
                             ))}
                             <span className="inline-block w-3 h-3 bg-white rounded-full ml-1 animate-pulse" />
                           </>
                         ) : (
-                          message.content
+                          <CustomMarkdown>{message.content}</CustomMarkdown>
                         )}
                       </p>
                     </div>
@@ -262,14 +251,14 @@ export default function ChatInterface() {
             placeholder="Type your message..."
             className="flex-1 bg-gray-800/60 chat-input focus:cursor-text border-white/20"
           />
-          <Button
+            <Button
             size="icon"
             type="submit"
             className="border-white/20 bg-[#2563eb]/90 hover:bg-[#2156c9]/80"
-          >
+            >
             <Send className="h-4 text-white w-4" />
             <span className="sr-only">Send message</span>
-          </Button>
+            </Button>
         </form>
       </div>
     </div>
