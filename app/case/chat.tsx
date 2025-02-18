@@ -97,15 +97,25 @@ const headerVariants = {
 // Define variants for the toggle button in each state
 const toggleButtonVariants = {
   minimized: { position: "relative" as "relative" },
-  expanded: { position: "absolute" as "absolute", top: 10, right: 10, scale: 0.8 },
+  expanded: {
+    position: "absolute" as "absolute",
+    top: 10,
+    right: 10,
+    scale: 0.8,
+  },
 };
 
-export default function ChatInterface({ onExpand, isExpanded }: ChatInterfaceProps) {
-  const [messages, setMessages] = useState<Message[]>([{
-    role: "assistant",
-    content: "",
-    timestamp: new Date().toLocaleTimeString(),
-  }]);
+export default function ChatInterface({
+  onExpand,
+  isExpanded,
+}: ChatInterfaceProps) {
+  const [messages, setMessages] = useState<Message[]>([
+    {
+      role: "assistant",
+      content: "",
+      timestamp: new Date().toLocaleTimeString(),
+    },
+  ]);
   const [typingWords, setTypingWords] = useState<string[]>([]);
   const [input, setInput] = useState("");
   const [isTyping, setIsTyping] = useState(true);
@@ -141,7 +151,8 @@ export default function ChatInterface({ onExpand, isExpanded }: ChatInterfacePro
             additionalCharCount = 0; // Reset additional character count
           } else {
             additionalCharCount += word.length + 1;
-            if (additionalCharCount >= 50) { // Force pause if no punctuation found within next 50 characters
+            if (additionalCharCount >= 50) {
+              // Force pause if no punctuation found within next 50 characters
               delay = 1000; // Pause for 1 second
               charCount = 0; // Reset character count after pause
               additionalCharCount = 0; // Reset additional character count
@@ -151,7 +162,7 @@ export default function ChatInterface({ onExpand, isExpanded }: ChatInterfacePro
 
         setTimeout(typeWord, delay);
       } else {
-        setMessages(prev => {
+        setMessages((prev) => {
           const updated = [...prev];
           updated[0] = { ...updated[0], content: typedWords.join(" ") };
           return updated;
@@ -250,7 +261,13 @@ export default function ChatInterface({ onExpand, isExpanded }: ChatInterfacePro
               <Sparkles className="ml-2 h-6 w-6 [&>path]:fill-transparent [&>path]:stroke-[url(#sparkleGradient)]" />
               <svg width="0" height="0">
                 <defs>
-                  <linearGradient id="sparkleGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                  <linearGradient
+                    id="sparkleGradient"
+                    x1="0%"
+                    y1="0%"
+                    x2="100%"
+                    y2="100%"
+                  >
                     <stop offset="0%" stopColor="#fff" />
                     <stop offset="50%" stopColor="#e0f0ff" />
                     <stop offset="100%" stopColor="#ffe0f0" />
@@ -290,11 +307,15 @@ export default function ChatInterface({ onExpand, isExpanded }: ChatInterfacePro
 
       {/* Main content area */}
       <div className="relative flex-1 flex flex-col">
-        <ScrollArea 
-          className={`flex-1 ${isExpanded ? 'pt-4' : 'pt-2'} px-4 pb-4`}
+        <ScrollArea
+          className={`flex-1 ${isExpanded ? "pt-4" : "pt-2"} px-4 pb-4`}
           ref={scrollAreaRef}
         >
-          <div className={`space-y-4 ${!isExpanded ? 'max-w-[600px] mx-auto' : ''}`}>
+          <div
+            className={`space-y-4 ${
+              !isExpanded ? "max-w-[600px] mx-auto" : ""
+            }`}
+          >
             <AnimatePresence mode="popLayout">
               {messages.map((message, index) => (
                 <motion.div
@@ -308,7 +329,11 @@ export default function ChatInterface({ onExpand, isExpanded }: ChatInterfacePro
                 >
                   <div
                     className={`flex items-start gap-2 ${
-                      !isExpanded ? 'max-w-[80%]' : message.role === "assistant" ? 'max-w-[85%] pr-12' : 'max-w-[75%]'
+                      !isExpanded
+                        ? "max-w-[80%]"
+                        : message.role === "assistant"
+                        ? "max-w-[85%] pr-12"
+                        : "max-w-[75%]"
                     } ${
                       message.role === "user" ? "flex-row-reverse" : "flex-row"
                     }`}
@@ -335,7 +360,9 @@ export default function ChatInterface({ onExpand, isExpanded }: ChatInterfacePro
                         }`}
                       >
                         <div className="text-sm">
-                          {isTyping && message.role === "assistant" && index === 0 ? (
+                          {isTyping &&
+                          message.role === "assistant" &&
+                          index === 0 ? (
                             <>
                               <CustomMarkdown isTyping>
                                 {typingWords.join(" ")}
