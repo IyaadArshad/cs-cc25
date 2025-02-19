@@ -6,7 +6,7 @@ import { Avatar, AvatarImage } from "@/components/ui/avatar";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Send, Sparkles, Maximize2, Minimize2, Loader2 } from "lucide-react";
+import { Send, Maximize2, Minimize2, Loader2 } from "lucide-react";
 import { useEffect, useState, useRef } from "react";
 import type { JSX } from "react";
 
@@ -512,7 +512,6 @@ export default function ChatInterface({
         <div className="absolute top-0 left-0 p-4">
           <h1 className="text-2xl font-bold text-white flex items-center">
             Mutasil AI Chat
-            <Sparkles className="ml-2 h-6 w-6 [&>path]:fill-transparent [&>path]:stroke-[url(#sparkleGradient)]" />
             <svg width="0" height="0">
               <defs>
                 <linearGradient id="sparkleGradient" x1="0%" y1="0%" x2="100%">
@@ -525,7 +524,7 @@ export default function ChatInterface({
           </h1>
         </div>
         <motion.div
-          className="flex flex-col items-center justify-center h-full space-y-8 p-4"
+          className="flex flex-col items-center justify-center h-full space-y-4 p-4"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
@@ -547,14 +546,12 @@ export default function ChatInterface({
             initial={{ y: 20, opacity: 0 }}
             animate={{ y: 0, opacity: 1 }}
             transition={{ delay: 0.4 }}
-            className="text-center space-y-4 w-full max-w-md"
+            className="text-center space-y-3 w-full max-w-md"
           >
             <h1 className="text-3xl font-bold text-white">
               What can I help with?
             </h1>
-            <div
-              className="p-4 rounded-lg"
-            >
+            <div className="p-4 rounded-lg">
               <form
                 className="flex gap-2"
                 onSubmit={(e) => {
@@ -595,7 +592,6 @@ export default function ChatInterface({
           <div className="flex items-center">
             <h1 className="text-2xl font-bold text-white flex items-center">
               Mutasil AI Chat
-              <Sparkles className="ml-2 h-6 w-6 [&>path]:fill-transparent [&>path]:stroke-[url(#sparkleGradient)]" />
               <svg width="0" height="0">
                 <defs>
                   <linearGradient
