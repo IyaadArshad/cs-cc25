@@ -479,48 +479,65 @@ export default function ChatInterface({ onExpand, isExpanded }: ChatInterfacePro
 
   if (showWelcome) {
     return (
-      <motion.div
-        className="flex flex-col items-center justify-center h-full space-y-8 p-4"
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        exit={{ opacity: 0 }}
-      >
+      <>
+        <div className="absolute top-0 left-0 p-4">
+          <h1 className="text-2xl font-bold text-white flex items-center">
+            Mutasil AI Chat
+            <Sparkles className="ml-2 h-6 w-6 [&>path]:fill-transparent [&>path]:stroke-[url(#sparkleGradient)]" />
+            <svg width="0" height="0">
+              <defs>
+                <linearGradient id="sparkleGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                  <stop offset="0%" stopColor="#fff" />
+                  <stop offset="50%" stopColor="#e0f0ff" />
+                  <stop offset="100%" stopColor="#ffe0f0" />
+                </linearGradient>
+              </defs>
+            </svg>
+          </h1>
+        </div>
         <motion.div
-          initial={{ scale: 0.8, opacity: 0 }}
-          animate={{ scale: 1, opacity: 1 }}
-          transition={{ delay: 0.2 }}
-          className="relative"
+          className="flex flex-col items-center justify-center h-full space-y-8 p-4"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          exit={{ opacity: 0 }}
         >
-          <div className="w-24 h-24 rounded-full overflow-hidden p-1">
-            <Avatar className="w-full h-full">
-              <AvatarImage src="http://localhost:3000/images/assistant.png" />
-            </Avatar>
-          </div>
-        </motion.div>
-
-        <motion.div
-          initial={{ y: 20, opacity: 0 }}
-          animate={{ y: 0, opacity: 1 }}
-          transition={{ delay: 0.4 }}
-          className="text-center space-y-4"
-        >
-          <h1 className="text-3xl font-bold text-white">What can I help with?</h1>
-          <div
-            className="max-w-md mx-auto p-4 rounded-lg bg-gradient-to-br from-[#2563eb] to-[#4C1D95] text-white shadow-lg"
-            onClick={startChat}
+          <motion.div
+            initial={{ scale: 0.8, opacity: 0 }}
+            animate={{ scale: 1, opacity: 1 }}
+            transition={{ delay: 0.2 }}
+            className="relative"
           >
-            <p className="text-sm">Hi! I'm your personal assistant for settling in Abu Dhabi. I can help you with:</p>
-            <ul className="mt-2 space-y-1 text-sm">
-              <li>• Visa processes and documentation</li>
-              <li>• Finding accommodation</li>
-              <li>• School enrollment</li>
-              <li>• Healthcare options</li>
-              <li>• Local transportation</li>
-            </ul>
-            <p className="mt-3 text-sm font-medium">Click to start chatting →</p>
-          </div>
+            <div className="w-24 h-24 rounded-full overflow-hidden p-1">
+              <Avatar className="w-full h-full">
+                <AvatarImage src="http://localhost:3000/images/assistant.png" />
+              </Avatar>
+            </div>
+          </motion.div>
+
+          <motion.div
+            initial={{ y: 20, opacity: 0 }}
+            animate={{ y: 0, opacity: 1 }}
+            transition={{ delay: 0.4 }}
+            className="text-center space-y-4"
+          >
+            <h1 className="text-3xl font-bold text-white">What can I help with?</h1>
+            <div
+              className="max-w-md mx-auto p-4 rounded-lg bg-gradient-to-br from-[#2563eb] to-[#4C1D95] text-white shadow-lg"
+              onClick={startChat}
+            >
+              <p className="text-sm">Hi! I'm your personal assistant for settling in Abu Dhabi. I can help you with:</p>
+              <ul className="mt-2 space-y-1 text-sm">
+                <li>• Visa processes and documentation</li>
+                <li>• Finding accommodation</li>
+                <li>• School enrollment</li>
+                <li>• Healthcare options</li>
+                <li>• Local transportation</li>
+              </ul>
+              <p className="mt-3 text-sm font-medium">Click to start chatting →</p>
+            </div>
+          </motion.div>
         </motion.div>
-      </motion.div>
+      </>
     )
   }
 
