@@ -1,159 +1,145 @@
-"use client";
+"use client"
 
-import React from "react";
-import { motion, AnimatePresence } from "framer-motion";
-import { Avatar, AvatarImage } from "@/components/ui/avatar";
-import { ScrollArea } from "@/components/ui/scroll-area";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Send, Sparkles, Maximize2, Minimize2, Loader2 } from "lucide-react";
-import { useEffect, useState, useRef } from "react";
-import { JSX } from "react";
+import React from "react"
+import { motion, AnimatePresence } from "framer-motion"
+import { Avatar, AvatarImage } from "@/components/ui/avatar"
+import { ScrollArea } from "@/components/ui/scroll-area"
+import { Button } from "@/components/ui/button"
+import { Input } from "@/components/ui/input"
+import { Send, Sparkles, Maximize2, Minimize2, Loader2 } from "lucide-react"
+import { useEffect, useState, useRef } from "react"
+import type { JSX } from "react"
 
 interface CustomMarkdownProps {
-  children: string;
-  isTyping?: boolean;
+  children: string
+  isTyping?: boolean
 }
 
 interface Token {
-  type: "text" | "bold" | "italic" | "bolditalic";
-  content: string;
+  type: "text" | "bold" | "italic" | "bolditalic"
+  content: string
 }
 
 const parseInlineTokens = (text: string): React.ReactNode[] => {
-  const tokens: Token[] = [];
-  const regex = /(\*\*\*([^*]+)\*\*\*\)|\*\*([^*]+)\*\*|\*([^*]+)\*)/g;
-  let lastIndex = 0;
-  let match;
+  const tokens: Token[] = []
+  const regex = /(\*\*\*([^*]+)\*\*\*\)|\*\*([^*]+)\*\*|\*([^*]+)\*)/g
+  let lastIndex = 0
+  let match
   while ((match = regex.exec(text)) !== null) {
     if (match.index > lastIndex) {
       tokens.push({
         type: "text",
         content: text.slice(lastIndex, match.index),
-      });
+      })
     }
     if (match[1]) {
       if (match[2] !== undefined) {
-        tokens.push({ type: "bolditalic", content: match[2] });
+        tokens.push({ type: "bolditalic", content: match[2] })
       } else if (match[3] !== undefined) {
-        tokens.push({ type: "bold", content: match[3] });
+        tokens.push({ type: "bold", content: match[3] })
       } else if (match[4] !== undefined) {
-        tokens.push({ type: "italic", content: match[4] });
+        tokens.push({ type: "italic", content: match[4] })
       }
     }
-    lastIndex = regex.lastIndex;
+    lastIndex = regex.lastIndex
   }
   if (lastIndex < text.length) {
-    tokens.push({ type: "text", content: text.slice(lastIndex) });
+    tokens.push({ type: "text", content: text.slice(lastIndex) })
   }
 
   return tokens.map((token, idx) => {
     const animatedContent = (
-      <motion.span
-        key={idx}
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ duration: 0.3 }}
-      >
+      <motion.span key={idx} initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 0.3 }}>
         {token.content}
       </motion.span>
-    );
+    )
     switch (token.type) {
       case "bolditalic":
         return (
           <strong key={idx}>
             <em>{animatedContent}</em>
           </strong>
-        );
+        )
       case "bold":
-        return <strong key={idx}>{animatedContent}</strong>;
+        return <strong key={idx}>{animatedContent}</strong>
       case "italic":
-        return <em key={idx}>{animatedContent}</em>;
+        return <em key={idx}>{animatedContent}</em>
       default:
-        return <span key={idx}>{animatedContent}</span>;
+        return <span key={idx}>{animatedContent}</span>
     }
-  });
-};
+  })
+}
 
-const parseMarkdownBlocks = (
-  text: string,
-  isTyping: boolean
-): React.ReactNode[] => {
-  const lines = text.split("\n");
-  const elements: React.ReactNode[] = [];
-  let bulletGroup: React.ReactNode[] = [];
-  let numberGroup: React.ReactNode[] = [];
-  let tableGroup: string[] = [];
-  let codeBlock: string[] = [];
-  let inCodeBlock = false;
-  let codeLang: string | null = null;
-  let quoteGroup: React.ReactNode[] = [];
+const parseMarkdownBlocks = (text: string, isTyping: boolean): React.ReactNode[] => {
+  const lines = text.split("\n")
+  const elements: React.ReactNode[] = []
+  let bulletGroup: React.ReactNode[] = []
+  let numberGroup: React.ReactNode[] = []
+  let tableGroup: string[] = []
+  let codeBlock: string[] = []
+  let inCodeBlock = false
+  let codeLang: string | null = null
+  let quoteGroup: React.ReactNode[] = []
 
   for (let i = 0; i < lines.length; i++) {
-    let line = lines[i];
+    const line = lines[i]
 
-    // Code block handling (fenced with ```)
+    // Code block handling (fenced with \`\`\`)
     if (inCodeBlock) {
       if (line.startsWith("```")) {
         elements.push(
           <pre key={`code-${i}`} className="bg-gray-800 text-white p-2 rounded">
             <code>{codeBlock.join("\n")}</code>
-          </pre>
-        );
-        inCodeBlock = false;
-        codeBlock = [];
-        codeLang = null;
+          </pre>,
+        )
+        inCodeBlock = false
+        codeBlock = []
+        codeLang = null
       } else {
-        codeBlock.push(line);
+        codeBlock.push(line)
       }
-      continue;
+      continue
     }
     if (line.startsWith("```")) {
-      inCodeBlock = true;
-      codeLang = line.replace("```", "").trim();
-      continue;
+      inCodeBlock = true
+      codeLang = line.replace("```", "").trim()
+      continue
     }
 
     // Math block handling (fenced with $$)
     if (line.startsWith("$$")) {
-      let mathContent: string[] = [];
-      let j = i + 1;
+      const mathContent: string[] = []
+      let j = i + 1
       while (j < lines.length && !lines[j].startsWith("$$")) {
-        mathContent.push(lines[j]);
-        j++;
+        mathContent.push(lines[j])
+        j++
       }
       elements.push(
-        <div
-          key={`math-${i}`}
-          className="math-block bg-gray-100 p-2 rounded my-2"
-        >
+        <div key={`math-${i}`} className="math-block bg-gray-100 p-2 rounded my-2">
           {`$$\n${mathContent.join("\n")}\n$$`}
-        </div>
-      );
-      i = j; // Skip processed lines
-      continue;
+        </div>,
+      )
+      i = j // Skip processed lines
+      continue
     }
 
     // Table handling: group rows that start with |
     if (line.trim().startsWith("|")) {
-      tableGroup.push(line);
+      tableGroup.push(line)
       if (i === lines.length - 1 || !lines[i + 1].trim().startsWith("|")) {
         // Process tableGroup assuming first row header, second separator, rest body
         const header = tableGroup[0]
           .split("|")
           .map((s) => s.trim())
-          .filter(Boolean);
+          .filter(Boolean)
         const bodyRows = tableGroup.slice(2).map((row) =>
           row
             .split("|")
             .map((s) => s.trim())
-            .filter(Boolean)
-        );
+            .filter(Boolean),
+        )
         elements.push(
-          <table
-            key={`table-${i}`}
-            className="table-auto border-collapse border border-gray-300 my-2"
-          >
+          <table key={`table-${i}`} className="table-auto border-collapse border border-gray-300 my-2">
             <thead>
               <tr>
                 {header.map((cell, idx) => (
@@ -174,67 +160,64 @@ const parseMarkdownBlocks = (
                 </tr>
               ))}
             </tbody>
-          </table>
-        );
-        tableGroup = [];
+          </table>,
+        )
+        tableGroup = []
       }
-      continue;
+      continue
     }
 
     // Bullet list handling
-    const bulletMatch = line.match(/^\s*([-*])\s+(.*)/);
+    const bulletMatch = line.match(/^\s*([-*])\s+(.*)/)
     if (bulletMatch) {
-      bulletGroup.push(<li key={i}>{parseInlineTokens(bulletMatch[2])}</li>);
+      bulletGroup.push(<li key={i}>{parseInlineTokens(bulletMatch[2])}</li>)
       if (i === lines.length - 1 || !lines[i + 1].match(/^\s*([-*])\s+(.*)/)) {
         elements.push(
           <ul key={`ul-${i}`} className="list-disc ml-5 my-2">
             {bulletGroup}
-          </ul>
-        );
-        bulletGroup = [];
+          </ul>,
+        )
+        bulletGroup = []
       }
-      continue;
+      continue
     }
 
     // Numbered list handling
-    const numberMatch = line.match(/^\s*\d+\.\s+(.*)/);
+    const numberMatch = line.match(/^\s*\d+\.\s+(.*)/)
     if (numberMatch) {
-      numberGroup.push(<li key={i}>{parseInlineTokens(numberMatch[1])}</li>);
+      numberGroup.push(<li key={i}>{parseInlineTokens(numberMatch[1])}</li>)
       if (i === lines.length - 1 || !lines[i + 1].match(/^\s*\d+\.\s+(.*)/)) {
         elements.push(
           <ol key={`ol-${i}`} className="list-decimal ml-5 my-2">
             {numberGroup}
-          </ol>
-        );
-        numberGroup = [];
+          </ol>,
+        )
+        numberGroup = []
       }
-      continue;
+      continue
     }
 
     // Blockquote handling
-    const quoteMatch = line.match(/^>\s+(.*)/);
+    const quoteMatch = line.match(/^>\s+(.*)/)
     if (quoteMatch) {
-      quoteGroup.push(<p key={i}>{parseInlineTokens(quoteMatch[1])}</p>);
+      quoteGroup.push(<p key={i}>{parseInlineTokens(quoteMatch[1])}</p>)
       if (i === lines.length - 1 || !lines[i + 1].match(/^>\s+(.*)/)) {
         elements.push(
-          <blockquote
-            key={`quote-${i}`}
-            className="border-l-4 pl-4 italic text-gray-700 my-2"
-          >
+          <blockquote key={`quote-${i}`} className="border-l-4 pl-4 italic text-gray-700 my-2">
             {quoteGroup}
-          </blockquote>
-        );
-        quoteGroup = [];
+          </blockquote>,
+        )
+        quoteGroup = []
       }
-      continue;
+      continue
     }
 
     // Headings handling
-    const headingMatch = line.match(/^(#{1,6})\s+(.*)/);
+    const headingMatch = line.match(/^(#{1,6})\s+(.*)/)
     if (headingMatch) {
-      const level = headingMatch[1].length;
-      const content = parseInlineTokens(headingMatch[2]);
-      const HeadingTag = `h${level}` as keyof JSX.IntrinsicElements;
+      const level = headingMatch[1].length
+      const content = parseInlineTokens(headingMatch[2])
+      const HeadingTag = `h${level}` as keyof JSX.IntrinsicElements
       const classes: { [key: number]: string } = {
         1: "text-4xl font-bold",
         2: "text-3xl font-bold",
@@ -242,40 +225,31 @@ const parseMarkdownBlocks = (
         4: "text-xl font-semibold",
         5: "text-lg font-semibold",
         6: "text-base font-medium",
-      };
-      elements.push(
-        React.createElement(
-          HeadingTag,
-          { key: i, className: classes[level] },
-          content
-        )
-      );
-      continue;
+      }
+      elements.push(React.createElement(HeadingTag, { key: i, className: classes[level] }, content))
+      continue
     }
 
     // Regular paragraph or empty line
     if (line.trim() === "") {
-      elements.push(<br key={i} />);
+      elements.push(<br key={i} />)
     } else {
-      elements.push(<p key={i}>{parseInlineTokens(line)}</p>);
+      elements.push(<p key={i}>{parseInlineTokens(line)}</p>)
     }
   }
 
-  return elements;
-};
+  return elements
+}
 
-const CustomMarkdown: React.FC<CustomMarkdownProps> = ({
-  children,
-  isTyping,
-}) => {
-  const elements = parseMarkdownBlocks(children, !!isTyping);
-  return <>{elements}</>;
-};
+const CustomMarkdown: React.FC<CustomMarkdownProps> = ({ children, isTyping }) => {
+  const elements = parseMarkdownBlocks(children, !!isTyping)
+  return <>{elements}</>
+}
 
 interface Message {
-  role: "user" | "assistant";
-  content: string;
-  timestamp: string;
+  role: "user" | "assistant"
+  content: string
+  timestamp: string
 }
 
 const initialMessage: Message = {
@@ -344,107 +318,110 @@ const initialMessage: Message = {
     "```\n" +
     "Welcome to **Abu Dhabi! I'm here to assist you with** your settlement process. Whether you need information about visas, housing, schools, or any other aspect of settling in, I'm here to help. What would you like to know about first? Feel free to ask about the visa process, finding accommodation, enrolling in schools, healthcare options, or any other topics related to your move to Abu Dhabi.",
   timestamp: new Date().toLocaleTimeString(),
-};
-
-interface ChatInterfaceProps {
-  onExpand: () => void;
-  isExpanded: boolean;
 }
 
-export default function ChatInterface({
-  onExpand,
-  isExpanded,
-}: ChatInterfaceProps) {
-  const [messages, setMessages] = useState<Message[]>([
-    {
-      role: "assistant",
-      content: "",
-      timestamp: new Date().toLocaleTimeString(),
-    },
-  ]);
-  const [typingWords, setTypingWords] = useState<string[]>([]);
-  const [input, setInput] = useState("");
-  const [isTyping, setIsTyping] = useState(true);
-  const scrollAreaRef = useRef<HTMLDivElement>(null);
-  const hasRun = useRef(false);
-  const [isContentLoading, setIsContentLoading] = useState(true);
+interface ChatInterfaceProps {
+  onExpand: () => void
+  isExpanded: boolean
+}
+
+export default function ChatInterface({ onExpand, isExpanded }: ChatInterfaceProps) {
+  const [showWelcome, setShowWelcome] = useState(true)
+  const [messages, setMessages] = useState<Message[]>([])
+  const [typingWords, setTypingWords] = useState<string[]>([])
+  const [input, setInput] = useState("")
+  const [isTyping, setIsTyping] = useState(false)
+  const scrollAreaRef = useRef<HTMLDivElement>(null)
+  const hasRun = useRef(false)
+  const [isContentLoading, setIsContentLoading] = useState(true)
 
   useEffect(() => {
-    setIsContentLoading(true);
-    const timer = setTimeout(() => setIsContentLoading(false), 2000);
-    return () => clearTimeout(timer);
-  }, [isExpanded]);
+    setIsContentLoading(true)
+    const timer = setTimeout(() => setIsContentLoading(false), 2000)
+    return () => clearTimeout(timer)
+  }, [isExpanded]) //Corrected dependency
+
+  const startChat = async () => {
+    setShowWelcome(false)
+    setIsTyping(true)
+    setMessages([
+      {
+        role: "assistant",
+        content: "",
+        timestamp: new Date().toLocaleTimeString(),
+      },
+    ])
+    hasRun.current = false
+  }
 
   useEffect(() => {
-    if (hasRun.current) return;
-    hasRun.current = true;
+    if (hasRun.current || showWelcome) return
+    hasRun.current = true
 
-    const words = initialMessage.content.split(" ");
-    let index = 0;
-    let typedWords: string[] = [];
-    let charCount = 0;
-    let additionalCharCount = 0;
+    const words = initialMessage.content.split(" ")
+    let index = 0
+    const typedWords: string[] = []
+    let charCount = 0
+    let additionalCharCount = 0
 
     const typeWord = () => {
       if (index < words.length) {
-        const word = words[index];
-        typedWords.push(word);
-        setTypingWords([...typedWords]);
-        charCount += word.length + 1; // +1 for the space
+        const word = words[index]
+        typedWords.push(word)
+        setTypingWords([...typedWords])
+        charCount += word.length + 1
 
-        index++;
-        let delay = 100; // Adjust speed here
+        index++
+        let delay = 100
 
-        // Check if we should pause
         if (charCount >= 149) {
-          const lastWord = typedWords[typedWords.length - 1];
+          const lastWord = typedWords[typedWords.length - 1]
           if (/[.,!?;:]/.test(lastWord.slice(-1))) {
-            delay = 1000; // Pause for 1 second
-            charCount = 0; // Reset character count after pause
-            additionalCharCount = 0; // Reset additional character count
+            delay = 1000
+            charCount = 0
+            additionalCharCount = 0
           } else {
-            additionalCharCount += word.length + 1;
+            additionalCharCount += word.length + 1
             if (additionalCharCount >= 50) {
-              // Force pause if no punctuation found within next 50 characters
-              delay = 1000; // Pause for 1 second
-              charCount = 0; // Reset character count after pause
-              additionalCharCount = 0; // Reset additional character count
+              delay = 1000
+              charCount = 0
+              additionalCharCount = 0
             }
           }
         }
 
-        setTimeout(typeWord, delay);
+        setTimeout(typeWord, delay)
       } else {
         setMessages((prev) => {
-          const updated = [...prev];
-          updated[0] = { ...updated[0], content: typedWords.join(" ") };
-          return updated;
-        });
-        setTimeout(() => setIsTyping(false), 1000); // Remove cursor after 1 second
+          const updated = [...prev]
+          updated[0] = { ...updated[0], content: typedWords.join(" ") }
+          return updated
+        })
+        setTimeout(() => setIsTyping(false), 1000)
       }
-    };
+    }
 
-    typeWord();
-  }, []);
+    typeWord()
+  }, [showWelcome])
 
   useEffect(() => {
     if (scrollAreaRef.current) {
-      scrollAreaRef.current.scrollTop = scrollAreaRef.current.scrollHeight;
+      scrollAreaRef.current.scrollTop = scrollAreaRef.current.scrollHeight
     }
-  }, [scrollAreaRef]);
+  }, [scrollAreaRef.current]) //Corrected dependency
 
   const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    if (!input.trim()) return;
+    e.preventDefault()
+    if (!input.trim()) return
 
     const newUserMessage: Message = {
       role: "user",
       content: input,
       timestamp: new Date().toLocaleTimeString(),
-    };
+    }
 
-    setMessages((prev) => [...prev, newUserMessage]);
-    setInput("");
+    setMessages((prev) => [...prev, newUserMessage])
+    setInput("")
 
     const payload = {
       messages: [...messages, newUserMessage].map(({ role, content }) => ({
@@ -466,7 +443,7 @@ export default function ChatInterface({
           bank: "bank-confirmed",
         },
       },
-    };
+    }
 
     try {
       const response = await fetch("/api/v1/chat", {
@@ -475,11 +452,11 @@ export default function ChatInterface({
           "Content-Type": "application/json",
         },
         body: JSON.stringify(payload),
-      });
+      })
 
-      if (!response.ok) throw new Error("Failed to send message");
+      if (!response.ok) throw new Error("Failed to send message")
 
-      const data = await response.json();
+      const data = await response.json()
       if (data.message) {
         setMessages((prev) => [
           ...prev,
@@ -488,17 +465,64 @@ export default function ChatInterface({
             content: data.message,
             timestamp: new Date().toLocaleTimeString(),
           },
-        ]);
+        ])
       }
     } catch (error) {
-      console.error("Error sending message:", error);
+      console.error("Error sending message:", error)
     }
-  };
+  }
 
   const handleExpand = () => {
-    scrollAreaRef.current?.scrollTo(0, 0); // Reset scroll position before transition
-    onExpand();
-  };
+    scrollAreaRef.current?.scrollTo(0, 0)
+    onExpand()
+  }
+
+  if (showWelcome) {
+    return (
+      <motion.div
+        className="flex flex-col items-center justify-center h-full space-y-8 p-4"
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        exit={{ opacity: 0 }}
+      >
+        <motion.div
+          initial={{ scale: 0.8, opacity: 0 }}
+          animate={{ scale: 1, opacity: 1 }}
+          transition={{ delay: 0.2 }}
+          className="relative"
+        >
+          <div className="w-24 h-24 rounded-full overflow-hidden p-1">
+            <Avatar className="w-full h-full">
+              <AvatarImage src="http://localhost:3000/images/assistant.png" />
+            </Avatar>
+          </div>
+        </motion.div>
+
+        <motion.div
+          initial={{ y: 20, opacity: 0 }}
+          animate={{ y: 0, opacity: 1 }}
+          transition={{ delay: 0.4 }}
+          className="text-center space-y-4"
+        >
+          <h1 className="text-3xl font-bold text-white">What can I help with?</h1>
+          <div
+            className="max-w-md mx-auto p-4 rounded-lg bg-gradient-to-br from-[#2563eb] to-[#4C1D95] text-white shadow-lg"
+            onClick={startChat}
+          >
+            <p className="text-sm">Hi! I'm your personal assistant for settling in Abu Dhabi. I can help you with:</p>
+            <ul className="mt-2 space-y-1 text-sm">
+              <li>• Visa processes and documentation</li>
+              <li>• Finding accommodation</li>
+              <li>• School enrollment</li>
+              <li>• Healthcare options</li>
+              <li>• Local transportation</li>
+            </ul>
+            <p className="mt-3 text-sm font-medium">Click to start chatting →</p>
+          </div>
+        </motion.div>
+      </motion.div>
+    )
+  }
 
   return (
     <motion.div
@@ -508,7 +532,6 @@ export default function ChatInterface({
       exit={{ opacity: 0 }}
       transition={{ duration: 0.2 }}
     >
-      {/* Header - Only show when not expanded */}
       {!isExpanded && (
         <div className="flex items-center p-4">
           <div className="flex items-center">
@@ -517,13 +540,7 @@ export default function ChatInterface({
               <Sparkles className="ml-2 h-6 w-6 [&>path]:fill-transparent [&>path]:stroke-[url(#sparkleGradient)]" />
               <svg width="0" height="0">
                 <defs>
-                  <linearGradient
-                    id="sparkleGradient"
-                    x1="0%"
-                    y1="0%"
-                    x2="100%"
-                    y2="100%"
-                  >
+                  <linearGradient id="sparkleGradient" x1="0%" y1="0%" x2="100%" y2="100%">
                     <stop offset="0%" stopColor="#fff" />
                     <stop offset="50%" stopColor="#e0f0ff" />
                     <stop offset="100%" stopColor="#ffe0f0" />
@@ -542,7 +559,6 @@ export default function ChatInterface({
         </div>
       )}
 
-      {/* Minimize button when expanded */}
       {isExpanded && (
         <motion.button
           initial={{ opacity: 0 }}
@@ -555,16 +571,13 @@ export default function ChatInterface({
         </motion.button>
       )}
 
-      {/* Main content area */}
       <div className="relative flex-1 flex flex-col">
         {isContentLoading ? (
           <div className="flex-1 flex flex-col items-center justify-center gap-6">
             <Loader2 className="h-8 w-8 text-[#2563eb] animate-spin" />
             <div className="text-center space-y-2 max-w-sm px-4">
               <h3 className="text-white text-lg font-medium">
-                {isExpanded
-                  ? "Switching to desktop view"
-                  : "Switching to mobile view"}
+                {isExpanded ? "Switching to desktop view" : "Switching to mobile view"}
               </h3>
               <p className="text-gray-400 text-sm">
                 {isExpanded
@@ -575,15 +588,8 @@ export default function ChatInterface({
           </div>
         ) : (
           <>
-            <ScrollArea
-              className={`flex-1 ${isExpanded ? "pt-4" : "pt-2"} px-4 pb-4`}
-              ref={scrollAreaRef}
-            >
-              <div
-                className={`space-y-4 ${
-                  !isExpanded ? "max-w-[600px] mx-auto" : ""
-                }`}
-              >
+            <ScrollArea className={`flex-1 ${isExpanded ? "pt-4" : "pt-2"} px-4 pb-4`} ref={scrollAreaRef}>
+              <div className={`space-y-4 ${!isExpanded ? "max-w-[600px] mx-auto" : ""}`}>
                 <AnimatePresence mode="popLayout">
                   {messages.map((message, index) => (
                     <motion.div
@@ -592,9 +598,7 @@ export default function ChatInterface({
                       animate={{ opacity: 1, y: 0 }}
                       exit={{ opacity: 0, y: -20 }}
                       className={`flex ${
-                        message.role === "user"
-                          ? "justify-end"
-                          : "justify-start"
+                        message.role === "user" ? "justify-end" : "justify-start"
                       } ${isExpanded && index === 0 ? "mt-8" : ""}`}
                     >
                       <div
@@ -602,13 +606,9 @@ export default function ChatInterface({
                           !isExpanded
                             ? "max-w-[80%]"
                             : message.role === "assistant"
-                            ? "max-w-[85%] pr-12"
-                            : "max-w-[75%]"
-                        } ${
-                          message.role === "user"
-                            ? "flex-row-reverse"
-                            : "flex-row"
-                        }`}
+                              ? "max-w-[85%] pr-12"
+                              : "max-w-[75%]"
+                        } ${message.role === "user" ? "flex-row-reverse" : "flex-row"}`}
                       >
                         <Avatar className="w-auto h-8">
                           <AvatarImage
@@ -619,13 +619,7 @@ export default function ChatInterface({
                             }
                           />
                         </Avatar>
-                        <div
-                          className={`flex flex-col ${
-                            message.role === "user"
-                              ? "items-end"
-                              : "items-start"
-                          }`}
-                        >
+                        <div className={`flex flex-col ${message.role === "user" ? "items-end" : "items-start"}`}>
                           <div
                             className={`rounded-lg p-3 ${
                               message.role === "user"
@@ -634,19 +628,13 @@ export default function ChatInterface({
                             }`}
                           >
                             <div className="text-sm">
-                              {isTyping &&
-                              message.role === "assistant" &&
-                              index === 0 ? (
+                              {isTyping && message.role === "assistant" && index === 0 ? (
                                 <>
-                                  <CustomMarkdown isTyping>
-                                    {typingWords.join(" ")}
-                                  </CustomMarkdown>
+                                  <CustomMarkdown isTyping>{typingWords.join(" ")}</CustomMarkdown>
                                   <span className="inline-block w-3 h-3 bg-white rounded-full ml-1 animate-pulse"></span>
                                 </>
                               ) : (
-                                <CustomMarkdown>
-                                  {message.content}
-                                </CustomMarkdown>
+                                <CustomMarkdown>{message.content}</CustomMarkdown>
                               )}
                             </div>
                           </div>
@@ -658,7 +646,6 @@ export default function ChatInterface({
               </div>
             </ScrollArea>
 
-            {/* Input area */}
             <div className="p-4 bg-[#12121d] sticky bottom-0">
               <form onSubmit={handleSubmit} className="flex gap-2">
                 <Input
@@ -667,11 +654,7 @@ export default function ChatInterface({
                   placeholder="Type your message..."
                   className="flex-1 bg-gray-800/60 chat-input focus:cursor-text border-white/20"
                 />
-                <Button
-                  size="icon"
-                  type="submit"
-                  className="border-white/20 bg-[#2563eb]/90 hover:bg-[#2156c9]/80"
-                >
+                <Button size="icon" type="submit" className="border-white/20 bg-[#2563eb]/90 hover:bg-[#2156c9]/80">
                   <Send className="h-4 text-white w-4" />
                   <span className="sr-only">Send message</span>
                 </Button>
@@ -681,5 +664,6 @@ export default function ChatInterface({
         )}
       </div>
     </motion.div>
-  );
+  )
 }
+
