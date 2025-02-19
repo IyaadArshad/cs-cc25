@@ -14,7 +14,7 @@ const geistMono = Geist_Mono({
 
 export const metadata: Metadata = {
   title: "Mutasil UAE",
-  description: "Your All-In-One hub for all your Dubai needs!",
+  description: "Your All-In-One hub for helping you settle in to the UAE!",
 };
 
 export default function RootLayout({
