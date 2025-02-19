@@ -35,52 +35,6 @@ import CaseChat from "./case/chat";
 import { motion, AnimatePresence } from "framer-motion";
 import CaseProfile from "./case/profile";
 
-interface ModeTransitionProps {
-  mode: "expanding" | "minimizing";
-}
-
-function ModeTransition({ mode }: ModeTransitionProps) {
-  return (
-    <div className="flex-1 flex flex-col items-center justify-center gap-6"></div>
-  );
-}
-
-const sizeVariants = {
-  minimized: {
-    width: "490px",
-    height: "780px",
-    transition: { duration: 0.5, ease: "easeInOut" },
-  },
-  expanded: {
-    width: "75vw",
-    height: "90vh",
-    transition: { duration: 0.5, ease: "easeInOut" },
-  },
-};
-
-interface CardTransitionProps {
-  isExpanded: boolean;
-  children: React.ReactNode;
-  className?: string;
-}
-
-function CardTransition({
-  isExpanded,
-  children,
-  className = "",
-}: CardTransitionProps) {
-  return (
-    <motion.div
-      initial={false}  // disable entrance animation on main card
-      variants={sizeVariants}
-      animate={isExpanded ? "expanded" : "minimized"}
-      className={`bg-gradient-to-b from-[#12121d]/80 to-[#12121d]/95 backdrop-blur-xl main-card fixed sm:relative sm:rounded-[18px] overflow-hidden flex flex-col ${className}`}
-    >
-      {children}
-    </motion.div>
-  );
-}
-
 export default function Page() {
   const [activeTab, setActiveTab] = useState<Tab>("home");
   const [userName, setUserName] = useState("");
@@ -98,29 +52,6 @@ export default function Page() {
     "Explore Local Transportation Options",
     "Manage Utilities Services",
   ];
-  const [highlightedIndex, setHighlightedIndex] = useState(0);
-  const [cardExpanded, setCardExpanded] = useState(false); // New state
-  const [isTransitioning, setIsTransitioning] = useState(false);
-  const [transitionMode, setTransitionMode] = useState<
-    "expanding" | "minimizing"
-  >("expanding");
-  const [contentVisible, setContentVisible] = useState(true);
-
-  const handleExpand = () => {
-    setContentVisible(false); // Fade out content
-    setTransitionMode(cardExpanded ? "minimizing" : "expanding");
-    setIsTransitioning(true);
-
-    // Wait for fade out
-    setTimeout(() => {
-      setCardExpanded((prev) => !prev);
-      // Wait for size transition then show content
-      setTimeout(() => {
-        setIsTransitioning(false);
-        setContentVisible(true);
-      }, 500);
-    }, 200);
-  };
 
   useEffect(() => {
     const nameCookie = document.cookie
@@ -166,7 +97,6 @@ export default function Page() {
   const randomBackground =
     backgrounds[Math.floor(Math.random() * backgrounds.length)];
 
-
   const getTabContent = (tab: Tab) => {
     switch (tab) {
       case "home":
@@ -178,9 +108,7 @@ export default function Page() {
       case "apps":
         return <CaseApps />;
       case "profile":
-        return (
-          <CaseProfile />
-        );
+        return <CaseProfile />;
       default:
         return null;
     }
@@ -196,11 +124,7 @@ export default function Page() {
         style={{ backgroundImage: `url(${randomBackground})` }}
         className="min-h-screen bg-cover bg-center flex items-center justify-center p-4 font-['Segoe_UI'] sm:p-4"
       >
-        <div
-          className={`w-full h-screen ${
-            cardExpanded ? "sm:w-[700px]" : "sm:w-[490px]"
-          } sm:max-w-lg sm:h-[780px] bg-gradient-to-b from-[#12121d]/80 to-[#12121d]/95 backdrop-blur-xl main-card fixed sm:relative sm:rounded-[18px] overflow-hidden flex flex-col`}
-        >
+        <div className="w-full h-screen sm:w-[490px] sm:h-[780px] bg-gradient-to-b from-[#12121d]/80 to-[#12121d]/95 backdrop-blur-xl main-card fixed sm:relative sm:rounded-[18px] overflow-hidden flex flex-col">
           {/* Content */}
           <div className="flex-1 flex flex-col items-center justify-center gap-3 px-6">
             {phase === "name" || phase === "bio" ? (
@@ -424,7 +348,7 @@ export default function Page() {
           {getTabContent(activeTab)}
         </div>
 
-        {/* Bottom Navigation - Now outside of card content */}
+        {/* Bottom Navigation */}
         <div className="bg-[#090910] min-h-[96px] flex justify-evenly gap-x-8 items-center border-t border-[#232323] p-4 fixed bottom-0 left-0 right-0 sm:absolute sm:bottom-0 sm:left-0 sm:right-0 sm:rounded-b-[18px]">
           {/* Active tab indicator */}
           <div
