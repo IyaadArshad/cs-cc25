@@ -70,6 +70,7 @@ function CardTransition({
 }: CardTransitionProps) {
   return (
     <motion.div
+      initial={false}  // disable entrance animation on main card
       variants={sizeVariants}
       animate={isExpanded ? "expanded" : "minimized"}
       className={`bg-gradient-to-b from-[#12121d]/80 to-[#12121d]/95 backdrop-blur-xl main-card fixed sm:relative sm:rounded-[18px] overflow-hidden flex flex-col ${className}`}
