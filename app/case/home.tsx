@@ -519,7 +519,7 @@ export default function CaseHome() {
     return (
       <div
         ref={overviewContainerRef}
-        className="relative flex-1 p-6 overflow-y-auto"
+        className="relative h-full flex-1 p-6 overflow-y-auto"
       >
         <div
           onClick={() => setOverviewMode(false)}
