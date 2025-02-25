@@ -9,6 +9,7 @@ import { Input } from "@/components/ui/input";
 import { Send, Sparkles } from "lucide-react";
 import { useEffect, useState, useRef } from "react";
 import CustomMarkdown from "@/components/custom-markdown";
+import Image from "next/image";
 
 interface Message {
   role: "user" | "assistant";
@@ -85,20 +86,20 @@ const initialMessage: Message = {
 };
 
 export default function ChatInterface() {
-  const [messages, setMessages] = useState<Message[]>([{
-    role: "assistant",
-    content: "",
-    timestamp: new Date().toLocaleTimeString(),
-  }]);
+  const [messages, setMessages] = useState<Message[]>([]);
   const [typingWords, setTypingWords] = useState<string[]>([]);
   const [input, setInput] = useState("");
-  const [isTyping, setIsTyping] = useState(true);
+  const [isTyping, setIsTyping] = useState(false);
+  const [chatStarted, setChatStarted] = useState(false);
   const scrollAreaRef = useRef<HTMLDivElement>(null);
   const hasRun = useRef(false);
 
   useEffect(() => {
-    if (hasRun.current) return;
+    if (!chatStarted || !hasRun.current) return;
+    
+    // Start typing animation only after chat has started
     hasRun.current = true;
+    setIsTyping(true);
 
     const words = initialMessage.content.split(" ");
     let index = 0;
@@ -137,7 +138,9 @@ export default function ChatInterface() {
       } else {
         setMessages(prev => {
           const updated = [...prev];
-          updated[0] = { ...updated[0], content: typedWords.join(" ") };
+          if (updated.length > 0) {
+            updated[updated.length - 1] = { ...updated[updated.length - 1], content: typedWords.join(" ") };
+          }
           return updated;
         });
         setTimeout(() => setIsTyping(false), 1000); // Remove cursor after 1 second
@@ -145,13 +148,13 @@ export default function ChatInterface() {
     };
 
     typeWord();
-  }, []);
+  }, [chatStarted]);
 
   useEffect(() => {
     if (scrollAreaRef.current) {
       scrollAreaRef.current.scrollTop = scrollAreaRef.current.scrollHeight;
     }
-  }, [scrollAreaRef]);
+  }, [messages, typingWords]);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -163,7 +166,21 @@ export default function ChatInterface() {
       timestamp: new Date().toLocaleTimeString(),
     };
 
-    setMessages((prev) => [...prev, newUserMessage]);
+    // If this is the first message, start the chat
+    if (!chatStarted) {
+      setChatStarted(true);
+      setMessages([
+        newUserMessage,
+        {
+          role: "assistant",
+          content: "",
+          timestamp: new Date().toLocaleTimeString(),
+        }
+      ]);
+    } else {
+      setMessages((prev) => [...prev, newUserMessage]);
+    }
+    
     setInput("");
 
     const payload = {
@@ -188,32 +205,95 @@ export default function ChatInterface() {
       },
     };
 
-    try {
-      const response = await fetch("/api/v1/chat", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(payload),
-      });
-
-      if (!response.ok) throw new Error("Failed to send message");
-
-      const data = await response.json();
-      if (data.message) {
-        setMessages((prev) => [
-          ...prev,
-          {
-            role: "assistant",
-            content: data.message,
-            timestamp: new Date().toLocaleTimeString(),
+    // Only make API call if not the first message
+    if (chatStarted) {
+      try {
+        const response = await fetch("/api/v1/chat", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
           },
-        ]);
+          body: JSON.stringify(payload),
+        });
+
+        if (!response.ok) throw new Error("Failed to send message");
+
+        const data = await response.json();
+        if (data.message) {
+          setMessages((prev) => [
+            ...prev,
+            {
+              role: "assistant",
+              content: data.message,
+              timestamp: new Date().toLocaleTimeString(),
+            },
+          ]);
+        }
+      } catch (error) {
+        console.error("Error sending message:", error);
       }
-    } catch (error) {
-      console.error("Error sending message:", error);
     }
   };
+
+  if (!chatStarted) {
+    return (
+      <>
+        <div className="absolute top-0 left-0 p-4">
+        </div>
+        <motion.div
+          className="flex flex-col items-center justify-center h-full space-y-4 p-4"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          exit={{ opacity: 0 }}
+        >
+          <motion.div
+            initial={{ scale: 0.8, opacity: 0 }}
+            animate={{ scale: 1, opacity: 1 }}
+            transition={{ delay: 0.2 }}
+            className="relative"
+          >
+            <div className="w-24 h-24 rounded-full overflow-hidden p-1">
+              <Avatar className="w-full h-full">
+                <AvatarImage src="http://localhost:3000/images/assistant.png" />
+              </Avatar>
+            </div>
+          </motion.div>
+
+          <motion.div
+            initial={{ y: 20, opacity: 0 }}
+            animate={{ y: 0, opacity: 1 }}
+            transition={{ delay: 0.4 }}
+            className="text-center space-y-3 w-full max-w-md"
+          >
+            <h1 className="text-3xl font-bold text-white">
+              What can I help with?
+            </h1>
+            <div className="p-4 rounded-lg">
+              <form
+                className="flex gap-2"
+                onSubmit={(e) => {
+                  e.preventDefault();
+                }}
+              >
+                <Input
+                  placeholder="Ask me anything about Abu Dhabi..."
+                  className="flex-1 bg-gray-800/60 chat-input focus:cursor-text border-white/20"
+                />
+                <Button
+                  size="icon"
+                  type="submit"
+                  className="border-white/20 bg-[#2563eb]/90 hover:bg-[#2156c9]/80"
+                >
+                  <Send className="h-4 text-white w-4" />
+                  <span className="sr-only">Start chat</span>
+                </Button>
+              </form>
+            </div>
+          </motion.div>
+        </motion.div>
+      </>
+    );
+  }
 
   return (
     <div className="flex flex-col h-screen">
@@ -228,9 +308,9 @@ export default function ChatInterface() {
           <svg width="0" height="0">
             <defs>
               <linearGradient id="sparkleGradient" x1="0%" y1="0%" x2="100%" y2="100%">
-          <stop offset="0%" stopColor="#fff" />
-          <stop offset="50%" stopColor="#e0f0ff" />
-          <stop offset="100%" stopColor="#ffe0f0" />
+                <stop offset="0%" stopColor="#fff" />
+                <stop offset="50%" stopColor="#e0f0ff" />
+                <stop offset="100%" stopColor="#ffe0f0" />
               </linearGradient>
             </defs>
           </svg>
@@ -277,7 +357,7 @@ export default function ChatInterface() {
                       }`}
                     >
                       <div className="text-sm">
-                        {isTyping && message.role === "assistant" && index === 0 ? (
+                        {isTyping && message.role === "assistant" && index === messages.length - 1 ? (
                           <>
                             <CustomMarkdown isTyping>
                               {typingWords.join(" ")}
@@ -305,14 +385,14 @@ export default function ChatInterface() {
             placeholder="Type your message..."
             className="flex-1 bg-gray-800/60 chat-input focus:cursor-text border-white/20"
           />
-            <Button
+          <Button
             size="icon"
             type="submit"
             className="border-white/20 bg-[#2563eb]/90 hover:bg-[#2156c9]/80"
-            >
+          >
             <Send className="h-4 text-white w-4" />
             <span className="sr-only">Send message</span>
-            </Button>
+          </Button>
         </form>
       </div>
     </div>
