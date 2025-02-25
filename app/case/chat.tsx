@@ -9,6 +9,7 @@ import { Input } from "@/components/ui/input";
 import { Send, Sparkles } from "lucide-react";
 import { useEffect, useState, useRef } from "react";
 import CustomMarkdown from "@/components/custom-markdown";
+import Image from "next/image";
 
 interface Message {
   role: "user" | "assistant";
@@ -95,7 +96,7 @@ export default function ChatInterface() {
 
   useEffect(() => {
     if (!chatStarted || !hasRun.current) return;
-
+    
     // Start typing animation only after chat has started
     hasRun.current = true;
     setIsTyping(true);
@@ -125,8 +126,7 @@ export default function ChatInterface() {
             additionalCharCount = 0; // Reset additional character count
           } else {
             additionalCharCount += word.length + 1;
-            if (additionalCharCount >= 50) {
-              // Force pause if no punctuation found within next 50 characters
+            if (additionalCharCount >= 50) { // Force pause if no punctuation found within next 50 characters
               delay = 1000; // Pause for 1 second
               charCount = 0; // Reset character count after pause
               additionalCharCount = 0; // Reset additional character count
@@ -136,13 +136,10 @@ export default function ChatInterface() {
 
         setTimeout(typeWord, delay);
       } else {
-        setMessages((prev) => {
+        setMessages(prev => {
           const updated = [...prev];
           if (updated.length > 0) {
-            updated[updated.length - 1] = {
-              ...updated[updated.length - 1],
-              content: typedWords.join(" "),
-            };
+            updated[updated.length - 1] = { ...updated[updated.length - 1], content: typedWords.join(" ") };
           }
           return updated;
         });
@@ -178,12 +175,12 @@ export default function ChatInterface() {
           role: "assistant",
           content: "",
           timestamp: new Date().toLocaleTimeString(),
-        },
+        }
       ]);
     } else {
       setMessages((prev) => [...prev, newUserMessage]);
     }
-
+    
     setInput("");
 
     const payload = {
@@ -241,7 +238,8 @@ export default function ChatInterface() {
   if (!chatStarted) {
     return (
       <>
-        <div className="absolute top-0 left-0 p-4"></div>
+        <div className="absolute top-0 left-0 p-4">
+        </div>
         <motion.div
           className="flex flex-col items-center justify-center h-full space-y-4 p-4"
           initial={{ opacity: 0 }}
@@ -309,13 +307,7 @@ export default function ChatInterface() {
           <Sparkles className="ml-2 h-6 w-6 [&>path]:fill-transparent [&>path]:stroke-[url(#sparkleGradient)]" />
           <svg width="0" height="0">
             <defs>
-              <linearGradient
-                id="sparkleGradient"
-                x1="0%"
-                y1="0%"
-                x2="100%"
-                y2="100%"
-              >
+              <linearGradient id="sparkleGradient" x1="0%" y1="0%" x2="100%" y2="100%">
                 <stop offset="0%" stopColor="#fff" />
                 <stop offset="50%" stopColor="#e0f0ff" />
                 <stop offset="100%" stopColor="#ffe0f0" />
@@ -365,9 +357,7 @@ export default function ChatInterface() {
                       }`}
                     >
                       <div className="text-sm">
-                        {isTyping &&
-                        message.role === "assistant" &&
-                        index === messages.length - 1 ? (
+                        {isTyping && message.role === "assistant" && index === messages.length - 1 ? (
                           <>
                             <CustomMarkdown isTyping>
                               {typingWords.join(" ")}
