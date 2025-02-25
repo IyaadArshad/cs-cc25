@@ -32,8 +32,6 @@ import CaseHome from "./case/home";
 import CaseDiscover from "./case/discover";
 import CaseApps from "./case/apps";
 import CaseChat from "./case/chat";
-import { motion, AnimatePresence } from "framer-motion";
-import CaseProfile from "./case/profile";
 
 export default function Page() {
   const [activeTab, setActiveTab] = useState<Tab>("home");
@@ -52,6 +50,7 @@ export default function Page() {
     "Explore Local Transportation Options",
     "Manage Utilities Services",
   ];
+  const [highlightedIndex, setHighlightedIndex] = useState(0);
 
   useEffect(() => {
     const nameCookie = document.cookie
@@ -97,6 +96,17 @@ export default function Page() {
   const randomBackground =
     backgrounds[Math.floor(Math.random() * backgrounds.length)];
 
+  const addOption = (option: string) => {
+    let parts = inputValue.split(",").map((p) => p.trim());
+    // Remove the current (possibly incomplete) fragment.
+    parts.pop();
+    // Append the new option.
+    parts.push(option);
+    // Reassemble the input with a trailing comma and space.
+    setInputValue(parts.join(", ") + ", ");
+    setHighlightedIndex(0);
+  };
+
   const getTabContent = (tab: Tab) => {
     switch (tab) {
       case "home":
@@ -104,11 +114,99 @@ export default function Page() {
       case "discover":
         return <CaseDiscover />;
       case "chat":
-        return <CaseChat />; // Pass prop to chat.tsx
+        return <CaseChat />;
       case "apps":
         return <CaseApps />;
       case "profile":
-        return <CaseProfile />;
+        return (
+          <div className="flex-1 p-5 overflow-y-auto">
+            {/* Updated Header */}
+            <div className="relative mb-7">
+              <button className="absolute left-0 w-8 h-8 flex items-center justify-center rounded-full bg-[#272739]">
+                <ChevronLeftFilled className="w-5 h-5 text-white" />
+              </button>
+              <h1 className="text-xl font-semibold text-white text-center">
+                Settings
+              </h1>
+            </div>
+
+            {/* Profile Section */}
+            <div className="flex items-center gap-4 mb-8">
+              <div className="w-16 h-16 rounded-full bg-[#2563eb] flex items-center justify-center">
+                <img
+                  src="/images/default_pfp.png"
+                  alt="Profile"
+                  style={{
+                    borderRadius: "9999px",
+                    width: "auto",
+                    height: "64px",
+                  }}
+                  className="text-white"
+                />
+              </div>
+              <div className="flex-1">
+                <h2 className="text-white mb-2 font-bold text-xl">
+                  The Donors Foundation
+                </h2>
+                <p className="text-gray-400 text-sm">
+                  Crypto, for good. $DONOR allows people to donate more with...
+                </p>
+              </div>
+              <button className="w-8 h-8 flex items-center justify-center rounded-full bg-[#272739]"></button>
+            </div>
+
+            {/* Wallet Settings Section */}
+            <div className="mb-8">
+              <div className="space-y-2">
+                <SettingsItem
+                  plainIcon
+                  icon={<LinkIcon className="w-7 h-7 text-white" />}
+                  title="Connected Apps"
+                  description="Manage connected apps"
+                />
+                <SettingsItem
+                  plainIcon
+                  icon={<ShieldCheckIcon className="w-7 h-7 text-white" />}
+                  title="Security and Recovery"
+                  description="Manage your passwords and recovery methods"
+                />
+                <SettingsItem
+                  plainIcon
+                  icon={<LockClosedIcon className="w-7 h-7 text-white" />}
+                  title="Change Password"
+                  description="Change the password used to unlock your app"
+                />
+                <SettingsItem
+                  plainIcon
+                  icon={<TrashIcon className="w-7 h-7 text-white" />}
+                  title="Remove Account"
+                  description="Remove this account from your app"
+                />
+              </div>
+            </div>
+
+            {/* App Settings Section */}
+            <div>
+              <h3 className="text-2xl font-bold text-white mb-4">Other</h3>
+              <div className="space-y-2">
+                <SettingsItem
+                  plainIcon
+                  icon={<UserGroupIcon className="w-7 h-7 text-white" />}
+                  title="Dubai Community"
+                  description="Come and join us"
+                />
+                <SettingsItem
+                  plainIcon
+                  icon={
+                    <ExclamationCircleIcon className="w-7 h-7 text-white" />
+                  }
+                  title="Report Issues or Give Feedback"
+                  description="Let us know what we can improve on"
+                />
+              </div>
+            </div>
+          </div>
+        );
       default:
         return null;
     }
@@ -124,7 +222,7 @@ export default function Page() {
         style={{ backgroundImage: `url(${randomBackground})` }}
         className="min-h-screen bg-cover bg-center flex items-center justify-center p-4 font-['Segoe_UI'] sm:p-4"
       >
-        <div className="w-full h-screen sm:w-[490px] sm:h-[780px] bg-gradient-to-b from-[#12121d]/80 to-[#12121d]/95 backdrop-blur-xl main-card fixed sm:relative sm:rounded-[18px] overflow-hidden flex flex-col">
+        <div className="w-full h-screen sm:w-[490px] sm:max-w-lg sm:h-[780px] bg-gradient-to-b from-[#12121d]/80 to-[#12121d]/95 backdrop-blur-xl main-card fixed sm:relative sm:rounded-[18px] overflow-hidden flex flex-col">
           {/* Content */}
           <div className="flex-1 flex flex-col items-center justify-center gap-3 px-6">
             {phase === "name" || phase === "bio" ? (
@@ -342,14 +440,12 @@ export default function Page() {
       style={{ backgroundImage: `url(${randomBackground})` }}
       className="min-h-screen bg-cover bg-center flex items-center justify-center p-4 font-['Segoe_UI'] sm:p-4"
     >
-      <div className="flex flex-col w-full sm:w-[490px] sm:h-[780px] relative">
+      <div className="w-full h-screen sm:w-[490px] sm:max-w-lg sm:h-[780px] bg-gradient-to-b from-[#12121d]/80 to-[#12121d]/95 backdrop-blur-xl main-card fixed sm:relative sm:rounded-[18px] overflow-hidden flex flex-col">
         {/* Main Content Area */}
-        <div className="flex-1 bg-gradient-to-b from-[#12121d]/80 to-[#12121d]/95 backdrop-blur-xl main-card sm:rounded-[18px] overflow-hidden mb-[96px]">
-          {getTabContent(activeTab)}
-        </div>
+        {getTabContent(activeTab)}
 
         {/* Bottom Navigation */}
-        <div className="bg-[#090910] min-h-[96px] flex justify-evenly gap-x-8 items-center border-t border-[#232323] p-4 fixed bottom-0 left-0 right-0 sm:absolute sm:bottom-0 sm:left-0 sm:right-0 sm:rounded-b-[18px]">
+        <div className="bg-[#090910] min-h-[96px] flex justify-evenly gap-x-8 items-center border-t border-[#232323] p-4 relative">
           {/* Active tab indicator */}
           <div
             className="absolute top-0 left-0 w-1/5 h-1 bg-[#2563eb] transition-all duration-300 ease-in-out"
