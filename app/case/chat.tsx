@@ -1,276 +1,15 @@
 "use client";
 
-import React from "react";
+import type React from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Avatar, AvatarImage } from "@/components/ui/avatar";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Send, Loader2 } from "lucide-react";
+import { Send, Sparkles } from "lucide-react";
 import { useEffect, useState, useRef } from "react";
-import type { JSX } from "react";
-
-interface CustomMarkdownProps {
-  children: string;
-  isTyping?: boolean;
-}
-
-interface Token {
-  type: "text" | "bold" | "italic" | "bolditalic";
-  content: string;
-}
-
-const parseInlineTokens = (text: string): React.ReactNode[] => {
-  const tokens: Token[] = [];
-  const regex = /(\*\*\*([^*]+)\*\*\*\)|\*\*([^*]+)\*\*|\*([^*]+)\*)/g;
-  let lastIndex = 0;
-  let match;
-  while ((match = regex.exec(text)) !== null) {
-    if (match.index > lastIndex) {
-      tokens.push({
-        type: "text",
-        content: text.slice(lastIndex, match.index),
-      });
-    }
-    if (match[1]) {
-      if (match[2] !== undefined) {
-        tokens.push({ type: "bolditalic", content: match[2] });
-      } else if (match[3] !== undefined) {
-        tokens.push({ type: "bold", content: match[3] });
-      } else if (match[4] !== undefined) {
-        tokens.push({ type: "italic", content: match[4] });
-      }
-    }
-    lastIndex = regex.lastIndex;
-  }
-  if (lastIndex < text.length) {
-    tokens.push({ type: "text", content: text.slice(lastIndex) });
-  }
-
-  return tokens.map((token, idx) => {
-    const animatedContent = (
-      <motion.span
-        key={idx}
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ duration: 0.3 }}
-      >
-        {token.content}
-      </motion.span>
-    );
-    switch (token.type) {
-      case "bolditalic":
-        return (
-          <strong key={idx}>
-            <em>{animatedContent}</em>
-          </strong>
-        );
-      case "bold":
-        return <strong key={idx}>{animatedContent}</strong>;
-      case "italic":
-        return <em key={idx}>{animatedContent}</em>;
-      default:
-        return <span key={idx}>{animatedContent}</span>;
-    }
-  });
-};
-
-const parseMarkdownBlocks = (
-  text: string,
-  isTyping: boolean
-): React.ReactNode[] => {
-  const lines = text.split("\n");
-  const elements: React.ReactNode[] = [];
-  let bulletGroup: React.ReactNode[] = [];
-  let numberGroup: React.ReactNode[] = [];
-  let tableGroup: string[] = [];
-  let codeBlock: string[] = [];
-  let inCodeBlock = false;
-  let codeLang: string | null = null;
-  let quoteGroup: React.ReactNode[] = [];
-
-  for (let i = 0; i < lines.length; i++) {
-    const line = lines[i];
-
-    // Code block handling (fenced with \`\`\`)
-    if (inCodeBlock) {
-      if (line.startsWith("```")) {
-        elements.push(
-          <pre key={`code-${i}`} className="bg-gray-800 text-white p-2 rounded">
-            <code>{codeBlock.join("\n")}</code>
-          </pre>
-        );
-        inCodeBlock = false;
-        codeBlock = [];
-        codeLang = null;
-      } else {
-        codeBlock.push(line);
-      }
-      continue;
-    }
-    if (line.startsWith("```")) {
-      inCodeBlock = true;
-      codeLang = line.replace("```", "").trim();
-      continue;
-    }
-
-    // Math block handling (fenced with $$)
-    if (line.startsWith("$$")) {
-      const mathContent: string[] = [];
-      let j = i + 1;
-      while (j < lines.length && !lines[j].startsWith("$$")) {
-        mathContent.push(lines[j]);
-        j++;
-      }
-      elements.push(
-        <div
-          key={`math-${i}`}
-          className="math-block bg-gray-100 p-2 rounded my-2"
-        >
-          {`$$\n${mathContent.join("\n")}\n$$`}
-        </div>
-      );
-      i = j; // Skip processed lines
-      continue;
-    }
-
-    // Table handling: group rows that start with |
-    if (line.trim().startsWith("|")) {
-      tableGroup.push(line);
-      if (i === lines.length - 1 || !lines[i + 1].trim().startsWith("|")) {
-        // Process tableGroup assuming first row header, second separator, rest body
-        const header = tableGroup[0]
-          .split("|")
-          .map((s) => s.trim())
-          .filter(Boolean);
-        const bodyRows = tableGroup.slice(2).map((row) =>
-          row
-            .split("|")
-            .map((s) => s.trim())
-            .filter(Boolean)
-        );
-        elements.push(
-          <table
-            key={`table-${i}`}
-            className="table-auto border-collapse border border-gray-300 my-2"
-          >
-            <thead>
-              <tr>
-                {header.map((cell, idx) => (
-                  <th key={idx} className="border border-gray-300 px-2 py-1">
-                    {cell}
-                  </th>
-                ))}
-              </tr>
-            </thead>
-            <tbody>
-              {bodyRows.map((row, ridx) => (
-                <tr key={ridx}>
-                  {row.map((cell, cidx) => (
-                    <td key={cidx} className="border border-gray-300 px-2 py-1">
-                      {cell}
-                    </td>
-                  ))}
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        );
-        tableGroup = [];
-      }
-      continue;
-    }
-
-    // Bullet list handling
-    const bulletMatch = line.match(/^\s*([-*])\s+(.*)/);
-    if (bulletMatch) {
-      bulletGroup.push(<li key={i}>{parseInlineTokens(bulletMatch[2])}</li>);
-      if (i === lines.length - 1 || !lines[i + 1].match(/^\s*([-*])\s+(.*)/)) {
-        elements.push(
-          <ul key={`ul-${i}`} className="list-disc ml-5 my-2">
-            {bulletGroup}
-          </ul>
-        );
-        bulletGroup = [];
-      }
-      continue;
-    }
-
-    // Numbered list handling
-    const numberMatch = line.match(/^\s*\d+\.\s+(.*)/);
-    if (numberMatch) {
-      numberGroup.push(<li key={i}>{parseInlineTokens(numberMatch[1])}</li>);
-      if (i === lines.length - 1 || !lines[i + 1].match(/^\s*\d+\.\s+(.*)/)) {
-        elements.push(
-          <ol key={`ol-${i}`} className="list-decimal ml-5 my-2">
-            {numberGroup}
-          </ol>
-        );
-        numberGroup = [];
-      }
-      continue;
-    }
-
-    // Blockquote handling
-    const quoteMatch = line.match(/^>\s+(.*)/);
-    if (quoteMatch) {
-      quoteGroup.push(<p key={i}>{parseInlineTokens(quoteMatch[1])}</p>);
-      if (i === lines.length - 1 || !lines[i + 1].match(/^>\s+(.*)/)) {
-        elements.push(
-          <blockquote
-            key={`quote-${i}`}
-            className="border-l-4 pl-4 italic text-gray-700 my-2"
-          >
-            {quoteGroup}
-          </blockquote>
-        );
-        quoteGroup = [];
-      }
-      continue;
-    }
-
-    // Headings handling
-    const headingMatch = line.match(/^(#{1,6})\s+(.*)/);
-    if (headingMatch) {
-      const level = headingMatch[1].length;
-      const content = parseInlineTokens(headingMatch[2]);
-      const HeadingTag = `h${level}` as keyof JSX.IntrinsicElements;
-      const classes: { [key: number]: string } = {
-        1: "text-4xl font-bold",
-        2: "text-3xl font-bold",
-        3: "text-2xl font-bold",
-        4: "text-xl font-semibold",
-        5: "text-lg font-semibold",
-        6: "text-base font-medium",
-      };
-      elements.push(
-        React.createElement(
-          HeadingTag,
-          { key: i, className: classes[level] },
-          content
-        )
-      );
-      continue;
-    }
-
-    // Regular paragraph or empty line
-    if (line.trim() === "") {
-      elements.push(<br key={i} />);
-    } else {
-      elements.push(<p key={i}>{parseInlineTokens(line)}</p>);
-    }
-  }
-
-  return elements;
-};
-
-const CustomMarkdown: React.FC<CustomMarkdownProps> = ({
-  children,
-  isTyping,
-}) => {
-  const elements = parseMarkdownBlocks(children, !!isTyping);
-  return <>{elements}</>;
-};
+import CustomMarkdown from "@/components/custom-markdown";
+import Image from "next/image";
 
 interface Message {
   role: "user" | "assistant";
@@ -347,34 +86,24 @@ const initialMessage: Message = {
 };
 
 export default function ChatInterface() {
-  const [showWelcome, setShowWelcome] = useState(true);
   const [messages, setMessages] = useState<Message[]>([]);
   const [typingWords, setTypingWords] = useState<string[]>([]);
   const [input, setInput] = useState("");
   const [isTyping, setIsTyping] = useState(false);
+  const [chatStarted, setChatStarted] = useState(false);
   const scrollAreaRef = useRef<HTMLDivElement>(null);
   const hasRun = useRef(false);
 
-  const startChat = async () => {
-    setShowWelcome(false);
-    setIsTyping(true);
-    setMessages([
-      {
-        role: "assistant",
-        content: "",
-        timestamp: new Date().toLocaleTimeString(),
-      },
-    ]);
-    hasRun.current = false;
-  };
-
   useEffect(() => {
-    if (hasRun.current || showWelcome) return;
+    if (!chatStarted || !hasRun.current) return;
+    
+    // Start typing animation only after chat has started
     hasRun.current = true;
+    setIsTyping(true);
 
     const words = initialMessage.content.split(" ");
     let index = 0;
-    const typedWords: string[] = [];
+    let typedWords: string[] = [];
     let charCount = 0;
     let additionalCharCount = 0;
 
@@ -383,46 +112,49 @@ export default function ChatInterface() {
         const word = words[index];
         typedWords.push(word);
         setTypingWords([...typedWords]);
-        charCount += word.length + 1;
+        charCount += word.length + 1; // +1 for the space
 
         index++;
-        let delay = 100;
+        let delay = 100; // Adjust speed here
 
+        // Check if we should pause
         if (charCount >= 149) {
           const lastWord = typedWords[typedWords.length - 1];
           if (/[.,!?;:]/.test(lastWord.slice(-1))) {
-            delay = 1000;
-            charCount = 0;
-            additionalCharCount = 0;
+            delay = 1000; // Pause for 1 second
+            charCount = 0; // Reset character count after pause
+            additionalCharCount = 0; // Reset additional character count
           } else {
             additionalCharCount += word.length + 1;
-            if (additionalCharCount >= 50) {
-              delay = 1000;
-              charCount = 0;
-              additionalCharCount = 0;
+            if (additionalCharCount >= 50) { // Force pause if no punctuation found within next 50 characters
+              delay = 1000; // Pause for 1 second
+              charCount = 0; // Reset character count after pause
+              additionalCharCount = 0; // Reset additional character count
             }
           }
         }
 
         setTimeout(typeWord, delay);
       } else {
-        setMessages((prev) => {
+        setMessages(prev => {
           const updated = [...prev];
-          updated[0] = { ...updated[0], content: typedWords.join(" ") };
+          if (updated.length > 0) {
+            updated[updated.length - 1] = { ...updated[updated.length - 1], content: typedWords.join(" ") };
+          }
           return updated;
         });
-        setTimeout(() => setIsTyping(false), 1000);
+        setTimeout(() => setIsTyping(false), 1000); // Remove cursor after 1 second
       }
     };
 
     typeWord();
-  }, [showWelcome]);
+  }, [chatStarted]);
 
   useEffect(() => {
     if (scrollAreaRef.current) {
       scrollAreaRef.current.scrollTop = scrollAreaRef.current.scrollHeight;
     }
-  }, [scrollAreaRef.current]); //Corrected dependency
+  }, [messages, typingWords]);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -434,7 +166,21 @@ export default function ChatInterface() {
       timestamp: new Date().toLocaleTimeString(),
     };
 
-    setMessages((prev) => [...prev, newUserMessage]);
+    // If this is the first message, start the chat
+    if (!chatStarted) {
+      setChatStarted(true);
+      setMessages([
+        newUserMessage,
+        {
+          role: "assistant",
+          content: "",
+          timestamp: new Date().toLocaleTimeString(),
+        }
+      ]);
+    } else {
+      setMessages((prev) => [...prev, newUserMessage]);
+    }
+    
     setInput("");
 
     const payload = {
@@ -459,49 +205,40 @@ export default function ChatInterface() {
       },
     };
 
-    try {
-      const response = await fetch("/api/v1/chat", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(payload),
-      });
-
-      if (!response.ok) throw new Error("Failed to send message");
-
-      const data = await response.json();
-      if (data.message) {
-        setMessages((prev) => [
-          ...prev,
-          {
-            role: "assistant",
-            content: data.message,
-            timestamp: new Date().toLocaleTimeString(),
+    // Only make API call if not the first message
+    if (chatStarted) {
+      try {
+        const response = await fetch("/api/v1/chat", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
           },
-        ]);
+          body: JSON.stringify(payload),
+        });
+
+        if (!response.ok) throw new Error("Failed to send message");
+
+        const data = await response.json();
+        if (data.message) {
+          setMessages((prev) => [
+            ...prev,
+            {
+              role: "assistant",
+              content: data.message,
+              timestamp: new Date().toLocaleTimeString(),
+            },
+          ]);
+        }
+      } catch (error) {
+        console.error("Error sending message:", error);
       }
-    } catch (error) {
-      console.error("Error sending message:", error);
     }
   };
 
-  if (showWelcome) {
+  if (!chatStarted) {
     return (
       <>
         <div className="absolute top-0 left-0 p-4">
-          <h1 className="text-2xl font-bold text-white flex items-center">
-            Mutasil AI Chat
-            <svg width="0" height="0">
-              <defs>
-                <linearGradient id="sparkleGradient" x1="0%" y1="0%" x2="100%">
-                  <stop offset="0%" stopColor="#fff" />
-                  <stop offset="50%" stopColor="#e0f0ff" />
-                  <stop offset="100%" stopColor="#ffe0f0" />
-                </linearGradient>
-              </defs>
-            </svg>
-          </h1>
         </div>
         <motion.div
           className="flex flex-col items-center justify-center h-full space-y-4 p-4"
@@ -536,7 +273,6 @@ export default function ChatInterface() {
                 className="flex gap-2"
                 onSubmit={(e) => {
                   e.preventDefault();
-                  startChat();
                 }}
               >
                 <Input
@@ -560,97 +296,105 @@ export default function ChatInterface() {
   }
 
   return (
-    <motion.div
-      className="flex overflow-y-auto flex-col h-full relative"
-      initial={{ opacity: 0 }}
-      animate={{ opacity: 1 }}
-      exit={{ opacity: 0 }}
-      transition={{ duration: 0.2 }}
-    >
-      <div className="relative flex-1 flex flex-col">
-        <ScrollArea className="flex-1 px-4 pb-4" ref={scrollAreaRef}>
-          <div className="space-y-4">
-            <AnimatePresence mode="popLayout">
-              {messages.map((message, index) => (
-                <motion.div
-                  key={`message-${index}-${message.timestamp}`}
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0, y: -20 }}
-                  className={`flex ${
-                    message.role === "user" ? "justify-end" : "justify-start"
+    <div className="flex flex-col h-screen">
+      <motion.div
+        initial={{ opacity: 0, y: -20 }}
+        animate={{ opacity: 1, y: 0 }}
+        className="flex items-center p-4"
+      >
+        <h1 className="text-2xl font-bold text-white flex items-center">
+          Mutasil AI Chat
+          <Sparkles className="ml-2 h-6 w-6 [&>path]:fill-transparent [&>path]:stroke-[url(#sparkleGradient)]" />
+          <svg width="0" height="0">
+            <defs>
+              <linearGradient id="sparkleGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" stopColor="#fff" />
+                <stop offset="50%" stopColor="#e0f0ff" />
+                <stop offset="100%" stopColor="#ffe0f0" />
+              </linearGradient>
+            </defs>
+          </svg>
+        </h1>
+      </motion.div>
+
+      <ScrollArea className="flex-1 p-4" ref={scrollAreaRef}>
+        <div className="space-y-4">
+          <AnimatePresence>
+            {messages.map((message, index) => (
+              <motion.div
+                key={index}
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -20 }}
+                className={`flex ${
+                  message.role === "user" ? "justify-end" : "justify-start"
+                }`}
+              >
+                <div
+                  className={`flex items-start gap-2 max-w-[80%] ${
+                    message.role === "user" ? "flex-row-reverse" : "flex-row"
                   }`}
                 >
+                  <Avatar className="w-auto h-8">
+                    <AvatarImage
+                      src={
+                        message.role === "user"
+                          ? "http://localhost:3000/images/default_pfp.png"
+                          : "http://localhost:3000/images/assistant.png"
+                      }
+                    />
+                  </Avatar>
                   <div
-                    className={`flex items-start gap-2 ${
-                      message.role === "user"
-                        ? "flex-row-reverse"
-                        : "flex-row"
+                    className={`flex flex-col ${
+                      message.role === "user" ? "items-end" : "items-start"
                     }`}
                   >
-                    <Avatar className="w-auto h-8">
-                      <AvatarImage
-                        src={
-                          message.role === "user"
-                            ? "http://localhost:3000/images/default_pfp.png"
-                            : "http://localhost:3000/images/assistant.png"
-                        }
-                      />
-                    </Avatar>
                     <div
-                      className={`flex flex-col ${
-                        message.role === "user" ? "items-end" : "items-start"
+                      className={`rounded-lg p-3 ${
+                        message.role === "user"
+                          ? "bg-primary text-primary-foreground"
+                          : "bg-gradient-to-br from-[#2563eb] to-[#4C1D95] text-white"
                       }`}
                     >
-                      <div
-                        className={`rounded-lg p-3 ${
-                          message.role === "user"
-                            ? "bg-primary text-primary-foreground"
-                            : "bg-gradient-to-br from-[#2563eb] to-[#4C1D95] text-white"
-                        }`}
-                      >
-                        <div className="text-sm">
-                          {isTyping &&
-                          message.role === "assistant" &&
-                          index === 0 ? (
-                            <>
-                              <CustomMarkdown isTyping>
-                                {typingWords.join(" ")}
-                              </CustomMarkdown>
-                              <span className="inline-block w-3 h-3 bg-white rounded-full ml-1 animate-pulse"></span>
-                            </>
-                          ) : (
-                            <CustomMarkdown>{message.content}</CustomMarkdown>
-                          )}
-                        </div>
+                      <div className="text-sm">
+                        {isTyping && message.role === "assistant" && index === messages.length - 1 ? (
+                          <>
+                            <CustomMarkdown isTyping>
+                              {typingWords.join(" ")}
+                            </CustomMarkdown>
+                            <span className="inline-block w-3 h-3 bg-white rounded-full ml-1 animate-pulse"></span>
+                          </>
+                        ) : (
+                          <CustomMarkdown>{message.content}</CustomMarkdown>
+                        )}
                       </div>
                     </div>
                   </div>
-                </motion.div>
-              ))}
-            </AnimatePresence>
-          </div>
-        </ScrollArea>
-
-        <div className="p-4 bg-[#12121d] sticky bottom-0">
-          <form onSubmit={handleSubmit} className="flex gap-2">
-            <Input
-              value={input}
-              onChange={(e) => setInput(e.target.value)}
-              placeholder="Type your message..."
-              className="flex-1 bg-gray-800/60 chat-input focus:cursor-text border-white/20"
-            />
-            <Button
-              size="icon"
-              type="submit"
-              className="border-white/20 bg-[#2563eb]/90 hover:bg-[#2156c9]/80"
-            >
-              <Send className="h-4 text-white w-4" />
-              <span className="sr-only">Send message</span>
-            </Button>
-          </form>
+                </div>
+              </motion.div>
+            ))}
+          </AnimatePresence>
         </div>
+      </ScrollArea>
+
+      <div className="p-4">
+        <form onSubmit={handleSubmit} className="flex gap-2">
+          <Input
+            value={input}
+            onChange={(e) => setInput(e.target.value)}
+            placeholder="Type your message..."
+            className="flex-1 bg-gray-800/60 chat-input focus:cursor-text border-white/20"
+          />
+          <Button
+            size="icon"
+            type="submit"
+            className="border-white/20 bg-[#2563eb]/90 hover:bg-[#2156c9]/80"
+          >
+            <Send className="h-4 text-white w-4" />
+            <span className="sr-only">Send message</span>
+          </Button>
+        </form>
       </div>
-    </motion.div>
+    </div>
   );
 }
