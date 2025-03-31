@@ -9,7 +9,6 @@ import { Input } from "@/components/ui/input";
 import { Send, Sparkles } from "lucide-react";
 import { useEffect, useState, useRef } from "react";
 import CustomMarkdown from "@/components/custom-markdown";
-import Image from "next/image";
 
 interface Message {
   role: "user" | "assistant";
@@ -19,69 +18,7 @@ interface Message {
 
 const initialMessage: Message = {
   role: "assistant",
-  content:
-    "# Heading 1\n" +
-    "## Heading 2\n" +
-    "### Heading 3\n" +
-    "#### Heading 4\n" +
-    "##### Heading 5\n" +
-    "###### Heading 6\n" +
-    "This is a **bold** text.\n" +
-    "This is an *italic* text.\n" +
-    "This is a ***bold and italic*** text.\n" +
-    "- Bullet point item 1\n" +
-    "- Bullet point item 2\n" +
-    "- Bullet point item 3\n" +
-    "1. Numbered list item 1\n" +
-    "2. Numbered list item 2\n" +
-    "3. Numbered list item 3\n" +
-    "This is a [link](https://example.com).\n" +
-    "This is an image: ![Image](https://example.com/image.png)\n" +
-    "> This is a blockquote.\n" +
-    "```js\n" +
-    "console.log('This is a code block.');\n" +
-    "```\n" +
-    "This is a table:\n" +
-    "| Header 1 | Header 2 | Header 3 |\n" +
-    "|----------|----------|----------|\n" +
-    "| Row 1    | Row 1    | Row 1    |\n" +
-    "| Row 2    | Row 2    | Row 2    |\n" +
-    "| Row 3    | Row 3    | Row 3    |\n" +
-    "This is a ~~strikethrough~~ text.\n" +
-    "This is a text with a footnote[^1].\n" +
-    "[^1]: This is the footnote.\n" +
-    "This is a text with a superscript: 2^10^.\n" +
-    "This is a text with a subscript: H~2~O.\n" +
-    "This is a text with an abbreviation: HTML.\n" +
-    "This is a text with a mark: ==mark==.\n" +
-    "This is a text with a definition: Apple:: A fruit.\n" +
-    "This is a text with a math block:\n" +
-    "$$\n" +
-    "\\frac{1}{2}\n" +
-    "$$\n" +
-    "This is a text with a inline math: $\\frac{1}{2}$\n" +
-    "This is a text with a mermaid diagram:\n" +
-    "```mermaid\n" +
-    "graph TD\n" +
-    "    A[Christmas] -->|Get money| B(Go shopping)\n" +
-    "    B --> C{Let me think}\n" +
-    "    C -->|One| D[Laptop]\n" +
-    "    C -->|Two| E[iPhone]\n" +
-    "    C -->|Three| F[Car]\n" +
-    "```\n" +
-    "This is a text with a flowchart:\n" +
-    "```flow\n" +
-    "st=>start: Start\n" +
-    "e=>end: End\n" +
-    "op1=>operation: Operation 1\n" +
-    "op2=>operation: Operation 2\n" +
-    "op3=>operation: Operation 3\n" +
-    "cond=>condition: Yes or No?\n" +
-    "st->op1->cond\n" +
-    "cond(yes)->op2->e\n" +
-    "cond(no)->op3->e\n" +
-    "```\n" +
-    "Welcome to **Abu Dhabi! I'm here to assist you with** your settlement process. Whether you need information about visas, housing, schools, or any other aspect of settling in, I'm here to help. What would you like to know about first? Feel free to ask about the visa process, finding accommodation, enrolling in schools, healthcare options, or any other topics related to your move to Abu Dhabi.",
+  content: "Hello! 😊 How can I assist you in settling into your new life in Abu Dhabi? 🏙️",
   timestamp: new Date().toLocaleTimeString(),
 };
 
@@ -91,6 +28,7 @@ export default function ChatInterface() {
   const [input, setInput] = useState("");
   const [isTyping, setIsTyping] = useState(false);
   const [chatStarted, setChatStarted] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const scrollAreaRef = useRef<HTMLDivElement>(null);
   const hasRun = useRef(false);
 
@@ -115,21 +53,21 @@ export default function ChatInterface() {
         charCount += word.length + 1; // +1 for the space
 
         index++;
-        let delay = 100; // Adjust speed here
+        let delay = 40; // Adjust typing speed (faster)
 
         // Check if we should pause
-        if (charCount >= 149) {
+        if (charCount >= 80) { // Reduced character count before pause
           const lastWord = typedWords[typedWords.length - 1];
           if (/[.,!?;:]/.test(lastWord.slice(-1))) {
-            delay = 1000; // Pause for 1 second
-            charCount = 0; // Reset character count after pause
-            additionalCharCount = 0; // Reset additional character count
+            delay = 400; // Shorter pause for punctuation
+            charCount = 0;
+            additionalCharCount = 0;
           } else {
             additionalCharCount += word.length + 1;
-            if (additionalCharCount >= 50) { // Force pause if no punctuation found within next 50 characters
-              delay = 1000; // Pause for 1 second
-              charCount = 0; // Reset character count after pause
-              additionalCharCount = 0; // Reset additional character count
+            if (additionalCharCount >= 30) { // Shorter distance before force pause
+              delay = 400;
+              charCount = 0;
+              additionalCharCount = 0;
             }
           }
         }
@@ -143,7 +81,7 @@ export default function ChatInterface() {
           }
           return updated;
         });
-        setTimeout(() => setIsTyping(false), 1000); // Remove cursor after 1 second
+        setTimeout(() => setIsTyping(false), 500); // Remove cursor after typing
       }
     };
 
@@ -158,8 +96,10 @@ export default function ChatInterface() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!input.trim()) return;
+    if (!input.trim() || isSubmitting) return;
 
+    setIsSubmitting(true);
+    
     const newUserMessage: Message = {
       role: "user",
       content: input,
@@ -179,10 +119,21 @@ export default function ChatInterface() {
       ]);
     } else {
       setMessages((prev) => [...prev, newUserMessage]);
+      
+      // Add a temporary loading message from assistant
+      setMessages((prev) => [
+        ...prev, 
+        {
+          role: "assistant",
+          content: "",
+          timestamp: new Date().toLocaleTimeString(),
+        }
+      ]);
     }
     
     setInput("");
 
+    // Prepare the payload for API
     const payload = {
       messages: [...messages, newUserMessage].map(({ role, content }) => ({
         role,
@@ -205,33 +156,68 @@ export default function ChatInterface() {
       },
     };
 
-    // Only make API call if not the first message
-    if (chatStarted) {
-      try {
-        const response = await fetch("/api/v1/chat", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(payload),
-        });
+    try {
+      const response = await fetch("/api/v1/chat", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(payload),
+      });
 
-        if (!response.ok) throw new Error("Failed to send message");
+      if (!response.ok) throw new Error("Failed to send message");
 
-        const data = await response.json();
-        if (data.message) {
-          setMessages((prev) => [
-            ...prev,
-            {
-              role: "assistant",
+      const data = await response.json();
+      
+      // Update the last message with the response
+      if (data.message) {
+        setMessages((prev) => {
+          const updated = [...prev];
+          // Update the last message which should be the assistant
+          if (updated.length > 0 && updated[updated.length - 1].role === "assistant") {
+            updated[updated.length - 1] = {
+              ...updated[updated.length - 1],
               content: data.message,
-              timestamp: new Date().toLocaleTimeString(),
-            },
-          ]);
-        }
-      } catch (error) {
-        console.error("Error sending message:", error);
+            };
+          }
+          return updated;
+        });
+        
+        // Start typing animation for the new response
+        setIsTyping(true);
+        setTypingWords([]);
+        const words = data.message.split(" ");
+        let index = 0;
+        let typedWords: string[] = [];
+        
+        const typeWord = () => {
+          if (index < words.length) {
+            typedWords.push(words[index]);
+            setTypingWords([...typedWords]);
+            index++;
+            setTimeout(typeWord, 40); // Fast typing speed
+          } else {
+            setIsTyping(false);
+          }
+        };
+        
+        typeWord();
       }
+    } catch (error) {
+      console.error("Error sending message:", error);
+      // Update the last message to show an error
+      setMessages((prev) => {
+        const updated = [...prev];
+        if (updated.length > 0 && updated[updated.length - 1].role === "assistant") {
+          updated[updated.length - 1] = {
+            ...updated[updated.length - 1],
+            content: "Sorry, I couldn't process your request. Please try again. 😔",
+          };
+        }
+        return updated;
+      });
+    } finally {
+      setIsSubmitting(false);
     }
   };
 
@@ -254,7 +240,7 @@ export default function ChatInterface() {
           >
             <div className="w-24 h-24 rounded-full overflow-hidden p-1">
               <Avatar className="w-full h-full">
-                <AvatarImage src="http://localhost:3000/images/assistant.png" />
+                <AvatarImage src="/images/assistant.png" />
               </Avatar>
             </div>
           </motion.div>
@@ -271,18 +257,19 @@ export default function ChatInterface() {
             <div className="p-4 rounded-lg">
               <form
                 className="flex gap-2"
-                onSubmit={(e) => {
-                  e.preventDefault();
-                }}
+                onSubmit={handleSubmit}
               >
                 <Input
                   placeholder="Ask me anything about Abu Dhabi..."
                   className="flex-1 bg-gray-800/60 chat-input focus:cursor-text border-white/20"
+                  value={input}
+                  onChange={(e) => setInput(e.target.value)}
                 />
                 <Button
                   size="icon"
                   type="submit"
                   className="border-white/20 bg-[#2563eb]/90 hover:bg-[#2156c9]/80"
+                  disabled={!input.trim() || isSubmitting}
                 >
                   <Send className="h-4 text-white w-4" />
                   <span className="sr-only">Start chat</span>
@@ -339,8 +326,8 @@ export default function ChatInterface() {
                     <AvatarImage
                       src={
                         message.role === "user"
-                          ? "http://localhost:3000/images/default_pfp.png"
-                          : "http://localhost:3000/images/assistant.png"
+                          ? "/images/default_pfp.png"
+                          : "/images/assistant.png"
                       }
                     />
                   </Avatar>
@@ -384,11 +371,13 @@ export default function ChatInterface() {
             onChange={(e) => setInput(e.target.value)}
             placeholder="Type your message..."
             className="flex-1 bg-gray-800/60 chat-input focus:cursor-text border-white/20"
+            disabled={isSubmitting}
           />
           <Button
             size="icon"
             type="submit"
             className="border-white/20 bg-[#2563eb]/90 hover:bg-[#2156c9]/80"
+            disabled={!input.trim() || isSubmitting}
           >
             <Send className="h-4 text-white w-4" />
             <span className="sr-only">Send message</span>
