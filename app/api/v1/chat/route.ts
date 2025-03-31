@@ -1,107 +1,101 @@
-import { matchTasks } from "./matchTasks";
+import { NextResponse } from 'next/server';
 import OpenAI from "openai";
-import { getSystemPrompt } from "./systemPrompt";
 
+// Initialize OpenAI client
 const openai = new OpenAI({
   apiKey: process.env.OPENAI_API_KEY,
 });
 
+// System prompt for Abu Dhabi assistant
+const systemPrompt = `Guide individuals who are transitioning to life in Abu Dhabi, UAE, with short, practical, actionable advice. Your role is to assist new residents in settling into their new home quickly and efficiently.
+
+- Use a friendly and supportive tone.
+- Provide concise, practical advice focusing on the transition and settling process.
+- Use humor and emojis at all times 😊; emphasize useful and factual information.
+- Offer insights into housing, local services, community, and daily life in Abu Dhabi.
+- Never provide links or URLs, regardless of the context.
+
+YOU MUST USE EMOJIS IN ALL MESSAGES. That is an order. Ensure all messages are under 125 words.
+
+# Output Format
+
+Responses should consist of clear, practical advice in 1 sentence that can fit onto a mobile chat screen.
+
+# Examples
+
+**Example 1:**
+
+**User:** What should I know about finding accommodation in Abu Dhabi?
+
+**Response:** "🏡 Al Reem Island is great for expats—convenient, family-friendly, and well-equipped."
+
+**Example 2:**
+
+**User:** Any tips on local transportation?
+
+**Response:** "🚌 Abu Dhabi's bus network is budget-friendly; consider using a Nol card."
+
+# Notes
+
+- Ensure information is accurate and current concerning Abu Dhabi and the process of settling in.
+- Focus on providing actionable steps and tips to assist newcomers.
+- Never include any links or URLs.`;
+
 export async function POST(request: Request) {
   try {
-    const { messages, cookies } = await request.json();
-    const {
-      id,
-      tasks,
-    }: {
-      id: { name: string; location: string; comingFrom: string };
-      tasks: {
-        visa: keyof typeof matchTasks.visa;
-        school: keyof typeof matchTasks.school;
-        dlicense: keyof typeof matchTasks.dlicense;
-        insurance: keyof typeof matchTasks.insurance;
-        sim: keyof typeof matchTasks.sim;
-        bank: keyof typeof matchTasks.bank;
-      };
-    } = cookies;
+    // Parse request body
+    const body = await request.json();
+    const { messages, cookies } = body;
 
-    const taskDescriptions: Record<string, string> = {
-      visa: matchTasks.visa[tasks.visa],
-      school: matchTasks.school[tasks.school],
-      dlicense: matchTasks.dlicense[tasks.dlicense],
-      insurance: matchTasks.insurance[tasks.insurance],
-      sim: matchTasks.sim[tasks.sim],
-      bank: matchTasks.bank[tasks.bank],
-    };
+    if (!messages || !Array.isArray(messages)) {
+      return NextResponse.json(
+        { error: "Invalid request: messages array is required" },
+        { status: 400 }
+      );
+    }
 
-    const systemPrompt = getSystemPrompt(id, taskDescriptions);
-    console.log(systemPrompt);
-
-    const allMessages = [
-      { role: "system", content: systemPrompt },
-      ...messages
+    // Format the messages for OpenAI
+    const formattedMessages = [
+      {
+        role: "system",
+        content: systemPrompt
+      },
+      ...messages.map((msg: any) => ({
+        role: msg.role,
+        content: msg.content
+      }))
     ];
 
+    // Call OpenAI API
     const response = await openai.chat.completions.create({
-      model: "gpt-4o-mini",
-      messages: allMessages,
+      model: "gpt-4o-mini-search-preview",
+      messages: formattedMessages,
       response_format: {
-        type: "json_schema",
-        json_schema: {
-          name: "api_response",
-          schema: {
-            type: "object",
-            required: ["response", "function_calls"],
-            properties: {
-              response: {
-                type: "string",
-                description: "Your response",
-              },
-              function_calls: {
-                type: "array",
-                items: {
-                  enum: [
-                    "open_app_talabat",
-                    "open_app_careem",
-                    "open_app_zomato",
-                    "open_app_entertainer",
-                    "open_app_tripadvisor",
-                    "open_app_visitabudhabi",
-                    "open_app_adpolice",
-                    "open_app_darb",
-                    "open_discover_page",
-                    "open_apps",
-                    "open_home",
-                  ],
-                  type: "string",
-                },
-                description: "A list of functions that you may want to call",
-              },
-            },
-            additionalProperties: false,
-          },
-          strict: true,
-        },
+        type: "text"
       },
-      temperature: 1,
-      max_completion_tokens: 16000,
-      top_p: 1,
-      frequency_penalty: 0,
-      presence_penalty: 0,
+      web_search_options: {
+        search_context_size: "medium",
+        user_location: {
+          type: "approximate",
+          approximate: {
+            country: "AE",
+            region: "Abu Dhabi",
+            city: "Abu Dhabi"
+          }
+        }
+      },
+      store: false
     });
 
-    return new Response(JSON.stringify(response.choices[0].message), {
-      status: 200,
-      headers: {
-        "Content-Type": "application/json",
-      },
-    });
+    // Extract and return the assistant's message
+    const assistantMessage = response.choices[0].message.content;
+
+    return NextResponse.json({ message: assistantMessage });
   } catch (error) {
-    console.error("API error:", error);
-    return new Response(JSON.stringify({ error: "Internal Server Error" }), {
-      status: 500,
-      headers: {
-        "Content-Type": "application/json",
-      },
-    });
+    console.error('Error processing chat request:', error);
+    return NextResponse.json(
+      { error: "Failed to process request" }, 
+      { status: 500 }
+    );
   }
 }
