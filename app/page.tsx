@@ -88,6 +88,10 @@ export default function Page() {
           60 * 60 * 24 * 7
         }`;
         setPhase("final");
+        // Add a slight delay before reloading to ensure cookies are set
+        setTimeout(() => {
+          window.location.reload();
+        }, 1200);
       }
     }
   };
