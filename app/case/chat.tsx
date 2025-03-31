@@ -22,6 +22,22 @@ const initialMessage: Message = {
   timestamp: new Date().toLocaleTimeString(),
 };
 
+// Helper function to remove all URL formats completely
+const removeLinks = (text: string): string => {
+  // Match various link formats:
+  // 1. Regular URLs in parentheses: (example.com)
+  // 2. Markdown formatted links: ([site.com](https://site.com))
+  const markdownLinkRegex = /\(\[(.*?)\]\(.*?\)\)/g;
+  const plainUrlRegex = /\(((https?:\/\/)?[\w-]+(\.[\w-]+)+\/?[\w-\._~:/?#[\]@!\$&'\(\)\*\+,;=.]+)\)/g;
+  
+  // First remove formatted markdown links
+  let cleaned = text.replace(markdownLinkRegex, '');
+  // Then remove plain URLs in parentheses
+  cleaned = cleaned.replace(plainUrlRegex, '');
+  
+  return cleaned;
+};
+
 export default function ChatInterface() {
   const [messages, setMessages] = useState<Message[]>([]);
   const [typingWords, setTypingWords] = useState<string[]>([]);
@@ -171,13 +187,16 @@ export default function ChatInterface() {
       
       // Update the last message with the response
       if (data.message) {
+        // Remove links from the message
+        const cleanedMessage = removeLinks(data.message);
+        
         setMessages((prev) => {
           const updated = [...prev];
           // Update the last message which should be the assistant
           if (updated.length > 0 && updated[updated.length - 1].role === "assistant") {
             updated[updated.length - 1] = {
               ...updated[updated.length - 1],
-              content: data.message,
+              content: cleanedMessage,
             };
           }
           return updated;
@@ -186,7 +205,7 @@ export default function ChatInterface() {
         // Start typing animation for the new response
         setIsTyping(true);
         setTypingWords([]);
-        const words = data.message.split(" ");
+        const words = cleanedMessage.split(" ");
         let index = 0;
         let typedWords: string[] = [];
         
@@ -304,7 +323,7 @@ export default function ChatInterface() {
         </h1>
       </motion.div>
 
-      <ScrollArea className="flex-1 p-4" ref={scrollAreaRef}>
+      <ScrollArea className="flex-1 p-4 overflow-y-auto" ref={scrollAreaRef}>
         <div className="space-y-4">
           <AnimatePresence>
             {messages.map((message, index) => (
