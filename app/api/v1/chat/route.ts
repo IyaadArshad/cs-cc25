@@ -68,7 +68,7 @@ export async function POST(request: Request) {
 
     // Call OpenAI API
     const response = await openai.chat.completions.create({
-      model: "gpt-4o-mini-search-preview",
+      model: "gpt-4o-search-preview",
       messages: formattedMessages,
       response_format: {
         type: "text"
