@@ -150,7 +150,7 @@ const parseMarkdownBlocks = (text: string, isTyping: boolean): React.ReactNode[]
 			bulletGroup.push(<li key={i}>{parseInlineTokens(bulletMatch[2])}</li>);
 			if (i === lines.length - 1 || !lines[i + 1].match(/^\s*([-*])\s+(.*)/)) {
 				elements.push(
-					<ul key={`ul-${i}`} className="list-disc ml-5 my-2">
+					<ul key={`ul-${i}`} className="list-disc ml-5 my-0">
 						{bulletGroup}
 					</ul>
 				);
