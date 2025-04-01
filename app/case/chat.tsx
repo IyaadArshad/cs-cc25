@@ -9,6 +9,7 @@ import { Input } from "@/components/ui/input";
 import { Send, Sparkles } from "lucide-react";
 import { useEffect, useState, useRef } from "react";
 import CustomMarkdown from "@/components/custom-markdown";
+import Cookies from 'js-cookie';
 
 interface Message {
   role: "user" | "assistant";
@@ -115,6 +116,11 @@ export default function ChatInterface() {
     if (!input.trim() || isSubmitting) return;
 
     setIsSubmitting(true);
+
+    var userName = Cookies.get('name') || "Unable to find the users name"; // Get the user's name from cookies
+    var lookingFor = Cookies.get('lookingFor') || "Unable to get users objectives"; // Get the user's location from cookies
+    var originalLocation = Cookies.get('country') || "Unable to determine country of origin"
+    var tasks = Cookies.get('tasks') || "Unable to determine tasks";
     
     const newUserMessage: Message = {
       role: "user",
@@ -150,25 +156,83 @@ export default function ChatInterface() {
     setInput("");
 
     // Prepare the payload for API
+    const tasksCookie = Cookies.get('tasks');
+      interface Tasks {
+        setup: string;
+        visa: string;
+        school: string;
+        dlicense: string;
+        insurance: string;
+        sim: string;
+        bank: string;
+        culture: string;
+        infrastructure: string;
+      }
+
+    let parsedTasks: Tasks = {
+      setup: "setup-not-confirmed",
+      visa: "visa-not-confirmed",
+      school: "school-not-confirmed",
+      dlicense: "dlicense-not-confirmed",
+      insurance: "insurance-not-confirmed",
+      sim: "sim-not-confirmed",
+      bank: "bank-not-confirmed",
+      culture: "culture-not-confirmed",
+      infrastructure: "infrastructure-not-confirmed",
+    };
+
+    try {
+      interface Tasks {
+        setup: string;
+        visa: string;
+        school: string;
+        dlicense: string;
+        insurance: string;
+        sim: string;
+        bank: string;
+        culture: string;
+        infrastructure: string;
+      }
+
+      parsedTasks = tasksCookie
+        ? (JSON.parse(decodeURIComponent(tasksCookie)) as Tasks)
+        : {
+        setup: "setup-not-confirmed",
+        visa: "visa-not-confirmed",
+        school: "school-not-confirmed",
+        dlicense: "dlicense-not-confirmed",
+        insurance: "insurance-not-confirmed",
+        sim: "sim-not-confirmed",
+        bank: "bank-not-confirmed",
+        culture: "culture-not-confirmed",
+        infrastructure: "infrastructure-not-confirmed",
+          };
+    } catch (error) {
+      console.error("Error parsing tasks cookie:", error);
+    }
+
     const payload = {
       messages: [...messages, newUserMessage].map(({ role, content }) => ({
-        role,
-        content,
+      role,
+      content,
       })),
       cookies: {
-        id: {
-          name: "Iyaad",
-          location: "Abu Dhabi, UAE",
-          comingFrom: "Sri Lanka",
-        },
-        tasks: {
-          visa: "visa-work",
-          school: "school-confirmed",
-          dlicense: "dlicense-confimed",
-          insurance: "insurance-confirmed",
-          sim: "sim-confirmed",
-          bank: "bank-confirmed",
-        },
+      id: {
+        name: Cookies.get('name') || "Unable to find the user's name",
+        location: Cookies.get('lookingFor') || "Unable to get user's objectives",
+        comingFrom: Cookies.get('country') || "Unable to determine country of origin",
+      },
+      tasks: {
+        setup: parsedTasks.setup || "setup-not-confirmed",
+        visa: parsedTasks.visa || "visa-not-confirmed",
+        school: parsedTasks.school || "school-not-confirmed",
+        dlicense: parsedTasks.dlicense || "dlicense-not-confirmed",
+        insurance: parsedTasks.insurance || "insurance-not-confirmed",
+        sim: parsedTasks.sim || "sim-not-confirmed",
+        bank: parsedTasks.bank || "bank-not-confirmed",
+        culture: parsedTasks.culture || "culture-not-confirmed",
+        infrastructure: parsedTasks.infrastructure || "infrastructure-not-confirmed",
+      },
       },
     };
 
