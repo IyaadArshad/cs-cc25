@@ -123,9 +123,7 @@ export default function Page() {
       case "apps":
         return <CaseApps />;
       case "profile":
-        return (
-          <CaseSettings />
-        );
+        return <CaseSettings />;
       default:
         return null;
     }
