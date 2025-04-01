@@ -366,11 +366,11 @@ export default function ChatInterface() {
   }
 
   return (
-    <div className="flex flex-col h-screen">
+    <div className="flex flex-col h-screen overflow-hidden">
       <motion.div
         initial={{ opacity: 0, y: -20 }}
         animate={{ opacity: 1, y: 0 }}
-        className="flex items-center p-4"
+        className="flex items-center p-4 z-10"
       >
         <h1 className="text-2xl font-bold text-white flex items-center">
           Mutasil AI Chat
@@ -387,67 +387,69 @@ export default function ChatInterface() {
         </h1>
       </motion.div>
 
-      <ScrollArea className="flex-1 p-4 overflow-y-auto" ref={scrollAreaRef}>
-        <div className="space-y-4">
-          <AnimatePresence>
-            {messages.map((message, index) => (
-              <motion.div
-                key={index}
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: -20 }}
-                className={`flex ${
-                  message.role === "user" ? "justify-end" : "justify-start"
-                }`}
-              >
-                <div
-                  className={`flex items-start gap-2 max-w-[80%] ${
-                    message.role === "user" ? "flex-row-reverse" : "flex-row"
+      <div className="flex-1 overflow-hidden relative">
+        <ScrollArea className="h-full p-4" ref={scrollAreaRef}>
+          <div className="space-y-4 pb-2">
+            <AnimatePresence>
+              {messages.map((message, index) => (
+                <motion.div
+                  key={index}
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: -20 }}
+                  className={`flex ${
+                    message.role === "user" ? "justify-end" : "justify-start"
                   }`}
                 >
-                  <Avatar className="w-auto h-8">
-                    <AvatarImage
-                      src={
-                        message.role === "user"
-                          ? "/images/default_pfp.png"
-                          : "/images/assistant.png"
-                      }
-                    />
-                  </Avatar>
                   <div
-                    className={`flex flex-col ${
-                      message.role === "user" ? "items-end" : "items-start"
+                    className={`flex items-start gap-2 max-w-[80%] ${
+                      message.role === "user" ? "flex-row-reverse" : "flex-row"
                     }`}
                   >
+                    <Avatar className="w-auto h-8">
+                      <AvatarImage
+                        src={
+                          message.role === "user"
+                            ? "/images/default_pfp.png"
+                            : "/images/assistant.png"
+                        }
+                      />
+                    </Avatar>
                     <div
-                      className={`rounded-lg p-3 ${
-                        message.role === "user"
-                          ? "bg-primary text-primary-foreground"
-                          : "bg-gradient-to-br from-[#2563eb] to-[#4C1D95] text-white"
+                      className={`flex flex-col ${
+                        message.role === "user" ? "items-end" : "items-start"
                       }`}
                     >
-                      <div className="text-sm">
-                        {isTyping && message.role === "assistant" && index === messages.length - 1 ? (
-                          <>
-                            <CustomMarkdown isTyping>
-                              {typingWords.join(" ")}
-                            </CustomMarkdown>
-                            <span className="inline-block w-3 h-3 bg-white rounded-full ml-1 animate-pulse"></span>
-                          </>
-                        ) : (
-                          <CustomMarkdown>{message.content}</CustomMarkdown>
-                        )}
+                      <div
+                        className={`rounded-lg p-3 ${
+                          message.role === "user"
+                            ? "bg-primary text-primary-foreground"
+                            : "bg-gradient-to-br from-[#2563eb] to-[#4C1D95] text-white"
+                        }`}
+                      >
+                        <div className="text-sm">
+                          {isTyping && message.role === "assistant" && index === messages.length - 1 ? (
+                            <>
+                              <CustomMarkdown isTyping>
+                                {typingWords.join(" ")}
+                              </CustomMarkdown>
+                              <span className="inline-block w-3 h-3 bg-white rounded-full ml-1 animate-pulse"></span>
+                            </>
+                          ) : (
+                            <CustomMarkdown>{message.content}</CustomMarkdown>
+                          )}
+                        </div>
                       </div>
                     </div>
                   </div>
-                </div>
-              </motion.div>
-            ))}
-          </AnimatePresence>
-        </div>
-      </ScrollArea>
+                </motion.div>
+              ))}
+            </AnimatePresence>
+          </div>
+        </ScrollArea>
+      </div>
 
-      <div className="p-4">
+      <div className="p-4 z-10">
         <form onSubmit={handleSubmit} className="flex gap-2">
           <Input
             value={input}
