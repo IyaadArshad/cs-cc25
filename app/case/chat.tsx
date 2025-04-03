@@ -47,7 +47,35 @@ export default function ChatInterface() {
   const [chatStarted, setChatStarted] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const scrollAreaRef = useRef<HTMLDivElement>(null);
+  const messagesEndRef = useRef<HTMLDivElement>(null);
   const hasRun = useRef(false);
+
+  // Function to scroll to bottom
+  const scrollToBottom = () => {
+    if (scrollAreaRef.current) {
+      scrollAreaRef.current.scrollTop = scrollAreaRef.current.scrollHeight;
+    }
+    
+    // Also try to scroll to the messages end marker
+    messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
+  };
+
+  // Scroll when messages or typing words change
+  useEffect(() => {
+    scrollToBottom();
+    
+    // Also set a small timeout to account for render delay
+    const timeoutId = setTimeout(scrollToBottom, 100);
+    return () => clearTimeout(timeoutId);
+  }, [messages, typingWords]);
+
+  // Add additional scroll during typing animation
+  useEffect(() => {
+    if (isTyping) {
+      const scrollInterval = setInterval(scrollToBottom, 500);
+      return () => clearInterval(scrollInterval);
+    }
+  }, [isTyping]);
 
   useEffect(() => {
     if (!chatStarted || !hasRun.current) return;
@@ -104,12 +132,6 @@ export default function ChatInterface() {
 
     typeWord();
   }, [chatStarted]);
-
-  useEffect(() => {
-    if (scrollAreaRef.current) {
-      scrollAreaRef.current.scrollTop = scrollAreaRef.current.scrollHeight;
-    }
-  }, [messages, typingWords]);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -445,6 +467,8 @@ export default function ChatInterface() {
                 </motion.div>
               ))}
             </AnimatePresence>
+            {/* Add an invisible div at the end to scroll to */}
+            <div ref={messagesEndRef} />
           </div>
         </ScrollArea>
       </div>
