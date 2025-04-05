@@ -223,7 +223,7 @@ function TaskQuestion({
   );
 }
 
-// Add this helper function near the top of the file, after imports
+// Update this helper function to correctly calculate progress
 function calculateProgress(
   taskAnswers: Record<string, string>,
   steps: typeof furtherSteps
@@ -235,9 +235,8 @@ function calculateProgress(
 
   steps.forEach((step) => {
     const answer = taskAnswers[step.id];
-    const defaultAnswer =
-      step.answers.find((ans) => ans.id.includes("none"))?.id || "";
-    if (answer && answer !== defaultAnswer) {
+    if (answer && answer !== `${step.id}-not-confirmed`) {
+      // Check if the answer exists and isn't the "not confirmed" placeholder
       completedTasks++;
     }
   });
@@ -373,8 +372,7 @@ export default function CaseHome() {
     if (!Cookies.get("tasks")) {
       const taskDefaults: Record<string, string> = {};
       furtherSteps.forEach((step) => {
-        const defaultAnswer =
-          step.answers.find((ans) => ans.id.includes("none"))?.id || "";
+        const defaultAnswer = `${step.id}-not-confirmed`;
         taskDefaults[step.id] = defaultAnswer;
       });
       Cookies.set("tasks", JSON.stringify(taskDefaults), {
@@ -505,14 +503,12 @@ export default function CaseHome() {
 
   if (overviewMode) {
     const progress = calculateProgress(taskAnswers, furtherSteps);
-    // Sort tasks: unanswered first, answered (where saved answer differs from default) go last.
+    // Sort tasks: unanswered first, answered last
     const sortedSteps = [...furtherSteps].sort((a, b) => {
-      const defaultA =
-        a.answers.find((ans) => ans.id.includes("none"))?.id || "";
-      const defaultB =
-        b.answers.find((ans) => ans.id.includes("none"))?.id || "";
-      const answeredA = taskAnswers[a.id] && taskAnswers[a.id] !== defaultA;
-      const answeredB = taskAnswers[b.id] && taskAnswers[b.id] !== defaultB;
+      const answeredA =
+        taskAnswers[a.id] && taskAnswers[a.id] !== `${a.id}-not-confirmed`;
+      const answeredB =
+        taskAnswers[b.id] && taskAnswers[b.id] !== `${b.id}-not-confirmed`;
       if (answeredA === answeredB) return 0;
       return answeredA ? 1 : -1;
     });
@@ -534,10 +530,9 @@ export default function CaseHome() {
         <div className="flex flex-col items-center justify-center space-y-6 mt-6">
           <div className="w-full max-w-xl mt-6 space-y-4">
             {sortedSteps.map((step, index) => {
-              const defaultAnswer =
-                step.answers.find((ans) => ans.id.includes("none"))?.id || "";
               const answered =
-                taskAnswers[step.id] && taskAnswers[step.id] !== defaultAnswer;
+                taskAnswers[step.id] &&
+                taskAnswers[step.id] !== `${step.id}-not-confirmed`;
               return (
                 <motion.div
                   id={`task-${step.id}`} // <-- Added id for scrolling

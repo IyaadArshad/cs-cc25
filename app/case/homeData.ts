@@ -69,7 +69,7 @@ export const furtherSteps = [
     question: "Driving",
     emphasisText: "license?",
     answers: [
-      { id: "dlicense-confimed", label: "Yes, I have a license", icon: Car },
+      { id: "dlicense-confirmed", label: "Yes, I have a license", icon: Car },
       { id: "dlicense-none", label: "No, I don't have one", icon: FileQuestion },
       { id: "dlicense-inprogress", label: "No, but I'm in the process of getting one", icon: UserPlus, isWide: true }
     ]

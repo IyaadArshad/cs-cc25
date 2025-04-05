@@ -69,7 +69,7 @@ export async function POST(request: Request) {
       // Driver's license status
       if (tasks.dlicense !== "dlicense-not-confirmed") {
         const licenseStatus =
-          tasks.dlicense === "dlicense-confimed"
+          tasks.dlicense === "dlicense-confirmed"
             ? "Has a UAE driving license"
             : tasks.dlicense === "dlicense-none"
             ? "Doesn't have a driving license"
