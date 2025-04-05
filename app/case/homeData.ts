@@ -23,7 +23,9 @@ import {
   Train,
   PiggyBank,
   LucideBanknote,
-  UserCheck
+  UserCheck,
+  Star,
+  ThumbsUp
 } from "lucide-react";
 
 export const furtherSteps = [
@@ -40,7 +42,7 @@ export const furtherSteps = [
   },
   {
     id: 'visa',
-    title: "Confirm visa Appointment",
+    title: "Confirm your visa",
     description: "Confirm your secured residency permit",
     question: "Select your",
     emphasisText: "visa status",
@@ -111,26 +113,14 @@ export const furtherSteps = [
   },
   {
     id: 'culture',
-    title: "Learn about Emirati Culture",
-    description: "Discover local customs and traditions specific to Abu Dhabi",
-    question: "Select your",
-    emphasisText: "learning path",
+    title: "UAE Familiarity Level",
+    description: "How comfortable are you with Emirati culture and lifestyle?",
+    question: "Your UAE",
+    emphasisText: "familiarity",
     answers: [
-      { id: "workshops", label: "Cultural Workshops", icon: UsersRound },
-      { id: "events", label: "Cultural Events", icon: BookOpen },
-      { id: "both", label: "Combined Learning", icon: Languages, isWide: true }
-    ]
-  },
-  {
-    id: 'infrastructure',
-    title: "Explore UAE Infrastructure",
-    description: "Get informed about public transport, utilities, and connectivity services",
-    question: "Select your",
-    emphasisText: "area focus",
-    answers: [
-      { id: "local", label: "Local Area", icon: MapPin },
-      { id: "city", label: "Whole City", icon: Building2 },
-      { id: "transport", label: "Transport Routes", icon: Train, isWide: true }
+      { id: "familiarity-very-familiar", label: "Very familiar", icon: ThumbsUp },
+      { id: "familiarity-somewhat", label: "Somewhat familiar", icon: Star },
+      { id: "familiarity-not-at-all", label: "Not familiar at all", icon: FileQuestion, isWide: true }
     ]
   }
 ];
