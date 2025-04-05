@@ -147,7 +147,7 @@ export default function Page() {
                 <img
                   src="/landing_new.png"
                   alt="Welcome"
-                  className={`absolute inset-0 object-cover w-full h-full transition-opacity duration-500 ${
+                  className={`absolute inset-0 object-cover h-full w-full pb-2 transition-opacity duration-500 ${
                     phase === "name" ? "opacity-100" : "opacity-0"
                   }`}
                 />
