@@ -6,7 +6,8 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Send, Sparkles } from "lucide-react";
+import { Send } from "lucide-react";
+import { Sparkles } from "lucide-react";
 import { useEffect, useState, useRef } from "react";
 import CustomMarkdown from "@/components/custom-markdown";
 import Cookies from 'js-cookie';
@@ -395,7 +396,7 @@ export default function ChatInterface() {
         className="flex items-center p-4 z-10"
       >
         <h1 className="text-2xl font-bold text-white flex items-center">
-          Mutasil AI Chat
+          Mutasil AI Agent Chat
           <Sparkles className="ml-2 h-6 w-6 [&>path]:fill-transparent [&>path]:stroke-[url(#sparkleGradient)]" />
           <svg width="0" height="0">
             <defs>
