@@ -4,16 +4,12 @@ import { useState, useEffect } from "react";
 import type React from "react";
 import { countries } from "./countries";
 import { Tab } from "../types/types";
-import SettingsItem from "@/components/SettingsItem";
 import { backgrounds } from "../variables/backgrounds";
 import {
   HomeIcon as HomeIconFilled,
   MagnifyingGlassIcon as MagnifyingGlassFilled,
   Squares2X2Icon as Squares2X2Filled,
   UserCircleIcon as UserCircleFilled,
-  ChevronLeftIcon as ChevronLeftFilled,
-  ExclamationCircleIcon,
-  UserGroupIcon,
   ChatBubbleLeftRightIcon as ChatBubbleLeftRightFilled,
 } from "@heroicons/react/24/solid";
 import {
@@ -21,10 +17,6 @@ import {
   MagnifyingGlassIcon,
   Squares2X2Icon,
   UserCircleIcon,
-  ShieldCheckIcon,
-  TrashIcon,
-  LockClosedIcon,
-  LinkIcon,
   ChatBubbleLeftRightIcon,
 } from "@heroicons/react/24/outline";
 import { Check } from "lucide-react";
@@ -37,7 +29,6 @@ import CaseSettings from "./case/settings";
 export default function Page() {
   const [activeTab, setActiveTab] = useState<Tab>("home");
   const [userName, setUserName] = useState("");
-  const [bio, setBio] = useState("");
   const [phase, setPhase] = useState<"name" | "bio" | "origin" | "final">(
     "name"
   );
