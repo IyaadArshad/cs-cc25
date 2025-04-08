@@ -1,3 +1,5 @@
+"use client";
+
 import { Card, CardContent } from "@/components/ui/card";
 import {
   Carousel,
@@ -331,9 +333,45 @@ function LoadingSpinner() {
       <motion.div
         className="w-12 h-12 border-4 border-[#2563eb] border-t-transparent rounded-full"
         animate={{ rotate: 360 }}
-        transition={{ duration: 1, repeat: Infinity, ease: "linear" }}
+        transition={{
+          duration: 1,
+          repeat: Number.POSITIVE_INFINITY,
+          ease: "linear",
+        }}
       />
     </motion.div>
+  );
+}
+
+// Card component for quick actions
+function QuickActionCard({
+  title,
+  description,
+  image,
+  link,
+}: {
+  title: React.ReactNode;
+  description: string;
+  image: string;
+  link: string;
+}) {
+  return (
+    <Card
+      className="bg-gray-800 border-gray-700 h-[280px] select-none cursor-pointer hover:bg-gray-700/50 transition-colors"
+      onClick={() => window.open(link, "_blank")}
+    >
+      <CardContent className="p-6 flex flex-col h-full">
+        <img
+          src={image || "/placeholder.svg"}
+          alt={typeof title === "string" ? title : "Quick action"}
+          className="w-full h-36 object-cover rounded-md mb-4"
+        />
+        <h3 className="text-white text-lg font-semibold mb-2 line-clamp-1">
+          {title}
+        </h3>
+        <p className="text-gray-400 text-sm line-clamp-3">{description}</p>
+      </CardContent>
+    </Card>
   );
 }
 
@@ -341,6 +379,15 @@ export default function CaseHome() {
   const [overviewMode, setOverviewMode] = useState(false);
   const [userName, setUserName] = useState("");
   const [isTransitioning, setIsTransitioning] = useState(false);
+  const [showDialog, setShowDialog] = useState(false);
+
+  const handleDialogClose = () => {
+    setShowDialog(false);
+  };
+
+  const handleExitAnyway = () => {
+    setShowDialog(false);
+  };
 
   // New animation states
   const [isReturning, setIsReturning] = useState(false);
@@ -357,13 +404,88 @@ export default function CaseHome() {
   const overviewContainerRef = useRef<HTMLDivElement>(null);
   const [hasShownCelebration, setHasShownCelebration] = useState(false);
 
+  // Quick actions data
+  const quickActions = [
+    {
+      title: (
+        <>
+          Order{" "}
+          <span className="text-[#2563eb]">
+            {new Date().getHours() < 11
+              ? "breakfast"
+              : new Date().getHours() < 15
+              ? "lunch"
+              : new Date().getHours() < 19
+              ? "dinner"
+              : "a snack"}
+          </span>
+        </>
+      ),
+      description: "Find restaurants and food delivery options near you",
+      image: "/img/tips/zomato.png",
+      link: "https://www.zomato.com/abudhabi",
+    },
+    {
+      title: (
+        <>
+          Call a <span className="text-[#2563eb]">taxi</span>
+        </>
+      ),
+      description: "Book a ride quickly and conveniently across the city",
+      image: "/img/tips/careem.png",
+      link: "https://www.careem.com",
+    },
+    {
+      title: (
+        <>
+          Order <span className="text-[#2563eb]">groceries</span>
+        </>
+      ),
+      description: "Get groceries and essentials delivered to your doorstep",
+      image: "/placeholder.svg?height=144&width=256",
+      link: "https://www.talabat.com/uae",
+    },
+    {
+      title: (
+        <>
+          Pay <span className="text-[#2563eb]">utility bills</span>
+        </>
+      ),
+      description: "Manage your water and electricity services easily",
+      image: "/img/tips/abuDhabiDistributionCompany.png",
+      link: "https://www.addc.ae",
+    },
+    {
+      title: (
+        <>
+          Explore <span className="text-[#2563eb]">attractions</span>
+        </>
+      ),
+      description: "Discover local events and activities in Abu Dhabi",
+      image: "/img/tips/visitAbuDhabi.png",
+      link: "https://visitabudhabi.ae",
+    },
+  ];
+
+  // Carousel options
+  const carouselOptions = {
+    loop: true,
+    dragFree: true,
+    draggable: true,
+    containScroll: "trimSnaps" as const,
+    axis: "x" as const,
+    wheelEnabled: true,
+    wheelScroll: 1,
+    align: "start" as const,
+  };
+
   useEffect(() => {
     const name = Cookies.get("name");
     if (name) {
       setUserName(name);
       // Update the tasks cookie to mark setup as complete if name exists
       const tasksCookie = Cookies.get("tasks");
-      let tasks = tasksCookie ? JSON.parse(tasksCookie) : {};
+      const tasks = tasksCookie ? JSON.parse(tasksCookie) : {};
       tasks["setup"] = "setup-complete";
       Cookies.set("tasks", JSON.stringify(tasks), { path: "/", expires: 7 });
       setTaskAnswers(tasks);
@@ -445,7 +567,7 @@ export default function CaseHome() {
   // Update task save to update the tasks cookie and taskAnswers state:
   const handleTaskSave = (taskId: string, selected: string) => {
     const tasksCookie = Cookies.get("tasks");
-    let tasks = tasksCookie ? JSON.parse(tasksCookie) : {};
+    const tasks = tasksCookie ? JSON.parse(tasksCookie) : {};
     tasks[taskId] = selected;
     Cookies.set("tasks", JSON.stringify(tasks), { path: "/", expires: 7 });
     setTaskAnswers(tasks);
@@ -627,6 +749,89 @@ export default function CaseHome() {
             />
           </motion.div>
         </div>
+      </AnimatePresence>
+
+      {/* Quick Actions Carousel */}
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        animate={{
+          opacity: mainViewReady ? 1 : 0,
+          y: mainViewReady ? 0 : 20,
+        }}
+        transition={{ duration: 0.4, delay: 0.6 }}
+        className="w-full mt-8"
+      >
+        <h2 className="text-xl text-white font-medium mb-4 px-2">
+          Quick Actions
+        </h2>
+
+        <Carousel
+          opts={carouselOptions}
+          className="w-full cursor-grab active:cursor-grabbing"
+        >
+          <CarouselContent className="select-none -ml-2">
+            {quickActions.map((action, index) => (
+              <CarouselItem
+                key={index}
+                className="pl-2 basis-[70%] md:basis-[45%] lg:basis-[30%]"
+              >
+                <motion.div
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 0.1 + index * 0.05 }}
+                >
+                  <QuickActionCard
+                    title={action.title}
+                    description={action.description}
+                    image={action.image}
+                    link={action.link}
+                  />
+                </motion.div>
+              </CarouselItem>
+            ))}
+          </CarouselContent>
+        </Carousel>
+      </motion.div>
+
+      <AnimatePresence>
+        {showDialog && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="fixed inset-0 flex justify-center items-center bg-black bg-opacity-50 z-50"
+          >
+            <motion.div
+              initial={{ opacity: 0, scale: 0.8 }}
+              animate={{ opacity: 1, scale: 1 }}
+              exit={{ opacity: 0, scale: 0.8 }}
+              transition={{ type: "spring", stiffness: 300, damping: 20 }}
+              className="bg-gray-800 p-8 rounded-lg text-center mx-4 max-w-xs"
+            >
+              <X className="w-16 h-16 text-[#2563eb] mx-auto" />
+              <h2 className="mt-4 text-2xl font-bold text-white">
+                You have unsaved changes
+              </h2>
+              <p className="mt-2 text-gray-300">
+                Do you want to exit without saving your selection?
+              </p>
+              <div className="mt-6 flex justify-center gap-4">
+                <button
+                  onClick={handleDialogClose}
+                  className="px-4 py-2 bg-gray-700/50 hover:bg-gray-600 text-white rounded-lg"
+                >
+                  Cancel
+                </button>
+                <button
+                  onClick={handleExitAnyway}
+                  className="px-4 py-2 bg-blue-600 hover:bg-blue-500 text-white rounded-lg"
+                >
+                  Exit anyway
+                </button>
+              </div>
+            </motion.div>
+          </motion.div>
+        )}
       </AnimatePresence>
       {/* Add custom keyframes for wiggle animation */}
       <style jsx global>{`
