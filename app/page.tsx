@@ -38,9 +38,9 @@ export default function Page() {
   const [isLoading, setIsLoading] = useState(true);
   const [inputValue, setInputValue] = useState("");
   const lookingForOptions = [
-    "Find Job & Employment Opportunities",
-    "Explore Local Transportation Options",
-    "Manage Utilities Services",
+    "Find Services & Transportation Options Available",
+    "Get Personalized AI-Powered Assistance",
+    "Order Fresh Food & Daily Living Essentials"
   ];
   const [highlightedIndex, setHighlightedIndex] = useState(0);
 
