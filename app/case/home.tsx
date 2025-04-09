@@ -387,7 +387,7 @@ export default function CaseHome() {
       title: (
         <>
           Order{" "}
-          <span className="text-[#2563eb]">
+          <span>
             {new Date().getHours() < 11
               ? "breakfast"
               : new Date().getHours() < 15
@@ -396,6 +396,7 @@ export default function CaseHome() {
               ? "dinner"
               : "a snack"}
           </span>
+          <span className="text-[#2563eb]"> with Zomato</span>
         </>
       ),
       description: "Find restaurants and food delivery options near you",
@@ -405,7 +406,7 @@ export default function CaseHome() {
     {
       title: (
         <>
-          Call a <span className="text-[#2563eb]">taxi</span>
+          Call a taxi <span className="text-[#2563eb]">with Careem</span>
         </>
       ),
       description: "Book a ride quickly and conveniently across the city",
@@ -415,27 +416,26 @@ export default function CaseHome() {
     {
       title: (
         <>
-          Order <span className="text-[#2563eb]">groceries</span>
+          Order groceries <span className="text-[#2563eb]">with Talabat</span>
         </>
       ),
-      description: "Get groceries and essentials delivered to your doorstep",
       image: "/placeholder.svg?height=144&width=256",
       link: "https://www.talabat.com/uae",
     },
     {
       title: (
         <>
-          Pay <span className="text-[#2563eb]">utility bills</span>
+          Pay utilities <span className="text-[#2563eb]">with ADDC</span>
         </>
       ),
-      description: "Manage your water and electricity services easily",
       image: "/img/tips/abuDhabiDistributionCompany.png",
       link: "https://www.addc.ae",
     },
     {
       title: (
         <>
-          Explore <span className="text-[#2563eb]">attractions</span>
+          Explore attractions{" "}
+          <span className="text-[#2563eb]">on Visit Abu Dhabi</span>
         </>
       ),
       description: "Discover local events and activities in Abu Dhabi",
@@ -444,7 +444,6 @@ export default function CaseHome() {
     },
   ];
 
-  // Carousel options
   const carouselOptions = {
     loop: true,
     dragFree: true,
