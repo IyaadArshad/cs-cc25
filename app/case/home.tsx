@@ -338,33 +338,6 @@ function LoadingSpinner() {
     </motion.div>
   );
 }
-function QuickActionCard({
-  title,
-  icon,
-  link,
-}: {
-  title: React.ReactNode;
-  icon: React.ReactNode;
-  link: string;
-}) {
-  return (
-    <Card
-      className="bg-gray-800 border-gray-700 h-[230px] w-full select-none cursor-pointer hover:bg-gray-700/50 transition-colors"
-      onClick={() => window.open(link, "_blank")}
-    >
-      <CardContent className="p-6 text-left flex flex-col gap-2 h-full">
-        <div className="w-full flex justify-left">
-          <div className="text-[#2563eb] w-14 h-14 flex items-center justify-center">
-            {icon}
-          </div>
-        </div>
-        <div className="flex flex-col items-start text-left mt-2">
-          <h1 className="text-white font-extralight text-3xl leading-normal">{title}</h1>
-        </div>
-      </CardContent>
-    </Card>
-  );
-}
 
 export default function CaseHome() {
   const [overviewMode, setOverviewMode] = useState(false);
@@ -748,11 +721,11 @@ export default function CaseHome() {
           opts={carouselOptions}
           className="w-full cursor-grab active:cursor-grabbing"
         >
-          <CarouselContent className="select-none">
+          <CarouselContent className="select-none px-2">
             {quickActions.map((action, index) => (
               <CarouselItem
                 key={index}
-                className="px-2 md:basis-1/3 lg:basis-1/4 xl:basis-1/5"
+                className="pl-2 pr-4 sm:pr-2 basis-[80%] min-w-[260px] sm:basis-2/3 md:basis-1/2 lg:basis-[40%] xl:basis-1/3 2xl:basis-1/4 max-w-[400px]"
               >
                 <motion.div
                   initial={{ opacity: 0, y: 20 }}
@@ -760,11 +733,21 @@ export default function CaseHome() {
                   transition={{ delay: 0.1 + index * 0.05 }}
                   className="h-full"
                 >
-                  <QuickActionCard
-                    title={action.title}
-                    icon={action.icon}
-                    link={action.link}
-                  />
+                  <Card
+                    className="bg-gray-800 border-gray-700 h-[230px] w-full select-none cursor-pointer hover:bg-gray-700/50 transition-colors"
+                    onClick={() => window.open(action.link, "_blank")}
+                  >
+                    <CardContent className="p-6 text-left flex flex-col gap-2 h-full">
+                      <div className="w-full flex justify-left">
+                        <div className="text-[#2563eb] w-14 h-14 flex items-center justify-center">
+                          {action.icon}
+                        </div>
+                      </div>
+                      <div className="flex flex-col items-start text-left mt-2">
+                        <h1 className="text-white font-extralight text-3xl leading-normal">{action.title}</h1>
+                      </div>
+                    </CardContent>
+                  </Card>
                 </motion.div>
               </CarouselItem>
             ))}
