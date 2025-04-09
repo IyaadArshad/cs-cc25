@@ -111,7 +111,7 @@ export default function CaseApps() {
             custom={index}
           >
             <a href={card.externalLink} target="_blank" rel="noreferrer">
-              <Card className="w-full min-w-[120px] bg-gray-800 border-gray-700 min-h-[280px] select-none cursor-pointer hover:bg-gray-700/50 transition-colors flex flex-col">
+              <Card className="w-full min-w-[120px] bg-gray-800 border-gray-700 min-h-[265px] select-none cursor-pointer hover:bg-gray-700/50 transition-colors flex flex-col">
                 <CardHeader className="relative text-white text-lg font-semibold line-clamp-2 pb-2">
                   <span rel="noreferrer" className="absolute top-3 right-3">
                     <ExternalLink className="w-4 h-4 text-gray-100/70" />
@@ -122,11 +122,11 @@ export default function CaseApps() {
                     width={"72px"}
                     height={"72px"}
                   />
-                  <CardTitle className="text-lg text-center">
+                  <CardTitle className="text-lg p-4 text-center m-0">
                     {card.title}
                   </CardTitle>
                 </CardHeader>
-                <CardContent className="text-gray-400 text-sm text-center pt-0 flex-1 flex items-center justify-center px-4">
+                <CardContent className="text-gray-400 text-sm text-center items-center justify-center px-4">
                   <p className="line-clamp-4">{card.content}</p>
                 </CardContent>
               </Card>
