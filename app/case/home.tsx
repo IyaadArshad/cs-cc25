@@ -7,12 +7,21 @@ import {
   CarouselItem,
 } from "@/components/ui/carousel";
 import { Button } from "@/components/ui/button";
-import { ArrowRight, Check } from "lucide-react";
+import { 
+  ArrowRight, 
+  Check, 
+  ArrowLeft, 
+  X, 
+  Utensils, 
+  Car, 
+  ShoppingBag, 
+  Receipt, 
+  MapPin 
+} from "lucide-react";
 import { useEffect, useState, useRef } from "react";
 import Cookies from "js-cookie";
 import { furtherSteps } from "./homeData";
 import { motion, AnimatePresence } from "framer-motion";
-import { ArrowLeft, X } from "lucide-react";
 import React from "react";
 import JSConfetti from "js-confetti";
 
@@ -331,28 +340,26 @@ function LoadingSpinner() {
 }
 function QuickActionCard({
   title,
-  image,
+  icon,
   link,
 }: {
   title: React.ReactNode;
-  image: string;
+  icon: React.ReactNode;
   link: string;
 }) {
   return (
     <Card
-      className="bg-gray-800 border-gray-700 h-[200px] select-none cursor-pointer hover:bg-gray-700/50 transition-colors"
+      className="bg-gray-800 border-gray-700 h-[230px] w-full select-none cursor-pointer hover:bg-gray-700/50 transition-colors"
       onClick={() => window.open(link, "_blank")}
     >
       <CardContent className="p-6 text-left flex flex-col gap-2 h-full">
         <div className="w-full flex justify-left">
-          <img
-            src={image || "/placeholder.svg"}
-            alt={typeof title === "string" ? title : "Quick action"}
-            className="w-14 h-14 object-cover rounded-md"
-          />
+          <div className="text-[#2563eb] w-14 h-14 flex items-center justify-center">
+            {icon}
+          </div>
         </div>
         <div className="flex flex-col items-start text-left mt-2">
-            <h1 className="text-white text-3xl font-semibold leading-normal">{title}</h1>
+          <h1 className="text-white font-extralight text-3xl leading-normal">{title}</h1>
         </div>
       </CardContent>
     </Card>
@@ -400,7 +407,7 @@ export default function CaseHome() {
         </>
       ),
       description: "Find restaurants and food delivery options near you",
-      image: "/img/tips/zomato.png",
+      icon: <Utensils size={32} />,
       link: "https://www.zomato.com/abudhabi",
     },
     {
@@ -410,7 +417,7 @@ export default function CaseHome() {
         </>
       ),
       description: "Book a ride quickly and conveniently across the city",
-      image: "/img/tips/careem.png",
+      icon: <Car size={32} />,
       link: "https://www.careem.com",
     },
     {
@@ -419,7 +426,7 @@ export default function CaseHome() {
           Order groceries<span className="text-[#2563eb]"><br/>with Talabat</span>
         </>
       ),
-      image: "/placeholder.svg?height=144&width=256",
+      icon: <ShoppingBag size={32} />,
       link: "https://www.talabat.com/uae",
     },
     {
@@ -428,7 +435,7 @@ export default function CaseHome() {
           Pay utilities<span className="text-[#2563eb]"><br/>with ADDC</span>
         </>
       ),
-      image: "/img/tips/abuDhabiDistributionCompany.png",
+      icon: <Receipt size={32} />,
       link: "https://www.addc.ae",
     },
     {
@@ -439,7 +446,7 @@ export default function CaseHome() {
         </>
       ),
       description: "Discover local events and activities in Abu Dhabi",
-      image: "/img/tips/visitAbuDhabi.png",
+      icon: <MapPin size={32} />,
       link: "https://visitabudhabi.ae",
     },
   ];
@@ -741,20 +748,21 @@ export default function CaseHome() {
           opts={carouselOptions}
           className="w-full cursor-grab active:cursor-grabbing"
         >
-          <CarouselContent className="select-none -ml-2">
+          <CarouselContent className="select-none">
             {quickActions.map((action, index) => (
               <CarouselItem
                 key={index}
-                className="pl-2 basis-[70%] md:basis-[45%] lg:basis-[30%]"
+                className="px-2 md:basis-1/3 lg:basis-1/4 xl:basis-1/5"
               >
                 <motion.div
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: 0.1 + index * 0.05 }}
+                  className="h-full"
                 >
                   <QuickActionCard
                     title={action.title}
-                    image={action.image}
+                    icon={action.icon}
                     link={action.link}
                   />
                 </motion.div>
@@ -763,7 +771,7 @@ export default function CaseHome() {
           </CarouselContent>
         </Carousel>
       </motion.div>
-
+      
       <AnimatePresence>
         {showDialog && (
           <motion.div
