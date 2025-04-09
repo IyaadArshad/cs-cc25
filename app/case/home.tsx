@@ -346,30 +346,29 @@ function LoadingSpinner() {
 // Card component for quick actions
 function QuickActionCard({
   title,
-  description,
   image,
   link,
 }: {
   title: React.ReactNode;
-  description: string;
   image: string;
   link: string;
 }) {
   return (
     <Card
-      className="bg-gray-800 border-gray-700 h-[280px] select-none cursor-pointer hover:bg-gray-700/50 transition-colors"
+      className="bg-gray-800 border-gray-700 h-[200px] select-none cursor-pointer hover:bg-gray-700/50 transition-colors"
       onClick={() => window.open(link, "_blank")}
     >
-      <CardContent className="p-6 flex flex-col h-full">
+      <CardContent className="p-6 text-left flex flex-col gap-4 h-full">
+      <div className="w-full flex justify-left">
         <img
-          src={image || "/placeholder.svg"}
-          alt={typeof title === "string" ? title : "Quick action"}
-          className="w-full h-36 object-cover rounded-md mb-4"
+        src={image || "/placeholder.svg"}
+        alt={typeof title === "string" ? title : "Quick action"}
+        className="w-16 h-16 object-cover rounded-md"
         />
-        <h3 className="text-white text-lg font-semibold mb-2 line-clamp-1">
-          {title}
-        </h3>
-        <p className="text-gray-400 text-sm line-clamp-3">{description}</p>
+      </div>
+      <div className="flex flex-col items-start text-left mt-2">
+        <h3 className="text-white text-lg font-semibold">{title}</h3>
+      </div>
       </CardContent>
     </Card>
   );
@@ -761,10 +760,6 @@ export default function CaseHome() {
         transition={{ duration: 0.4, delay: 0.6 }}
         className="w-full mt-8"
       >
-        <h2 className="text-xl text-white font-medium mb-4 px-2">
-          Quick Actions
-        </h2>
-
         <Carousel
           opts={carouselOptions}
           className="w-full cursor-grab active:cursor-grabbing"
@@ -782,7 +777,6 @@ export default function CaseHome() {
                 >
                   <QuickActionCard
                     title={action.title}
-                    description={action.description}
                     image={action.image}
                     link={action.link}
                   />
