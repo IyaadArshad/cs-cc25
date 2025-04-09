@@ -396,7 +396,7 @@ export default function CaseHome() {
               ? "dinner"
               : "a snack"}
           </span>
-          <span className="text-[#2563eb]">{" "}with Zomato</span>
+          <span className="text-[#2563eb]"><br />with Zomato</span>
         </>
       ),
       description: "Find restaurants and food delivery options near you",
@@ -406,7 +406,7 @@ export default function CaseHome() {
     {
       title: (
         <>
-          Call a taxi{" "}<span className="text-[#2563eb]">with Careem</span>
+          Call a taxi<span className="text-[#2563eb]"><br/>with Careem</span>
         </>
       ),
       description: "Book a ride quickly and conveniently across the city",
@@ -416,7 +416,7 @@ export default function CaseHome() {
     {
       title: (
         <>
-          Order groceries{" "}<span className="text-[#2563eb]">with Talabat</span>
+          Order groceries<span className="text-[#2563eb]"><br/>with Talabat</span>
         </>
       ),
       image: "/placeholder.svg?height=144&width=256",
@@ -425,7 +425,7 @@ export default function CaseHome() {
     {
       title: (
         <>
-          Pay utilities{" "}<span className="text-[#2563eb]">with ADDC</span>
+          Pay utilities<span className="text-[#2563eb]"><br/>with ADDC</span>
         </>
       ),
       image: "/img/tips/abuDhabiDistributionCompany.png",
@@ -434,8 +434,8 @@ export default function CaseHome() {
     {
       title: (
         <>
-          Explore attractions{" "}
-          <span className="text-[#2563eb]">on Visit Abu Dhabi</span>
+          Explore attractions
+          <span className="text-[#2563eb]"><br/>on Visit Abu Dhabi</span>
         </>
       ),
       description: "Discover local events and activities in Abu Dhabi",
