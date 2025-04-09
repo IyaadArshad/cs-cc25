@@ -7,20 +7,14 @@ import {
   CarouselItem,
 } from "@/components/ui/carousel";
 import { Button } from "@/components/ui/button";
-import {
-  ArrowRight,
-  Briefcase,
-  Plane,
-  FileQuestion,
-  Check,
-} from "lucide-react"; // <-- Added Check icon
+import { ArrowRight, Check } from "lucide-react";
 import { useEffect, useState, useRef } from "react";
 import Cookies from "js-cookie";
 import { furtherSteps } from "./homeData";
 import { motion, AnimatePresence } from "framer-motion";
 import { ArrowLeft, X } from "lucide-react";
 import React from "react";
-import JSConfetti from "js-confetti"; // Add this import at the top
+import JSConfetti from "js-confetti";
 
 export interface Option {
   id: string;
@@ -35,7 +29,7 @@ export interface TaskQuestionProps {
   options: Option[];
   onSave: (selectedId: string) => void;
   onExit: () => void;
-  progress: number; // Add this new prop
+  progress: number;
 }
 
 function TaskQuestion({
@@ -44,7 +38,7 @@ function TaskQuestion({
   options,
   onSave,
   onExit,
-  progress, // Add this new prop
+  progress,
 }: TaskQuestionProps) {
   const [selectedOption, setSelectedOption] = useState("");
   const [showDialog, setShowDialog] = useState(false);
@@ -78,7 +72,7 @@ function TaskQuestion({
     setIsExiting(true);
     setTimeout(() => {
       onExit();
-    }, 300); // Matches the exit animation duration
+    }, 300);
   };
 
   const handleSave = (selected: string) => {
@@ -99,7 +93,6 @@ function TaskQuestion({
 
   return (
     <div className="relative flex-1 p-6 overflow-y-auto hide-scrollbar">
-      {/* Update progress bar to use the passed progress */}
       <div
         onClick={handleExit}
         className="absolute top-6 left-6 cursor-pointer flex items-center gap-4 hover:text-gray-300"
@@ -316,12 +309,6 @@ function ProgressCircle({
     </div>
   );
 }
-
-interface VisaSelectionProps {
-  onSave: (visa: string) => void;
-  onExit: () => void;
-}
-
 function LoadingSpinner() {
   return (
     <motion.div
@@ -342,8 +329,6 @@ function LoadingSpinner() {
     </motion.div>
   );
 }
-
-// Card component for quick actions
 function QuickActionCard({
   title,
   image,
@@ -359,16 +344,16 @@ function QuickActionCard({
       onClick={() => window.open(link, "_blank")}
     >
       <CardContent className="p-6 text-left flex flex-col gap-4 h-full">
-      <div className="w-full flex justify-left">
-        <img
-        src={image || "/placeholder.svg"}
-        alt={typeof title === "string" ? title : "Quick action"}
-        className="w-16 h-16 object-cover rounded-md"
-        />
-      </div>
-      <div className="flex flex-col items-start text-left mt-2">
-        <h3 className="text-white text-lg font-semibold">{title}</h3>
-      </div>
+        <div className="w-full flex justify-left">
+          <img
+            src={image || "/placeholder.svg"}
+            alt={typeof title === "string" ? title : "Quick action"}
+            className="w-16 h-16 object-cover rounded-md"
+          />
+        </div>
+        <div className="flex flex-col items-start text-left mt-2">
+          <h3 className="text-white text-lg font-semibold">{title}</h3>
+        </div>
       </CardContent>
     </Card>
   );
@@ -388,22 +373,15 @@ export default function CaseHome() {
     setShowDialog(false);
   };
 
-  // New animation states
   const [isReturning, setIsReturning] = useState(false);
   const [mainViewReady, setMainViewReady] = useState(false);
   const [isInitialLoading, setIsInitialLoading] = useState(true);
-
-  // Remove visaSelectionMode and add generic task state:
-  // const [visaSelectionMode, setVisaSelectionMode] = useState(false);
   const [currentTaskStep, setCurrentTaskStep] = useState<string | null>(null);
-  // New state for task answers as saved in cookie
   const [taskAnswers, setTaskAnswers] = useState<Record<string, string>>({});
   const [firstQuestionCompleted, setFirstQuestionCompleted] = useState(false);
-  // New ref for scrolling the overview container
   const overviewContainerRef = useRef<HTMLDivElement>(null);
   const [hasShownCelebration, setHasShownCelebration] = useState(false);
 
-  // Quick actions data
   const quickActions = [
     {
       title: (
