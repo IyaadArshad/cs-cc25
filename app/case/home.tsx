@@ -343,16 +343,16 @@ function QuickActionCard({
       className="bg-gray-800 border-gray-700 h-[200px] select-none cursor-pointer hover:bg-gray-700/50 transition-colors"
       onClick={() => window.open(link, "_blank")}
     >
-      <CardContent className="p-6 text-left flex flex-col gap-4 h-full">
+      <CardContent className="p-6 text-left flex flex-col gap-2 h-full">
         <div className="w-full flex justify-left">
           <img
             src={image || "/placeholder.svg"}
             alt={typeof title === "string" ? title : "Quick action"}
-            className="w-16 h-16 object-cover rounded-md"
+            className="w-14 h-14 object-cover rounded-md"
           />
         </div>
         <div className="flex flex-col items-start text-left mt-2">
-          <h3 className="text-white text-lg font-semibold">{title}</h3>
+            <h1 className="text-white text-3xl font-semibold leading-normal">{title}</h1>
         </div>
       </CardContent>
     </Card>
@@ -396,7 +396,7 @@ export default function CaseHome() {
               ? "dinner"
               : "a snack"}
           </span>
-          <span className="text-[#2563eb]"> with Zomato</span>
+          <span className="text-[#2563eb]">{" "}with Zomato</span>
         </>
       ),
       description: "Find restaurants and food delivery options near you",
@@ -406,7 +406,7 @@ export default function CaseHome() {
     {
       title: (
         <>
-          Call a taxi <span className="text-[#2563eb]">with Careem</span>
+          Call a taxi{" "}<span className="text-[#2563eb]">with Careem</span>
         </>
       ),
       description: "Book a ride quickly and conveniently across the city",
@@ -416,7 +416,7 @@ export default function CaseHome() {
     {
       title: (
         <>
-          Order groceries <span className="text-[#2563eb]">with Talabat</span>
+          Order groceries{" "}<span className="text-[#2563eb]">with Talabat</span>
         </>
       ),
       image: "/placeholder.svg?height=144&width=256",
@@ -425,7 +425,7 @@ export default function CaseHome() {
     {
       title: (
         <>
-          Pay utilities <span className="text-[#2563eb]">with ADDC</span>
+          Pay utilities{" "}<span className="text-[#2563eb]">with ADDC</span>
         </>
       ),
       image: "/img/tips/abuDhabiDistributionCompany.png",
