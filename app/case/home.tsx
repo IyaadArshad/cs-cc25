@@ -451,6 +451,7 @@ export default function CaseHome() {
     wheelEnabled: true,
     wheelScroll: 1,
     align: "start" as const,
+    startIndex: 0,
   };
 
   useEffect(() => {
@@ -752,11 +753,13 @@ export default function CaseHome() {
           opts={carouselOptions}
           className="w-full cursor-grab active:cursor-grabbing"
         >
-          <CarouselContent className="select-none px-2">
+          <CarouselContent className="select-none px-2 -ml-1">
             {quickActions.map((action, index) => (
               <CarouselItem
                 key={index}
-                className="pl-2 pr-3 sm:pr-2 basis-[60%] min-w-[200px] sm:basis-1/3 md:basis-[28%] lg:basis-[20%] xl:basis-1/6 max-w-[250px]"
+                className={`pl-2 ${
+                  index === 0 ? "ml-1" : ""
+                } basis-[60%] min-w-[200px] sm:basis-1/3 md:basis-[28%] lg:basis-[20%] xl:basis-1/6 max-w-[250px]`}
               >
                 <motion.div
                   initial={{ opacity: 0, y: 20 }}
