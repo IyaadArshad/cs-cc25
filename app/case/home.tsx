@@ -528,9 +528,7 @@ export default function CaseHome() {
 
       setIsLoadingNews(true);
       try {
-        const response = await fetch(
-          "/api/v1/feed"
-        );
+        const response = await fetch("/api/v1/feed");
 
         if (!response.ok) {
           throw new Error("Failed to fetch news");
