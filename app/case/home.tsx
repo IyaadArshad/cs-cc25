@@ -7,16 +7,16 @@ import {
   CarouselItem,
 } from "@/components/ui/carousel";
 import { Button } from "@/components/ui/button";
-import { 
-  ArrowRight, 
-  Check, 
-  ArrowLeft, 
-  X, 
-  Utensils, 
-  Car, 
-  ShoppingBag, 
-  Receipt, 
-  MapPin 
+import {
+  ArrowRight,
+  Check,
+  ArrowLeft,
+  X,
+  Utensils,
+  Car,
+  ShoppingBag,
+  Receipt,
+  MapPin,
 } from "lucide-react";
 import { useEffect, useState, useRef } from "react";
 import Cookies from "js-cookie";
@@ -376,7 +376,10 @@ export default function CaseHome() {
               ? "dinner"
               : "a snack"}
           </span>
-          <span className="text-[#2563eb]"><br />with Zomato</span>
+          <span className="text-[#2563eb]">
+            <br />
+            with Zomato
+          </span>
         </>
       ),
       description: "Find restaurants and food delivery options near you",
@@ -386,7 +389,11 @@ export default function CaseHome() {
     {
       title: (
         <>
-          Call a taxi<span className="text-[#2563eb]"><br/>with Careem</span>
+          Call a taxi
+          <span className="text-[#2563eb]">
+            <br />
+            with Careem
+          </span>
         </>
       ),
       description: "Book a ride quickly and conveniently across the city",
@@ -396,7 +403,11 @@ export default function CaseHome() {
     {
       title: (
         <>
-          Order groceries<span className="text-[#2563eb]"><br/>with Talabat</span>
+          Order groceries
+          <span className="text-[#2563eb]">
+            <br />
+            with Talabat
+          </span>
         </>
       ),
       icon: <ShoppingBag size={32} />,
@@ -405,7 +416,11 @@ export default function CaseHome() {
     {
       title: (
         <>
-          Pay utilities<span className="text-[#2563eb]"><br/>with ADDC</span>
+          Pay utilities
+          <span className="text-[#2563eb]">
+            <br />
+            with ADDC
+          </span>
         </>
       ),
       icon: <Receipt size={32} />,
@@ -415,7 +430,10 @@ export default function CaseHome() {
       title: (
         <>
           Explore attractions
-          <span className="text-[#2563eb]"><br/>on Visit Abu Dhabi</span>
+          <span className="text-[#2563eb]">
+            <br />
+            on Visit Abu Dhabi
+          </span>
         </>
       ),
       description: "Discover local events and activities in Abu Dhabi",
@@ -725,7 +743,7 @@ export default function CaseHome() {
             {quickActions.map((action, index) => (
               <CarouselItem
                 key={index}
-                className="pl-2 pr-3 sm:pr-2 basis-[75%] min-w-[240px] sm:basis-2/5 md:basis-1/3 lg:basis-1/4 xl:basis-1/4 max-w-[300px]"
+                className="pl-2 pr-3 sm:pr-2 basis-[65%] min-w-[220px] sm:basis-1/3 md:basis-[30%] lg:basis-[22%] xl:basis-1/5 max-w-[280px]"
               >
                 <motion.div
                   initial={{ opacity: 0, y: 20 }}
@@ -744,7 +762,9 @@ export default function CaseHome() {
                         </div>
                       </div>
                       <div className="flex flex-col items-start text-left mt-1">
-                        <h1 className="text-white font-semibold text-xl leading-normal">{action.title}</h1>
+                        <h1 className="text-white font-semibold text-xl leading-normal">
+                          {action.title}
+                        </h1>
                       </div>
                     </CardContent>
                   </Card>
@@ -754,7 +774,7 @@ export default function CaseHome() {
           </CarouselContent>
         </Carousel>
       </motion.div>
-      
+
       <AnimatePresence>
         {showDialog && (
           <motion.div
