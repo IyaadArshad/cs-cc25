@@ -361,6 +361,8 @@ export default function CaseHome() {
   const [firstQuestionCompleted, setFirstQuestionCompleted] = useState(false);
   const overviewContainerRef = useRef<HTMLDivElement>(null);
   const [hasShownCelebration, setHasShownCelebration] = useState(false);
+  const [newsArticles, setNewsArticles] = useState<any[]>([]);
+  const [isLoadingNews, setIsLoadingNews] = useState(false);
 
   const quickActions = [
     {
@@ -518,6 +520,37 @@ export default function CaseHome() {
       setHasShownCelebration(true);
     }
   }, [taskAnswers, hasShownCelebration, overviewMode]);
+
+  // Add new useEffect for fetching news articles
+  useEffect(() => {
+    const fetchNews = async () => {
+      if (!mainViewReady) return;
+
+      setIsLoadingNews(true);
+      try {
+        const response = await fetch(
+          "/api/v1/feed"
+        );
+
+        if (!response.ok) {
+          throw new Error("Failed to fetch news");
+        }
+
+        const data = await response.json();
+        // Filter to only include articles with images and limit to 5 articles
+        const articlesWithImages = data
+          .filter((article: any) => article._image)
+          .slice(0, 5);
+        setNewsArticles(articlesWithImages);
+      } catch (error) {
+        console.error("Error fetching news:", error);
+      } finally {
+        setIsLoadingNews(false);
+      }
+    };
+
+    fetchNews();
+  }, [mainViewReady]);
 
   interface Task {
     id: string;
@@ -809,70 +842,98 @@ export default function CaseHome() {
         }}
         transition={{ duration: 0.4, delay: 0.8 }}
         className="w-full"
-      >        
+      >
+        <h2 className="text-xl font-semibold text-white mb-4">For You</h2>
+
         <div className="space-y-4">
-          {/* Sample news articles - will be replaced with actual API data */}
-          {[
-            {
-              id: 1,
-              title: "Abu Dhabi's new cultural district opens to visitors",
-              source: "Gulf News",
-              time: "2 hours ago",
-              image: "https://via.placeholder.com/100"
-            },
-            {
-              id: 2,
-              title: "UAE announces new visa regulations for expats and visitors",
-              source: "Khaleej Times",
-              time: "5 hours ago",
-              image: "https://via.placeholder.com/100"
-            },
-            {
-              id: 3,
-              title: "The best weekend activities in Abu Dhabi this month",
-              source: "Time Out Abu Dhabi",
-              time: "1 day ago",
-              image: "https://via.placeholder.com/100"
-            },
-            {
-              id: 4,
-              title: "Abu Dhabi unveils sustainable transportation initiative",
-              source: "Emirates News Agency",
-              time: "2 days ago",
-              image: "https://via.placeholder.com/100"
-            }
-          ].map((article) => (
-            <motion.div
-              key={article.id}
-              initial={{ opacity: 0, y: 10 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.9 + article.id * 0.1 }}
-            >
-              <Card className="bg-gray-800 border-gray-700 hover:bg-gray-700/50 cursor-pointer transition-colors">
-                <div className="flex p-3">
-                  <div className="flex-shrink-0">
-                    <div className="w-[100px] h-[70px] rounded-md overflow-hidden bg-gray-700">
-                      <img 
-                        src={article.image} 
-                        alt={article.title}
-                        className="w-full h-full object-cover"
-                      />
-                    </div>
-                  </div>
-                  <div className="ml-4 flex flex-col justify-between flex-1">
-                    <h3 className="text-white font-medium line-clamp-2 text-sm">
-                      {article.title}
-                    </h3>
-                    <div className="flex items-center mt-1">
-                      <span className="text-xs text-blue-400">{article.source}</span>
-                      <span className="mx-2 text-gray-500">•</span>
-                      <span className="text-xs text-gray-400">{article.time}</span>
-                    </div>
+          {/* Hardcoded Article */}
+          <motion.div
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.9 }}
+          >
+            <Card className="bg-gray-800 border-gray-700 hover:bg-gray-700/50 cursor-pointer transition-colors">
+              <div className="flex p-3">
+                <div className="flex-shrink-0">
+                  <div className="w-[100px] h-[70px] rounded-md overflow-hidden bg-gray-700">
+                    <img
+                      src="https://via.placeholder.com/100"
+                      alt="Abu Dhabi News"
+                      className="w-full h-full object-cover"
+                    />
                   </div>
                 </div>
-              </Card>
-            </motion.div>
-          ))}
+                <div className="ml-4 flex flex-col justify-between flex-1">
+                  <h3 className="text-white font-medium line-clamp-2 text-sm">
+                    Abu Dhabi's new cultural district opens to visitors
+                  </h3>
+                  <div className="flex items-center mt-1">
+                    <span className="text-xs text-blue-400">Gulf News</span>
+                    <span className="mx-2 text-gray-500">•</span>
+                    <span className="text-xs text-gray-400">2 hours ago</span>
+                  </div>
+                </div>
+              </div>
+            </Card>
+          </motion.div>
+
+          {/* Microsoft Articles */}
+          {isLoadingNews ? (
+            <div className="flex justify-center py-4">
+              <div className="w-6 h-6 border-2 border-t-transparent border-blue-500 rounded-full animate-spin"></div>
+            </div>
+          ) : (
+            newsArticles.map((article, index) => (
+              <motion.div
+                key={`msn-${index}`}
+                initial={{ opacity: 0, y: 10 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 1 + index * 0.1 }}
+              >
+                <Card className="bg-gray-800 border-gray-700 hover:bg-gray-700/50 cursor-pointer transition-colors">
+                  <div className="flex p-3">
+                    <div className="flex-shrink-0">
+                      <div className="w-[100px] h-[70px] rounded-md overflow-hidden bg-gray-700">
+                        {article._image && article._image.href ? (
+                          <img
+                            src={`https://www.bing.com/${article._image.href}`}
+                            alt={article._title || "News article"}
+                            className="w-full h-full object-cover"
+                          />
+                        ) : (
+                          <div className="w-full h-full flex items-center justify-center bg-gray-800">
+                            <span className="text-gray-500 text-xs">
+                              No image
+                            </span>
+                          </div>
+                        )}
+                      </div>
+                    </div>
+                    <div className="ml-4 flex flex-col justify-between flex-1">
+                      <h3 className="text-white font-medium line-clamp-2 text-sm">
+                        {article._title}
+                      </h3>
+                      <div className="flex items-center mt-1">
+                        <span className="text-xs text-blue-400">
+                          {article._provider?.name ||
+                            article._authors?.[0]?.name ||
+                            "News Source"}
+                        </span>
+                        <span className="mx-2 text-gray-500">•</span>
+                        <span className="text-xs text-gray-400">
+                          {article._lastPublishedDateTime
+                            ? new Date(
+                                article._lastPublishedDateTime
+                              ).toLocaleDateString()
+                            : "Recent"}
+                        </span>
+                      </div>
+                    </div>
+                  </div>
+                </Card>
+              </motion.div>
+            ))
+          )}
         </div>
       </motion.div>
 
