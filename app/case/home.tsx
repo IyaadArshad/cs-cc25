@@ -725,7 +725,7 @@ export default function CaseHome() {
             {quickActions.map((action, index) => (
               <CarouselItem
                 key={index}
-                className="pl-2 pr-4 sm:pr-2 basis-[90%] min-w-[260px] sm:basis-1/2 md:basis-1/3 lg:basis-1/3 xl:basis-1/3 max-w-[350px]"
+                className="pl-2 pr-3 sm:pr-2 basis-[75%] min-w-[240px] sm:basis-2/5 md:basis-1/3 lg:basis-1/4 xl:basis-1/4 max-w-[300px]"
               >
                 <motion.div
                   initial={{ opacity: 0, y: 20 }}
@@ -734,17 +734,17 @@ export default function CaseHome() {
                   className="h-full"
                 >
                   <Card
-                    className="bg-gray-800 border-gray-700 h-[180px] w-full select-none cursor-pointer hover:bg-gray-700/50 transition-colors"
+                    className="bg-gray-800 border-gray-700 h-[130px] w-full select-none cursor-pointer hover:bg-gray-700/50 transition-colors"
                     onClick={() => window.open(action.link, "_blank")}
                   >
-                    <CardContent className="p-4 text-left flex flex-col gap-2 h-full">
+                    <CardContent className="p-3 text-left flex flex-col gap-1 h-full">
                       <div className="w-full flex justify-left">
-                        <div className="text-[#2563eb] w-12 h-12 flex items-center justify-center">
+                        <div className="text-[#2563eb] w-10 h-10 flex items-center justify-center">
                           {action.icon}
                         </div>
                       </div>
-                      <div className="flex flex-col items-start text-left mt-2">
-                        <h1 className="text-white font-extralight text-2xl leading-normal">{action.title}</h1>
+                      <div className="flex flex-col items-start text-left mt-1">
+                        <h1 className="text-white font-semibold text-xl leading-normal">{action.title}</h1>
                       </div>
                     </CardContent>
                   </Card>
