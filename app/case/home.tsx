@@ -787,6 +787,95 @@ export default function CaseHome() {
         </Carousel>
       </motion.div>
 
+      {/* Section Divider for News */}
+      <motion.div
+        initial={{ opacity: 0, scaleX: 0.8 }}
+        animate={{
+          opacity: mainViewReady ? 1 : 0,
+          scaleX: mainViewReady ? 1 : 0.8,
+        }}
+        transition={{ duration: 0.4, delay: 0.7 }}
+        className="w-full flex items-center gap-4 my-8 mt-12"
+      >
+        <div className="h-px bg-gray-700 flex-grow"></div>
+      </motion.div>
+
+      {/* News & Stories Section */}
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        animate={{
+          opacity: mainViewReady ? 1 : 0,
+          y: mainViewReady ? 0 : 20,
+        }}
+        transition={{ duration: 0.4, delay: 0.8 }}
+        className="w-full"
+      >        
+        <div className="space-y-4">
+          {/* Sample news articles - will be replaced with actual API data */}
+          {[
+            {
+              id: 1,
+              title: "Abu Dhabi's new cultural district opens to visitors",
+              source: "Gulf News",
+              time: "2 hours ago",
+              image: "https://via.placeholder.com/100"
+            },
+            {
+              id: 2,
+              title: "UAE announces new visa regulations for expats and visitors",
+              source: "Khaleej Times",
+              time: "5 hours ago",
+              image: "https://via.placeholder.com/100"
+            },
+            {
+              id: 3,
+              title: "The best weekend activities in Abu Dhabi this month",
+              source: "Time Out Abu Dhabi",
+              time: "1 day ago",
+              image: "https://via.placeholder.com/100"
+            },
+            {
+              id: 4,
+              title: "Abu Dhabi unveils sustainable transportation initiative",
+              source: "Emirates News Agency",
+              time: "2 days ago",
+              image: "https://via.placeholder.com/100"
+            }
+          ].map((article) => (
+            <motion.div
+              key={article.id}
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.9 + article.id * 0.1 }}
+            >
+              <Card className="bg-gray-800 border-gray-700 hover:bg-gray-700/50 cursor-pointer transition-colors">
+                <div className="flex p-3">
+                  <div className="flex-shrink-0">
+                    <div className="w-[100px] h-[70px] rounded-md overflow-hidden bg-gray-700">
+                      <img 
+                        src={article.image} 
+                        alt={article.title}
+                        className="w-full h-full object-cover"
+                      />
+                    </div>
+                  </div>
+                  <div className="ml-4 flex flex-col justify-between flex-1">
+                    <h3 className="text-white font-medium line-clamp-2 text-sm">
+                      {article.title}
+                    </h3>
+                    <div className="flex items-center mt-1">
+                      <span className="text-xs text-blue-400">{article.source}</span>
+                      <span className="mx-2 text-gray-500">•</span>
+                      <span className="text-xs text-gray-400">{article.time}</span>
+                    </div>
+                  </div>
+                </div>
+              </Card>
+            </motion.div>
+          ))}
+        </div>
+      </motion.div>
+
       <AnimatePresence>
         {showDialog && (
           <motion.div
