@@ -535,11 +535,48 @@ export default function CaseHome() {
         }
 
         const data = await response.json();
-        // Filter to only include articles with images and limit to 5 articles
-        const articlesWithImages = data
-          .filter((article: any) => article._image)
-          .slice(0, 5);
-        setNewsArticles(articlesWithImages);
+
+        // Function to detect if text is primarily in English
+        const isEnglishText = (text: string): boolean => {
+          // Skip empty text
+          if (!text || text.trim() === "") return false;
+
+          // Check for non-Latin characters (simplified approach)
+          const nonLatinPattern = /[^\x00-\x7F\s]/g;
+          const nonLatinChars = text.match(nonLatinPattern) || [];
+          const nonLatinPercentage = nonLatinChars.length / text.length;
+
+          // If less than 15% are non-Latin characters, likely English
+          return nonLatinPercentage < 0.15;
+        };
+
+        // Parse date string into a standardized Date object
+        const parseArticleDate = (dateStr: string): Date => {
+          if (!dateStr) return new Date(0); // Default to epoch if no date
+
+          try {
+            return new Date(dateStr);
+          } catch (e) {
+            console.warn("Could not parse date:", dateStr);
+            return new Date(0);
+          }
+        };
+
+        // Filter to only include English articles
+        const englishArticles = data.filter((article: any) =>
+          isEnglishText(article.title || "") &&
+          isEnglishText(article.summary || "")
+        );
+
+        // Sort by date (newest first)
+        const sortedArticles = englishArticles.sort((a: any, b: any) => {
+          const dateA = parseArticleDate(a.date);
+          const dateB = parseArticleDate(b.date);
+          return dateB.getTime() - dateA.getTime();
+        });
+
+        // Limit to 5 articles
+        setNewsArticles(sortedArticles.slice(0, 5));
       } catch (error) {
         console.error("Error fetching news:", error);
       } finally {
@@ -549,12 +586,6 @@ export default function CaseHome() {
 
     fetchNews();
   }, [mainViewReady]);
-
-  interface Task {
-    id: string;
-    title: string;
-    description: string;
-  }
 
   // Update task click to open any question:
   const handleTaskClick = (taskId: string) => {
@@ -875,7 +906,7 @@ export default function CaseHome() {
             </Card>
           </motion.div>
 
-          {/* Microsoft Articles */}
+          {/* News Articles from API */}
           {isLoadingNews ? (
             <div className="flex justify-center py-4">
               <div className="w-6 h-6 border-2 border-t-transparent border-blue-500 rounded-full animate-spin"></div>
@@ -883,47 +914,36 @@ export default function CaseHome() {
           ) : (
             newsArticles.map((article, index) => (
               <motion.div
-                key={`msn-${index}`}
+                key={`news-${index}`}
                 initial={{ opacity: 0, y: 10 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 1 + index * 0.1 }}
+                onClick={() =>
+                  article.link && window.open(article.link, "_blank")
+                }
               >
                 <Card className="bg-gray-800 border-gray-700 hover:bg-gray-700/50 cursor-pointer transition-colors">
                   <div className="flex p-3">
                     <div className="flex-shrink-0">
                       <div className="w-[100px] h-[70px] rounded-md overflow-hidden bg-gray-700">
-                        {article._image && article._image.href ? (
-                          <img
-                            src={`https://www.bing.com/${article._image.href}`}
-                            alt={article._title || "News article"}
-                            className="w-full h-full object-cover"
-                          />
-                        ) : (
-                          <div className="w-full h-full flex items-center justify-center bg-gray-800">
-                            <span className="text-gray-500 text-xs">
-                              No image
-                            </span>
-                          </div>
-                        )}
+                        <img
+                          src="https://via.placeholder.com/100"
+                          alt={article.title || "News article"}
+                          className="w-full h-full object-cover"
+                        />
                       </div>
                     </div>
                     <div className="ml-4 flex flex-col justify-between flex-1">
                       <h3 className="text-white font-medium line-clamp-2 text-sm">
-                        {article._title}
+                        {article.title}
                       </h3>
                       <div className="flex items-center mt-1">
                         <span className="text-xs text-blue-400">
-                          {article._provider?.name ||
-                            article._authors?.[0]?.name ||
-                            "News Source"}
+                          {article.source || "News Source"}
                         </span>
                         <span className="mx-2 text-gray-500">•</span>
                         <span className="text-xs text-gray-400">
-                          {article._lastPublishedDateTime
-                            ? new Date(
-                                article._lastPublishedDateTime
-                              ).toLocaleDateString()
-                            : "Recent"}
+                          {article.date || "Recent"}
                         </span>
                       </div>
                     </div>
