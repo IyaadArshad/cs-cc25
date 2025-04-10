@@ -185,7 +185,7 @@ export const foodPlaces = [
 
 export const shoppingPlaces = [
   {
-    image: "/img/discover/localMarketsAndStores/theGalleria.png",
+    image: "/img/discover/localMarketsAndStores/YasMall.png",
     title: "Yas Mall",
     description:
       "Largest mall in Abu Dhabi with over 370 stores and 60 restaurants.",
@@ -235,7 +235,7 @@ export const shoppingPlaces = [
     externalLink: "https://madinatzayed-mall.com",
   },
   {
-    image: "/img/discover/localMarketsAndStores/dalmaMall.png",
+    image: "/img/discover/localMarketsAndStores/worldTradeCenterMall.png",
     title: "World Trade Center Mall",
     description:
       "Modern mall in the heart of the city with a traditional souk feel.",
