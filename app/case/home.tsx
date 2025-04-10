@@ -725,6 +725,19 @@ export default function CaseHome() {
         </div>
       </AnimatePresence>
 
+      {/* Section Divider */}
+      <motion.div
+        initial={{ opacity: 0, scaleX: 0.8 }}
+        animate={{
+          opacity: mainViewReady ? 1 : 0,
+          scaleX: mainViewReady ? 1 : 0.8,
+        }}
+        transition={{ duration: 0.4, delay: 0.5 }}
+        className="w-full flex items-center gap-4 my-8"
+      >
+        <div className="h-px bg-gray-700 flex-grow"></div>
+      </motion.div>
+
       {/* Quick Actions Carousel */}
       <motion.div
         initial={{ opacity: 0, y: 20 }}
