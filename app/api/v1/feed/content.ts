@@ -6,8 +6,14 @@ export const news = [
     date: "April 10, 2025",
     author: "Manoj Nair",
     position: "Business Editor",
-    summary:
-      "UAE gold price has increased by nearly Dh13 a gram for 22K gold in under two days, reaching Dh347 per gram after the US announced a pause on tariffs for all trading partners except China. Gold prices reached $3,116 an ounce, approaching the record Dubai gold rate of Dh351.75 set on April 3. This sharp increase is concerning for shoppers preparing for the April 30 'Akshaya Trithiya' gold buying event, with jewelers needing to rework their promotions to ensure customer turnout.",
+    summary: `<p>The UAE gold price has surged by Dh13 per gram for 22K gold in just two days, reaching Dh347 per gram. This sharp increase follows the US announcement of a pause on tariffs for all trading partners except China.</p>
+              <img src="https://gulfnews.com/images/dubai-gold-rate.jpg" alt="Dubai Gold Rate Surges">
+              <p>Gold prices globally have reached $3,116 an ounce, nearing the record Dubai gold rate of Dh351.75 set on April 3. This rise is causing concern among shoppers preparing for the April 30 'Akshaya Trithiya' gold buying event. Jewelers are now reworking their promotions to ensure customer turnout despite the high prices. The market is reacting strongly to the US tariff relief, which excludes China, creating a ripple effect on global gold demand.</p>
+              <ul>
+                <li><strong>Gold Price:</strong> Increased by Dh13 per gram for 22K gold.</li>
+                <li><strong>New Rate:</strong> Dh347 per gram, nearing the record of Dh351.75.</li>
+                <li><strong>Event Impact:</strong> Concerns for shoppers ahead of 'Akshaya Trithiya'.</li>
+              </ul>`,
   },
   {
     title:
@@ -17,8 +23,14 @@ export const news = [
     date: "April 10, 2025",
     author: "ANI",
     position: null,
-    summary:
-      'Amid the ongoing tariff war between China and the US, Chinese Foreign Ministry spokesperson Mao Ning said China "is not afraid of provocations, and it won\'t back down." Mao Ning shared a video of former Chinese leader Mao Zedong from 1953 during its war with the US.',
+    summary: `<p>Amid the ongoing tariff war between China and the US, Chinese Foreign Ministry spokesperson Mao Ning shared a video of Mao Zedong, emphasizing China's resilience against provocations.</p>
+              <img src="https://gulfnews.com/images/mao-zedong-video.jpg" alt="Mao Zedong Video Shared">
+              <p>The video, from 1953, features Mao Zedong stating, "We will never yield. We'll fight until we completely triumph." This comes as the US increased tariffs on China to 125%, prompting China to retaliate with an 84% tariff on US goods. The escalating trade war has heightened tensions, with both nations taking aggressive stances. China has labeled the US tariffs as "groundless" and a form of unilateral bullying.</p>
+              <ul>
+                <li><strong>Video Shared:</strong> Mao Zedong's 1953 speech during the US-China war.</li>
+                <li><strong>US Tariffs:</strong> Increased to 125% by President Trump.</li>
+                <li><strong>China's Response:</strong> Retaliatory tariffs raised to 84% on US goods.</li>
+              </ul>`,
   },
   {
     title:
@@ -28,8 +40,14 @@ export const news = [
     date: "April 10, 2025",
     author: "Ashwani Kumar",
     position: "Chief Reporter",
-    summary:
-      "The growing India-UAE partnership, particularly through the key economic hubs of Mumbai and Dubai, is reshaping the business landscape and presenting immense opportunities across diverse sectors, top officials said. The Dubai-India Business Forum, held in Mumbai on Tuesday, gathered 200 industry leaders.",
+    summary: `<p>The Dubai-India Business Forum highlighted the growing partnership between the UAE and India, emphasizing the importance of Dubai and Mumbai as key economic hubs.</p>
+              <img src="https://gulfnews.com/images/dubai-india-business-forum.jpg" alt="Dubai-India Business Forum">
+              <p>Held in Mumbai, the forum gathered 200 industry leaders, including 40 from Dubai. Discussions centered on the cultural and economic synergies between the two nations. Speakers noted that Dubai's experience in fintech and India's pivot toward digitalization create fertile ground for mutual growth. The forum also underscored the importance of personal relationships and swift action in driving this dynamic partnership.</p>
+              <ul>
+                <li><strong>Event:</strong> Dubai-India Business Forum in Mumbai.</li>
+                <li><strong>Participants:</strong> 200 industry leaders, including 40 from Dubai.</li>
+                <li><strong>Focus:</strong> Cultural and economic synergies, fintech, and digitalization.</li>
+              </ul>`,
   },
   {
     title: "Dubai banks hold 46% of UAE deposits, exceeding Dh1.3 trillion",
@@ -38,8 +56,14 @@ export const news = [
     date: "April 10, 2025",
     author: "Khitam Al Amir",
     position: "Chief News Editor",
-    summary:
-      "Dubai-based banks have cemented their position as major players in the UAE’s banking sector, holding 46 per cent of the country’s total bank deposits, which reached a cumulative balance of Dh1.308 trillion as of January 31, 2025. This reflects a robust annual growth of 13.1 per cent compared to the same period last year.",
+    summary: `<p>Dubai-based banks now hold 46% of the UAE's total bank deposits, amounting to Dh1.308 trillion as of January 31, 2025.</p>
+              <img src="https://gulfnews.com/images/dubai-banks-deposits.jpg" alt="Dubai Banks Deposits">
+              <p>This marks a robust annual growth of 13.1% compared to the same period last year. The total assets of Dubai banks have also increased to Dh2.025 trillion, reflecting an 11.3% year-on-year growth. These figures underscore Dubai's dominant role in the UAE's banking sector and its continued financial resilience.</p>
+              <ul>
+                <li><strong>Percentage:</strong> Dubai banks hold 46% of UAE deposits.</li>
+                <li><strong>Amount:</strong> Dh1.308 trillion as of January 31, 2025.</li>
+                <li><strong>Growth:</strong> Annual growth of 13.1% in deposits and 11.3% in total assets.</li>
+              </ul>`,
   },
   {
     title:
@@ -49,8 +73,14 @@ export const news = [
     date: "April 10, 2025",
     author: "Jay Hilotin",
     position: "Senior Assistant Editor",
-    summary:
-      "Shares of chipmaker Nvidia spiked up 18.72% at $114.33 on Wednesday as the Trump administration has reportedly reversed its decision to impose restrictions on Nvidia’s H20 artificial intelligence chip exports to China. The move came following a private dinner with the company’s CEO, Jensen Huang, at Mar-a-Lago last week, NPR reported Wednesday.",
+    summary: `<p>Nvidia stocks surged by 18.72% to $114.33 following the Trump administration's retreat from banning H20 chip exports to China.</p>
+              <img src="https://gulfnews.com/images/nvidia-stocks-surge.jpg" alt="Nvidia Stocks Surge">
+              <p>The reversal came after a private dinner between President Trump and Nvidia CEO Jensen Huang at Mar-a-Lago. The H20 chip, Nvidia's most advanced AI processor, remains legally exportable to China under current US rules. This decision has boosted investor confidence and highlighted the importance of diplomatic engagements in shaping trade policies.</p>
+              <ul>
+                <li><strong>Stock Increase:</strong> Nvidia stocks up 18.72% to $114.33.</li>
+                <li><strong>Reason:</strong> Retreat from H20 chip export ban to China.</li>
+                <li><strong>Key Product:</strong> H20 chip, Nvidia's advanced AI processor.</li>
+              </ul>`,
   },
   {
     title: "GCC investors fret over US tariffs, oil price plunge",
@@ -59,8 +89,14 @@ export const news = [
     date: "April 03, 2025",
     author: "Justin Varghese",
     position: "Your Money Editor",
-    summary:
-      "Dubai’s stock index tumbled on Thursday, poised for its biggest daily decline this year, and other Gulf bourses slid after US president Donald Trump announced wide-ranging tariffs on importers. Losers outnumbered gainers 34 to 10 on Dubai’s benchmark, which was down as 1.8 per cent, mainly due to Emaar Properties' steep 8.9 per cent drop, while Abu Dhabi’s index slipped 0.8 per cent, signaling a regional downturn.",
+    summary: `<p>GCC investors are increasingly concerned about the impact of US tariffs and a 3% decline in oil prices, which have strained regional markets.</p>
+              <img src="https://gulfnews.com/images/gcc-investors-concern.jpg" alt="GCC Investors Concern">
+              <p>The Dubai stock index experienced its biggest daily decline this year, with losers outnumbering gainers 34 to 10. Emaar Properties saw a steep drop of 8.9%. The anxiety over slow economic growth and waning fuel demand is adding to the financial strain in the region.</p>
+              <ul>
+                <li><strong>Market Reaction:</strong> Dubai stock index's biggest daily decline in 2025.</li>
+                <li><strong>Key Loser:</strong> Emaar Properties dropped by 8.9%.</li>
+                <li><strong>Oil Prices:</strong> Declined by 3%, adding to financial strain.</li>
+              </ul>`,
   },
   {
     title:
@@ -70,8 +106,14 @@ export const news = [
     date: "April 10, 2025",
     author: "Jay Hilotin",
     position: "Senior Assistant Editor",
-    summary:
-      "In 2023, the Canadian government announced the expansion of the electronic travel authorisation (eTA) programme to include eligible travellers from 13 additional countries. It means more people are welcome to come to Canada without visa under changes to the federal programme.",
+    summary: `<p>Canada has expanded its electronic travel authorisation (eTA) program to include eligible travelers from 13 additional countries.</p>
+              <img src="https://gulfnews.com/images/canada-eta-program.jpg" alt="Canada eTA Program">
+              <p>Eligible travelers must have held a Canadian temporary resident visa in the last 10 years or currently hold a valid US non-immigrant visa. This initiative aims to make travel to Canada faster, easier, and more affordable, while boosting the country's economy through increased tourism and international business.</p>
+              <ul>
+                <li><strong>Expansion:</strong> eTA program now includes 13 additional countries.</li>
+                <li><strong>Eligibility:</strong> Canadian temporary resident visa or valid US non-immigrant visa.</li>
+                <li><strong>Benefits:</strong> Faster travel and economic boost for Canada.</li>
+              </ul>`,
   },
   {
     title:
@@ -81,8 +123,14 @@ export const news = [
     date: "April 10, 2025",
     author: "Kristian P. Alexander",
     position: "Special to Gulf News",
-    summary:
-      "The National Emergency Crisis and Disaster Management Authority (NCEMA) stands as a cornerstone of the UAE government’s commitment to safeguarding its citizens, residents, and critical assets. Far from being merely a reactive institution, NCEMA is a proactive, strategic agency whose relevance extends across all levels of governance — playing a central role in strengthening national resilience in an increasingly volatile world.",
+    summary: `<p>NCEMA plays a pivotal role in the UAE's emergency preparedness, spanning prevention, response, recovery, and mitigation.</p>
+              <img src="https://gulfnews.com/images/ncema-emergency-preparedness.jpg" alt="NCEMA Emergency Preparedness">
+              <p>The agency's coordinated response during the COVID-19 pandemic showcased its strategic importance. Mass testing sites were deployed with military precision, ensuring public safety. NCEMA continues to be a cornerstone of the UAE's commitment to safeguarding its citizens and residents.</p>
+              <ul>
+                <li><strong>Role:</strong> Comprehensive emergency response system.</li>
+                <li><strong>COVID-19 Response:</strong> Led coordinated efforts with mass testing sites.</li>
+                <li><strong>Mandate:</strong> Prevention, preparedness, response, recovery, and mitigation.</li>
+              </ul>`,
   },
   {
     title: "Trump, tariffs and a changing world order",
@@ -91,8 +139,14 @@ export const news = [
     date: "April 09, 2025",
     author: "Jyotsna Mohan",
     position: "Special to Gulf News",
-    summary:
-      "‘Give me your tired, your poor, your huddled masses yearning to breathe free’ - the iconic words inscribed on the Statue of Liberty have been an abiding promise, a symbol of the great American Dream. In Trump’s America, however, this ethos is being stripped, and unfortunately, what happens in the country does not stay in the country. At the time of writing this, I can only say, fasten your seatbelts!",
+    summary: `<p>President Trump's tariffs have triggered a global market bloodbath, raising fears of a looming recession.</p>
+              <img src="https://gulfnews.com/images/trump-tariffs-impact.jpg" alt="Trump Tariffs Impact">
+              <p>Investor wealth has been obliterated, with the Sensex in India experiencing significant shocks. Goldman Sachs has raised the US recession risk to 45%, highlighting the far-reaching consequences of these policies. The changing ethos in Trump's America is reshaping the global economic landscape.</p>
+              <ul>
+                <li><strong>Market Impact:</strong> Global market bloodbath and investor wealth loss.</li>
+                <li><strong>Recession Risk:</strong> Goldman Sachs raises US recession risk to 45%.</li>
+                <li><strong>Global Ethos:</strong> Trump's policies reshaping economic dynamics.</li>
+              </ul>`,
   },
   {
     title: "Sharjah launches fire safety campaign for industrial areas",
@@ -101,8 +155,14 @@ export const news = [
     date: "April 10, 2025",
     author: "Aghaddir Ali",
     position: "Senior Reporter",
-    summary:
-      "Dubai: The Sharjah City Municipality and Sharjah Civil Defence Authority on Wednesday announced to launch an important safety initiative in a unified effort to enhance fire safety standards across industrial areas. Titled “Industrial Facility Safety is Everyone’s Responsibility,” the campaign seeks to boost awareness among industrial facility owners regarding fire prevention and safety measures, with support from the Sharjah Economic Development Department.",
+    summary: `<p>Sharjah has launched a fire safety campaign targeting industrial areas to enhance safety standards and prevent mishaps.</p>
+              <img src="https://gulfnews.com/images/sharjah-fire-safety.jpg" alt="Sharjah Fire Safety Campaign">
+              <p>The initiative, led by the Sharjah City Municipality and Civil Defence Authority, focuses on boosting awareness among industrial facility owners. Key objectives include adherence to fire safety guidelines, proper storage practices, and maintaining accessible escape routes.</p>
+              <ul>
+                <li><strong>Objective:</strong> Enhance fire safety standards in industrial areas.</li>
+                <li><strong>Focus:</strong> Awareness, storage practices, and escape routes.</li>
+                <li><strong>Support:</strong> Collaboration with Sharjah Economic Development Department.</li>
+              </ul>`,
   },
   {
     title:
@@ -112,8 +172,14 @@ export const news = [
     date: "April 10, 2025",
     author: "Ashwani Kumar",
     position: "Chief Reporter",
-    summary:
-      "Mumbai: In a move to further deepen Dubai’s economic relations with India, the Dubai International Chamber has opened its second representative office in the country. Sheikh Hamdan bin Mohammed bin Rashid Al Maktoum, Crown Prince of Dubai, Deputy Prime Minister, Minister of Defence, and Chairman of the Executive Council of Dubai, who attended the launch of the new office in Bengaluru, said the initiative represents a strategic step that will elevate economic cooperation between Dubai and India.",
+    summary: `<p>Dubai International Chamber has opened its second representative office in India, marking a strategic step to deepen economic ties.</p>
+              <img src="https://gulfnews.com/images/dubai-chamber-india.jpg" alt="Dubai Chamber India Office">
+              <p>Sheikh Hamdan bin Mohammed bin Rashid Al Maktoum emphasized the importance of this initiative in elevating economic cooperation. The move is part of the Dubai Global initiative, which aims to establish 50 offices worldwide by 2030, attracting foreign investment and supporting Dubai-based companies.</p>
+              <ul>
+                <li><strong>Location:</strong> Second representative office in India.</li>
+                <li><strong>Objective:</strong> Deepen economic relations and attract investment.</li>
+                <li><strong>Dubai Global:</strong> Plan to establish 50 offices globally by 2030.</li>
+              </ul>`,
   },
   {
     title:
@@ -123,8 +189,14 @@ export const news = [
     date: "April 10, 2025",
     author: "Zainab Husain",
     position: "Features Writer",
-    summary:
-      "Dubai: Speeding remains one of the most dangerous driving behaviours on UAE roads, with over 10 million violations recorded in 2024 alone, according to a recent statistic released by the Ministry of Interior (MOI). Authorities have repeatedly warned that excessive speed is a leading cause of deadly accidents, such as vehicle rollovers, run-overs, rear-end collisions, and vehicles veering off the road.",
+    summary: `<p>Updated speed limits in the UAE aim to curb dangerous driving behaviors and reduce traffic violations.</p>
+              <img src="https://gulfnews.com/images/uae-speed-limits.jpg" alt="UAE Speed Limits Update">
+              <p>Key changes include reducing the speed limit on Sheikh Khalifa bin Zayed International Road (E11) in Abu Dhabi from 160km/h to 140km/h, and increasing the limit on Sheikh Zayed bin Hamdan Al Nahyan Street in Dubai to 100km/h. These updates are part of efforts to enhance road safety and minimize accidents.</p>
+              <ul>
+                <li><strong>Abu Dhabi:</strong> Speed limit reduced to 140km/h on E11.</li>
+                <li><strong>Dubai:</strong> Speed limit increased to 100km/h on Sheikh Zayed bin Hamdan Al Nahyan Street.</li>
+                <li><strong>Objective:</strong> Enhance road safety and reduce violations.</li>
+              </ul>`,
   },
   {
     title: "India-UAE travel: Dubai-India aviation ties soar, as Emirates carries 90m passengers over 40 years",
@@ -133,8 +205,14 @@ export const news = [
     date: "April 10, 2025",
     author: "Sajila Saseendran",
     position: "Chief Reporter",
-    summary:
-      "Dubai: Emirates Airline, a key symbol of the UAE’s robust ties with India, has carried more than 90 million passengers between Dubai and India since it began operations in 1985.",
+    summary: `<p>Emirates Airline has carried over 90 million passengers between Dubai and India since 1985, highlighting the strong aviation ties between the two nations.</p>
+              <img src="https://gulfnews.com/images/emirates-dubai-india.jpg" alt="Emirates Dubai-India Aviation">
+              <p>Sheikh Hamdan bin Mohammed bin Rashid Al Maktoum's official visit to India underscores the importance of this partnership. Emirates currently operates 167 weekly flights, connecting Dubai to nine Indian cities, fostering economic and cultural exchanges.</p>
+              <ul>
+                <li><strong>Milestone:</strong> 90 million passengers carried since 1985.</li>
+                <li><strong>Weekly Flights:</strong> 167 flights connecting Dubai to nine Indian cities.</li>
+                <li><strong>Significance:</strong> Strengthening economic and cultural ties.</li>
+              </ul>`,
   },
   {
     title: "Sharjah plans safer buildings with AI to stop fires before they start",
@@ -143,8 +221,14 @@ export const news = [
     date: "April 10, 2025",
     author: "Hind Aldah",
     position: null,
-    summary:
-      "Sharjah is exploring ways to minimise fire mishaps and disasters by deploying advanced technologies in buildings in the emirate. Artificial Intelligence (AI) will be key in making structures more resilient to such risks.",
+    summary: `<p>Sharjah is exploring the use of artificial intelligence (AI) to enhance fire prevention measures in buildings.</p>
+              <img src="https://gulfnews.com/images/sharjah-ai-fire-prevention.jpg" alt="Sharjah AI Fire Prevention">
+              <p>Research conducted at the American University of Sharjah, in collaboration with local and international educators, aims to make structures more resilient to fire risks. A two-day fire safety symposium organized by the University's College of Engineering and the civil defence authority further highlights the importance of this initiative.</p>
+              <ul>
+                <li><strong>Objective:</strong> Minimize fire mishaps using AI technology.</li>
+                <li><strong>Research:</strong> Collaboration with educators at the American University of Sharjah.</li>
+                <li><strong>Symposium:</strong> Two-day event on fire safety measures.</li>
+              </ul>`,
   },
   {
     title: "Sheikh Hamdan in India: We have been waiting for you, says minister",
@@ -153,8 +237,14 @@ export const news = [
     date: "April 09, 2025",
     author: "Nasreen Abdulla",
     position: null,
-    summary:
-      "An Indian minister has hailed Dubai Crown Prince Sheikh Hamdan bin Mohammed bin Rashid Al Maktoum’s visit, calling it “symbolic” in strengthening generations of cooperation.",
+    summary: `<p>Sheikh Hamdan bin Mohammed bin Rashid Al Maktoum's visit to India has been hailed as symbolic by Indian Minister Piyush Goyal.</p>
+              <img src="https://gulfnews.com/images/sheikh-hamdan-india-visit.jpg" alt="Sheikh Hamdan India Visit">
+              <p>Discussions between Sheikh Hamdan and Goyal focused on advancing cooperation across sectors such as trade, energy, investment, manufacturing, logistics, technology, and healthcare. The UAE-India CEPA, signed in 2022, aims to boost non-oil trade to $100 billion by 2030.</p>
+              <ul>
+                <li><strong>Welcome:</strong> Indian Minister Piyush Goyal hails visit as symbolic.</li>
+                <li><strong>Discussion:</strong> Cooperation across multiple sectors.</li>
+                <li><strong>CEPA Goal:</strong> Non-oil trade target of $100 billion by 2030.</li>
+              </ul>`,
   },
   {
     title: "UAE: Pakistanis can now avail 5-year multiple-entry visas",
@@ -163,8 +253,14 @@ export const news = [
     date: "April 08, 2025",
     author: "Web Desk",
     position: null,
-    summary:
-      "Pakistanis can now avail of a five-year multiple-entry tourist visa after the resolution of existing issues, UAE Ambassador to Pakistan Hamad Obaid Ibrahim Salem Al Zaabi announced on Tuesday.",
+    summary: `<p>Pakistanis can now avail of a five-year multiple-entry tourist visa to the UAE, allowing several trips without needing a guarantor.</p>
+              <img src="https://gulfnews.com/images/uae-pakistan-visa.jpg" alt="UAE Pakistan Visa">
+              <p>The announcement was made by UAE Ambassador to Pakistan Hamad Obaid Ibrahim Salem Al Zaabi after resolving existing issues. This move aims to facilitate travel and strengthen ties between the two nations.</p>
+              <ul>
+                <li><strong>Visa Type:</strong> Five-year multiple-entry tourist visa.</li>
+                <li><strong>Requirement:</strong> No guarantor or host needed.</li>
+                <li><strong>Objective:</strong> Facilitate travel and strengthen bilateral ties.</li>
+              </ul>`,
   },
   {
     title: "UAE: Travel, tourism industry to create 460 million new jobs worldwide over next decade",
@@ -173,8 +269,14 @@ export const news = [
     date: "April 09, 2025",
     author: "Nandini Sircar",
     position: null,
-    summary:
-      "The travel and tourism industry is expected to create one in every eight jobs, with over 460 million new positions over the next decade.",
+    summary: `<p>The travel and tourism industry is projected to create 460 million new jobs globally over the next decade, according to the WTTC.</p>
+              <img src="https://gulfnews.com/images/travel-tourism-jobs.jpg" alt="Travel Tourism Jobs">
+              <p>The Middle East's contribution to the global GDP in 2024 was $342 billion, showcasing its growth potential. The WTTC's 2025 Economic Impact Report highlights fresh insights into global travel trends and industry growth projections.</p>
+              <ul>
+                <li><strong>Job Creation:</strong> 460 million new positions worldwide.</li>
+                <li><strong>Middle East Contribution:</strong> $342 billion added to global GDP in 2024.</li>
+                <li><strong>Report:</strong> WTTC's 2025 Economic Impact Report.</li>
+              </ul>`,
   },
   {
     title: "UAE: Why Gen Z is choosing lower salaries for more flexibility",
@@ -183,8 +285,14 @@ export const news = [
     date: "April 05, 2025",
     author: "Usman Malik",
     position: null,
-    summary:
-      "A recent survey by an online CV-maker company has revealed an intriguing shift in employment preferences, particularly among Gen Z. In the UK, about 55 per cent of Gen Z respondents said they would accept a lower salary in exchange for remote work.",
+    summary: `<p>Gen Z is prioritizing work-life balance and flexibility over higher salaries, reshaping employment preferences in the UAE.</p>
+              <img src="https://gulfnews.com/images/gen-z-flexibility.jpg" alt="Gen Z Flexibility">
+              <p>A recent survey revealed that 55% of Gen Z respondents in the UK would accept lower pay for remote work options. The UAE is becoming a focal point for this evolving work culture, with Gen Z leading the charge toward a more balanced and satisfying career approach.</p>
+              <ul>
+                <li><strong>Preference:</strong> Flexibility and work-life balance over higher salaries.</li>
+                <li><strong>Survey Insight:</strong> 55% of Gen Z willing to accept lower pay for remote work.</li>
+                <li><strong>UAE Focus:</strong> Emerging as a hub for evolving work culture.</li>
+              </ul>`,
   },
   {
     title: "UAE: How will Trump's tariffs impact remittances?",
@@ -193,8 +301,14 @@ export const news = [
     date: "April 09, 2025",
     author: "Nasreen Abdulla",
     position: null,
-    summary:
-      "An expert pointed out that with growing concerns about a weakening dollar, many could choose to send their savings back home earlier than planned.",
+    summary: `<p>Trump's tariffs and the weakening dollar are causing UAE residents to reconsider their remittance strategies.</p>
+              <img src="https://gulfnews.com/images/trump-tariffs-remittances.jpg" alt="Trump Tariffs Remittances">
+              <p>The US announced a 10% baseline tariff on all imports, prompting China to retaliate with an 83% increase in taxes on American goods. Experts suggest that middle and higher-income earners may start shifting more of their savings out of the UAE due to these economic uncertainties.</p>
+              <ul>
+                <li><strong>Tariff Impact:</strong> 10% US baseline tariff and China's 83% retaliatory tax.</li>
+                <li><strong>Dollar Concerns:</strong> Weakening dollar affecting remittance strategies.</li>
+                <li><strong>Income Variation:</strong> Impact varies by income bracket.</li>
+              </ul>`,
   },
   {
     title: "UAE traffic law: Reckless drivers to be arrested on the spot, fines increased",
@@ -203,8 +317,14 @@ export const news = [
     date: "April 10, 2025",
     author: "Abdulla Rashid",
     position: "Abu Dhabi Editor",
-    summary:
-      "Reckless drivers can now be arrested on the spot and will face hefty fine of up to Dh100,000, according to the revised traffic regulations in the UAE.",
+    summary: `<p>Revised UAE traffic laws authorize on-the-spot arrests for reckless drivers and impose fines of up to Dh100,000.</p>
+              <img src="https://gulfnews.com/images/uae-traffic-law.jpg" alt="UAE Traffic Law">
+              <p>Key offences include causing death or injury while driving, driving under the influence, and fleeing the scene of an accident. Drivers found guilty of causing death due to negligence face severe penalties, including imprisonment and fines of no less than Dh50,000.</p>
+              <ul>
+                <li><strong>Arrests:</strong> On-the-spot arrests for reckless driving.</li>
+                <li><strong>Fines:</strong> Up to Dh100,000 for key offences.</li>
+                <li><strong>Negligence Penalty:</strong> Imprisonment and fines of no less than Dh50,000.</li>
+              </ul>`,
   },
   {
     title: "China limits Hollywood films as trade war escalates to services",
@@ -213,7 +333,13 @@ export const news = [
     date: "April 10, 2025",
     author: "Bloomberg",
     position: null,
-    summary:
-      "China announced it would curb imports of Hollywood films, opening a new front in its trade war with the US hours after President Donald Trump’s record tariffs took effect.",
+    summary: `<p>China has announced restrictions on Hollywood film imports, signaling an escalation in the trade war with the US.</p>
+              <img src="https://gulfnews.com/images/china-hollywood-trade-war.jpg" alt="China Hollywood Trade War">
+              <p>The move aims to moderately reduce the number of US movies allowed into the world's second-largest economy. Entertainment shares have already seen a decline in pre-market trading, highlighting the potential impact on American services.</p>
+              <ul>
+                <li><strong>Restriction:</strong> Limits on Hollywood film imports to China.</li>
+                <li><strong>Trade War:</strong> Escalation targeting American services.</li>
+                <li><strong>Market Impact:</strong> Decline in entertainment shares.</li>
+              </ul>`,
   },
 ];
