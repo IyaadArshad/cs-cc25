@@ -126,4 +126,94 @@ export const news = [
     summary:
       "Dubai: Speeding remains one of the most dangerous driving behaviours on UAE roads, with over 10 million violations recorded in 2024 alone, according to a recent statistic released by the Ministry of Interior (MOI). Authorities have repeatedly warned that excessive speed is a leading cause of deadly accidents, such as vehicle rollovers, run-overs, rear-end collisions, and vehicles veering off the road.",
   },
+  {
+    title: "India-UAE travel: Dubai-India aviation ties soar, as Emirates carries 90m passengers over 40 years",
+    link: "https://gulfnews.com/uae/government/india-uae-travel-dubai-india-aviation-ties-soar-as-emirates-carries-90m-passengers-over-40-years-1.102394888",
+    source: "Gulf News",
+    date: "April 10, 2025",
+    author: "Sajila Saseendran",
+    position: "Chief Reporter",
+    summary:
+      "Dubai: Emirates Airline, a key symbol of the UAE’s robust ties with India, has carried more than 90 million passengers between Dubai and India since it began operations in 1985.",
+  },
+  {
+    title: "Sharjah plans safer buildings with AI to stop fires before they start",
+    link: "https://gulfnews.com/uae/emergencies/sharjah-plans-safer-buildings-with-ai-to-stop-fires-before-they-start-1.102394895",
+    source: "Khaleej Times",
+    date: "April 10, 2025",
+    author: "Hind Aldah",
+    position: null,
+    summary:
+      "Sharjah is exploring ways to minimise fire mishaps and disasters by deploying advanced technologies in buildings in the emirate. Artificial Intelligence (AI) will be key in making structures more resilient to such risks.",
+  },
+  {
+    title: "Sheikh Hamdan in India: We have been waiting for you, says minister",
+    link: "https://gulfnews.com/uae/sheikh-hamdan-in-india-we-have-been-waiting-for-you-says-minister-1.102394901",
+    source: "Khaleej Times",
+    date: "April 09, 2025",
+    author: "Nasreen Abdulla",
+    position: null,
+    summary:
+      "An Indian minister has hailed Dubai Crown Prince Sheikh Hamdan bin Mohammed bin Rashid Al Maktoum’s visit, calling it “symbolic” in strengthening generations of cooperation.",
+  },
+  {
+    title: "UAE: Pakistanis can now avail 5-year multiple-entry visas",
+    link: "https://gulfnews.com/uae/uae-pakistanis-can-now-avail-5-year-multiple-entry-visas-1.102394905",
+    source: "Khaleej Times",
+    date: "April 08, 2025",
+    author: "Web Desk",
+    position: null,
+    summary:
+      "Pakistanis can now avail of a five-year multiple-entry tourist visa after the resolution of existing issues, UAE Ambassador to Pakistan Hamad Obaid Ibrahim Salem Al Zaabi announced on Tuesday.",
+  },
+  {
+    title: "UAE: Travel, tourism industry to create 460 million new jobs worldwide over next decade",
+    link: "https://gulfnews.com/jobs/uae-travel-tourism-industry-to-create-460-million-new-jobs-worldwide-over-next-decade-1.102394909",
+    source: "Khaleej Times",
+    date: "April 09, 2025",
+    author: "Nandini Sircar",
+    position: null,
+    summary:
+      "The travel and tourism industry is expected to create one in every eight jobs, with over 460 million new positions over the next decade.",
+  },
+  {
+    title: "UAE: Why Gen Z is choosing lower salaries for more flexibility",
+    link: "https://gulfnews.com/jobs/uae-why-gen-z-is-choosing-lower-salaries-for-more-flexibility-1.102394913",
+    source: "Khaleej Times",
+    date: "April 05, 2025",
+    author: "Usman Malik",
+    position: null,
+    summary:
+      "A recent survey by an online CV-maker company has revealed an intriguing shift in employment preferences, particularly among Gen Z. In the UK, about 55 per cent of Gen Z respondents said they would accept a lower salary in exchange for remote work.",
+  },
+  {
+    title: "UAE: How will Trump's tariffs impact remittances?",
+    link: "https://gulfnews.com/uae/uae-how-will-trumps-tariffs-impact-remittances-1.102394917",
+    source: "Khaleej Times",
+    date: "April 09, 2025",
+    author: "Nasreen Abdulla",
+    position: null,
+    summary:
+      "An expert pointed out that with growing concerns about a weakening dollar, many could choose to send their savings back home earlier than planned.",
+  },
+  {
+    title: "UAE traffic law: Reckless drivers to be arrested on the spot, fines increased",
+    link: "https://gulfnews.com/uae/transport/uae-traffic-law-reckless-drivers-to-be-arrested-on-the-spot-fines-increased-1.102394921",
+    source: "Gulf News",
+    date: "April 10, 2025",
+    author: "Abdulla Rashid",
+    position: "Abu Dhabi Editor",
+    summary:
+      "Reckless drivers can now be arrested on the spot and will face hefty fine of up to Dh100,000, according to the revised traffic regulations in the UAE.",
+  },
+  {
+    title: "China limits Hollywood films as trade war escalates to services",
+    link: "https://gulfnews.com/entertainment/hollywood/china-limits-hollywood-films-as-trade-war-escalates-to-services-1.102394925",
+    source: "Gulf News",
+    date: "April 10, 2025",
+    author: "Bloomberg",
+    position: null,
+    summary:
+      "China announced it would curb imports of Hollywood films, opening a new front in its trade war with the US hours after President Donald Trump’s record tariffs took effect.",
+  },
 ];
