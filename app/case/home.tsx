@@ -773,9 +773,7 @@ export default function CaseHome() {
                   >
                     <CardContent className="p-3 flex flex-col text-left justify-center h-full">
                       <div className="flex flex-col items-start">
-                        <div className="text-[#2563eb] mb-3">
-                          {action.icon}
-                        </div>
+                        <div className="text-[#2563eb] mb-3">{action.icon}</div>
                         <h1 className="text-white font-semibold text-lg leading-normal">
                           {action.title}
                         </h1>
