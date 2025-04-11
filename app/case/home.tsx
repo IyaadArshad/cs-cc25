@@ -775,12 +775,15 @@ export default function CaseHome() {
           scaleX: mainViewReady ? 1 : 0.8,
         }}
         transition={{ duration: 0.4, delay: 0.5 }}
-        className="w-full flex items-center gap-4 my-8"
+        className="w-full flex items-center gap-4 mt-8"
       >
         <div className="h-px bg-gray-700 flex-grow"></div>
       </motion.div>
 
       {/* Quick Actions Carousel */}
+
+      <h1 className="text-2xl mt-4 text-white">Quick Actions</h1>
+
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{
@@ -788,7 +791,7 @@ export default function CaseHome() {
           y: mainViewReady ? 0 : 20,
         }}
         transition={{ duration: 0.4, delay: 0.6 }}
-        className="w-full mt-8"
+        className="w-full mt-6"
       >
         <Carousel
           opts={carouselOptions}
@@ -854,37 +857,6 @@ export default function CaseHome() {
         <h2 className="text-xl font-semibold text-white mb-4">For You</h2>
 
         <div className="space-y-4">
-          {/* Hardcoded Article */}
-          <motion.div
-            initial={{ opacity: 0, y: 10 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.9 }}
-          >
-            <Card className="bg-gray-800 border-gray-700 hover:bg-gray-700/50 cursor-pointer transition-colors">
-              <div className="flex p-3">
-                <div className="flex-shrink-0">
-                  <div className="w-[100px] h-[70px] rounded-md overflow-hidden bg-gray-700">
-                    <img
-                      src="https://via.placeholder.com/100"
-                      alt="Abu Dhabi News"
-                      className="w-full h-full object-cover"
-                    />
-                  </div>
-                </div>
-                <div className="ml-4 flex flex-col justify-between flex-1">
-                  <h3 className="text-white font-medium line-clamp-2 text-sm">
-                    Abu Dhabi's new cultural district opens to visitors
-                  </h3>
-                  <div className="flex items-center mt-1">
-                    <span className="text-xs text-blue-400">Gulf News</span>
-                    <span className="mx-2 text-gray-500">•</span>
-                    <span className="text-xs text-gray-400">2 hours ago</span>
-                  </div>
-                </div>
-              </div>
-            </Card>
-          </motion.div>
-
           {/* Microsoft Articles */}
           {isLoadingNews ? (
             <div className="flex justify-center py-4">
