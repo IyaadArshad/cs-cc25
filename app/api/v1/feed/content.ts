@@ -211,7 +211,8 @@ export const news = [
     image: "042511",
   },
   {
-    title: "India-UAE travel: Dubai-India aviation ties soar, as Emirates carries 90m passengers over 40 years",
+    title:
+      "India-UAE travel: Dubai-India aviation ties soar, as Emirates carries 90m passengers over 40 years",
     link: "https://gulfnews.com/uae/government/india-uae-travel-dubai-india-aviation-ties-soar-as-emirates-carries-90m-passengers-over-40-years-1.102394888",
     source: "Gulf News",
     date: "April 10, 2025",
@@ -228,7 +229,8 @@ export const news = [
     image: "042512",
   },
   {
-    title: "Sharjah plans safer buildings with AI to stop fires before they start",
+    title:
+      "Sharjah plans safer buildings with AI to stop fires before they start",
     link: "https://gulfnews.com/uae/emergencies/sharjah-plans-safer-buildings-with-ai-to-stop-fires-before-they-start-1.102394895",
     source: "Khaleej Times",
     date: "April 10, 2025",
@@ -245,7 +247,8 @@ export const news = [
     image: "042513",
   },
   {
-    title: "Sheikh Hamdan in India: We have been waiting for you, says minister",
+    title:
+      "Sheikh Hamdan in India: We have been waiting for you, says minister",
     link: "https://gulfnews.com/uae/sheikh-hamdan-in-india-we-have-been-waiting-for-you-says-minister-1.102394901",
     source: "Khaleej Times",
     date: "April 09, 2025",
@@ -279,7 +282,8 @@ export const news = [
     image: "042515",
   },
   {
-    title: "UAE: Travel, tourism industry to create 460 million new jobs worldwide over next decade",
+    title:
+      "UAE: Travel, tourism industry to create 460 million new jobs worldwide over next decade",
     link: "https://gulfnews.com/jobs/uae-travel-tourism-industry-to-create-460-million-new-jobs-worldwide-over-next-decade-1.102394909",
     source: "Khaleej Times",
     date: "April 09, 2025",
@@ -330,7 +334,8 @@ export const news = [
     image: "042518",
   },
   {
-    title: "UAE traffic law: Reckless drivers to be arrested on the spot, fines increased",
+    title:
+      "UAE traffic law: Reckless drivers to be arrested on the spot, fines increased",
     link: "https://gulfnews.com/uae/transport/uae-traffic-law-reckless-drivers-to-be-arrested-on-the-spot-fines-increased-1.102394921",
     source: "Gulf News",
     date: "April 10, 2025",
