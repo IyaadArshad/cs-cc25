@@ -16,51 +16,51 @@ const cardsData: cardData[] = [
     content:
       "Discover exclusive discounts on dining, leisure, and entertainment activities.",
     externalLink: "https://www.theentertainerme.com/en-ae/abu-dhabi-al-ain",
-    location: "/img/tips/entertainer.png",
+    location: "/img/apps/entertainer.png",
   },
   {
     title: "Tripadvisor",
     content: "Read reviews and find the best places in Abu Dhabi.",
     externalLink: "https://www.tripadvisor.com",
-    location: "/img/tips/tripadvisor.png",
+    location: "/img/apps/tripadvisor.png",
   },
   {
     title: "Zomato",
     content: "Discover top restaurants and cafes in Abu Dhabi.",
     externalLink: "https://www.zomato.com",
-    location: "/img/tips/zomato.png",
+    location: "/img/apps/zomato.png",
   },
   {
     title: "Careem",
     content: "Book rides quickly and conveniently across the city.",
     externalLink: "https://www.careem.com",
-    location: "/img/tips/careem.png",
+    location: "/img/apps/careem.png",
   },
   {
-    title: "ADDC",
+    title: "TAQA",
     content: "Pay your water and electricity bills quickly and securely.",
     externalLink: "https://www.addc.ae/en-US/home/pages/AboutUs.aspx",
-    location: "/img/tips/abuDhabiDistributionCompany.png",
+    location: "/img/apps/TAQA.png",
   },
   {
     title: "DARB",
     content:
       "Access real-time public transport and traffic information with ease.",
     externalLink: "https://darb.qmobility.ae/RucWeb/login",
-    location: "/img/tips/darb.png",
+    location: "/img/apps/darb.png",
   },
   {
     title: "AD Police",
     content:
       "Connect with Abu Dhabi's trusted police services for prompt assistance.",
     externalLink: "https://es.adpolice.gov.ae/trafficservices/",
-    location: "/img/tips/abuDhabiPolice.png",
+    location: "/img/apps/abuDhabiPolice.png",
   },
   {
     title: "Visit Abu Dhabi",
     content: "Plan your trip and explore attractions in Abu Dhabi.",
     externalLink: "https://visitabudhabi.ae",
-    location: "/img/tips/visitAbuDhabi.png",
+    location: "/img/apps/visitAbuDhabi.png",
   },
 ];
 
