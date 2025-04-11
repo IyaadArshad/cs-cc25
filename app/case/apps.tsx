@@ -38,8 +38,8 @@ const cardsData: cardData[] = [
   },
   {
     title: "TAQA",
-    content: "Pay your water and electricity bills quickly and securely.",
-    externalLink: "https://www.addc.ae/en-US/home/pages/AboutUs.aspx",
+    content: "Easily pay your water and electricity bills in one place .",
+    externalLink: "https://taqadistribution.com/addc/en-us/residential/overview",
     location: "/img/apps/TAQA.png",
   },
   {
