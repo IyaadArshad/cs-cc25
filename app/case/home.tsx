@@ -535,21 +535,6 @@ export default function CaseHome() {
         }
 
         const data = await response.json();
-
-        // Function to detect if text is primarily in English
-        const isEnglishText = (text: string): boolean => {
-          // Skip empty text
-          if (!text || text.trim() === "") return false;
-
-          // Check for non-Latin characters (simplified approach)
-          const nonLatinPattern = /[^\x00-\x7F\s]/g;
-          const nonLatinChars = text.match(nonLatinPattern) || [];
-          const nonLatinPercentage = nonLatinChars.length / text.length;
-
-          // If less than 15% are non-Latin characters, likely English
-          return nonLatinPercentage < 0.15;
-        };
-
         // Parse date string into a standardized Date object
         const parseArticleDate = (dateStr: string): Date => {
           if (!dateStr) return new Date(0); // Default to epoch if no date
@@ -562,21 +547,15 @@ export default function CaseHome() {
           }
         };
 
-        // Filter to only include English articles
-        const englishArticles = data.filter((article: any) =>
-          isEnglishText(article.title || "") &&
-          isEnglishText(article.summary || "")
-        );
-
         // Sort by date (newest first)
-        const sortedArticles = englishArticles.sort((a: any, b: any) => {
+        const sortedArticles = data.sort((a: any, b: any) => {
           const dateA = parseArticleDate(a.date);
           const dateB = parseArticleDate(b.date);
           return dateB.getTime() - dateA.getTime();
         });
 
         // Limit to 5 articles
-        setNewsArticles(sortedArticles.slice(0, 5));
+        setNewsArticles(sortedArticles.slice(0, 100));
       } catch (error) {
         console.error("Error fetching news:", error);
       } finally {
@@ -906,7 +885,7 @@ export default function CaseHome() {
             </Card>
           </motion.div>
 
-          {/* News Articles from API */}
+          {/* Microsoft Articles */}
           {isLoadingNews ? (
             <div className="flex justify-center py-4">
               <div className="w-6 h-6 border-2 border-t-transparent border-blue-500 rounded-full animate-spin"></div>
@@ -918,9 +897,7 @@ export default function CaseHome() {
                 initial={{ opacity: 0, y: 10 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 1 + index * 0.1 }}
-                onClick={() =>
-                  article.link && window.open(article.link, "_blank")
-                }
+                onClick={() => article.link && window.open(article.link, "_blank")}
               >
                 <Card className="bg-gray-800 border-gray-700 hover:bg-gray-700/50 cursor-pointer transition-colors">
                   <div className="flex p-3">
