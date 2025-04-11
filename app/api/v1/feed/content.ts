@@ -14,6 +14,7 @@ export const news = [
                 <li><strong>New Rate:</strong> Dh347 per gram, nearing the record of Dh351.75.</li>
                 <li><strong>Event Impact:</strong> Concerns for shoppers ahead of 'Akshaya Trithiya'.</li>
               </ul>`,
+    image: "04250",
   },
   {
     title:
@@ -31,6 +32,7 @@ export const news = [
                 <li><strong>US Tariffs:</strong> Increased to 125% by President Trump.</li>
                 <li><strong>China's Response:</strong> Retaliatory tariffs raised to 84% on US goods.</li>
               </ul>`,
+    image: "04251",
   },
   {
     title:
@@ -48,6 +50,7 @@ export const news = [
                 <li><strong>Participants:</strong> 200 industry leaders, including 40 from Dubai.</li>
                 <li><strong>Focus:</strong> Cultural and economic synergies, fintech, and digitalization.</li>
               </ul>`,
+    image: "04252",
   },
   {
     title: "Dubai banks hold 46% of UAE deposits, exceeding Dh1.3 trillion",
@@ -64,6 +67,7 @@ export const news = [
                 <li><strong>Amount:</strong> Dh1.308 trillion as of January 31, 2025.</li>
                 <li><strong>Growth:</strong> Annual growth of 13.1% in deposits and 11.3% in total assets.</li>
               </ul>`,
+    image: "04253",
   },
   {
     title:
@@ -81,6 +85,7 @@ export const news = [
                 <li><strong>Reason:</strong> Retreat from H20 chip export ban to China.</li>
                 <li><strong>Key Product:</strong> H20 chip, Nvidia's advanced AI processor.</li>
               </ul>`,
+    image: "04254",
   },
   {
     title: "GCC investors fret over US tariffs, oil price plunge",
@@ -97,6 +102,7 @@ export const news = [
                 <li><strong>Key Loser:</strong> Emaar Properties dropped by 8.9%.</li>
                 <li><strong>Oil Prices:</strong> Declined by 3%, adding to financial strain.</li>
               </ul>`,
+    image: "04255",
   },
   {
     title:
@@ -114,6 +120,7 @@ export const news = [
                 <li><strong>Eligibility:</strong> Canadian temporary resident visa or valid US non-immigrant visa.</li>
                 <li><strong>Benefits:</strong> Faster travel and economic boost for Canada.</li>
               </ul>`,
+    image: "04256",
   },
   {
     title:
@@ -131,6 +138,7 @@ export const news = [
                 <li><strong>COVID-19 Response:</strong> Led coordinated efforts with mass testing sites.</li>
                 <li><strong>Mandate:</strong> Prevention, preparedness, response, recovery, and mitigation.</li>
               </ul>`,
+    image: "04257",
   },
   {
     title: "Trump, tariffs and a changing world order",
@@ -147,6 +155,7 @@ export const news = [
                 <li><strong>Recession Risk:</strong> Goldman Sachs raises US recession risk to 45%.</li>
                 <li><strong>Global Ethos:</strong> Trump's policies reshaping economic dynamics.</li>
               </ul>`,
+    image: "04258",
   },
   {
     title: "Sharjah launches fire safety campaign for industrial areas",
@@ -163,6 +172,7 @@ export const news = [
                 <li><strong>Focus:</strong> Awareness, storage practices, and escape routes.</li>
                 <li><strong>Support:</strong> Collaboration with Sharjah Economic Development Department.</li>
               </ul>`,
+    image: "04259",
   },
   {
     title:
@@ -180,6 +190,7 @@ export const news = [
                 <li><strong>Objective:</strong> Deepen economic relations and attract investment.</li>
                 <li><strong>Dubai Global:</strong> Plan to establish 50 offices globally by 2030.</li>
               </ul>`,
+    image: "042510",
   },
   {
     title:
@@ -197,6 +208,7 @@ export const news = [
                 <li><strong>Dubai:</strong> Speed limit increased to 100km/h on Sheikh Zayed bin Hamdan Al Nahyan Street.</li>
                 <li><strong>Objective:</strong> Enhance road safety and reduce violations.</li>
               </ul>`,
+    image: "042511",
   },
   {
     title: "India-UAE travel: Dubai-India aviation ties soar, as Emirates carries 90m passengers over 40 years",
@@ -213,6 +225,7 @@ export const news = [
                 <li><strong>Weekly Flights:</strong> 167 flights connecting Dubai to nine Indian cities.</li>
                 <li><strong>Significance:</strong> Strengthening economic and cultural ties.</li>
               </ul>`,
+    image: "042512",
   },
   {
     title: "Sharjah plans safer buildings with AI to stop fires before they start",
@@ -229,6 +242,7 @@ export const news = [
                 <li><strong>Research:</strong> Collaboration with educators at the American University of Sharjah.</li>
                 <li><strong>Symposium:</strong> Two-day event on fire safety measures.</li>
               </ul>`,
+    image: "042513",
   },
   {
     title: "Sheikh Hamdan in India: We have been waiting for you, says minister",
@@ -245,6 +259,7 @@ export const news = [
                 <li><strong>Discussion:</strong> Cooperation across multiple sectors.</li>
                 <li><strong>CEPA Goal:</strong> Non-oil trade target of $100 billion by 2030.</li>
               </ul>`,
+    image: "042514",
   },
   {
     title: "UAE: Pakistanis can now avail 5-year multiple-entry visas",
@@ -261,6 +276,7 @@ export const news = [
                 <li><strong>Requirement:</strong> No guarantor or host needed.</li>
                 <li><strong>Objective:</strong> Facilitate travel and strengthen bilateral ties.</li>
               </ul>`,
+    image: "042515",
   },
   {
     title: "UAE: Travel, tourism industry to create 460 million new jobs worldwide over next decade",
@@ -277,6 +293,7 @@ export const news = [
                 <li><strong>Middle East Contribution:</strong> $342 billion added to global GDP in 2024.</li>
                 <li><strong>Report:</strong> WTTC's 2025 Economic Impact Report.</li>
               </ul>`,
+    image: "042516",
   },
   {
     title: "UAE: Why Gen Z is choosing lower salaries for more flexibility",
@@ -293,6 +310,7 @@ export const news = [
                 <li><strong>Survey Insight:</strong> 55% of Gen Z willing to accept lower pay for remote work.</li>
                 <li><strong>UAE Focus:</strong> Emerging as a hub for evolving work culture.</li>
               </ul>`,
+    image: "042517",
   },
   {
     title: "UAE: How will Trump's tariffs impact remittances?",
@@ -309,6 +327,7 @@ export const news = [
                 <li><strong>Dollar Concerns:</strong> Weakening dollar affecting remittance strategies.</li>
                 <li><strong>Income Variation:</strong> Impact varies by income bracket.</li>
               </ul>`,
+    image: "042518",
   },
   {
     title: "UAE traffic law: Reckless drivers to be arrested on the spot, fines increased",
@@ -325,6 +344,7 @@ export const news = [
                 <li><strong>Fines:</strong> Up to Dh100,000 for key offences.</li>
                 <li><strong>Negligence Penalty:</strong> Imprisonment and fines of no less than Dh50,000.</li>
               </ul>`,
+    image: "042519",
   },
   {
     title: "China limits Hollywood films as trade war escalates to services",
@@ -341,5 +361,6 @@ export const news = [
                 <li><strong>Trade War:</strong> Escalation targeting American services.</li>
                 <li><strong>Market Impact:</strong> Decline in entertainment shares.</li>
               </ul>`,
+    image: "042520",
   },
 ];
