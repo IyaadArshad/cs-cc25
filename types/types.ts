@@ -12,4 +12,4 @@ export interface SettingsItemProps {
   plainIcon?: boolean;
 }
 
-export type Tab = "home" | "discover" | "chat" | "apps" | "profile";
+export type Tab = "home" | "discover" | "chat" | "apps" | "culture" | "profile";
