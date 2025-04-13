@@ -1,6 +1,6 @@
 import { Carousel, CarouselContent, CarouselItem } from "@/components/ui/carousel";
 import { Card, CardContent } from "@/components/ui/card";
-import { MapPin, Utensils, ShoppingBag, Landmark, ArrowLeft, ExternalLink } from "lucide-react";
+import { MapPin, Utensils, ShoppingBag, Landmark, ArrowLeft, ExternalLink, CarFront } from "lucide-react";
 import { useState, useRef, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { placesToVisit, foodPlaces, shoppingPlaces, essentialServices } from "./discoverData";
@@ -20,6 +20,7 @@ interface Place {
   description: string;
   longDescription?: string[];
   externalLink?: string;
+  eta: number;
 }
 
 export default function CaseDiscover() {
@@ -110,6 +111,19 @@ export default function CaseDiscover() {
                 </p>
               ))}
             </motion.div>
+
+            <motion.p
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.25 }} // Reduced from 0.5
+              className="w-full mb-4 py-4 bg-blue-600 hover:bg-blue-700 text-white rounded-lg flex items-center justify-center gap-2"
+            >
+              <span className="text-gray-300 text-sm">
+                <CarFront className="w-4 h-4" />
+              </span>
+              ETA : {selectedPlace.eta} minutes
+              
+            </motion.p>
 
             <motion.button
               initial={{ opacity: 0, y: 20 }}

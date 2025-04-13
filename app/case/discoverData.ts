@@ -10,6 +10,7 @@ export const placesToVisit = [
       "White marble panels ornamented with semi-precious stones, including lapis lazuli, red agate, amethyst, abalone shell and mother of pearl, create intricate floral designs throughout the mosque.",
     ],
     externalLink: "https://www.szgmc.gov.ae/en",
+    eta: 20,
   },
   {
     image: "/img/discover/placesToVisit/louvre.png",
@@ -22,6 +23,7 @@ export const placesToVisit = [
       "Housing over 600 artworks, including both permanent collections and loans from French partner museums, the Louvre Abu Dhabi tells the story of humanity through art, from ancient times to the contemporary era.",
     ],
     externalLink: "https://www.louvreabudhabi.ae",
+    eta: 30,
   },
   {
     image: "/img/discover/placesToVisit/QasrAlWatan.png",
@@ -34,6 +36,7 @@ export const placesToVisit = [
       "Visitors can explore the House of Knowledge, which contains rare manuscripts and books, and learn about the UAE's system of governance and traditions through interactive exhibitions.",
     ],
     externalLink: "https://www.qasralwatan.ae",
+    eta: 35,
   },
   {
     image: "/img/discover/placesToVisit/yas.png",
@@ -47,6 +50,7 @@ export const placesToVisit = [
       "With world-class hotels, shopping at Yas Mall, and a vibrant dining scene, Yas Island offers endless entertainment options for visitors of all ages.",
     ],
     externalLink: "https://www.yasisland.ae",
+    eta: 15,
   },
   {
     image: "/img/discover/placesToVisit/cornicheBeach.png",
@@ -60,6 +64,7 @@ export const placesToVisit = [
       "Regular events and festivals are held along the Corniche, bringing the community together for celebrations and entertainment throughout the year.",
     ],
     externalLink: "https://visitabudhabi.ae/en/where-to-go/corniche-beach",
+    eta: 40,
   },
   {
     image: "/img/discover/placesToVisit/EmiratesPalace.png",
@@ -73,6 +78,7 @@ export const placesToVisit = [
       "Famous for its Palace Cappuccino sprinkled with 24-karat gold flakes, the hotel offers unique dining experiences across its multiple award-winning restaurants.",
     ],
     externalLink: "https://www.mandarinoriental.com/abu-dhabi/emirates-palace",
+    eta: 45,
   },
   {
     image: "/img/discover/placesToVisit/mangroveNationalPark.png",
@@ -87,6 +93,7 @@ export const placesToVisit = [
     ],
     externalLink:
       "https://visitabudhabi.ae/en/where-to-go/mangrove-national-park",
+    eta: 35,
   },
 ];
 
@@ -103,6 +110,7 @@ export const foodPlaces = [
       "Multiple convenient locations across the city with consistent quality and fast service.",
     ],
     externalLink: "https://visitabudhabi.ae/restaurants/shawarmatime",
+    eta: 25,
   },
   {
     // Nested folder image: updated with a new valid URL
@@ -118,6 +126,7 @@ export const foodPlaces = [
       "Great value meal deals and family platters make it perfect for group dining.",
     ],
     externalLink: "https://www.nandos.ae",
+    eta: 18,
   },
   {
     image: "/img/discover/culinaryDelights/shakespeareAndCo.png",
@@ -131,6 +140,7 @@ export const foodPlaces = [
       "Popular among families and professionals, with multiple locations across Abu Dhabi.",
     ],
     externalLink: "https://shakespeare-and-co.com",
+    eta: 32,
   },
   {
     image: "/img/discover/culinaryDelights/alMandi.png",
@@ -144,6 +154,7 @@ export const foodPlaces = [
       "Popular for both dine-in and takeaway, with generous portions at affordable prices.",
     ],
     externalLink: "https://almandi-house.ae/",
+    eta: 12,
   },
   {
     image: "/img/discover/culinaryDelights/lebaneseFlower.png",
@@ -156,6 +167,7 @@ export const foodPlaces = [
       "Their generous portions and consistent quality have made them a local favorite for decades.",
     ],
     externalLink: "https://lebaneseflower.ae",
+    eta: 28,
   },
   {
     image: "/img/discover/culinaryDelights/subway.png",
@@ -168,6 +180,7 @@ export const foodPlaces = [
       "Perfect for quick lunches or light dinners, with locations throughout Abu Dhabi.",
     ],
     externalLink: "https://subway.com/en-AE",
+    eta: 10,
   },
   {
     image: "/img/discover/culinaryDelights/alMzrab.png",
@@ -180,6 +193,7 @@ export const foodPlaces = [
       "Great place to try authentic Emirati dishes like Harees and Machboos.",
     ],
     externalLink: "https://visitabudhabi.ae/restaurants/al-mrzab",
+    eta: 35,
   },
 ];
 
@@ -196,6 +210,7 @@ export const shoppingPlaces = [
       "The mall's entertainment options include a 20-screen cinema, family entertainment center, and year-round events.",
     ],
     externalLink: "https://yasmall.ae",
+    eta: 15,
   },
   {
     image: "/img/discover/localMarketsAndStores/theGalleria.png",
@@ -209,6 +224,7 @@ export const shoppingPlaces = [
       "The expansion includes a dedicated family entertainment zone with innovative leisure attractions.",
     ],
     externalLink: "https://thegalleria.ae",
+    eta: 30,
   },
   {
     image: "/img/discover/localMarketsAndStores/AbuDhabiMall.png",
@@ -221,6 +237,7 @@ export const shoppingPlaces = [
       "The mall is directly connected to Beach Rotana Hotel, making it convenient for tourists.",
     ],
     externalLink: "https://abudhabi-mall.com",
+    eta: 35,
   },
   {
     image: "/img/discover/localMarketsAndStores/madinatZayed.png",
@@ -233,6 +250,7 @@ export const shoppingPlaces = [
       "The shopping centre serves as a cultural bridge between traditional and modern retail experiences.",
     ],
     externalLink: "https://madinatzayed-mall.com",
+    eta: 40,
   },
   {
     image: "/img/discover/localMarketsAndStores/worldTradeCenterMall.png",
@@ -246,6 +264,7 @@ export const shoppingPlaces = [
       "The mall's rooftop garden provides a unique outdoor shopping and dining experience.",
     ],
     externalLink: "https://wtcad.ae",
+    eta: 42,
   },
   {
     image: "/img/discover/localMarketsAndStores/dalmaMall.png",
@@ -259,6 +278,7 @@ export const shoppingPlaces = [
       "The mall serves as a community hub for the Mussafah and Mohammed Bin Zayed City areas.",
     ],
     externalLink: "https://dalmamall.ae",
+    eta: 10,
   },
   {
     image: "/img/discover/localMarketsAndStores/MushrifMall.png",
@@ -272,6 +292,7 @@ export const shoppingPlaces = [
       "The mall's traditional souk section offers local products and handicrafts.",
     ],
     externalLink: "https://mushrifmall.com",
+    eta: 32,
   },
 ];
 
@@ -287,6 +308,7 @@ export const essentialServices = [
       "The platform has revolutionized government service delivery in Abu Dhabi through digital transformation.",
     ],
     externalLink: "https://tamm.abudhabi",
+    eta: 25,
   },
   {
     image: "/img/discover/essentialServices/abuDhabiDepartmentOfMunicipalitiesAndTransport.png",
@@ -299,6 +321,7 @@ export const essentialServices = [
       "Their services include emergency care, specialized treatments, and preventive healthcare programs.",
     ],
     externalLink: "https://seha.ae",
+    eta: 30,
   },
   {
     image: "/img/discover/essentialServices/abuDhabiChamber.png",
@@ -312,6 +335,7 @@ export const essentialServices = [
       "Their community policing initiatives help maintain strong relationships with residents.",
     ],
     externalLink: "https://adi.gov.ae",
+    eta: 38,
   },
   {
     image: "/img/discover/essentialServices/abuDhabiDepartmentOfMunicipalitiesAndTransport.png",
@@ -325,6 +349,7 @@ export const essentialServices = [
       "Their services include parking management, public bus operations, and maritime transport regulation.",
     ],
     externalLink: "https://dmt.gov.ae",
+    eta: 42,
   },
   {
     image: "/img/discover/essentialServices/abuDhabiDepartmentOfMunicipalitiesAndTransport.png",
@@ -337,6 +362,7 @@ export const essentialServices = [
       "ADDC promotes sustainable consumption through various awareness programs.",
     ],
     externalLink: "https://addc.ae",
+    eta: 22,
   },
   {
     image: "/img/discover/essentialServices/abuDhabiChamber.png",
@@ -350,6 +376,7 @@ export const essentialServices = [
       "Their services include certificate of origin issuance and business networking opportunities.",
     ],
     externalLink: "https://abudhabichamber.ae",
+    eta: 33,
   },
   {
     image: "/img/discover/essentialServices/abuDhabiJudicialDepartment.png",
@@ -362,5 +389,6 @@ export const essentialServices = [
       "Their services include notary public, marriage services, and legal consultation.",
     ],
     externalLink: "https://adjd.gov.ae",
+    eta: 38,
   },
 ];
