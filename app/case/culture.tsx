@@ -306,7 +306,9 @@ export default function GuideSection() {
           transition={{ duration: 0.2, delay: 0.15 }}
           className="text-gray-300 text-lg mb-8"
         >
-          Abu Dhabi is hosting a variety of exciting events this April, offering a blend of cultural, musical, and sporting experiences. Here are some highlights:
+          Abu Dhabi is hosting a variety of exciting events this April, offering
+          a blend of cultural, musical, and sporting experiences. Here are some
+          highlights:
         </motion.p>
 
         <div className="space-y-4">
@@ -315,18 +317,27 @@ export default function GuideSection() {
               key={event.id}
               initial={{ opacity: 0, y: 10 }}
               animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: 10 }}
               transition={{ duration: 0.2, delay: 0.2 + index * 0.05 }}
-              className={`bg-gray-800 border ${expandedEvent === event.id ? 'border-blue-500' : 'border-gray-700'} rounded-lg overflow-hidden`}
+              className={`bg-gray-800 border ${
+                expandedEvent === event.id
+                  ? "border-blue-500"
+                  : "border-gray-700"
+              } rounded-lg overflow-hidden`}
             >
               <div
                 className="flex items-center p-4 cursor-pointer hover:bg-gray-700/50 transition"
-                onClick={() => setExpandedEvent(expandedEvent === event.id ? null : event.id)}
+                onClick={() =>
+                  setExpandedEvent(expandedEvent === event.id ? null : event.id)
+                }
               >
                 <div className="w-12 h-12 bg-blue-600/20 rounded-full flex items-center justify-center flex-shrink-0 mr-4">
                   <span className="text-2xl">{event.icon}</span>
                 </div>
                 <div className="flex-1">
-                  <h3 className="text-white font-medium text-lg">{event.title}</h3>
+                  <h3 className="text-white font-medium text-lg">
+                    {event.title}
+                  </h3>
                   <div className="flex flex-wrap gap-x-4 text-gray-400 text-sm mt-1">
                     <span className="flex items-center">
                       <Calendar className="w-3 h-3 mr-1" /> {event.date}
@@ -337,43 +348,49 @@ export default function GuideSection() {
                   </div>
                 </div>
                 <ChevronRight
-                  className={`w-5 h-5 text-gray-400 transition-transform ${expandedEvent === event.id ? 'rotate-90' : ''}`}
+                  className={`w-5 h-5 text-gray-400 transition-transform ${
+                    expandedEvent === event.id ? "rotate-90" : ""
+                  }`}
                 />
               </div>
 
-              {expandedEvent === event.id && (
-                <motion.div
-                  initial={{ opacity: 0, height: 0 }}
-                  animate={{ opacity: 1, height: 'auto' }}
-                  exit={{ opacity: 0, height: 0 }}
-                  transition={{ duration: 0.2 }}
-                  className="px-4 pb-4"
-                >
-                  <div className="h-48 relative mb-4 mt-2 rounded-lg overflow-hidden">
-                    <div className="absolute inset-0 bg-gray-900/20 z-10"></div>
-                    <img
-                      src={event.image}
-                      alt={event.title}
-                      className="w-full h-full object-cover"
-                      onError={(e) => {
-                        e.currentTarget.src = "/images/event-placeholder.jpg";
-                      }}
-                    />
-                  </div>
-                  <p className="text-gray-300 mb-4">{event.description}</p>
-                  <div className="flex justify-between items-center">
-                    <span className="text-sm text-gray-500">Source: {event.source}</span>
-                    <a
-                      href={event.link}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white text-sm rounded-md transition"
-                    >
-                      Visit Website
-                    </a>
-                  </div>
-                </motion.div>
-              )}
+              <AnimatePresence>
+                {expandedEvent === event.id && (
+                  <motion.div
+                    initial={{ opacity: 0, height: 0 }}
+                    animate={{ opacity: 1, height: "auto" }}
+                    exit={{ opacity: 0, height: 0 }}
+                    transition={{ duration: 0.2 }}
+                    className="px-4 pb-4"
+                  >
+                    {/* <div className="h-48 relative mb-4 mt-2 rounded-lg overflow-hidden">
+                      <div className="absolute inset-0 bg-gray-900/20 z-10"></div>
+                      <img
+                        src={event.image}
+                        alt={event.title}
+                        className="w-full h-full object-cover"
+                        onError={(e) => {
+                          e.currentTarget.src = "/images/event-placeholder.jpg";
+                        }}
+                      />
+                    </div> */}
+                    <p className="text-gray-300 pt-4  mb-4">{event.description}</p>
+                    <div className="flex justify-between items-center">
+                      <span className="text-sm text-gray-500">
+                        Source: {event.source}
+                      </span>
+                      <a
+                        href={event.link}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white text-sm rounded-md transition"
+                      >
+                        Visit Website
+                      </a>
+                    </div>
+                  </motion.div>
+                )}
+              </AnimatePresence>
             </motion.div>
           ))}
         </div>
