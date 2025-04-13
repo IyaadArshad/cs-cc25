@@ -6,7 +6,6 @@ import { motion, AnimatePresence } from "framer-motion";
 import { cardsData, cardData, TraditionsData, ClothesData, FoodData, ReligionData } from "./cultureData";
 
 export default function CaseCulture() {
-  const isFirstRender = useRef(true);
   const containerRef = useRef<HTMLDivElement>(null);
 
   const [selectedCard, setSelectedCard] = useState<cardData | null>(null);
