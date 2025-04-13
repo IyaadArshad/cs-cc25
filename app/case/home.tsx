@@ -782,7 +782,17 @@ export default function CaseHome() {
 
       {/* Quick Actions Carousel */}
 
-      <h1 className="text-2xl mt-4 text-white">Quick Actions</h1>
+        <motion.h1
+          initial={{ opacity: 0, y: 20 }}
+          animate={{
+            opacity: mainViewReady ? 1 : 0,
+            y: mainViewReady ? 0 : 20,
+          }}
+          transition={{ duration: 0.4, delay: 0.55 }}
+          className="text-2xl mt-4 text-white"
+        >
+          Quick Actions
+        </motion.h1>
 
       <motion.div
         initial={{ opacity: 0, y: 20 }}
