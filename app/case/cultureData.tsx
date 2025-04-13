@@ -46,18 +46,19 @@ const containerVariants = {
     visible: { 
         opacity: 1, 
         transition: { 
-            staggerChildren: 0.05,
-            duration: 0.2 
+            staggerChildren: 0.08,
+            duration: 0.2,
+            when: "beforeChildren"
         } 
     },
 };
 
 const itemVariants = {
-    hidden: { opacity: 0, y: 5 },
+    hidden: { opacity: 0, y: 10 },
     visible: { 
         opacity: 1, 
         y: 0,
-        transition: { duration: 0.2 }
+        transition: { duration: 0.3 }
     },
 };
 
@@ -66,7 +67,7 @@ export const TraditionsData = () => {
         <motion.div
             className="bg-black p-4 rounded-lg w-full overflow-y-auto max-h-full"
             variants={containerVariants}
-            initial="visible"
+            initial="hidden"
             animate="visible"
         >
             <motion.h2
@@ -117,7 +118,7 @@ export const ClothesData = () => {
         <motion.div
             className="bg-black p-4 rounded-lg w-full overflow-y-auto max-h-full"
             variants={containerVariants}
-            initial="visible"
+            initial="hidden"
             animate="visible"
         >
             <motion.h2
@@ -168,7 +169,7 @@ export const FoodData = () => {
         <motion.div
             className="bg-black p-4 rounded-lg w-full overflow-y-auto max-h-full"
             variants={containerVariants}
-            initial="visible"
+            initial="hidden"
             animate="visible"
         >
             <motion.h2
@@ -219,7 +220,7 @@ export const ReligionData = () => {
         <motion.div
             className="bg-black p-4 rounded-lg w-full overflow-y-auto max-h-full"
             variants={containerVariants}
-            initial="visible"
+            initial="hidden"
             animate="visible"
         >
             <motion.h2
