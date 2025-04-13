@@ -194,6 +194,7 @@ export default function GuideSection() {
   const [searchQuery, setSearchQuery] = useState("");
   const [isSearching, setIsSearching] = useState(false);
   const searchTimeoutRef = useRef<NodeJS.Timeout | null>(null);
+  const isFirstRender = useRef(true);
 
   useEffect(() => {
     const timeoutId = setTimeout(() => {
@@ -226,7 +227,7 @@ export default function GuideSection() {
       opacity: 1,
       y: 0,
       transition: {
-        delay: isSearching ? 0 : custom * 0.03,
+        delay: isSearching ? 0 : custom * 0.05,
         duration: 0.2,
       },
     }),
@@ -340,7 +341,7 @@ export default function GuideSection() {
             <motion.h1
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
-              transition={{ duration: 0.2 }}
+              transition={{ duration: 0.2, delay: 0.1 }}
               className="text-white text-4xl font-bold mb-8"
             >
               {selectedCard.title}
@@ -349,7 +350,7 @@ export default function GuideSection() {
             <motion.div
               initial={{ opacity: 0, scale: 0.98 }}
               animate={{ opacity: 1, scale: 1 }}
-              transition={{ duration: 0.2 }}
+              transition={{ duration: 0.2, delay: 0.15 }}
               className="relative w-full h-[300px] mb-8"
             >
               <img
@@ -362,7 +363,7 @@ export default function GuideSection() {
             <motion.div
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
-              transition={{ duration: 0.2 }}
+              transition={{ duration: 0.2, delay: 0.2 }}
               className="mb-8"
             >
               <p className="text-gray-300 text-lg leading-relaxed mb-6">
@@ -375,7 +376,7 @@ export default function GuideSection() {
             <motion.button
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
-              transition={{ duration: 0.2 }}
+              transition={{ duration: 0.2, delay: 0.25 }}
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
               onClick={() => setSelectedCard(null)}
@@ -387,9 +388,12 @@ export default function GuideSection() {
         ) : (
           <div>
             <motion.div
-              initial={{ opacity: 0, y: -10 }}
+              initial={isFirstRender.current ? { opacity: 0, y: -10 } : false}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.2 }}
+              onAnimationComplete={() => {
+                isFirstRender.current = false;
+              }}
               className="mb-6"
             >
               <h1 className="text-4xl font-bold text-white text-center">
@@ -397,7 +401,12 @@ export default function GuideSection() {
               </h1>
             </motion.div>
 
-            <div className="relative mb-6">
+            <motion.div 
+              initial={isFirstRender.current ? { opacity: 0, y: 10 } : false}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.2, delay: 0.1 }}
+              className="relative mb-6"
+            >
               <Search className="absolute top-3 left-3 h-5 w-5 text-gray-400" />
               <input
                 type="text"
@@ -414,7 +423,7 @@ export default function GuideSection() {
                   Clear
                 </button>
               )}
-            </div>
+            </motion.div>
 
             {searchQuery ? (
               <motion.div
@@ -442,7 +451,7 @@ export default function GuideSection() {
                             key={card.id}
                             initial={{ opacity: 0 }}
                             animate={{ opacity: 1 }}
-                            transition={{ duration: 0.2 }}
+                            transition={{ duration: 0.2, delay: index * 0.05 }}
                           >
                             <Card
                               className="w-full h-full bg-gray-800 border-gray-700 cursor-pointer hover:bg-gray-700/50 transition-colors shadow-md"
@@ -490,9 +499,9 @@ export default function GuideSection() {
             ) : (
               <div className="space-y-6">
                 <motion.div
-                  initial={{ opacity: 0, y: 10 }}
+                  initial={isFirstRender.current ? { opacity: 0, y: 10 } : false}
                   animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.2 }}
+                  transition={{ duration: 0.2, delay: 0.2 }}
                   className="relative overflow-hidden rounded-xl bg-gradient-to-br from-blue-600 to-blue-800 p-6 shadow-lg"
                 >
                   <DecorationShapes />
@@ -514,9 +523,9 @@ export default function GuideSection() {
                 </motion.div>
 
                 <motion.div
-                  initial={{ opacity: 0, y: 10 }}
+                  initial={isFirstRender.current ? { opacity: 0, y: 10 } : false}
                   animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.2 }}
+                  transition={{ duration: 0.2, delay: 0.3 }}
                   className="bg-gray-800 rounded-xl p-4 shadow-md"
                 >
                   <div className="flex items-center justify-between mb-3">
@@ -534,7 +543,11 @@ export default function GuideSection() {
                   </p>
                 </motion.div>
 
-                <div>
+                <motion.div
+                  initial={isFirstRender.current ? { opacity: 0, y: 10 } : false}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.2, delay: 0.4 }}
+                >
                   <h3 className="text-lg font-semibold text-white mb-4">
                     Browse by Category
                   </h3>
@@ -543,7 +556,7 @@ export default function GuideSection() {
                       <motion.div
                         key={category.id}
                         variants={cardVariants}
-                        initial="hidden"
+                        initial={isFirstRender.current ? "hidden" : false}
                         animate="visible"
                         custom={index}
                       >
@@ -582,13 +595,13 @@ export default function GuideSection() {
                       </motion.div>
                     ))}
                   </div>
-                </div>
+                </motion.div>
 
                 {selectedTab && (
                   <motion.div
-                    initial={{ opacity: 0 }}
-                    animate={{ opacity: 1 }}
-                    transition={{ duration: 0.2 }}
+                    initial={{ opacity: 0, y: 10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.2, delay: 0.6 }}
                     className="mt-8"
                   >
                     <div className="flex items-center justify-between mb-4">
@@ -622,7 +635,7 @@ export default function GuideSection() {
                             key={card.id}
                             initial={{ opacity: 0, y: 10 }}
                             animate={{ opacity: 1, y: 0 }}
-                            transition={{ duration: 0.2, delay: index * 0.05 }}
+                            transition={{ duration: 0.2, delay: 0.7 + index * 0.05 }}
                           >
                             <Card
                               className="w-full cursor-pointer hover:bg-gray-700/50 transition bg-gray-800 border-gray-700"
@@ -653,9 +666,9 @@ export default function GuideSection() {
                 )}
 
                 <motion.div
-                  initial={{ opacity: 0 }}
-                  animate={{ opacity: 1 }}
-                  transition={{ duration: 0.2 }}
+                  initial={isFirstRender.current ? { opacity: 0, y: 10 } : false}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.2, delay: 0.9 }}
                   className="mt-8 bg-gray-800 rounded-xl p-6 border border-gray-700"
                 >
                   <div className="flex items-center justify-between mb-4">
