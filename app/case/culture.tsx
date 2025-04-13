@@ -168,6 +168,8 @@ export default function GuideSection() {
   const [selectedTab, setSelectedTab] = useState("welcome");
   const [selectedCard, setSelectedCard] = useState<cardData | null>(null);
   const [searchQuery, setSearchQuery] = useState("");
+  const [isSearching, setIsSearching] = useState(false);
+  const searchTimeoutRef = useRef<NodeJS.Timeout | null>(null);
 
   useEffect(() => {
     const timeoutId = setTimeout(() => {
@@ -182,13 +184,33 @@ export default function GuideSection() {
     return () => clearTimeout(timeoutId);
   }, [selectedCard, selectedTab]);
 
+  useEffect(() => {
+    if (searchTimeoutRef.current) {
+      clearTimeout(searchTimeoutRef.current);
+    }
+
+    if (searchQuery) {
+      setIsSearching(true);
+    } else {
+      setIsSearching(false);
+    }
+  }, [searchQuery]);
+
   const cardVariants = {
-    hidden: { opacity: 0, y: 20 },
+    hidden: { opacity: 0, y: 10 },
     visible: (custom: number) => ({
       opacity: 1,
       y: 0,
-      transition: { delay: custom * 0.05 }
+      transition: { 
+        delay: isSearching ? 0 : custom * 0.03, 
+        duration: 0.2
+      }
     })
+  };
+
+  const searchResultsVariants = {
+    hidden: { opacity: 0 },
+    visible: { opacity: 1, transition: { duration: 0.2 } }
   };
 
   const filteredCategories = searchQuery
@@ -201,7 +223,6 @@ export default function GuideSection() {
       })).filter(category => category.cards.length > 0)
     : guideCategories;
 
-  // Placeholder component for content that doesn't exist yet
   const PlaceholderContent = ({ title }: { title: string }) => (
     <div className="prose prose-invert max-w-none">
       <h2 className="text-2xl font-bold mb-4">{title}</h2>
@@ -214,7 +235,6 @@ export default function GuideSection() {
     </div>
   );
 
-  // Function to determine which component to render
   const renderCardContent = () => {
     if (!selectedCard) return null;
 
@@ -227,7 +247,6 @@ export default function GuideSection() {
     }
   };
 
-  // Icons for categories
   const categoryIcons = {
     "welcome": <Home className="w-5 h-5" />,
     "culture": <BookOpen className="w-5 h-5" />,
@@ -236,7 +255,6 @@ export default function GuideSection() {
     "attractions": <MapPin className="w-5 h-5" />,
   };
   
-  // Shape component for decorative elements
   const DecorationShapes = () => (
     <div className="absolute bottom-0 right-0 overflow-hidden opacity-30">
       <div className="w-20 h-20 rounded-full bg-blue-300 absolute bottom-[-10px] right-[-10px]"></div>
@@ -249,16 +267,14 @@ export default function GuideSection() {
     <div ref={containerRef} className="flex-1 p-5 overflow-y-auto bg-gray-950">
       <AnimatePresence mode="wait">
         {selectedCard ? (
-          // Detail view (unchanged)
           <motion.div
             key="detail"
-            initial={{ opacity: 0, y: 20 }}
+            initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: 20 }}
+            exit={{ opacity: 0, y: 10 }}
             transition={{ duration: 0.2 }}
             className="pb-10"
           >
-            {/* Detail View */}
             <div className="flex items-center gap-4 mb-6">
               <motion.button
                 whileHover={{ scale: 1.05 }}
@@ -274,16 +290,16 @@ export default function GuideSection() {
             <motion.h1
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
-              transition={{ delay: 0.1 }}
+              transition={{ duration: 0.2 }}
               className="text-white text-4xl font-bold mb-8"
             >
               {selectedCard.title}
             </motion.h1>
 
             <motion.div
-              initial={{ opacity: 0, scale: 0.95 }}
+              initial={{ opacity: 0, scale: 0.98 }}
               animate={{ opacity: 1, scale: 1 }}
-              transition={{ delay: 0.15 }}
+              transition={{ duration: 0.2 }}
               className="relative w-full h-[300px] mb-8"
             >
               <img
@@ -294,23 +310,22 @@ export default function GuideSection() {
             </motion.div>
 
             <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.2 }}
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ duration: 0.2 }}
               className="mb-8"
             >
               <p className="text-gray-300 text-lg leading-relaxed mb-6">
                 {selectedCard.content}
               </p>
 
-              {/* Render the detailed content directly here */}
               {renderCardContent()}
             </motion.div>
 
             <motion.button
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.3 }}
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ duration: 0.2 }}
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
               onClick={() => setSelectedCard(null)}
@@ -321,16 +336,15 @@ export default function GuideSection() {
           </motion.div>
         ) : (
           <div>
-            {/* Main Guide Title */}
             <motion.div 
-              initial={{ opacity: 0, y: -20 }}
+              initial={{ opacity: 0, y: -10 }}
               animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.2 }}
               className="mb-6"
             >
               <h1 className="text-4xl font-bold text-white text-center">Guide</h1>
             </motion.div>
             
-            {/* Search box */}
             <div className="relative mb-6">
               <Search className="absolute top-3 left-3 h-5 w-5 text-gray-400" />
               <input
@@ -351,8 +365,11 @@ export default function GuideSection() {
             </div>
 
             {searchQuery ? (
-              // Search Results
-              <div>
+              <motion.div
+                variants={searchResultsVariants}
+                initial="hidden"
+                animate="visible"
+              >
                 <h2 className="text-xl font-semibold text-white mb-4">Search Results</h2>
                 {filteredCategories.length > 0 ? (
                   filteredCategories.map((category, categoryIndex) => (
@@ -361,14 +378,13 @@ export default function GuideSection() {
                         {categoryIcons[category.id as keyof typeof categoryIcons]}
                         <span className="ml-2">{category.title}</span>
                       </h3>
-                      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 gap-4">
+                      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                         {category.cards.map((card, index) => (
                           <motion.div
                             key={card.id}
-                            variants={cardVariants}
-                            initial="hidden"
-                            animate="visible"
-                            custom={index + (categoryIndex * 3)}
+                            initial={{ opacity: 0 }}
+                            animate={{ opacity: 1 }}
+                            transition={{ duration: 0.2 }}
                           >
                             <Card
                               className="w-full h-full bg-gray-800 border-gray-700 cursor-pointer hover:bg-gray-700/50 transition-colors shadow-md"
@@ -405,14 +421,13 @@ export default function GuideSection() {
                     </p>
                   </div>
                 )}
-              </div>
+              </motion.div>
             ) : (
-              // Normal view with Welcome Card and Category Cards
               <div className="space-y-6">
-                {/* Welcome Card */}
                 <motion.div
-                  initial={{ opacity: 0, y: 20 }}
+                  initial={{ opacity: 0, y: 10 }}
                   animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.2 }}
                   className="relative overflow-hidden rounded-xl bg-gradient-to-br from-blue-600 to-blue-800 p-6 shadow-lg"
                 >
                   <DecorationShapes />
@@ -430,11 +445,10 @@ export default function GuideSection() {
                   </div>
                 </motion.div>
 
-                {/* Recent Updates Card (optional) */}
                 <motion.div
-                  initial={{ opacity: 0, y: 20 }}
+                  initial={{ opacity: 0, y: 10 }}
                   animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: 0.1 }}
+                  transition={{ duration: 0.2 }}
                   className="bg-gray-800 rounded-xl p-4 shadow-md"
                 >
                   <div className="flex items-center justify-between mb-3">
@@ -447,7 +461,6 @@ export default function GuideSection() {
                   <p className="text-gray-400 text-sm">Check out the new dining recommendations and cultural attractions added this month.</p>
                 </motion.div>
 
-                {/* Category Cards */}
                 <div>
                   <h3 className="text-lg font-semibold text-white mb-4">Browse by Category</h3>
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -484,11 +497,11 @@ export default function GuideSection() {
                   </div>
                 </div>
 
-                {/* When a category is selected */}
                 {selectedTab && (
                   <motion.div
                     initial={{ opacity: 0 }}
                     animate={{ opacity: 1 }}
+                    transition={{ duration: 0.2 }}
                     className="mt-8"
                   >
                     <div className="flex items-center justify-between mb-4">
@@ -510,10 +523,9 @@ export default function GuideSection() {
                       {guideCategories.find(cat => cat.id === selectedTab)?.cards.map((card, index) => (
                         <motion.div
                           key={card.id}
-                          variants={cardVariants}
-                          initial="hidden"
-                          animate="visible"
-                          custom={index}
+                          initial={{ opacity: 0, y: 10 }}
+                          animate={{ opacity: 1, y: 0 }}
+                          transition={{ duration: 0.2, delay: index * 0.05 }}
                         >
                           <Card
                             className="w-full cursor-pointer hover:bg-gray-700/50 transition bg-gray-800 border-gray-700"
@@ -539,8 +551,12 @@ export default function GuideSection() {
                   </motion.div>
                 )}
 
-                {/* Help section remains unchanged */}
-                <div className="mt-8 bg-gray-800 rounded-xl p-6 border border-gray-700">
+                <motion.div 
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  transition={{ duration: 0.2 }}
+                  className="mt-8 bg-gray-800 rounded-xl p-6 border border-gray-700"
+                >
                   <div className="flex items-center justify-between mb-4">
                     <h3 className="text-xl font-bold text-white">Need Help?</h3>
                     <Map className="w-6 h-6 text-blue-400" />
@@ -559,7 +575,7 @@ export default function GuideSection() {
                       Emergency Info
                     </button>
                   </div>
-                </div>
+                </motion.div>
               </div>
             )}
           </div>
