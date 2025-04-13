@@ -6,7 +6,6 @@ import Image from "next/image";
 import { motion, AnimatePresence } from "framer-motion";
 import {
   cardsData,
-  cardData,
   TraditionsData,
   ClothesData,
   FoodData,
@@ -14,7 +13,15 @@ import {
 } from "./cultureData";
 import { ArrowLeft, Search, BookOpen, MapPin, Bus, Utensils, HelpCircle, Map } from "lucide-react";
 
-// Define our guide categories
+export interface cardData {
+  id: string;
+  title: string;
+  content: string;
+  src: string;
+  alt: string;
+  comp: string;
+}
+
 const guideCategories = [
   {
     id: "welcome",

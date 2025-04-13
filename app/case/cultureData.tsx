@@ -1,15 +1,10 @@
 "use client";
 import { motion } from "framer-motion";
-export interface cardData {
-    title: string;
-    content: string;
-    src: string;
-    alt: string;
-    comp: string;
-}
+import { cardData } from "./culture";
 
 export const cardsData: cardData[] = [
     {
+      id: "1",
       title: "Emirati Culture and Traditions",
       content:
         "Explore the rich tapestry of Emirati culture, from traditional Bedouin customs to modern artistic expressions. Discover the values of hospitality, family, and community that define the Emirati identity.",
@@ -18,6 +13,7 @@ export const cardsData: cardData[] = [
       comp: "TraditionsData"
     },
     {
+      id: "2",
       title: "Traditional Emirati Wear",
       content:
         "Uncover the significance of traditional Emirati clothing, such as the Kandura for men and the Abaya for women. Learn how these garments reflect cultural pride, religious values, and the desert environment.",
@@ -26,6 +22,7 @@ export const cardsData: cardData[] = [
       comp: "ClothesData"
     },
     {
+      id: "3",
       title: "Emirati Food",
       content:
         "Indulge in the flavors of Emirati cuisine, a delightful fusion of Middle Eastern, Persian, and Indian influences. From savory dishes like Machboos to sweet treats like Luqaimat, experience the culinary heritage of the UAE.",
@@ -34,6 +31,7 @@ export const cardsData: cardData[] = [
       comp: 'FoodData'
     },
     {
+      id: "4",
       title: "Religious Values and Beliefs",
       content:
         "Delve into the role of Islam in shaping Emirati society and values. Discover the importance of faith, compassion, and generosity in daily life, and explore the stunning mosques and religious sites that showcase Islamic art and architecture.",
