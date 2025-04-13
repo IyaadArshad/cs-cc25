@@ -203,60 +203,66 @@ export default function GuideSection() {
       title: "Les Misérables: The Arena Spectacular",
       date: "April 8-20, 2025",
       location: "Etihad Arena, Yas Island",
-      description: "This adaptation of the classic musical features a cast and orchestra of over 65 performers, delivering an immersive experience with iconic songs like \"I Dreamed a Dream\" and \"One Day More.\"",
+      description:
+        'This adaptation of the classic musical features a cast and orchestra of over 65 performers, delivering an immersive experience with iconic songs like "I Dreamed a Dream" and "One Day More."',
       link: "https://www.etihadarena.ae/en/event-booking/les-miserables-the-arena-spectacular",
       source: "Etihad Arena",
-      icon: "🎭"
+      icon: "🎭",
     },
     {
       id: "club-social",
       title: "Club Social Abu Dhabi",
       date: "April 18-20, 2025",
       location: "Etihad Park, Yas Island",
-      description: "Three nights of live performances featuring artists such as Usher, Snow Patrol, and The Kooks, providing a mix of pop, rock, and indie hits for attendees.",
+      description:
+        "Three nights of live performances featuring artists such as Usher, Snow Patrol, and The Kooks, providing a mix of pop, rock, and indie hits for attendees.",
       link: "https://www.clubsocial.ae/",
       source: "Club Social",
-      icon: "🎵"
+      icon: "🎵",
     },
     {
       id: "comic-con",
       title: "Middle East Film & Comic Con (MEFCC)",
       date: "April 18-20, 2025",
       location: "Abu Dhabi National Exhibition Centre (ADNEC)",
-      description: "The region's largest pop culture festival featuring celebrity appearances, including Ian McDiarmid (Sheev Palpatine from Star Wars) and Hideo Ishikawa (voice of Itachi Uchiha in Naruto), along with panels, workshops, and exhibitions related to film, TV, comics, and gaming.",
+      description:
+        "The region's largest pop culture festival featuring celebrity appearances, including Ian McDiarmid (Sheev Palpatine from Star Wars) and Hideo Ishikawa (voice of Itachi Uchiha in Naruto), along with panels, workshops, and exhibitions related to film, TV, comics, and gaming.",
       link: "https://www.mefcc.com/home/",
       source: "Middle East Film & Comic Con",
-      icon: "🦸‍♂️"
+      icon: "🦸‍♂️",
     },
     {
       id: "healthcare-week",
       title: "Abu Dhabi Global Healthcare Week 2025",
       date: "April 15-17, 2025",
       location: "Abu Dhabi National Exhibition Centre (ADNEC)",
-      description: "This event brings together global health leaders for conferences, workshops, and exhibitions focused on diverse and inclusive health, longevity, precision health, and medical breakthroughs.",
+      description:
+        "This event brings together global health leaders for conferences, workshops, and exhibitions focused on diverse and inclusive health, longevity, precision health, and medical breakthroughs.",
       link: "https://www.adnec.ae/en/eventlisting/abu-dhabi-global-health-week-2025",
       source: "adnec.ae",
-      icon: "🏥"
+      icon: "🏥",
     },
     {
       id: "racing-league",
       title: "Autonomous Racing League (A2RL)",
       date: "April 26, 2025",
       location: "Yas Marina Circuit",
-      description: "Features autonomous car, drone, and dune buggy races with a prize pool of US$2.25 million, where eight elite teams will compete, showcasing cutting-edge technology in motorsports.",
+      description:
+        "Features autonomous car, drone, and dune buggy races with a prize pool of US$2.25 million, where eight elite teams will compete, showcasing cutting-edge technology in motorsports.",
       link: "https://a2rl.io/",
       source: "Abu Dhabi Autonomous Racing League",
-      icon: "🏎️"
+      icon: "🏎️",
     },
     {
       id: "bred",
       title: "BRED Abu Dhabi",
       date: "April 23-28, 2025",
       location: "Yas Bay Waterfront",
-      description: "A celebration of neo-culture blending music, fashion, art, sport, and gaming, featuring performances from regional and global talent, emphasizing the fusion of local and international creativity.",
+      description:
+        "A celebration of neo-culture blending music, fashion, art, sport, and gaming, featuring performances from regional and global talent, emphasizing the fusion of local and international creativity.",
       link: "https://bredabudhabi.com/",
       source: "BRED Abu Dhabi",
-      icon: "🎨"
+      icon: "🎨",
     },
     {
       id: "more-events-end-of-list",
@@ -265,9 +271,10 @@ export default function GuideSection() {
       source: "Visit Abu Dhabi",
       date: "April 2025",
       location: "Abu Dhabi",
-      description: "Stay tuned for more exciting events and activities happening in Abu Dhabi this April. This list will be updated as more events become available",
+      description:
+        "Stay tuned for more exciting events and activities happening in Abu Dhabi this April. This list will be updated as more events become available",
       icon: "⏳",
-    }
+    },
   ];
 
   const EventsDetailView = () => {
@@ -378,7 +385,9 @@ export default function GuideSection() {
                         }}
                       />
                     </div> */}
-                    <p className="text-gray-300 pt-4  mb-4">{event.description}</p>
+                    <p className="text-gray-300 pt-4  mb-4">
+                      {event.description}
+                    </p>
                     <div className="flex justify-between items-center">
                       <span className="text-sm text-gray-500">
                         Source: {event.source}
@@ -694,7 +703,9 @@ export default function GuideSection() {
             ) : (
               <div className="space-y-6">
                 <motion.div
-                  initial={isFirstRender.current ? { opacity: 0, y: 10 } : false}
+                  initial={
+                    isFirstRender.current ? { opacity: 0, y: 10 } : false
+                  }
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.2, delay: 0.2 }}
                   className="relative overflow-hidden rounded-xl bg-gradient-to-br from-blue-600 to-blue-800 p-6 shadow-lg"
@@ -718,7 +729,9 @@ export default function GuideSection() {
                 </motion.div>
 
                 <motion.div
-                  initial={isFirstRender.current ? { opacity: 0, y: 10 } : false}
+                  initial={
+                    isFirstRender.current ? { opacity: 0, y: 10 } : false
+                  }
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.2, delay: 0.3 }}
                   className="bg-gray-800 rounded-xl p-4 shadow-md cursor-pointer hover:bg-gray-700/50 transition"
@@ -740,7 +753,9 @@ export default function GuideSection() {
                 </motion.div>
 
                 <motion.div
-                  initial={isFirstRender.current ? { opacity: 0, y: 10 } : false}
+                  initial={
+                    isFirstRender.current ? { opacity: 0, y: 10 } : false
+                  }
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.2, delay: 0.4 }}
                 >
@@ -831,7 +846,10 @@ export default function GuideSection() {
                             key={card.id}
                             initial={{ opacity: 0, y: 10 }}
                             animate={{ opacity: 1, y: 0 }}
-                            transition={{ duration: 0.2, delay: 0.7 + index * 0.05 }}
+                            transition={{
+                              duration: 0.2,
+                              delay: 0.7 + index * 0.05,
+                            }}
                           >
                             <Card
                               className="w-full cursor-pointer hover:bg-gray-700/50 transition bg-gray-800 border-gray-700"
@@ -862,7 +880,9 @@ export default function GuideSection() {
                 )}
 
                 <motion.div
-                  initial={isFirstRender.current ? { opacity: 0, y: 10 } : false}
+                  initial={
+                    isFirstRender.current ? { opacity: 0, y: 10 } : false
+                  }
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.2, delay: 0.9 }}
                   className="mt-8 bg-gray-800 rounded-xl p-6 border border-gray-700"
