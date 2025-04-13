@@ -869,7 +869,9 @@ export default function CaseHome() {
                 initial={{ opacity: 0, y: 10 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 1 + index * 0.1 }}
-                onClick={() => article.link && window.open(article.link, "_blank")}
+                onClick={() =>
+                  article.link && window.open(article.link, "_blank")
+                }
               >
                 <Card className="bg-gray-800 border-gray-700 hover:bg-gray-700/50 cursor-pointer transition-colors">
                   <div className="flex p-3">
