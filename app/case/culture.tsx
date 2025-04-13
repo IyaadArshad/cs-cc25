@@ -205,9 +205,8 @@ export default function GuideSection() {
       location: "Etihad Arena, Yas Island",
       description: "This adaptation of the classic musical features a cast and orchestra of over 65 performers, delivering an immersive experience with iconic songs like \"I Dreamed a Dream\" and \"One Day More.\"",
       link: "https://www.etihadarena.ae/en/event-booking/les-miserables-the-arena-spectacular",
-      source: "Secret Abu Dhabi",
-      icon: "🎭",
-      image: "/images/les-miserables.jpg",
+      source: "Etihad Arena",
+      icon: "🎭"
     },
     {
       id: "club-social",
@@ -216,9 +215,8 @@ export default function GuideSection() {
       location: "Etihad Park, Yas Island",
       description: "Three nights of live performances featuring artists such as Usher, Snow Patrol, and The Kooks, providing a mix of pop, rock, and indie hits for attendees.",
       link: "https://www.clubsocial.ae/",
-      source: "Secret Abu Dhabi, What's On, Yalla Abu Dhabi Life",
-      icon: "🎵",
-      image: "/images/club-social.jpg",
+      source: "Club Social",
+      icon: "🎵"
     },
     {
       id: "comic-con",
@@ -227,9 +225,8 @@ export default function GuideSection() {
       location: "Abu Dhabi National Exhibition Centre (ADNEC)",
       description: "The region's largest pop culture festival featuring celebrity appearances, including Ian McDiarmid (Sheev Palpatine from Star Wars) and Hideo Ishikawa (voice of Itachi Uchiha in Naruto), along with panels, workshops, and exhibitions related to film, TV, comics, and gaming.",
       link: "https://www.mefcc.com/home/",
-      source: "Secret Abu Dhabi, Yalla Abu Dhabi Life, Wikipedia",
-      icon: "🦸‍♂️",
-      image: "/images/comic-con.jpg",
+      source: "Middle East Film & Comic Con",
+      icon: "🦸‍♂️"
     },
     {
       id: "healthcare-week",
@@ -237,10 +234,9 @@ export default function GuideSection() {
       date: "April 15-17, 2025",
       location: "Abu Dhabi National Exhibition Centre (ADNEC)",
       description: "This event brings together global health leaders for conferences, workshops, and exhibitions focused on diverse and inclusive health, longevity, precision health, and medical breakthroughs.",
-      link: "#",
-      source: "What's On, Experience Abu Dhabi, adnec.ae",
-      icon: "🏥",
-      image: "/images/healthcare.jpg",
+      link: "https://www.adnec.ae/en/eventlisting/abu-dhabi-global-health-week-2025",
+      source: "adnec.ae",
+      icon: "🏥"
     },
     {
       id: "racing-league",
@@ -249,9 +245,8 @@ export default function GuideSection() {
       location: "Yas Marina Circuit",
       description: "Features autonomous car, drone, and dune buggy races with a prize pool of US$2.25 million, where eight elite teams will compete, showcasing cutting-edge technology in motorsports.",
       link: "https://a2rl.io/",
-      source: "What's On, Wikipedia",
-      icon: "🏎️",
-      image: "/images/racing.jpg",
+      source: "Abu Dhabi Autonomous Racing League",
+      icon: "🏎️"
     },
     {
       id: "bred",
@@ -260,9 +255,18 @@ export default function GuideSection() {
       location: "Yas Bay Waterfront",
       description: "A celebration of neo-culture blending music, fashion, art, sport, and gaming, featuring performances from regional and global talent, emphasizing the fusion of local and international creativity.",
       link: "https://bredabudhabi.com/",
-      source: "Experience Abu Dhabi",
-      icon: "🎨",
-      image: "/images/bred.jpg",
+      source: "BRED Abu Dhabi",
+      icon: "🎨"
+    },
+    {
+      id: "more-events-end-of-list",
+      title: "More Events coming soon...",
+      link: "https://visitabudhabi.ae/en/events",
+      source: "Visit Abu Dhabi",
+      date: "April 2025",
+      location: "Abu Dhabi",
+      description: "Stay tuned for more exciting events and activities happening in Abu Dhabi this April. This list will be updated as more events become available",
+      icon: "⏳",
     }
   ];
 
