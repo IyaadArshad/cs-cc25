@@ -1,6 +1,6 @@
 "use client";
 import { motion } from "framer-motion";
-import { cardData } from "./culture";
+import { cardData } from "./guide";
 
 export const cardsData: cardData[] = [
     {

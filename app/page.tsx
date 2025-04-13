@@ -26,7 +26,7 @@ import CaseHome from "./case/home";
 import CaseDiscover from "./case/discover";
 import CaseApps from "./case/apps";
 import CaseChat from "./case/chat";
-import CaseCulture from "./case/culture"
+import CaseGuide from "./case/guide"
 import CaseSettings from "./case/settings";
 
 export default function Page() {
@@ -116,8 +116,8 @@ export default function Page() {
         return <CaseChat />;
       case "apps":
         return <CaseApps />;
-      case "culture":
-        return <CaseCulture />
+      case "guide":
+        return <CaseGuide />
       case "profile":
         return <CaseSettings />;
       default:
@@ -340,7 +340,7 @@ export default function Page() {
               className="flex flex-col items-center justify-center gap-1 opacity-50 cursor-not-allowed"
             >
               <BuildingLibraryIcon className="w-8 h-8 text-[#ffffff]/50" />
-              <span className="text-[12px] text-[#ffffff]/50">Culture</span>
+              <span className="text-[12px] text-[#ffffff]/50">Guides</span>
             </button>
             <button
               disabled
@@ -371,7 +371,7 @@ export default function Page() {
             className="absolute top-0 left-0 w-1/6 h-1 bg-[#2563eb] transition-all duration-300 ease-in-out"
             style={{
               transform: `translateX(${
-                ["home", "discover", "apps", "chat","culture", "profile"].indexOf(
+                ["home", "discover", "apps", "chat","guide", "profile"].indexOf(
                   activeTab
                 ) * 100
               }%)`,
@@ -447,20 +447,20 @@ export default function Page() {
             </span>
           </button>
           <button
-            onClick={() => setActiveTab("culture")}
+            onClick={() => setActiveTab("guide")}
             className="flex flex-col items-center justify-center gap-1"
           >
-            {activeTab === "culture" ? (
+            {activeTab === "guide" ? (
               <BuildingLibraryFilled className="w-8 h-8 text-[#2563eb]" />
             ) : (
               <BuildingLibraryIcon className="w-8 h-8 text-[#ffffff]" />
             )}
             <span
               className={`text-[12px] ${
-                activeTab === "culture" ? "text-[#2563eb]" : "text-[#ffffff]"
+                activeTab === "guide" ? "text-[#2563eb]" : "text-[#ffffff]"
               }`}
             >
-              Culture
+              Guides
             </span>
           </button>
           <button
