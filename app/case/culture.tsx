@@ -3,7 +3,14 @@ import { useState, useRef, useEffect } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import Image from "next/image";
 import { motion, AnimatePresence } from "framer-motion";
-import { cardsData, cardData, TraditionsData, ClothesData, FoodData, ReligionData } from "./cultureData";
+import {
+  cardsData,
+  cardData,
+  TraditionsData,
+  ClothesData,
+  FoodData,
+  ReligionData,
+} from "./cultureData";
 import { ArrowLeft } from "lucide-react";
 
 export default function CaseCulture() {
@@ -31,7 +38,7 @@ export default function CaseCulture() {
 
   const renderCardContent = () => {
     if (!selectedCard) return null;
-    
+
     return (
       <div className="text-gray-300 space-y-6">
         {selectedCard.comp === "TraditionsData" && <TraditionsContent />}
@@ -47,19 +54,19 @@ export default function CaseCulture() {
       <TraditionsData />
     </div>
   );
-  
+
   const ClothesContent = () => (
     <div className="prose prose-invert max-w-none">
       <ClothesData />
     </div>
   );
-  
+
   const FoodContent = () => (
     <div className="prose prose-invert max-w-none">
       <FoodData />
     </div>
   );
-  
+
   const ReligionContent = () => (
     <div className="prose prose-invert max-w-none">
       <ReligionData />
@@ -122,7 +129,7 @@ export default function CaseCulture() {
               <p className="text-gray-300 text-lg leading-relaxed mb-6">
                 {selectedCard.content}
               </p>
-              
+
               {/* Render the detailed content directly here */}
               {renderCardContent()}
             </motion.div>
@@ -143,7 +150,9 @@ export default function CaseCulture() {
           <div className="p-2">
             <h1 className="text-2xl font-bold mb-4 text-white">Culture</h1>
             <p className="text-gray-400 mb-6">
-              Emirati culture blends Bedouin traditions, Islamic values, and heritage. Hospitality, family, and community are key. Traditional arts thrive alongside modern advancements.
+              Emirati culture blends Bedouin traditions, Islamic values, and
+              heritage. Hospitality, family, and community are key. Traditional
+              arts thrive alongside modern advancements.
             </p>
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
               {cardsData.map((card, index) => (
