@@ -1,20 +1,30 @@
 "use client";
 import { useState, useRef, useEffect } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import Image from "next/image";
 import { motion, AnimatePresence } from "framer-motion";
 import {
   cardsData,
-  cardData,
   TraditionsData,
   ClothesData,
   FoodData,
   ReligionData,
 } from "./cultureData";
-import { ArrowLeft, Search, BookOpen, MapPin, Bus, Utensils, HelpCircle, Map } from "lucide-react";
+import { 
+  ArrowLeft, Search, BookOpen, MapPin, Bus, 
+  Utensils, HelpCircle, Map, Home, User, 
+  Calendar, ChevronRight
+} from "lucide-react";
 
-// Define our guide categories
+export interface cardData {
+  id: string;
+  title: string;
+  content: string;
+  src: string;
+  alt: string;
+  comp: string;
+}
+
 const guideCategories = [
   {
     id: "welcome",
@@ -158,6 +168,8 @@ export default function GuideSection() {
   const [selectedTab, setSelectedTab] = useState("welcome");
   const [selectedCard, setSelectedCard] = useState<cardData | null>(null);
   const [searchQuery, setSearchQuery] = useState("");
+  const [isSearching, setIsSearching] = useState(false);
+  const searchTimeoutRef = useRef<NodeJS.Timeout | null>(null);
 
   useEffect(() => {
     const timeoutId = setTimeout(() => {
@@ -172,13 +184,33 @@ export default function GuideSection() {
     return () => clearTimeout(timeoutId);
   }, [selectedCard, selectedTab]);
 
+  useEffect(() => {
+    if (searchTimeoutRef.current) {
+      clearTimeout(searchTimeoutRef.current);
+    }
+
+    if (searchQuery) {
+      setIsSearching(true);
+    } else {
+      setIsSearching(false);
+    }
+  }, [searchQuery]);
+
   const cardVariants = {
-    hidden: { opacity: 0, y: 20 },
+    hidden: { opacity: 0, y: 10 },
     visible: (custom: number) => ({
       opacity: 1,
       y: 0,
-      transition: { delay: custom * 0.05 }
+      transition: { 
+        delay: isSearching ? 0 : custom * 0.03, 
+        duration: 0.2
+      }
     })
+  };
+
+  const searchResultsVariants = {
+    hidden: { opacity: 0 },
+    visible: { opacity: 1, transition: { duration: 0.2 } }
   };
 
   const filteredCategories = searchQuery
@@ -191,7 +223,6 @@ export default function GuideSection() {
       })).filter(category => category.cards.length > 0)
     : guideCategories;
 
-  // Placeholder component for content that doesn't exist yet
   const PlaceholderContent = ({ title }: { title: string }) => (
     <div className="prose prose-invert max-w-none">
       <h2 className="text-2xl font-bold mb-4">{title}</h2>
@@ -204,7 +235,6 @@ export default function GuideSection() {
     </div>
   );
 
-  // Function to determine which component to render
   const renderCardContent = () => {
     if (!selectedCard) return null;
 
@@ -217,19 +247,34 @@ export default function GuideSection() {
     }
   };
 
+  const categoryIcons = {
+    "welcome": <Home className="w-5 h-5" />,
+    "culture": <BookOpen className="w-5 h-5" />,
+    "getting-around": <Bus className="w-5 h-5" />,
+    "dining": <Utensils className="w-5 h-5" />,
+    "attractions": <MapPin className="w-5 h-5" />,
+  };
+  
+  const DecorationShapes = () => (
+    <div className="absolute bottom-0 right-0 overflow-hidden opacity-30">
+      <div className="w-20 h-20 rounded-full bg-blue-300 absolute bottom-[-10px] right-[-10px]"></div>
+      <div className="w-12 h-12 rounded-full bg-blue-200 absolute bottom-[20px] right-[30px]"></div>
+      <div className="w-8 h-8 rounded-md bg-blue-100 rotate-12 absolute bottom-[15px] right-[60px]"></div>
+    </div>
+  );
+
   return (
-    <div ref={containerRef} className="flex-1 p-5 overflow-y-auto bg-gray-900">
+    <div ref={containerRef} className="flex-1 p-5 overflow-y-auto bg-gray-950">
       <AnimatePresence mode="wait">
         {selectedCard ? (
           <motion.div
             key="detail"
-            initial={{ opacity: 0, y: 20 }}
+            initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: 20 }}
+            exit={{ opacity: 0, y: 10 }}
             transition={{ duration: 0.2 }}
             className="pb-10"
           >
-            {/* Detail View */}
             <div className="flex items-center gap-4 mb-6">
               <motion.button
                 whileHover={{ scale: 1.05 }}
@@ -245,16 +290,16 @@ export default function GuideSection() {
             <motion.h1
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
-              transition={{ delay: 0.1 }}
+              transition={{ duration: 0.2 }}
               className="text-white text-4xl font-bold mb-8"
             >
               {selectedCard.title}
             </motion.h1>
 
             <motion.div
-              initial={{ opacity: 0, scale: 0.95 }}
+              initial={{ opacity: 0, scale: 0.98 }}
               animate={{ opacity: 1, scale: 1 }}
-              transition={{ delay: 0.15 }}
+              transition={{ duration: 0.2 }}
               className="relative w-full h-[300px] mb-8"
             >
               <img
@@ -265,27 +310,26 @@ export default function GuideSection() {
             </motion.div>
 
             <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.2 }}
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ duration: 0.2 }}
               className="mb-8"
             >
               <p className="text-gray-300 text-lg leading-relaxed mb-6">
                 {selectedCard.content}
               </p>
 
-              {/* Render the detailed content directly here */}
               {renderCardContent()}
             </motion.div>
 
             <motion.button
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.3 }}
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ duration: 0.2 }}
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
               onClick={() => setSelectedCard(null)}
-              className="w-full py-4 mt-4 bg-gray-600 hover:bg-gray-700 text-white rounded-lg flex items-center justify-center"
+              className="w-full py-4 mt-4 bg-gray-700 hover:bg-gray-600 text-white rounded-lg flex items-center justify-center"
             >
               Back to Guide
             </motion.button>
@@ -293,76 +337,74 @@ export default function GuideSection() {
         ) : (
           <div>
             <motion.div 
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              className="mb-8"
+              initial={{ opacity: 0, y: -10 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.2 }}
+              className="mb-6"
             >
-              <h1 className="text-3xl font-bold mb-3 text-white">Abu Dhabi Visitor Guide</h1>
-              <p className="text-gray-400 mb-6">
-                Everything you need to know about visiting and living in Abu Dhabi. Find information about local culture, transportation, attractions, and more.
-              </p>
-              
-              {/* Search box */}
-              <div className="relative mb-8">
-                <Search className="absolute top-3 left-3 h-5 w-5 text-gray-400" />
-                <input
-                  type="text"
-                  placeholder="Search the guide..."
-                  className="w-full bg-gray-800 text-white border border-gray-700 rounded-lg py-3 px-10 focus:outline-none focus:ring-2 focus:ring-blue-500"
-                  value={searchQuery}
-                  onChange={(e) => setSearchQuery(e.target.value)}
-                />
-                {searchQuery && (
-                  <button 
-                    className="absolute right-3 top-3 text-gray-400 hover:text-white"
-                    onClick={() => setSearchQuery("")}
-                  >
-                    Clear
-                  </button>
-                )}
-              </div>
+              <h1 className="text-4xl font-bold text-white text-center">Guide</h1>
             </motion.div>
+            
+            <div className="relative mb-6">
+              <Search className="absolute top-3 left-3 h-5 w-5 text-gray-400" />
+              <input
+                type="text"
+                placeholder="Search guides..."
+                className="w-full bg-gray-800 text-white border border-gray-700 rounded-full py-2 px-10 focus:outline-none focus:ring-2 focus:ring-blue-500 shadow-lg"
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+              />
+              {searchQuery && (
+                <button 
+                  className="absolute right-3 top-2 text-gray-400 hover:text-white"
+                  onClick={() => setSearchQuery("")}
+                >
+                  Clear
+                </button>
+              )}
+            </div>
 
             {searchQuery ? (
-              // Search Results
-              <div>
+              <motion.div
+                variants={searchResultsVariants}
+                initial="hidden"
+                animate="visible"
+              >
                 <h2 className="text-xl font-semibold text-white mb-4">Search Results</h2>
                 {filteredCategories.length > 0 ? (
                   filteredCategories.map((category, categoryIndex) => (
                     <div key={category.id} className="mb-10">
                       <h3 className="text-lg font-medium text-white mb-4 flex items-center">
-                        {category.icon}
+                        {categoryIcons[category.id as keyof typeof categoryIcons]}
                         <span className="ml-2">{category.title}</span>
                       </h3>
-                      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                         {category.cards.map((card, index) => (
                           <motion.div
                             key={card.id}
-                            variants={cardVariants}
-                            initial="hidden"
-                            animate="visible"
-                            custom={index + (categoryIndex * 3)}
+                            initial={{ opacity: 0 }}
+                            animate={{ opacity: 1 }}
+                            transition={{ duration: 0.2 }}
                           >
                             <Card
-                              className="w-full h-full bg-gray-800 border-gray-700 cursor-pointer hover:bg-gray-700/50 transition-colors"
+                              className="w-full h-full bg-gray-800 border-gray-700 cursor-pointer hover:bg-gray-700/50 transition-colors shadow-md"
                               onClick={() => setSelectedCard(card as cardData)}
                             >
-                              <CardHeader className="relative text-white text-lg font-semibold pb-2">
-                                <div className="w-full h-36 relative mb-2">
+                              <CardContent className="p-4 flex flex-row items-center">
+                                <div className="w-12 h-12 relative rounded-full overflow-hidden flex-shrink-0">
                                   <Image
                                     src={card.src}
                                     alt={card.alt}
-                                    className="object-cover rounded-lg"
+                                    className="object-cover"
                                     fill
-                                    sizes="(max-width: 768px) 100vw, 300px"
+                                    sizes="48px"
                                   />
                                 </div>
-                                <CardTitle className="text-lg p-2 text-center m-0">
-                                  {card.title}
-                                </CardTitle>
-                              </CardHeader>
-                              <CardContent className="text-gray-400 text-sm text-center">
-                                <p className="line-clamp-3">{card.content}</p>
+                                <div className="ml-3 flex-1">
+                                  <h4 className="text-white font-medium">{card.title}</h4>
+                                  <p className="text-gray-400 text-sm line-clamp-1">{card.content}</p>
+                                </div>
+                                <ChevronRight className="text-gray-400 w-5 h-5 flex-shrink-0" />
                               </CardContent>
                             </Card>
                           </motion.div>
@@ -379,92 +421,163 @@ export default function GuideSection() {
                     </p>
                   </div>
                 )}
-              </div>
+              </motion.div>
             ) : (
-              // Normal view with tabs
-              <Tabs defaultValue={selectedTab} onValueChange={setSelectedTab} className="w-full">
-                <TabsList className="w-full bg-gray-800 border border-gray-700 mb-6 overflow-x-auto flex whitespace-nowrap p-1">
-                  {guideCategories.map((category) => (
-                    <TabsTrigger 
-                      key={category.id} 
-                      value={category.id}
-                      className="flex-1 min-w-fit data-[state=active]:bg-blue-600 data-[state=active]:text-white"
-                    >
-                      <div className="flex items-center gap-2">
-                        {category.icon}
-                        <span>{category.title}</span>
-                      </div>
-                    </TabsTrigger>
-                  ))}
-                </TabsList>
-                {guideCategories.map((category) => (
-                  <TabsContent key={category.id} value={category.id} className="mt-0">
-                    <div className="p-1">
-                      <h2 className="text-2xl font-bold mb-2 text-white">{category.title}</h2>
-                      <p className="text-gray-400 mb-6">
-                        {category.description}
+              <div className="space-y-6">
+                <motion.div
+                  initial={{ opacity: 0, y: 10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.2 }}
+                  className="relative overflow-hidden rounded-xl bg-gradient-to-br from-blue-600 to-blue-800 p-6 shadow-lg"
+                >
+                  <DecorationShapes />
+                  <div className="flex items-start">
+                    <div>
+                      <h2 className="text-2xl font-bold text-white mb-2">Welcome to Abu Dhabi</h2>
+                      <p className="text-blue-100 max-w-lg">
+                        Your comprehensive guide to navigating, exploring, and enjoying everything Abu Dhabi has to offer.
                       </p>
-                      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-                        {category.cards.map((card, index) => (
-                          <motion.div
-                            key={card.id}
-                            variants={cardVariants}
-                            initial="hidden"
-                            animate="visible"
-                            custom={index}
-                          >
-                            <Card
-                              className="w-full h-full bg-gray-800 border-gray-700 cursor-pointer hover:bg-gray-700/50 transition-colors"
-                              onClick={() => setSelectedCard(card as cardData)}
-                            >
-                              <CardHeader className="relative text-white text-lg font-semibold pb-2">
-                                <div className="w-full h-36 relative mb-2">
-                                  <Image
-                                    src={card.src}
-                                    alt={card.alt}
-                                    className="object-cover rounded-lg"
-                                    fill
-                                    sizes="(max-width: 768px) 100vw, 300px"
-                                  />
-                                </div>
-                                <CardTitle className="text-lg p-2 text-center m-0">
-                                  {card.title}
-                                </CardTitle>
-                              </CardHeader>
-                              <CardContent className="text-gray-400 text-sm text-center">
-                                <p className="line-clamp-3">{card.content}</p>
-                              </CardContent>
-                            </Card>
-                          </motion.div>
-                        ))}
-                      </div>
+                      <button className="mt-4 bg-white text-blue-700 rounded-full px-5 py-2 text-sm font-medium hover:bg-blue-50 transition shadow-sm">
+                        Get Started
+                      </button>
                     </div>
-                  </TabsContent>
-                ))}
-              </Tabs>
-            )}
+                    <User className="ml-auto w-16 h-16 text-blue-300 opacity-40" />
+                  </div>
+                </motion.div>
 
-            {/* Quick help footer */}
-            <div className="mt-12 bg-gray-800 rounded-lg p-6 border border-gray-700">
-              <div className="flex items-center justify-between mb-4">
-                <h3 className="text-xl font-bold text-white">Need Help?</h3>
-                <Map className="w-6 h-6 text-blue-400" />
+                <motion.div
+                  initial={{ opacity: 0, y: 10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.2 }}
+                  className="bg-gray-800 rounded-xl p-4 shadow-md"
+                >
+                  <div className="flex items-center justify-between mb-3">
+                    <h3 className="text-white font-semibold flex items-center">
+                      <Calendar className="w-4 h-4 mr-2" />
+                      Recent Updates
+                    </h3>
+                    <span className="text-xs bg-blue-600 text-white rounded-full px-2 py-1">New</span>
+                  </div>
+                  <p className="text-gray-400 text-sm">Check out the new dining recommendations and cultural attractions added this month.</p>
+                </motion.div>
+
+                <div>
+                  <h3 className="text-lg font-semibold text-white mb-4">Browse by Category</h3>
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    {guideCategories.map((category, index) => (
+                      <motion.div
+                        key={category.id}
+                        variants={cardVariants}
+                        initial="hidden"
+                        animate="visible"
+                        custom={index}
+                      >
+                        <Card
+                          className="w-full cursor-pointer hover:bg-gray-800/70 transition bg-gray-800 border-gray-700 shadow-md overflow-hidden"
+                          onClick={() => setSelectedTab(category.id)}
+                        >
+                          <CardContent className="p-4">
+                            <div className="flex items-start mb-3">
+                              <div className="w-10 h-10 rounded-full bg-blue-600/20 flex items-center justify-center">
+                                {categoryIcons[category.id as keyof typeof categoryIcons]}
+                              </div>
+                              <ChevronRight className="ml-auto text-gray-500 w-5 h-5" />
+                            </div>
+                            <h4 className="text-white font-medium text-lg mb-1">{category.title}</h4>
+                            <p className="text-gray-400 text-sm line-clamp-2">{category.description}</p>
+                            
+                            <div className="mt-3 pt-3 border-t border-gray-700 flex items-center justify-between">
+                              <span className="text-xs text-gray-400">{category.cards.length} guides</span>
+                              <span className="text-xs text-blue-400 hover:underline">View all</span>
+                            </div>
+                          </CardContent>
+                        </Card>
+                      </motion.div>
+                    ))}
+                  </div>
+                </div>
+
+                {selectedTab && (
+                  <motion.div
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    transition={{ duration: 0.2 }}
+                    className="mt-8"
+                  >
+                    <div className="flex items-center justify-between mb-4">
+                      <h3 className="text-xl font-bold text-white flex items-center">
+                        {categoryIcons[selectedTab as keyof typeof categoryIcons]}
+                        <span className="ml-2">
+                          {guideCategories.find(cat => cat.id === selectedTab)?.title}
+                        </span>
+                      </h3>
+                      <button 
+                        onClick={() => setSelectedTab("welcome")}
+                        className="text-sm text-gray-400 hover:text-white"
+                      >
+                        View All
+                      </button>
+                    </div>
+
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                      {guideCategories.find(cat => cat.id === selectedTab)?.cards.map((card, index) => (
+                        <motion.div
+                          key={card.id}
+                          initial={{ opacity: 0, y: 10 }}
+                          animate={{ opacity: 1, y: 0 }}
+                          transition={{ duration: 0.2, delay: index * 0.05 }}
+                        >
+                          <Card
+                            className="w-full cursor-pointer hover:bg-gray-700/50 transition bg-gray-800 border-gray-700"
+                            onClick={() => setSelectedCard(card as cardData)}
+                          >
+                            <div className="h-32 relative">
+                              <Image
+                                src={card.src}
+                                alt={card.alt}
+                                className="object-cover rounded-t-lg"
+                                fill
+                                sizes="(max-width: 768px) 100vw, 384px"
+                              />
+                            </div>
+                            <CardContent className="p-4">
+                              <h4 className="text-white font-medium mb-1">{card.title}</h4>
+                              <p className="text-gray-400 text-sm line-clamp-2">{card.content}</p>
+                            </CardContent>
+                          </Card>
+                        </motion.div>
+                      ))}
+                    </div>
+                  </motion.div>
+                )}
+
+                <motion.div 
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  transition={{ duration: 0.2 }}
+                  className="mt-8 bg-gray-800 rounded-xl p-6 border border-gray-700"
+                >
+                  <div className="flex items-center justify-between mb-4">
+                    <h3 className="text-xl font-bold text-white">Need Help?</h3>
+                    <Map className="w-6 h-6 text-blue-400" />
+                  </div>
+                  <p className="text-gray-400 mb-4">
+                    Can't find what you're looking for? Our support team is here to help you navigate Abu Dhabi with ease.
+                  </p>
+                  <div className="flex flex-wrap gap-3">
+                    <button className="px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-md">
+                      Contact Support
+                    </button>
+                    <button className="px-4 py-2 bg-gray-700 hover:bg-gray-600 text-white rounded-md">
+                      Download Map
+                    </button>
+                    <button className="px-4 py-2 bg-gray-700 hover:bg-gray-600 text-white rounded-md">
+                      Emergency Info
+                    </button>
+                  </div>
+                </motion.div>
               </div>
-              <p className="text-gray-400 mb-4">
-                Can't find what you're looking for? Our support team is here to help you navigate Abu Dhabi with ease.
-              </p>
-              <div className="flex flex-wrap gap-3">
-                <button className="px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-md">
-                  Contact Support
-                </button>
-                <button className="px-4 py-2 bg-gray-700 hover:bg-gray-600 text-white rounded-md">
-                  Download Map
-                </button>
-                <button className="px-4 py-2 bg-gray-700 hover:bg-gray-600 text-white rounded-md">
-                  Emergency Info
-                </button>
-              </div>
-            </div>
+            )}
           </div>
         )}
       </AnimatePresence>
