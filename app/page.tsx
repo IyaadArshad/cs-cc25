@@ -339,6 +339,13 @@ export default function Page() {
               disabled
               className="flex flex-col items-center justify-center gap-1 opacity-50 cursor-not-allowed"
             >
+              <BuildingLibraryIcon className="w-8 h-8 text-[#ffffff]/50" />
+              <span className="text-[12px] text-[#ffffff]/50">Culture</span>
+            </button>
+            <button
+              disabled
+              className="flex flex-col items-center justify-center gap-1 opacity-50 cursor-not-allowed"
+            >
               <UserCircleIcon className="w-8 h-8 text-[#ffffff]/50" />
               <span className="text-[12px] text-[#ffffff]/50">Profile</span>
             </button>
