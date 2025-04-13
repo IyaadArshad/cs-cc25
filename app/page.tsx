@@ -11,6 +11,7 @@ import {
   Squares2X2Icon as Squares2X2Filled,
   UserCircleIcon as UserCircleFilled,
   ChatBubbleLeftRightIcon as ChatBubbleLeftRightFilled,
+  BuildingLibraryIcon as BuildingLibraryFilled
 } from "@heroicons/react/24/solid";
 import {
   HomeIcon,
@@ -18,12 +19,14 @@ import {
   Squares2X2Icon,
   UserCircleIcon,
   ChatBubbleLeftRightIcon,
+  BuildingLibraryIcon,
 } from "@heroicons/react/24/outline";
 import { Check } from "lucide-react";
 import CaseHome from "./case/home";
 import CaseDiscover from "./case/discover";
 import CaseApps from "./case/apps";
 import CaseChat from "./case/chat";
+import CaseCulture from "./case/culture"
 import CaseSettings from "./case/settings";
 
 export default function Page() {
@@ -113,6 +116,8 @@ export default function Page() {
         return <CaseChat />;
       case "apps":
         return <CaseApps />;
+      case "culture":
+        return <CaseCulture />
       case "profile":
         return <CaseSettings />;
       default:
@@ -334,6 +339,13 @@ export default function Page() {
               disabled
               className="flex flex-col items-center justify-center gap-1 opacity-50 cursor-not-allowed"
             >
+              <BuildingLibraryIcon className="w-8 h-8 text-[#ffffff]/50" />
+              <span className="text-[12px] text-[#ffffff]/50">Culture</span>
+            </button>
+            <button
+              disabled
+              className="flex flex-col items-center justify-center gap-1 opacity-50 cursor-not-allowed"
+            >
               <UserCircleIcon className="w-8 h-8 text-[#ffffff]/50" />
               <span className="text-[12px] text-[#ffffff]/50">Profile</span>
             </button>
@@ -356,10 +368,10 @@ export default function Page() {
         <div className="bg-[#090910] min-h-[96px] flex justify-evenly gap-x-8 items-center border-t border-[#232323] p-4 relative">
           {/* Active tab indicator */}
           <div
-            className="absolute top-0 left-0 w-1/5 h-1 bg-[#2563eb] transition-all duration-300 ease-in-out"
+            className="absolute top-0 left-0 w-1/6 h-1 bg-[#2563eb] transition-all duration-300 ease-in-out"
             style={{
               transform: `translateX(${
-                ["home", "discover", "apps", "chat", "profile"].indexOf(
+                ["home", "discover", "apps", "chat","culture", "profile"].indexOf(
                   activeTab
                 ) * 100
               }%)`,
@@ -432,6 +444,23 @@ export default function Page() {
               }`}
             >
               Chat
+            </span>
+          </button>
+          <button
+            onClick={() => setActiveTab("culture")}
+            className="flex flex-col items-center justify-center gap-1"
+          >
+            {activeTab === "culture" ? (
+              <BuildingLibraryFilled className="w-8 h-8 text-[#2563eb]" />
+            ) : (
+              <BuildingLibraryIcon className="w-8 h-8 text-[#ffffff]" />
+            )}
+            <span
+              className={`text-[12px] ${
+                activeTab === "culture" ? "text-[#2563eb]" : "text-[#ffffff]"
+              }`}
+            >
+              Culture
             </span>
           </button>
           <button
