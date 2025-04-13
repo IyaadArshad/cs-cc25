@@ -294,9 +294,10 @@ export default function GuideSection() {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ duration: 0.2, delay: 0.1 }}
-          className="text-white text-4xl font-bold mb-8"
+          className="text-white text-4xl font-bold mb-6 flex items-center gap-2"
         >
-          April 2025 Events
+          {/* <Calendar className="w-12 h-12 pr-1" /> */}
+          Latest Events
         </motion.h1>
 
         <motion.p
