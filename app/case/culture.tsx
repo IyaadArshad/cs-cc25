@@ -193,33 +193,204 @@ export default function GuideSection() {
   const [selectedCard, setSelectedCard] = useState<cardData | null>(null);
   const [searchQuery, setSearchQuery] = useState("");
   const [isSearching, setIsSearching] = useState(false);
+  const [showEvents, setShowEvents] = useState(false);
   const searchTimeoutRef = useRef<NodeJS.Timeout | null>(null);
   const isFirstRender = useRef(true);
 
-  useEffect(() => {
-    const timeoutId = setTimeout(() => {
-      if (containerRef.current) {
-        containerRef.current.scrollTo({
-          top: 0,
-          behavior: "smooth",
-        });
-      }
-    }, 350);
-
-    return () => clearTimeout(timeoutId);
-  }, [selectedCard, selectedTab]);
-
-  useEffect(() => {
-    if (searchTimeoutRef.current) {
-      clearTimeout(searchTimeoutRef.current);
+  const aprilEvents = [
+    {
+      id: "les-miserables",
+      title: "Les Misérables: The Arena Spectacular",
+      date: "April 8-20, 2025",
+      location: "Etihad Arena, Yas Island",
+      description: "This adaptation of the classic musical features a cast and orchestra of over 65 performers, delivering an immersive experience with iconic songs like \"I Dreamed a Dream\" and \"One Day More.\"",
+      link: "https://www.etihadarena.ae/en/event-booking/les-miserables-the-arena-spectacular",
+      source: "Secret Abu Dhabi",
+      icon: "🎭",
+      image: "/images/les-miserables.jpg",
+    },
+    {
+      id: "club-social",
+      title: "Club Social Abu Dhabi",
+      date: "April 18-20, 2025",
+      location: "Etihad Park, Yas Island",
+      description: "Three nights of live performances featuring artists such as Usher, Snow Patrol, and The Kooks, providing a mix of pop, rock, and indie hits for attendees.",
+      link: "https://www.clubsocial.ae/",
+      source: "Secret Abu Dhabi, What's On, Yalla Abu Dhabi Life",
+      icon: "🎵",
+      image: "/images/club-social.jpg",
+    },
+    {
+      id: "comic-con",
+      title: "Middle East Film & Comic Con (MEFCC)",
+      date: "April 18-20, 2025",
+      location: "Abu Dhabi National Exhibition Centre (ADNEC)",
+      description: "The region's largest pop culture festival featuring celebrity appearances, including Ian McDiarmid (Sheev Palpatine from Star Wars) and Hideo Ishikawa (voice of Itachi Uchiha in Naruto), along with panels, workshops, and exhibitions related to film, TV, comics, and gaming.",
+      link: "https://www.mefcc.com/home/",
+      source: "Secret Abu Dhabi, Yalla Abu Dhabi Life, Wikipedia",
+      icon: "🦸‍♂️",
+      image: "/images/comic-con.jpg",
+    },
+    {
+      id: "healthcare-week",
+      title: "Abu Dhabi Global Healthcare Week 2025",
+      date: "April 15-17, 2025",
+      location: "Abu Dhabi National Exhibition Centre (ADNEC)",
+      description: "This event brings together global health leaders for conferences, workshops, and exhibitions focused on diverse and inclusive health, longevity, precision health, and medical breakthroughs.",
+      link: "#",
+      source: "What's On, Experience Abu Dhabi, adnec.ae",
+      icon: "🏥",
+      image: "/images/healthcare.jpg",
+    },
+    {
+      id: "racing-league",
+      title: "Autonomous Racing League (A2RL)",
+      date: "April 26, 2025",
+      location: "Yas Marina Circuit",
+      description: "Features autonomous car, drone, and dune buggy races with a prize pool of US$2.25 million, where eight elite teams will compete, showcasing cutting-edge technology in motorsports.",
+      link: "https://a2rl.io/",
+      source: "What's On, Wikipedia",
+      icon: "🏎️",
+      image: "/images/racing.jpg",
+    },
+    {
+      id: "bred",
+      title: "BRED Abu Dhabi",
+      date: "April 23-28, 2025",
+      location: "Yas Bay Waterfront",
+      description: "A celebration of neo-culture blending music, fashion, art, sport, and gaming, featuring performances from regional and global talent, emphasizing the fusion of local and international creativity.",
+      link: "https://bredabudhabi.com/",
+      source: "Experience Abu Dhabi",
+      icon: "🎨",
+      image: "/images/bred.jpg",
     }
+  ];
 
-    if (searchQuery) {
-      setIsSearching(true);
-    } else {
-      setIsSearching(false);
-    }
-  }, [searchQuery]);
+  const EventsDetailView = () => {
+    const [expandedEvent, setExpandedEvent] = useState<string | null>(null);
+
+    return (
+      <motion.div
+        key="events-detail"
+        initial={{ opacity: 0, y: 10 }}
+        animate={{ opacity: 1, y: 0 }}
+        exit={{ opacity: 0, y: 10 }}
+        transition={{ duration: 0.2 }}
+        className="pb-10"
+      >
+        <div className="flex items-center gap-4 mb-6">
+          <motion.button
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.95 }}
+            onClick={() => setShowEvents(false)}
+            className="flex items-center gap-2 text-white hover:text-blue-400"
+          >
+            <ArrowLeft className="w-5 h-5" />
+            <span>Back to Guide</span>
+          </motion.button>
+        </div>
+
+        <motion.h1
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 0.2, delay: 0.1 }}
+          className="text-white text-4xl font-bold mb-8"
+        >
+          April 2025 Events
+        </motion.h1>
+
+        <motion.p
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 0.2, delay: 0.15 }}
+          className="text-gray-300 text-lg mb-8"
+        >
+          Abu Dhabi is hosting a variety of exciting events this April, offering a blend of cultural, musical, and sporting experiences. Here are some highlights:
+        </motion.p>
+
+        <div className="space-y-4">
+          {aprilEvents.map((event, index) => (
+            <motion.div
+              key={event.id}
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.2, delay: 0.2 + index * 0.05 }}
+              className={`bg-gray-800 border ${expandedEvent === event.id ? 'border-blue-500' : 'border-gray-700'} rounded-lg overflow-hidden`}
+            >
+              <div
+                className="flex items-center p-4 cursor-pointer hover:bg-gray-700/50 transition"
+                onClick={() => setExpandedEvent(expandedEvent === event.id ? null : event.id)}
+              >
+                <div className="w-12 h-12 bg-blue-600/20 rounded-full flex items-center justify-center flex-shrink-0 mr-4">
+                  <span className="text-2xl">{event.icon}</span>
+                </div>
+                <div className="flex-1">
+                  <h3 className="text-white font-medium text-lg">{event.title}</h3>
+                  <div className="flex flex-wrap gap-x-4 text-gray-400 text-sm mt-1">
+                    <span className="flex items-center">
+                      <Calendar className="w-3 h-3 mr-1" /> {event.date}
+                    </span>
+                    <span className="flex items-center">
+                      <MapPin className="w-3 h-3 mr-1" /> {event.location}
+                    </span>
+                  </div>
+                </div>
+                <ChevronRight
+                  className={`w-5 h-5 text-gray-400 transition-transform ${expandedEvent === event.id ? 'rotate-90' : ''}`}
+                />
+              </div>
+
+              {expandedEvent === event.id && (
+                <motion.div
+                  initial={{ opacity: 0, height: 0 }}
+                  animate={{ opacity: 1, height: 'auto' }}
+                  exit={{ opacity: 0, height: 0 }}
+                  transition={{ duration: 0.2 }}
+                  className="px-4 pb-4"
+                >
+                  <div className="h-48 relative mb-4 mt-2 rounded-lg overflow-hidden">
+                    <div className="absolute inset-0 bg-gray-900/20 z-10"></div>
+                    <img
+                      src={event.image}
+                      alt={event.title}
+                      className="w-full h-full object-cover"
+                      onError={(e) => {
+                        e.currentTarget.src = "/images/event-placeholder.jpg";
+                      }}
+                    />
+                  </div>
+                  <p className="text-gray-300 mb-4">{event.description}</p>
+                  <div className="flex justify-between items-center">
+                    <span className="text-sm text-gray-500">Source: {event.source}</span>
+                    <a
+                      href={event.link}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white text-sm rounded-md transition"
+                    >
+                      Visit Website
+                    </a>
+                  </div>
+                </motion.div>
+              )}
+            </motion.div>
+          ))}
+        </div>
+
+        <motion.button
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 0.2, delay: 0.25 }}
+          whileHover={{ scale: 1.05 }}
+          whileTap={{ scale: 0.95 }}
+          onClick={() => setShowEvents(false)}
+          className="w-full py-4 mt-8 bg-gray-700 hover:bg-gray-600 text-white rounded-lg flex items-center justify-center"
+        >
+          Back to Guide
+        </motion.button>
+      </motion.div>
+    );
+  };
 
   const cardVariants = {
     hidden: { opacity: 0, y: 10 },
@@ -385,6 +556,8 @@ export default function GuideSection() {
               Back to Guide
             </motion.button>
           </motion.div>
+        ) : showEvents ? (
+          <EventsDetailView />
         ) : (
           <div>
             <motion.div
@@ -401,7 +574,7 @@ export default function GuideSection() {
               </h1>
             </motion.div>
 
-            <motion.div 
+            <motion.div
               initial={isFirstRender.current ? { opacity: 0, y: 10 } : false}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.2, delay: 0.1 }}
@@ -526,7 +699,8 @@ export default function GuideSection() {
                   initial={isFirstRender.current ? { opacity: 0, y: 10 } : false}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.2, delay: 0.3 }}
-                  className="bg-gray-800 rounded-xl p-4 shadow-md"
+                  className="bg-gray-800 rounded-xl p-4 shadow-md cursor-pointer hover:bg-gray-700/50 transition"
+                  onClick={() => setShowEvents(true)}
                 >
                   <div className="flex items-center justify-between mb-3">
                     <h3 className="text-white font-semibold flex items-center">
