@@ -11,7 +11,7 @@ import {
   Squares2X2Icon as Squares2X2Filled,
   UserCircleIcon as UserCircleFilled,
   ChatBubbleLeftRightIcon as ChatBubbleLeftRightFilled,
-  BuildingLibraryIcon as BuildingLibraryFilled
+  BuildingLibraryIcon as BuildingLibraryFilled,
 } from "@heroicons/react/24/solid";
 import {
   HomeIcon,
@@ -26,7 +26,7 @@ import CaseHome from "./case/home";
 import CaseDiscover from "./case/discover";
 import CaseApps from "./case/apps";
 import CaseChat from "./case/chat";
-import CaseGuide from "./case/guide"
+import CaseGuide from "./case/guide";
 import CaseSettings from "./case/settings";
 
 export default function Page() {
@@ -43,7 +43,7 @@ export default function Page() {
   const lookingForOptions = [
     "Find Services & Transportation Options Available",
     "Get Personalized AI-Powered Assistance",
-    "Order Fresh Food & Daily Living Essentials"
+    "Order Fresh Food & Daily Living Essentials",
   ];
   const [highlightedIndex, setHighlightedIndex] = useState(0);
 
@@ -117,7 +117,7 @@ export default function Page() {
       case "apps":
         return <CaseApps />;
       case "guide":
-        return <CaseGuide />
+        return <CaseGuide />;
       case "profile":
         return <CaseSettings />;
       default:
@@ -371,9 +371,14 @@ export default function Page() {
             className="absolute top-0 left-0 w-1/6 h-1 bg-[#2563eb] transition-all duration-300 ease-in-out"
             style={{
               transform: `translateX(${
-                ["home", "discover", "apps", "chat","guide", "profile"].indexOf(
-                  activeTab
-                ) * 100
+                [
+                  "home",
+                  "discover",
+                  "apps",
+                  "chat",
+                  "guide",
+                  "profile",
+                ].indexOf(activeTab) * 100
               }%)`,
             }}
           ></div>
