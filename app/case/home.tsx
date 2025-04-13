@@ -831,7 +831,6 @@ export default function CaseHome() {
         </Carousel>
       </motion.div>
 
-      {/* Section Divider for News */}
       <motion.div
         initial={{ opacity: 0, scaleX: 0.8 }}
         animate={{
@@ -839,7 +838,7 @@ export default function CaseHome() {
           scaleX: mainViewReady ? 1 : 0.8,
         }}
         transition={{ duration: 0.4, delay: 0.7 }}
-        className="w-full flex items-center gap-4 my-8 mt-12"
+        className="w-full flex items-center gap-4 mt-8"
       >
         <div className="h-px bg-gray-700 flex-grow"></div>
       </motion.div>
@@ -854,7 +853,7 @@ export default function CaseHome() {
         transition={{ duration: 0.4, delay: 0.8 }}
         className="w-full"
       >
-        <h2 className="text-xl font-semibold text-white mb-4">For You</h2>
+        <h2 className="text-2xl text-white mb-4 mt-4">For You</h2>
 
         <div className="space-y-4">
           {/* Microsoft Articles */}
