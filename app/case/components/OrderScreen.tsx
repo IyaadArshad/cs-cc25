@@ -316,18 +316,13 @@ export function OrderScreen({
   );
 
   return (
-    <div className="relative flex-1 overflow-y-auto hide-scrollbar fixed inset-0 bg-black bg-opacity-80 z-50 flex items-center justify-center">
+    <div className="relative flex-1 p-6 overflow-y-auto hide-scrollbar">
       {/* Restaurant Selection Screen */}
       {currentStep === OrderStep.RESTAURANT_SELECTION && (
-        <motion.div
-          className="bg-gray-900 rounded-xl w-full max-w-4xl overflow-hidden relative min-h-[80vh] max-h-[90vh]"
-          initial={{ scale: 0.9, opacity: 0 }}
-          animate={{ scale: 1, opacity: 1 }}
-          exit={{ scale: 0.9, opacity: 0 }}
-        >
+        <>
           <div
             onClick={onClose}
-            className="absolute top-6 left-6 cursor-pointer flex items-center gap-4 hover:text-gray-300"
+            className="absolute top-6 left-6 cursor-pointer flex items-center gap-4 hover:text-gray-300 z-10"
           >
             <ArrowLeft className="w-5 h-5 text-white" />
             <span className="text-white">Back</span>
@@ -338,7 +333,7 @@ export function OrderScreen({
             animate={isExiting ? "exit" : "show"}
             exit="exit"
             variants={containerVariants}
-            className="flex flex-col items-center justify-center space-y-6 p-6 mt-12 h-full overflow-y-auto"
+            className="flex flex-col items-center justify-center space-y-6 mt-12"
           >
             <motion.div variants={itemVariants} className="self-start w-full">
               <h2 className="text-6xl font-extrabold text-white mb-6 leading-tight">
@@ -401,20 +396,15 @@ export function OrderScreen({
               )}
             </motion.div>
           </motion.div>
-        </motion.div>
+        </>
       )}
 
       {/* Menu Selection Screen */}
       {currentStep === OrderStep.MENU_SELECTION && selectedRestaurant && (
-        <motion.div
-          className="bg-gray-900 rounded-xl w-full max-w-4xl overflow-hidden relative min-h-[80vh] max-h-[90vh] flex flex-col"
-          initial={{ scale: 0.9, opacity: 0 }}
-          animate={{ scale: 1, opacity: 1 }}
-          exit={{ scale: 0.9, opacity: 0 }}
-        >
+        <>
           <div
             onClick={handleExit}
-            className="absolute top-6 left-6 cursor-pointer flex items-center gap-4 hover:text-gray-300"
+            className="absolute top-6 left-6 cursor-pointer flex items-center gap-4 hover:text-gray-300 z-10"
           >
             <ArrowLeft className="w-5 h-5 text-white" />
             <span className="text-white">Back</span>
@@ -425,7 +415,7 @@ export function OrderScreen({
             animate={isExiting ? "exit" : "show"}
             exit="exit"
             variants={containerVariants}
-            className="flex flex-col p-6 mt-12 flex-1 overflow-hidden"
+            className="flex flex-col mt-12 h-[calc(100vh-130px)]"
           >
             <motion.div variants={itemVariants} className="self-start">
               <h2 className="text-6xl font-extrabold text-white mb-6 leading-tight">
@@ -483,35 +473,30 @@ export function OrderScreen({
           </motion.div>
 
           {orderItems.length > 0 && (
-            <div className="bg-gray-900 border-t border-gray-800 p-4">
+            <div className="sticky bottom-4 mt-6 w-full">
               <Button
-                className="w-full bg-blue-600 hover:bg-blue-500 text-white"
+                className="w-full bg-blue-600 hover:bg-blue-500 text-white py-3"
                 onClick={handleCheckout}
               >
                 Checkout ({orderItems.reduce((total, item) => total + item.quantity, 0)} items • {getTotalAmount()} AED)
               </Button>
             </div>
           )}
-        </motion.div>
+        </>
       )}
 
       {/* Checkout Screen */}
       {currentStep === OrderStep.CHECKOUT && (
-        <motion.div
-          className="bg-gray-900 rounded-xl w-full max-w-4xl overflow-hidden relative min-h-[80vh] max-h-[90vh]"
-          initial={{ scale: 0.9, opacity: 0 }}
-          animate={{ scale: 1, opacity: 1 }}
-          exit={{ scale: 0.9, opacity: 0 }}
-        >
+        <>
           <div
             onClick={handleExit}
-            className="absolute top-6 left-6 cursor-pointer flex items-center gap-4 hover:text-gray-300"
+            className="absolute top-6 left-6 cursor-pointer flex items-center gap-4 hover:text-gray-300 z-10"
           >
             <ArrowLeft className="w-5 h-5 text-white" />
             <span className="text-white">Back</span>
           </div>
 
-          <div className="absolute top-6 right-6">
+          <div className="absolute top-6 right-6 z-10">
             <div className="bg-yellow-500/80 text-yellow-900 px-3 py-1 rounded-full text-xs font-medium">
               Demo Mode
             </div>
@@ -522,7 +507,7 @@ export function OrderScreen({
             animate={isExiting ? "exit" : "show"}
             exit="exit"
             variants={containerVariants}
-            className="flex flex-col items-center space-y-6 p-6 mt-12 h-full overflow-y-auto"
+            className="flex flex-col items-center space-y-6 mt-12"
           >
             <motion.div variants={itemVariants} className="self-center">
               <div className="bg-blue-500/20 p-4 rounded-full mb-6">
@@ -530,7 +515,7 @@ export function OrderScreen({
               </div>
             </motion.div>
             
-            <motion.div variants={itemVariants} className="self-start w-full">
+            <motion.div variants={itemVariants} className="w-full">
               <h2 className="text-6xl font-extrabold text-white mb-8 leading-tight text-center">
                 Confirm<br />
                 <span style={{ color: "#2563eb" }}>your order</span>
@@ -544,7 +529,7 @@ export function OrderScreen({
               {orderItems.map((orderItem) => (
                 <div key={orderItem.item.id} className="flex justify-between items-center py-2 border-b border-gray-700 last:border-b-0">
                   <div className="flex items-center">
-                    <div className="text-white mr-2">{orderItem.quantity}</div>
+                    <div className="text-white mr-2">{orderItem.quantity}×</div>
                     <div className="text-white">{orderItem.item.name}</div>
                   </div>
                   <div className="flex items-center gap-4">
@@ -584,63 +569,49 @@ export function OrderScreen({
               </Button>
             </motion.div>
           </motion.div>
-        </motion.div>
+        </>
       )}
 
       {/* Loading Screen */}
       {currentStep === OrderStep.LOADING && (
-        <motion.div
-          className="bg-gray-900 rounded-xl w-full max-w-4xl overflow-hidden relative min-h-[80vh] max-h-[90vh]"
-          initial={{ scale: 0.9, opacity: 0 }}
-          animate={{ scale: 1, opacity: 1 }}
-          exit={{ scale: 0.9, opacity: 0 }}
-        >
-          <div className="flex flex-col items-center justify-center h-full p-6">
-            <motion.div
-              className="w-16 h-16 border-4 border-blue-500 border-t-transparent rounded-full"
-              animate={{ rotate: 360 }}
-              transition={{ duration: 1, repeat: Infinity, ease: "linear" }}
-            />
-            <p className="mt-6 text-white text-lg">Processing your order...</p>
-          </div>
-        </motion.div>
+        <div className="flex flex-col items-center justify-center h-full p-6">
+          <motion.div
+            className="w-16 h-16 border-4 border-blue-500 border-t-transparent rounded-full"
+            animate={{ rotate: 360 }}
+            transition={{ duration: 1, repeat: Infinity, ease: "linear" }}
+          />
+          <p className="mt-6 text-white text-lg">Processing your order...</p>
+        </div>
       )}
 
       {/* Confirmation Screen */}
       {currentStep === OrderStep.CONFIRMATION && (
-        <motion.div
-          className="bg-gray-900 rounded-xl w-full max-w-4xl overflow-hidden relative min-h-[80vh] max-h-[90vh]"
-          initial={{ scale: 0.9, opacity: 0 }}
-          animate={{ scale: 1, opacity: 1 }}
-          exit={{ scale: 0.9, opacity: 0 }}
-        >
-          <div className="flex flex-col items-center justify-center h-full p-6">
-            <motion.div
-              className="w-20 h-20 bg-green-500 rounded-full flex items-center justify-center"
-              initial={{ scale: 0 }}
-              animate={{ scale: 1 }}
-              transition={{ type: "spring", damping: 10, stiffness: 100 }}
-            >
-              <Check className="w-10 h-10 text-white" />
-            </motion.div>
-            <motion.h3
-              className="mt-6 text-white text-2xl font-semibold text-center"
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.2 }}
-            >
-              Order Confirmed!
-            </motion.h3>
-            <motion.p
-              className="mt-2 text-gray-400 text-center"
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.3 }}
-            >
-              Your order has been placed successfully
-            </motion.p>
-          </div>
-        </motion.div>
+        <div className="flex flex-col items-center justify-center h-full p-6">
+          <motion.div
+            className="w-20 h-20 bg-green-500 rounded-full flex items-center justify-center"
+            initial={{ scale: 0 }}
+            animate={{ scale: 1 }}
+            transition={{ type: "spring", damping: 10, stiffness: 100 }}
+          >
+            <Check className="w-10 h-10 text-white" />
+          </motion.div>
+          <motion.h3
+            className="mt-6 text-white text-2xl font-semibold text-center"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.2 }}
+          >
+            Order Confirmed!
+          </motion.h3>
+          <motion.p
+            className="mt-2 text-gray-400 text-center"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.3 }}
+          >
+            Your order has been placed successfully
+          </motion.p>
+        </div>
       )}
 
       {/* Exit Dialog */}

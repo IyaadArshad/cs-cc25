@@ -629,6 +629,26 @@ export default function CaseHome() {
     );
   }
 
+  // Show order screen if it's active
+  if (showOrderScreen) {
+    return (
+      <OrderScreen
+        onClose={() => setShowOrderScreen(false)}
+        onOrderComplete={handleOrderComplete}
+      />
+    );
+  }
+
+  // Show order details if active
+  if (showOrderDetails && activeOrder) {
+    return (
+      <OrderDetails 
+        order={activeOrder}
+        onClose={() => setShowOrderDetails(false)}
+      />
+    );
+  }
+
   // Replace single visaSelectionMode block with generic task question:
   if (currentTaskStep) {
     const taskStep = furtherSteps.find((step) => step.id === currentTaskStep);
@@ -745,21 +765,6 @@ export default function CaseHome() {
 
   return (
     <div className="flex-1 p-6 overflow-y-auto">
-      <AnimatePresence>
-        {showOrderScreen && (
-          <OrderScreen
-            onClose={() => setShowOrderScreen(false)}
-            onOrderComplete={handleOrderComplete}
-          />
-        )}
-        {showOrderDetails && activeOrder && (
-          <OrderDetails 
-            order={activeOrder}
-            onClose={() => setShowOrderDetails(false)}
-          />
-        )}
-      </AnimatePresence>
-
       {activeOrder && (
         <motion.div
           initial={{ opacity: 0, y: -20 }}
