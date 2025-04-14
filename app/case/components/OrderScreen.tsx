@@ -1,20 +1,22 @@
-import { useState } from "react";
+import React, { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { X, MapPin, Check, ShoppingCart } from "lucide-react";
+import { ArrowLeft, Check, ShoppingCart, X, Search, Clock } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { Card, CardContent } from "@/components/ui/card";
+import Image from "next/image";
 
 interface Restaurant {
   id: string;
   name: string;
   image: string;
+  description: string;
   rating: number;
   deliveryTime: string;
-  categories: Category[];
 }
 
 interface Category {
+  id: string;
   name: string;
-  items: MenuItem[];
 }
 
 interface MenuItem {
@@ -23,341 +25,595 @@ interface MenuItem {
   description: string;
   price: number;
   image: string;
+  categoryId: string;
 }
 
-interface OrderItem extends MenuItem {
+interface OrderItem {
+  item: MenuItem;
   quantity: number;
 }
 
-const sampleRestaurants: Restaurant[] = [
+// Sample data
+const RESTAURANTS: Restaurant[] = [
   {
     id: "shawarma-station",
     name: "Shawarma Station",
     image: "/img/discover/culinaryDelights/shawarmaStation.png",
+    description: "Popular chain known for fresh shawarmas and Middle Eastern street food.",
     rating: 4.5,
-    deliveryTime: "20-30",
-    categories: [
-      {
-        name: "Popular",
-        items: [
-          {
-            id: "chicken-shawarma",
-            name: "Chicken Shawarma",
-            description: "Fresh chicken with garlic sauce and pickles",
-            price: 12,
-            image: "/img/discover/culinaryDelights/shawarmaStation.png"
-          },
-          {
-            id: "meat-shawarma",
-            name: "Meat Shawarma",
-            description: "Tender meat with tahini sauce",
-            price: 14,
-            image: "/img/discover/culinaryDelights/shawarmaStation.png"
-          }
-        ]
-      }
-    ]
+    deliveryTime: "20-30 min",
   },
   {
     id: "al-mandi",
     name: "Al Mandi and Al Madhbi House",
     image: "/img/discover/culinaryDelights/alMandi.png",
+    description: "Authentic Yemeni restaurant specializing in Mandi and Madhbi dishes.",
     rating: 4.3,
-    deliveryTime: "30-40",
-    categories: [
-      {
-        name: "Signature Dishes",
-        items: [
-          {
-            id: "chicken-mandi",
-            name: "Chicken Mandi",
-            description: "Traditional Yemeni rice dish with chicken",
-            price: 45,
-            image: "/img/discover/culinaryDelights/alMandi.png"
-          }
-        ]
-      }
-    ]
+    deliveryTime: "25-35 min",
+  },
+  {
+    id: "nandos",
+    name: "Nando's",
+    image: "https://upload.wikimedia.org/wikipedia/commons/thumb/7/72/Flame-grilled_PERi-PERi_chicken.jpg/440px-Flame-grilled_PERi-PERi_chicken.jpg",
+    description: "Famous for its Peri-Peri chicken in a casual dining atmosphere.",
+    rating: 4.2,
+    deliveryTime: "20-30 min",
+  },
+  {
+    id: "lebanese-flower",
+    name: "Lebanese Flower",
+    image: "/img/discover/culinaryDelights/lebaneseFlower.png",
+    description: "Famous local spot for Lebanese cuisine at reasonable prices.",
+    rating: 4.7,
+    deliveryTime: "15-25 min",
   }
 ];
 
-export function OrderScreen({ onClose, onOrderComplete }: { onClose: () => void, onOrderComplete: (restaurant: Restaurant) => void }) {
-  const [step, setStep] = useState<'restaurants' | 'menu' | 'checkout' | 'processing' | 'confirmation'>('restaurants');
+// Sample menu categories
+const CATEGORIES: Category[] = [
+  { id: "popular", name: "Most Popular" },
+  { id: "appetizers", name: "Appetizers" },
+  { id: "main", name: "Main Dishes" },
+  { id: "sides", name: "Sides" },
+  { id: "drinks", name: "Drinks" },
+  { id: "desserts", name: "Desserts" },
+];
+
+// Sample menu items
+const generateMenuItems = (restaurantId: string): MenuItem[] => {
+  if (restaurantId === "shawarma-station") {
+    return [
+      {
+        id: "chicken-shawarma",
+        name: "Chicken Shawarma",
+        description: "Grilled marinated chicken with garlic sauce and pickles",
+        price: 18,
+        image: "/img/discover/culinaryDelights/shawarmaStation.png",
+        categoryId: "popular"
+      },
+      {
+        id: "beef-shawarma",
+        name: "Beef Shawarma",
+        description: "Tender beef with tahini sauce and vegetables",
+        price: 20,
+        image: "/img/discover/culinaryDelights/shawarmaStation.png",
+        categoryId: "popular"
+      },
+      {
+        id: "falafel-wrap",
+        name: "Falafel Wrap",
+        description: "Crispy falafel with fresh vegetables and tahini",
+        price: 15,
+        image: "/img/discover/culinaryDelights/shawarmaStation.png",
+        categoryId: "popular"
+      },
+      {
+        id: "hummus",
+        name: "Hummus",
+        description: "Creamy chickpea dip with olive oil",
+        price: 12,
+        image: "/img/discover/culinaryDelights/shawarmaStation.png",
+        categoryId: "appetizers"
+      },
+      {
+        id: "tabbouleh",
+        name: "Tabbouleh",
+        description: "Fresh parsley salad with bulgur wheat",
+        price: 14,
+        image: "/img/discover/culinaryDelights/shawarmaStation.png",
+        categoryId: "appetizers"
+      },
+      {
+        id: "mixed-grill",
+        name: "Mixed Grill",
+        description: "Assortment of grilled meats with rice",
+        price: 45,
+        image: "/img/discover/culinaryDelights/shawarmaStation.png",
+        categoryId: "main"
+      },
+      {
+        id: "french-fries",
+        name: "French Fries",
+        description: "Crispy golden fries",
+        price: 10,
+        image: "/img/discover/culinaryDelights/shawarmaStation.png",
+        categoryId: "sides"
+      },
+      {
+        id: "soft-drink",
+        name: "Soft Drink",
+        description: "Cola, Sprite, or Fanta",
+        price: 8,
+        image: "/img/discover/culinaryDelights/shawarmaStation.png",
+        categoryId: "drinks"
+      },
+      {
+        id: "baklava",
+        name: "Baklava",
+        description: "Sweet pastry with nuts and honey",
+        price: 16,
+        image: "/img/discover/culinaryDelights/shawarmaStation.png",
+        categoryId: "desserts"
+      },
+    ];
+  } else if (restaurantId === "al-mandi") {
+    return [
+      {
+        id: "chicken-mandi",
+        name: "Chicken Mandi",
+        description: "Traditional Yemeni dish with aromatic rice and chicken",
+        price: 35,
+        image: "/img/discover/culinaryDelights/alMandi.png",
+        categoryId: "popular"
+      },
+      {
+        id: "lamb-madhbi",
+        name: "Lamb Madhbi",
+        description: "Tender lamb grilled on hot stones",
+        price: 45,
+        image: "/img/discover/culinaryDelights/alMandi.png", 
+        categoryId: "popular"
+      },
+      // More items would go here
+    ];
+  } else {
+    return [];
+  }
+};
+
+// Animation variants
+const containerVariants = {
+  hidden: { opacity: 0 },
+  show: {
+    opacity: 1,
+    transition: { staggerChildren: 0.05, delayChildren: 0.2 }
+  },
+  exit: {
+    opacity: 0,
+    transition: { duration: 0.2 }
+  }
+};
+
+const itemVariants = {
+  hidden: { opacity: 0, y: 10 },
+  show: { opacity: 1, y: 0 },
+  exit: { opacity: 0, y: -10 }
+};
+
+enum OrderStep {
+  RESTAURANT_SELECTION = 0,
+  MENU_SELECTION = 1,
+  CHECKOUT = 2,
+  LOADING = 3,
+  CONFIRMATION = 4
+}
+
+export function OrderScreen({
+  onClose,
+  onOrderComplete,
+}: {
+  onClose: () => void;
+  onOrderComplete: (restaurant: Restaurant) => void;
+}) {
+  const [currentStep, setCurrentStep] = useState<OrderStep>(OrderStep.RESTAURANT_SELECTION);
+  const [showMoreRestaurants, setShowMoreRestaurants] = useState(false);
   const [selectedRestaurant, setSelectedRestaurant] = useState<Restaurant | null>(null);
-  const [cart, setCart] = useState<OrderItem[]>([]);
-  const [showMore, setShowMore] = useState(false);
+  const [selectedCategory, setSelectedCategory] = useState<string>("popular");
+  const [orderItems, setOrderItems] = useState<OrderItem[]>([]);
+  const [menuItems, setMenuItems] = useState<MenuItem[]>([]);
+
+  const handleRestaurantSelect = (restaurant: Restaurant) => {
+    setSelectedRestaurant(restaurant);
+    setMenuItems(generateMenuItems(restaurant.id));
+    setCurrentStep(OrderStep.MENU_SELECTION);
+  };
 
   const handleAddToCart = (item: MenuItem) => {
-    setCart(current => {
-      const existing = current.find(i => i.id === item.id);
-      if (existing) {
-        return current.map(i => 
-          i.id === item.id ? { ...i, quantity: i.quantity + 1 } : i
+    setOrderItems(prev => {
+      const existingItem = prev.find(i => i.item.id === item.id);
+      if (existingItem) {
+        return prev.map(i => 
+          i.item.id === item.id 
+            ? { ...i, quantity: i.quantity + 1 } 
+            : i
         );
+      } else {
+        return [...prev, { item, quantity: 1 }];
       }
-      return [...current, { ...item, quantity: 1 }];
     });
   };
 
   const handleRemoveFromCart = (itemId: string) => {
-    setCart(current => {
-      const existing = current.find(i => i.id === itemId);
-      if (existing && existing.quantity > 1) {
-        return current.map(i => 
-          i.id === itemId ? { ...i, quantity: i.quantity - 1 } : i
+    setOrderItems(prev => {
+      const existingItem = prev.find(i => i.item.id === itemId);
+      if (existingItem && existingItem.quantity > 1) {
+        return prev.map(i => 
+          i.item.id === itemId 
+            ? { ...i, quantity: i.quantity - 1 } 
+            : i
         );
+      } else {
+        return prev.filter(i => i.item.id !== itemId);
       }
-      return current.filter(i => i.id !== itemId);
     });
   };
 
   const getTotalAmount = () => {
-    return cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+    return orderItems.reduce((total, item) => total + item.item.price * item.quantity, 0);
   };
 
   const handleCheckout = () => {
-    setStep('processing');
-    // Simulate processing
+    setCurrentStep(OrderStep.CHECKOUT);
+  };
+
+  const handleConfirmOrder = () => {
+    setCurrentStep(OrderStep.LOADING);
+    // Simulate loading
     setTimeout(() => {
-      setStep('confirmation');
+      setCurrentStep(OrderStep.CONFIRMATION);
+      // Show confirmation for 1.5 seconds
       setTimeout(() => {
         if (selectedRestaurant) {
           onOrderComplete(selectedRestaurant);
         }
-      }, 2000);
+      }, 1500);
     }, 2000);
   };
 
+  const visibleRestaurants = showMoreRestaurants ? RESTAURANTS : RESTAURANTS.slice(0, 2);
+
+  const filteredMenuItems = menuItems.filter(item => 
+    selectedCategory === "all" || item.categoryId === selectedCategory
+  );
+
   return (
     <motion.div
+      className="fixed inset-0 bg-black bg-opacity-80 z-50 flex items-center justify-center p-4"
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
-      className="fixed inset-0 bg-gray-900 z-50 overflow-hidden"
     >
-      <div className="relative h-full">
-        <header className="p-4 flex items-center justify-between border-b border-gray-800">
-          <button onClick={onClose} className="text-white">
-            <X className="w-6 h-6" />
+      <motion.div
+        className="bg-gray-900 rounded-xl w-full max-w-3xl overflow-hidden relative"
+        initial={{ scale: 0.9, opacity: 0 }}
+        animate={{ scale: 1, opacity: 1 }}
+        exit={{ scale: 0.9, opacity: 0 }}
+        transition={{ type: "spring", damping: 20 }}
+      >
+        <div className="sticky top-0 z-10 bg-gray-900 px-6 py-4 border-b border-gray-800 flex items-center justify-between">
+          <button 
+            className="flex items-center gap-2 text-gray-400 hover:text-white"
+            onClick={currentStep > OrderStep.RESTAURANT_SELECTION 
+              ? () => setCurrentStep(prev => prev - 1) 
+              : onClose}
+          >
+            <ArrowLeft size={18} />
+            <span>{currentStep > OrderStep.RESTAURANT_SELECTION ? "Back" : "Cancel"}</span>
           </button>
-          <div className="absolute left-1/2 transform -translate-x-1/2 flex items-center text-white">
-            {step === 'restaurants' && <MapPin className="w-4 h-4 mr-2" />}
-            <span className="text-lg font-medium">
-              {step === 'restaurants' && "Nearby Restaurants"}
-              {step === 'menu' && selectedRestaurant?.name}
-              {step === 'checkout' && "Confirm Order"}
-              {step === 'processing' && "Processing"}
-              {step === 'confirmation' && "Order Confirmed"}
-            </span>
+          
+          <div className="text-white text-lg font-medium">
+            {currentStep === OrderStep.RESTAURANT_SELECTION && "Select Restaurant"}
+            {currentStep === OrderStep.MENU_SELECTION && selectedRestaurant?.name}
+            {currentStep === OrderStep.CHECKOUT && "Confirm Order"}
+            {currentStep === OrderStep.LOADING && "Processing Order"}
+            {currentStep === OrderStep.CONFIRMATION && "Order Confirmed"}
           </div>
-          {step !== 'restaurants' && (
-            <div className="text-white px-3 py-1 rounded-full bg-blue-600 text-sm">
-              Demo Mode
-            </div>
-          )}
-        </header>
+          
+          <div className="bg-blue-600/30 text-blue-400 px-3 py-1 rounded-full text-xs font-medium">
+            Demo Mode
+          </div>
+        </div>
 
         <AnimatePresence mode="wait">
-          {step === 'restaurants' && (
+          {currentStep === OrderStep.RESTAURANT_SELECTION && (
             <motion.div
-              key="restaurants"
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -20 }}
-              className="p-4 space-y-4 overflow-y-auto h-[calc(100vh-64px)]"
+              key="restaurant-selection"
+              className="p-6 max-h-[70vh] overflow-y-auto"
+              variants={containerVariants}
+              initial="hidden"
+              animate="show"
+              exit="exit"
             >
-              {sampleRestaurants.slice(0, showMore ? undefined : 2).map((restaurant) => (
-                <motion.div
-                  key={restaurant.id}
-                  className="bg-gray-800 rounded-lg p-4 cursor-pointer"
-                  onClick={() => {
-                    setSelectedRestaurant(restaurant);
-                    setStep('menu');
-                  }}
-                >
-                  <div className="h-40 rounded-lg overflow-hidden mb-4">
-                    <img 
-                      src={restaurant.image} 
-                      alt={restaurant.name}
-                      className="w-full h-full object-cover"
-                    />
-                  </div>
-                  <h3 className="text-white text-lg font-medium">{restaurant.name}</h3>
-                  <div className="flex items-center mt-2 text-sm text-gray-400">
-                    <span className="mr-4">⭐️ {restaurant.rating}</span>
-                    <span>{restaurant.deliveryTime} mins</span>
-                  </div>
-                </motion.div>
-              ))}
-              {!showMore && (
-                <Button 
-                  onClick={() => setShowMore(true)}
-                  className="w-full bg-gray-800 text-white hover:bg-gray-700"
-                >
-                  Show More
-                </Button>
-              )}
-            </motion.div>
-          )}
+              <motion.div variants={itemVariants} className="mb-4 relative">
+                <Search className="absolute left-3 top-3 text-gray-500 w-5 h-5" />
+                <input
+                  type="text"
+                  placeholder="Search for restaurants"
+                  className="w-full bg-gray-800 border border-gray-700 rounded-lg py-3 pl-10 pr-4 text-white focus:outline-none focus:ring-2 focus:ring-blue-600"
+                />
+              </motion.div>
+              
+              <motion.h2 
+                variants={itemVariants}
+                className="text-white font-semibold mb-4"
+              >
+                NEARBY RESTAURANTS
+              </motion.h2>
 
-          {step === 'menu' && selectedRestaurant && (
-            <motion.div
-              key="menu"
-              initial={{ opacity: 0, x: 100 }}
-              animate={{ opacity: 1, x: 0 }}
-              exit={{ opacity: 0, x: -100 }}
-              className="h-[calc(100vh-64px)] flex flex-col"
-            >
-              <div className="flex-1 overflow-y-auto">
-                <div className="h-48 relative">
-                  <img 
-                    src={selectedRestaurant.image}
-                    alt={selectedRestaurant.name}
-                    className="w-full h-full object-cover"
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-gray-900 to-transparent" />
-                </div>
-                
-                {selectedRestaurant.categories.map((category) => (
-                  <div key={category.name} className="p-4">
-                    <h3 className="text-white text-xl font-medium mb-4">{category.name}</h3>
-                    <div className="space-y-4">
-                      {category.items.map((item) => (
-                        <div 
-                          key={item.id}
-                          className="bg-gray-800 rounded-lg p-4 flex items-center"
-                        >
-                          <img 
-                            src={item.image}
-                            alt={item.name}
-                            className="w-24 h-24 rounded-lg object-cover"
+              <div className="space-y-4">
+                {visibleRestaurants.map((restaurant) => (
+                  <motion.div
+                    key={restaurant.id}
+                    variants={itemVariants}
+                    onClick={() => handleRestaurantSelect(restaurant)}
+                  >
+                    <Card className="bg-gray-800 border-gray-700 hover:bg-gray-700/50 cursor-pointer transition-colors">
+                      <div className="flex p-4">
+                        <div className="flex-shrink-0 w-24 h-24 rounded-md overflow-hidden">
+                          <img
+                            src={restaurant.image}
+                            alt={restaurant.name}
+                            className="w-full h-full object-cover"
                           />
-                          <div className="ml-4 flex-1">
-                            <h4 className="text-white font-medium">{item.name}</h4>
-                            <p className="text-gray-400 text-sm mt-1">{item.description}</p>
-                            <div className="flex items-center justify-between mt-2">
-                              <span className="text-white">AED {item.price}</span>
-                              <Button
-                                onClick={() => handleAddToCart(item)}
-                                className="bg-blue-600 hover:bg-blue-700 text-white"
-                              >
-                                Add
-                              </Button>
+                        </div>
+                        <div className="ml-4 flex flex-col justify-between">
+                          <div>
+                            <h3 className="text-white font-medium">{restaurant.name}</h3>
+                            <p className="text-gray-400 text-sm mt-1 line-clamp-2">
+                              {restaurant.description}
+                            </p>
+                          </div>
+                          <div className="flex items-center gap-4 mt-2">
+                            <div className="flex items-center">
+                              <div className="text-yellow-500">★</div>
+                              <span className="text-white text-sm ml-1">{restaurant.rating}</span>
+                            </div>
+                            <div className="flex items-center text-gray-400 text-sm">
+                              <Clock size={14} className="mr-1" />
+                              {restaurant.deliveryTime}
                             </div>
                           </div>
                         </div>
-                      ))}
-                    </div>
-                  </div>
+                      </div>
+                    </Card>
+                  </motion.div>
+                ))}
+
+                {!showMoreRestaurants && (
+                  <motion.button
+                    variants={itemVariants}
+                    className="w-full py-3 text-center text-blue-500 hover:text-blue-400 rounded-lg border border-gray-800 hover:border-gray-700"
+                    onClick={() => setShowMoreRestaurants(true)}
+                  >
+                    Show More Restaurants
+                  </motion.button>
+                )}
+              </div>
+            </motion.div>
+          )}
+
+          {currentStep === OrderStep.MENU_SELECTION && selectedRestaurant && (
+            <motion.div
+              key="menu-selection"
+              className="h-[70vh] overflow-hidden flex"
+              variants={containerVariants}
+              initial="hidden"
+              animate="show"
+              exit="exit"
+            >
+              {/* Categories sidebar */}
+              <div className="w-1/4 border-r border-gray-800 overflow-y-auto">
+                {CATEGORIES.map((category) => (
+                  <motion.button
+                    key={category.id}
+                    variants={itemVariants}
+                    className={`w-full text-left px-4 py-3 transition-colors ${
+                      selectedCategory === category.id
+                        ? "bg-gray-800 text-white font-medium border-l-2 border-blue-500"
+                        : "text-gray-400 hover:bg-gray-800/50"
+                    }`}
+                    onClick={() => setSelectedCategory(category.id)}
+                  >
+                    {category.name}
+                  </motion.button>
                 ))}
               </div>
 
-              {cart.length > 0 && (
-                <div className="border-t border-gray-800 p-4">
-                  <Button
-                    onClick={() => setStep('checkout')}
-                    className="w-full bg-blue-600 hover:bg-blue-700 text-white"
-                  >
-                    Checkout (AED {getTotalAmount()})
-                  </Button>
-                </div>
-              )}
-            </motion.div>
-          )}
-
-          {step === 'checkout' && (
-            <motion.div
-              key="checkout"
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -20 }}
-              className="p-4 h-[calc(100vh-64px)] flex flex-col"
-            >
-              <div className="flex-1">
-                <div className="bg-gray-800 rounded-lg p-4 mb-4">
-                  <div className="flex items-center justify-center mb-4">
-                    <ShoppingCart className="w-12 h-12 text-blue-600" />
-                  </div>
-                  <h3 className="text-white text-xl font-medium text-center mb-6">Your Order</h3>
-                  {cart.map((item) => (
-                    <div key={item.id} className="flex items-center justify-between py-2">
-                      <div className="flex items-center">
-                        <span className="text-white">{item.quantity}x</span>
-                        <span className="text-white ml-2">{item.name}</span>
-                      </div>
-                      <div className="flex items-center">
-                        <span className="text-white">AED {item.price * item.quantity}</span>
-                        <div className="ml-4 flex items-center space-x-2">
-                          <Button
-                            onClick={() => handleRemoveFromCart(item.id)}
-                            className="px-2 py-1 bg-gray-700 hover:bg-gray-600 text-white"
-                          >
-                            -
-                          </Button>
-                          <Button
-                            onClick={() => handleAddToCart(item)}
-                            className="px-2 py-1 bg-gray-700 hover:bg-gray-600 text-white"
-                          >
-                            +
-                          </Button>
+              {/* Menu items */}
+              <div className="w-3/4 overflow-y-auto p-4">
+                <div className="space-y-4">
+                  {filteredMenuItems.map((item) => (
+                    <motion.div
+                      key={item.id}
+                      variants={itemVariants}
+                      className="bg-gray-800 rounded-lg p-4 flex justify-between"
+                    >
+                      <div className="flex gap-3">
+                        <div className="w-16 h-16 rounded-md overflow-hidden flex-shrink-0">
+                          <img src={item.image} alt={item.name} className="w-full h-full object-cover" />
+                        </div>
+                        <div>
+                          <h3 className="text-white font-medium">{item.name}</h3>
+                          <p className="text-gray-400 text-sm mt-1 line-clamp-2">{item.description}</p>
+                          <div className="mt-2 text-white font-semibold">{item.price} AED</div>
                         </div>
                       </div>
-                    </div>
+                      <button
+                        className="self-end bg-blue-600 hover:bg-blue-700 text-white px-3 py-1 rounded h-8"
+                        onClick={() => handleAddToCart(item)}
+                      >
+                        Add
+                      </button>
+                    </motion.div>
                   ))}
                 </div>
               </div>
-
-              <Button
-                onClick={handleCheckout}
-                className="w-full bg-blue-600 hover:bg-blue-700 text-white"
-              >
-                Place Order (AED {getTotalAmount()})
-              </Button>
             </motion.div>
           )}
 
-          {step === 'processing' && (
+          {currentStep === OrderStep.CHECKOUT && (
             <motion.div
-              key="processing"
+              key="checkout"
+              className="p-6 max-h-[70vh] overflow-y-auto"
+              variants={containerVariants}
+              initial="hidden"
+              animate="show"
+              exit="exit"
+            >
+              <motion.div 
+                variants={itemVariants} 
+                className="flex items-center justify-center mb-6"
+              >
+                <div className="bg-blue-500/20 p-3 rounded-full">
+                  <ShoppingCart size={28} className="text-blue-500" />
+                </div>
+              </motion.div>
+
+              <motion.h3 
+                variants={itemVariants}
+                className="text-xl font-semibold text-white text-center mb-6"
+              >
+                Confirm your order
+              </motion.h3>
+
+              <motion.div variants={itemVariants} className="bg-gray-800 rounded-lg p-4 mb-6">
+                <h4 className="text-white font-medium mb-3">Order Summary</h4>
+                {orderItems.map((orderItem) => (
+                  <div key={orderItem.item.id} className="flex justify-between items-center py-2 border-t border-gray-700">
+                    <div className="flex items-center">
+                      <div className="text-white">{orderItem.quantity}x</div>
+                      <div className="ml-2 text-white">{orderItem.item.name}</div>
+                    </div>
+                    <div className="flex items-center gap-4">
+                      <div className="text-white">{orderItem.quantity * orderItem.item.price} AED</div>
+                      <div className="flex gap-2">
+                        <button 
+                          className="w-6 h-6 rounded-full bg-gray-700 flex items-center justify-center text-white hover:bg-gray-600"
+                          onClick={() => handleRemoveFromCart(orderItem.item.id)}
+                        >
+                          -
+                        </button>
+                        <button 
+                          className="w-6 h-6 rounded-full bg-gray-700 flex items-center justify-center text-white hover:bg-gray-600"
+                          onClick={() => handleAddToCart(orderItem.item)}
+                        >
+                          +
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                ))}
+              </motion.div>
+
+              <motion.div
+                variants={itemVariants}
+                className="bg-gray-800 rounded-lg p-4 mb-6"
+              >
+                <div className="flex justify-between py-2">
+                  <span className="text-gray-300">Subtotal</span>
+                  <span className="text-white">{getTotalAmount()} AED</span>
+                </div>
+                <div className="flex justify-between py-2 border-t border-gray-700">
+                  <span className="text-gray-300">Delivery Fee</span>
+                  <span className="text-white">5 AED</span>
+                </div>
+                <div className="flex justify-between py-2 border-t border-gray-700 font-medium">
+                  <span className="text-white">Total</span>
+                  <span className="text-white">{getTotalAmount() + 5} AED</span>
+                </div>
+              </motion.div>
+
+              <motion.button
+                variants={itemVariants}
+                className="w-full py-4 bg-blue-600 hover:bg-blue-700 text-white rounded-lg font-medium"
+                onClick={handleConfirmOrder}
+                disabled={orderItems.length === 0}
+              >
+                Place Order
+              </motion.button>
+            </motion.div>
+          )}
+
+          {currentStep === OrderStep.LOADING && (
+            <motion.div
+              key="loading"
+              className="p-6 h-[70vh] flex flex-col items-center justify-center"
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
-              className="h-[calc(100vh-64px)] flex items-center justify-center"
             >
-              <div className="text-center">
-                <motion.div
-                  className="w-16 h-16 border-4 border-blue-600 border-t-transparent rounded-full mx-auto mb-4"
-                  animate={{ rotate: 360 }}
-                  transition={{ duration: 1, repeat: Infinity, ease: "linear" }}
-                />
-                <p className="text-white text-lg">Processing your order...</p>
-              </div>
+              <motion.div
+                className="w-16 h-16 border-4 border-blue-500 border-t-transparent rounded-full"
+                animate={{ rotate: 360 }}
+                transition={{ duration: 1, repeat: Infinity, ease: "linear" }}
+              />
+              <p className="mt-6 text-white text-lg">Processing your order...</p>
             </motion.div>
           )}
 
-          {step === 'confirmation' && (
+          {currentStep === OrderStep.CONFIRMATION && (
             <motion.div
               key="confirmation"
-              initial={{ opacity: 0, scale: 0.8 }}
-              animate={{ opacity: 1, scale: 1 }}
-              className="h-[calc(100vh-64px)] flex items-center justify-center"
+              className="p-6 h-[70vh] flex flex-col items-center justify-center"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
             >
-              <div className="text-center">
-                <motion.div
-                  initial={{ scale: 0 }}
-                  animate={{ scale: 1 }}
-                  transition={{ type: "spring", stiffness: 200, damping: 20 }}
-                  className="w-20 h-20 rounded-full bg-green-600 flex items-center justify-center mx-auto mb-4"
-                >
-                  <Check className="w-10 h-10 text-white" />
-                </motion.div>
-                <h3 className="text-white text-xl font-medium">Order Confirmed!</h3>
-                <p className="text-gray-400 mt-2">Your food is being prepared</p>
-              </div>
+              <motion.div
+                className="w-20 h-20 bg-green-500 rounded-full flex items-center justify-center"
+                initial={{ scale: 0 }}
+                animate={{ scale: 1 }}
+                transition={{ type: "spring", damping: 10, stiffness: 100 }}
+              >
+                <Check className="w-10 h-10 text-white" />
+              </motion.div>
+              <motion.h3
+                className="mt-6 text-white text-2xl font-semibold text-center"
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.2 }}
+              >
+                Order Confirmed!
+              </motion.h3>
+              <motion.p
+                className="mt-2 text-gray-400 text-center"
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.3 }}
+              >
+                Your order has been placed successfully
+              </motion.p>
             </motion.div>
           )}
         </AnimatePresence>
-      </div>
+
+        {currentStep === OrderStep.MENU_SELECTION && orderItems.length > 0 && (
+          <div className="sticky bottom-0 bg-gray-900 border-t border-gray-800 p-4">
+            <div className="flex items-center justify-between">
+              <div>
+                <span className="text-gray-400">{orderItems.reduce((total, item) => total + item.quantity, 0)} items</span>
+                <p className="text-white font-semibold">{getTotalAmount()} AED</p>
+              </div>
+              <Button 
+                className="bg-blue-600 hover:bg-blue-700"
+                onClick={handleCheckout}
+              >
+                Continue to Checkout
+              </Button>
+            </div>
+          </div>
+        )}
+      </motion.div>
     </motion.div>
   );
 }

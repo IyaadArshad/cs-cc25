@@ -17,6 +17,7 @@ import {
   ShoppingBag,
   Receipt,
   MapPin,
+  Clock,
 } from "lucide-react";
 import { useEffect, useState, useRef } from "react";
 import Cookies from "js-cookie";
@@ -25,6 +26,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import React from "react";
 import JSConfetti from "js-confetti";
 import { OrderScreen } from "./components/OrderScreen";
+import { OrderDetails } from "./components/OrderDetails";
 
 export interface Option {
   id: string;
@@ -347,6 +349,7 @@ export default function CaseHome() {
   const [showDialog, setShowDialog] = useState(false);
   const [showOrderScreen, setShowOrderScreen] = useState(false);
   const [activeOrder, setActiveOrder] = useState<any>(null);
+  const [showOrderDetails, setShowOrderDetails] = useState(false);
 
   const handleDialogClose = () => {
     setShowDialog(false);
@@ -749,16 +752,20 @@ export default function CaseHome() {
             onOrderComplete={handleOrderComplete}
           />
         )}
+        {showOrderDetails && activeOrder && (
+          <OrderDetails 
+            order={activeOrder}
+            onClose={() => setShowOrderDetails(false)}
+          />
+        )}
       </AnimatePresence>
 
       {activeOrder && (
         <motion.div
           initial={{ opacity: 0, y: -20 }}
           animate={{ opacity: 1, y: 0 }}
-          className="bg-gray-800 rounded-lg p-4 mb-6 cursor-pointer"
-          onClick={() => {
-            /* TODO: Show order details */
-          }}
+          className="bg-gray-800 rounded-lg p-4 mb-6 cursor-pointer hover:bg-gray-700/70 transition-all"
+          onClick={() => setShowOrderDetails(true)}
         >
           <div className="flex items-center justify-between">
             <div>
@@ -767,8 +774,9 @@ export default function CaseHome() {
               </h3>
               <p className="text-gray-400 text-sm">Order {activeOrder.status}</p>
             </div>
-            <div className="text-blue-500">
-              Delivery in ~{activeOrder.estimatedTime} mins
+            <div className="text-blue-400 flex items-center">
+              <Clock className="w-4 h-4 mr-1" />
+              <span>Delivery in ~{activeOrder.estimatedTime} mins</span>
             </div>
           </div>
         </motion.div>
