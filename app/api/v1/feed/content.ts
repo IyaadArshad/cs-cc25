@@ -14,6 +14,32 @@ export const news = [
   },
   {
     "source": {
+      "id": "rt",
+      "name": "RT"
+    },
+    "author": "RT",
+    "title": "Russia thanks UAE for mediating prisoner swap with US",
+    "description": "Russia and the US have carried out another prisoner exchange which took place at an Abu Dhabi airport Read Full Article at RT.com",
+    "url": "https://www.rt.com/russia/615536-russia-thanks-uae-mediating-prisoner-swap/",
+    "urlToImage": "https://mf.b37mrtl.ru/files/2025.04/article/67f7aa04203027423526652b.jpg",
+    "publishedAt": "2025-04-10T11:24:01Z",
+    "content": "Russia’s Federal Security Service (FSB) has confirmed the latest prisoner swap with the US, which took place in the United Arab Emirates on Thursday. The agency thanked Abu Dhabi for its mediation ef… [+1383 chars]"
+  },
+  {
+    "source": {
+      "id": "rt",
+      "name": "RT"
+    },
+    "author": "RT",
+    "title": "WATCH Russia-US prisoner swap in Abu Dhabi",
+    "description": "Russia’s FSB has released a video showing a prisoner swap between Russia and the US in Abu Dhabi Read Full Article at RT.com",
+    "url": "https://www.rt.com/russia/615540-russia-us-prisoner-swap-video/",
+    "urlToImage": "https://mf.b37mrtl.ru/files/2025.04/article/67f7c81720302725315e3546.png",
+    "publishedAt": "2025-04-10T13:39:53Z",
+    "content": "Russia’s Federal Security Service (FSB) has released two videos showing a surprise prisoner swap between the US and Russia, which was mediated by the United Arab Emirates.\r\nThe exchange took place on… [+1210 chars]"
+  },
+  {
+    "source": {
       "id": "al-jazeera-english",
       "name": "Al Jazeera English"
     },
@@ -24,6 +50,20 @@ export const news = [
     "urlToImage": "https://www.aljazeera.com/wp-content/uploads/2025/04/SV-Blue-diamond-horz-clean-1744134714.jpg?resize=1920%2C1440",
     "publishedAt": "2025-04-08T18:43:14Z",
     "content": "NewsFeed\r\nSothebys unveiled the Mediterranean Blue a newly discovered 10.03-carat fancy vivid blue diamond at an Abu Dhabi exhibit. It could fetch up to $20 million when auctioned in Geneva next mont… [+1 chars]"
+  },
+  
+  {
+    "source": {
+      "id": null,
+      "name": "Bringatrailer.com"
+    },
+    "author": "bringatrailer",
+    "title": "Abu Dhabi-Market 1993 Mercedes-Benz 500SL at No Reserve",
+    "description": "This 1993 Mercedes-Benz 500SL was initially ordered in Abu Dhabi and was imported to Canada under previous ownership. Finished in Blue Black Metallic over Anthracite leather, the car is powered by a 5.0-liter V8 paired with a four-speed automatic transmission…",
+    "url": "https://bringatrailer.com/listing/1993-mercedes-benz-500sl-27/",
+    "urlToImage": "https://bringatrailer.com/wp-content/uploads/2025/03/1993_mercedes-benz_500sl_dsc00862-fotor-20250310192932-39717.jpg",
+    "publishedAt": "2025-03-26T22:30:11Z",
+    "content": "This 1993 Mercedes-Benz 500SL was initially ordered in Abu Dhabi and was imported to Canada under previous ownership. Finished in Blue Black Metallic over Anthracite leather, the car is powered by a … [+2309 chars]"
   },
   {
     "source": {
@@ -53,32 +93,6 @@ export const news = [
   },
   {
     "source": {
-      "id": "rt",
-      "name": "RT"
-    },
-    "author": "RT",
-    "title": "WATCH Russia-US prisoner swap in Abu Dhabi",
-    "description": "Russia’s FSB has released a video showing a prisoner swap between Russia and the US in Abu Dhabi Read Full Article at RT.com",
-    "url": "https://www.rt.com/russia/615540-russia-us-prisoner-swap-video/",
-    "urlToImage": "https://mf.b37mrtl.ru/files/2025.04/article/67f7c81720302725315e3546.png",
-    "publishedAt": "2025-04-10T13:39:53Z",
-    "content": "Russia’s Federal Security Service (FSB) has released two videos showing a surprise prisoner swap between the US and Russia, which was mediated by the United Arab Emirates.\r\nThe exchange took place on… [+1210 chars]"
-  },
-  {
-    "source": {
-      "id": null,
-      "name": "Bringatrailer.com"
-    },
-    "author": "bringatrailer",
-    "title": "Abu Dhabi-Market 1993 Mercedes-Benz 500SL at No Reserve",
-    "description": "This 1993 Mercedes-Benz 500SL was initially ordered in Abu Dhabi and was imported to Canada under previous ownership. Finished in Blue Black Metallic over Anthracite leather, the car is powered by a 5.0-liter V8 paired with a four-speed automatic transmission…",
-    "url": "https://bringatrailer.com/listing/1993-mercedes-benz-500sl-27/",
-    "urlToImage": "https://bringatrailer.com/wp-content/uploads/2025/03/1993_mercedes-benz_500sl_dsc00862-fotor-20250310192932-39717.jpg",
-    "publishedAt": "2025-03-26T22:30:11Z",
-    "content": "This 1993 Mercedes-Benz 500SL was initially ordered in Abu Dhabi and was imported to Canada under previous ownership. Finished in Blue Black Metallic over Anthracite leather, the car is powered by a … [+2309 chars]"
-  },
-  {
-    "source": {
       "id": null,
       "name": "MMA Mania"
     },
@@ -90,17 +104,5 @@ export const news = [
     "publishedAt": "2025-03-20T14:25:45Z",
     "content": "Photo by Chris Unger/Zuffa LLC via Getty Images\r\n\n \n\n Ultimate Fighting Championship (UFC) is headed back to “Fight Island.”\nThe promotion today announced its next overseas “Fight Night” card for Sat… [+1082 chars]"
   },
-  {
-    "source": {
-      "id": "rt",
-      "name": "RT"
-    },
-    "author": "RT",
-    "title": "Russia thanks UAE for mediating prisoner swap with US",
-    "description": "Russia and the US have carried out another prisoner exchange which took place at an Abu Dhabi airport Read Full Article at RT.com",
-    "url": "https://www.rt.com/russia/615536-russia-thanks-uae-mediating-prisoner-swap/",
-    "urlToImage": "https://mf.b37mrtl.ru/files/2025.04/article/67f7aa04203027423526652b.jpg",
-    "publishedAt": "2025-04-10T11:24:01Z",
-    "content": "Russia’s Federal Security Service (FSB) has confirmed the latest prisoner swap with the US, which took place in the United Arab Emirates on Thursday. The agency thanked Abu Dhabi for its mediation ef… [+1383 chars]"
-  }
+  
 ]
