@@ -337,63 +337,57 @@ export function OrderScreen({
           >
             <motion.div variants={itemVariants} className="self-start w-full">
               <h2 className="text-6xl font-extrabold text-white mb-6 leading-tight">
-                Select your<br />
+                Choose your
+                <br />
                 <span style={{ color: "#2563eb" }}>restaurant</span>
               </h2>
             </motion.div>
 
-            <motion.div variants={itemVariants} className="mb-4 relative w-full">
-              <Search className="absolute left-3 top-3 text-gray-500 w-5 h-5" />
-              <input
-                type="text"
-                placeholder="Search for nearby restaurants"
-                className="w-full bg-gray-800 border border-gray-700 rounded-lg py-3 pl-10 pr-4 text-white focus:outline-none focus:ring-2 focus:ring-blue-600"
-              />
-            </motion.div>
-            
-            <motion.div variants={itemVariants} className="w-full grid grid-cols-1 gap-4">
-              {visibleRestaurants.map((restaurant) => (
-                <Button
+            {/* <motion.div variants={itemVariants} className="mb-4 relative w-full">
+            <Search className="absolute left-3 top-3 text-gray-500 w-5 h-5" />
+            <input
+              type="text"
+              placeholder="Search for restaurants"
+              className="w-full bg-gray-800 border border-gray-700 rounded-lg py-3 pl-10 pr-4 text-white focus:outline-none focus:ring-2 focus:ring-blue-600"
+            />
+          </motion.div> */}
+
+            <motion.div
+              variants={itemVariants}
+              className="w-full grid grid-cols-2 gap-4"
+            >
+              {RESTAURANTS.map((restaurant) => (
+                <div
                   key={restaurant.id}
-                  variant="outline"
-                  className="flex bg-gray-800 border-gray-700 text-white hover:bg-gray-700/50 transition-colors p-4 w-full h-auto items-start text-left"
+                  className="flex flex-col bg-gray-800 rounded-lg overflow-hidden border border-gray-700 hover:border-gray-600 transition-colors cursor-pointer"
                   onClick={() => handleRestaurantSelect(restaurant)}
                 >
-                  <div className="flex-shrink-0 w-20 h-20 rounded-md overflow-hidden mr-4">
+                  <div className="w-full aspect-video">
                     <img
                       src={restaurant.image}
                       alt={restaurant.name}
                       className="w-full h-full object-cover"
                     />
                   </div>
-                  <div>
-                    <h3 className="text-white font-medium text-lg">{restaurant.name}</h3>
-                    <p className="text-gray-400 text-sm mt-1 line-clamp-2">
-                      {restaurant.description}
-                    </p>
-                    <div className="flex items-center gap-4 mt-2">
+                  <div className="p-3">
+                    <h3 className="text-white font-medium text-lg line-clamp-1">
+                      {restaurant.name}
+                    </h3>
+                    <div className="flex items-center gap-2 mt-1.5">
                       <div className="flex items-center">
                         <div className="text-yellow-500">★</div>
-                        <span className="text-white text-sm ml-1">{restaurant.rating}</span>
+                        <span className="text-white text-sm ml-0.5">
+                          {restaurant.rating}
+                        </span>
                       </div>
                       <div className="flex items-center text-gray-400 text-sm">
-                        <Clock size={14} className="mr-1" />
+                        <Clock size={12} className="mr-0.5" />
                         {restaurant.deliveryTime}
                       </div>
                     </div>
                   </div>
-                </Button>
+                </div>
               ))}
-
-              {!showMoreRestaurants && (
-                <motion.button
-                  variants={itemVariants}
-                  className="w-full py-3 text-center text-blue-500 hover:text-blue-400 rounded-lg border border-gray-800 hover:border-gray-700"
-                  onClick={() => setShowMoreRestaurants(true)}
-                >
-                  Show More Restaurants
-                </motion.button>
-              )}
             </motion.div>
           </motion.div>
         </>
@@ -409,7 +403,7 @@ export function OrderScreen({
             <ArrowLeft className="w-5 h-5 text-white" />
             <span className="text-white">Back</span>
           </div>
-          
+
           <motion.div
             initial="hidden"
             animate={isExiting ? "exit" : "show"}
@@ -419,14 +413,18 @@ export function OrderScreen({
           >
             <motion.div variants={itemVariants} className="self-start">
               <h2 className="text-6xl font-extrabold text-white mb-6 leading-tight">
-                Choose your<br />
+                Choose your
+                <br />
                 <span style={{ color: "#2563eb" }}>items</span>
               </h2>
             </motion.div>
 
             <div className="flex flex-1 overflow-hidden">
               {/* Categories sidebar */}
-              <motion.div variants={itemVariants} className="w-1/4 border-r border-gray-800 overflow-y-auto pr-2">
+              <motion.div
+                variants={itemVariants}
+                className="w-1/4 border-r border-gray-800 overflow-y-auto pr-2"
+              >
                 {CATEGORIES.map((category) => (
                   <Button
                     key={category.id}
@@ -444,7 +442,10 @@ export function OrderScreen({
               </motion.div>
 
               {/* Menu items */}
-              <motion.div variants={itemVariants} className="w-3/4 overflow-y-auto p-4 space-y-4">
+              <motion.div
+                variants={itemVariants}
+                className="w-3/4 overflow-y-auto p-4 space-y-4"
+              >
                 {filteredMenuItems.map((item) => (
                   <div
                     key={item.id}
@@ -452,12 +453,20 @@ export function OrderScreen({
                   >
                     <div className="flex gap-3">
                       <div className="w-16 h-16 rounded-md overflow-hidden flex-shrink-0">
-                        <img src={item.image} alt={item.name} className="w-full h-full object-cover" />
+                        <img
+                          src={item.image}
+                          alt={item.name}
+                          className="w-full h-full object-cover"
+                        />
                       </div>
                       <div>
                         <h3 className="text-white font-medium">{item.name}</h3>
-                        <p className="text-gray-400 text-sm mt-1 line-clamp-2">{item.description}</p>
-                        <div className="mt-2 text-white font-semibold">{item.price} AED</div>
+                        <p className="text-gray-400 text-sm mt-1 line-clamp-2">
+                          {item.description}
+                        </p>
+                        <div className="mt-2 text-white font-semibold">
+                          {item.price} AED
+                        </div>
                       </div>
                     </div>
                     <button
@@ -478,7 +487,9 @@ export function OrderScreen({
                 className="w-full bg-blue-600 hover:bg-blue-500 text-white py-3"
                 onClick={handleCheckout}
               >
-                Checkout ({orderItems.reduce((total, item) => total + item.quantity, 0)} items • {getTotalAmount()} AED)
+                Checkout (
+                {orderItems.reduce((total, item) => total + item.quantity, 0)}{" "}
+                items • {getTotalAmount()} AED)
               </Button>
             </div>
           )}
@@ -501,7 +512,7 @@ export function OrderScreen({
               Demo Mode
             </div>
           </div>
-          
+
           <motion.div
             initial="hidden"
             animate={isExiting ? "exit" : "show"}
@@ -514,34 +525,40 @@ export function OrderScreen({
                 <ShoppingBag size={32} className="text-blue-500" />
               </div>
             </motion.div>
-            
+
             <motion.div variants={itemVariants} className="w-full">
               <h2 className="text-6xl font-extrabold text-white mb-8 leading-tight text-center">
-                Confirm<br />
+                Confirm
+                <br />
                 <span style={{ color: "#2563eb" }}>your order</span>
               </h2>
             </motion.div>
 
-            <motion.div 
-              variants={itemVariants} 
+            <motion.div
+              variants={itemVariants}
               className="w-full bg-gray-800 rounded-lg p-4 overflow-y-auto max-h-[40vh]"
             >
               {orderItems.map((orderItem) => (
-                <div key={orderItem.item.id} className="flex justify-between items-center py-2 border-b border-gray-700 last:border-b-0">
+                <div
+                  key={orderItem.item.id}
+                  className="flex justify-between items-center py-2 border-b border-gray-700 last:border-b-0"
+                >
                   <div className="flex items-center">
                     <div className="text-white mr-2">{orderItem.quantity}×</div>
                     <div className="text-white">{orderItem.item.name}</div>
                   </div>
                   <div className="flex items-center gap-4">
-                    <div className="text-white">{orderItem.quantity * orderItem.item.price} AED</div>
+                    <div className="text-white">
+                      {orderItem.quantity * orderItem.item.price} AED
+                    </div>
                     <div className="flex gap-1">
-                      <button 
+                      <button
                         className="w-6 h-6 rounded-full bg-gray-700 flex items-center justify-center text-white hover:bg-gray-600"
                         onClick={() => handleRemoveFromCart(orderItem.item.id)}
                       >
                         -
                       </button>
-                      <button 
+                      <button
                         className="w-6 h-6 rounded-full bg-gray-700 flex items-center justify-center text-white hover:bg-gray-600"
                         onClick={() => handleAddToCart(orderItem.item)}
                       >
@@ -555,7 +572,8 @@ export function OrderScreen({
 
             <motion.div variants={itemVariants} className="w-full text-center">
               <div className="text-3xl font-light text-white mb-4">
-                Total: <span className="font-medium">{getTotalAmount()} AED</span>
+                Total:{" "}
+                <span className="font-medium">{getTotalAmount()} AED</span>
               </div>
             </motion.div>
 
