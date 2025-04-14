@@ -1,17 +1,33 @@
-import { Carousel, CarouselContent, CarouselItem } from "@/components/ui/carousel";
+import {
+  Carousel,
+  CarouselContent,
+  CarouselItem,
+} from "@/components/ui/carousel";
 import { Card, CardContent } from "@/components/ui/card";
-import { MapPin, Utensils, ShoppingBag, Landmark, ArrowLeft, ExternalLink } from "lucide-react";
+import {
+  MapPin,
+  Utensils,
+  ShoppingBag,
+  Landmark,
+  ArrowLeft,
+  ExternalLink,
+} from "lucide-react";
 import { useState, useRef, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { placesToVisit, foodPlaces, shoppingPlaces, essentialServices } from "./discoverData";
+import {
+  placesToVisit,
+  foodPlaces,
+  shoppingPlaces,
+  essentialServices,
+} from "./discoverData";
 
 const cardVariants = {
   hidden: { opacity: 0, y: 20 },
   visible: (custom: number) => ({
     opacity: 1,
     y: 0,
-    transition: { delay: custom * 0.05 } // Reduced from 0.1 to 0.05
-  })
+    transition: { delay: custom * 0.05 }, // Reduced from 0.1 to 0.05
+  }),
 };
 
 interface Place {
@@ -33,7 +49,7 @@ export default function CaseDiscover() {
       if (containerRef.current) {
         containerRef.current.scrollTo({
           top: 0,
-          behavior: 'smooth'
+          behavior: "smooth",
         });
       }
     }, 350); // Increased delay to let animations settle
@@ -45,11 +61,11 @@ export default function CaseDiscover() {
     loop: true,
     dragFree: true,
     draggable: true,
-    containScroll: 'trimSnaps' as const,
-    axis: 'x' as const,
+    containScroll: "trimSnaps" as const,
+    axis: "x" as const,
     wheelEnabled: true,
     wheelScroll: 1,
-    align: 'start' as const,
+    align: "start" as const,
   };
 
   return (
@@ -105,7 +121,10 @@ export default function CaseDiscover() {
               className="space-y-4 mb-8"
             >
               {selectedPlace.longDescription?.map((paragraph, index) => (
-                <p key={index} className="text-gray-300 text-lg leading-relaxed">
+                <p
+                  key={index}
+                  className="text-gray-300 text-lg leading-relaxed"
+                >
                   {paragraph}
                 </p>
               ))}
@@ -117,7 +136,7 @@ export default function CaseDiscover() {
               transition={{ delay: 0.25 }} // Reduced from 0.5
               whileHover={{ scale: 1.02 }}
               whileTap={{ scale: 0.98 }}
-              onClick={() => window.open(selectedPlace.externalLink, '_blank')}
+              onClick={() => window.open(selectedPlace.externalLink, "_blank")}
               className="w-full py-4 bg-blue-600 hover:bg-blue-700 text-white rounded-lg flex items-center justify-center gap-2"
             >
               Learn More
@@ -161,15 +180,21 @@ export default function CaseDiscover() {
               <motion.h2
                 initial={isFirstRender.current ? { opacity: 0, y: 20 } : false}
                 animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.05 }} 
+                transition={{ delay: 0.05 }}
                 className="text-white text-xl font-semibold mb-6 flex items-center"
               >
                 <MapPin className="mr-2" /> Places to Visit
               </motion.h2>
-              <Carousel opts={carouselOptions} className="w-full cursor-grab active:cursor-grabbing">
+              <Carousel
+                opts={carouselOptions}
+                className="w-full cursor-grab active:cursor-grabbing"
+              >
                 <CarouselContent className="select-none -ml-2">
                   {placesToVisit.map((place, index) => (
-                    <CarouselItem key={index} className="pl-2 basis-[48%] md:basis-[48%] lg:basis-[48%]">
+                    <CarouselItem
+                      key={index}
+                      className="pl-2 basis-[48%] md:basis-[48%] lg:basis-[48%]"
+                    >
                       <motion.div
                         variants={cardVariants}
                         initial={isFirstRender.current ? "hidden" : false}
@@ -177,7 +202,10 @@ export default function CaseDiscover() {
                         // Base offset for Section 1: custom = index + 2
                         custom={index + 2}
                       >
-                        <PlaceCard place={place} onSelect={() => setSelectedPlace(place)} />
+                        <PlaceCard
+                          place={place}
+                          onSelect={() => setSelectedPlace(place)}
+                        />
                       </motion.div>
                     </CarouselItem>
                   ))}
@@ -195,10 +223,16 @@ export default function CaseDiscover() {
               >
                 <Utensils className="mr-2" /> Culinary Delights
               </motion.h2>
-              <Carousel opts={carouselOptions} className="w-full cursor-grab active:cursor-grabbing">
+              <Carousel
+                opts={carouselOptions}
+                className="w-full cursor-grab active:cursor-grabbing"
+              >
                 <CarouselContent className="select-none -ml-2">
                   {foodPlaces.map((place, index) => (
-                    <CarouselItem key={index} className="pl-2 basis-[48%] md:basis-[48%] lg:basis-[48%]">
+                    <CarouselItem
+                      key={index}
+                      className="pl-2 basis-[48%] md:basis-[48%] lg:basis-[48%]"
+                    >
                       <motion.div
                         variants={cardVariants}
                         initial={isFirstRender.current ? "hidden" : false}
@@ -206,7 +240,10 @@ export default function CaseDiscover() {
                         // Base offset for Section 2: custom = index + 12
                         custom={index + 8}
                       >
-                        <PlaceCard place={place} onSelect={() => setSelectedPlace(place)} />
+                        <PlaceCard
+                          place={place}
+                          onSelect={() => setSelectedPlace(place)}
+                        />
                       </motion.div>
                     </CarouselItem>
                   ))}
@@ -224,10 +261,16 @@ export default function CaseDiscover() {
               >
                 <ShoppingBag className="mr-2" /> Local Markets & Stores
               </motion.h2>
-              <Carousel opts={carouselOptions} className="w-full cursor-grab active:cursor-grabbing">
+              <Carousel
+                opts={carouselOptions}
+                className="w-full cursor-grab active:cursor-grabbing"
+              >
                 <CarouselContent className="select-none -ml-2">
                   {shoppingPlaces.map((place, index) => (
-                    <CarouselItem key={index} className="pl-2 basis-[48%] md:basis-[48%] lg:basis-[48%]">
+                    <CarouselItem
+                      key={index}
+                      className="pl-2 basis-[48%] md:basis-[48%] lg:basis-[48%]"
+                    >
                       <motion.div
                         variants={cardVariants}
                         initial={isFirstRender.current ? "hidden" : false}
@@ -235,7 +278,10 @@ export default function CaseDiscover() {
                         // Base offset for Section 3: custom = index + 16
                         custom={index + 16}
                       >
-                        <PlaceCard place={place} onSelect={() => setSelectedPlace(place)} />
+                        <PlaceCard
+                          place={place}
+                          onSelect={() => setSelectedPlace(place)}
+                        />
                       </motion.div>
                     </CarouselItem>
                   ))}
@@ -253,10 +299,16 @@ export default function CaseDiscover() {
               >
                 <Landmark className="mr-2" /> Essential Services
               </motion.h2>
-              <Carousel opts={carouselOptions} className="w-full cursor-grab active:cursor-grabbing">
+              <Carousel
+                opts={carouselOptions}
+                className="w-full cursor-grab active:cursor-grabbing"
+              >
                 <CarouselContent className="select-none -ml-2">
                   {essentialServices.map((service, index) => (
-                    <CarouselItem key={index} className="pl-2 basis-[48%] md:basis-[48%] lg:basis-[48%]">
+                    <CarouselItem
+                      key={index}
+                      className="pl-2 basis-[48%] md:basis-[48%] lg:basis-[48%]"
+                    >
                       <motion.div
                         variants={cardVariants}
                         initial={isFirstRender.current ? "hidden" : false}
@@ -264,7 +316,10 @@ export default function CaseDiscover() {
                         // Base offset for Section 4: custom = index + 20
                         custom={index + 20}
                       >
-                        <PlaceCard place={service} onSelect={() => setSelectedPlace(service)} />
+                        <PlaceCard
+                          place={service}
+                          onSelect={() => setSelectedPlace(service)}
+                        />
                       </motion.div>
                     </CarouselItem>
                   ))}
@@ -278,7 +333,13 @@ export default function CaseDiscover() {
   );
 }
 
-function PlaceCard({ place, onSelect }: { place: Place; onSelect: () => void }) {
+function PlaceCard({
+  place,
+  onSelect,
+}: {
+  place: Place;
+  onSelect: () => void;
+}) {
   return (
     <Card
       className="bg-gray-800 border-gray-700 h-[320px] select-none cursor-pointer hover:bg-gray-700/50 transition-colors"
@@ -290,8 +351,12 @@ function PlaceCard({ place, onSelect }: { place: Place; onSelect: () => void }) 
           alt={place.title}
           className="w-full h-36 object-cover rounded-md mb-4"
         />
-        <h3 className="text-white text-lg font-semibold mb-2 line-clamp-1">{place.title}</h3>
-        <p className="text-gray-400 text-sm line-clamp-3">{place.description}</p>
+        <h3 className="text-white text-lg font-semibold mb-2 line-clamp-1">
+          {place.title}
+        </h3>
+        <p className="text-gray-400 text-sm line-clamp-3">
+          {place.description}
+        </p>
       </CardContent>
     </Card>
   );

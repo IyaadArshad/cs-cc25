@@ -277,7 +277,8 @@ export const shoppingPlaces = [
 
 export const essentialServices = [
   {
-    image: "/img/discover/essentialServices/abuDhabiDepartmentOfMunicipalitiesAndTransport.png",
+    image:
+      "/img/discover/essentialServices/abuDhabiDepartmentOfMunicipalitiesAndTransport.png",
     title: "TAMM Service Centre",
     description: "One-stop shop for government services in Abu Dhabi.",
     longDescription: [
@@ -289,7 +290,8 @@ export const essentialServices = [
     externalLink: "https://tamm.abudhabi",
   },
   {
-    image: "/img/discover/essentialServices/abuDhabiDepartmentOfMunicipalitiesAndTransport.png",
+    image:
+      "/img/discover/essentialServices/abuDhabiDepartmentOfMunicipalitiesAndTransport.png",
     title: "Abu Dhabi Health Services (SEHA)",
     description: "Network of public hospitals and clinics in Abu Dhabi.",
     longDescription: [
@@ -314,7 +316,8 @@ export const essentialServices = [
     externalLink: "https://adi.gov.ae",
   },
   {
-    image: "/img/discover/essentialServices/abuDhabiDepartmentOfMunicipalitiesAndTransport.png",
+    image:
+      "/img/discover/essentialServices/abuDhabiDepartmentOfMunicipalitiesAndTransport.png",
     title: "Department of Municipalities and Transport",
     description:
       "Handles city planning, transportation, and municipal affairs.",
@@ -327,7 +330,8 @@ export const essentialServices = [
     externalLink: "https://dmt.gov.ae",
   },
   {
-    image: "/img/discover/essentialServices/abuDhabiDepartmentOfMunicipalitiesAndTransport.png",
+    image:
+      "/img/discover/essentialServices/abuDhabiDepartmentOfMunicipalitiesAndTransport.png",
     title: "Abu Dhabi Distribution Company",
     description: "Manages electricity and water services for residents.",
     longDescription: [
