@@ -1,9 +1,7 @@
 import React, { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { ArrowLeft, Check, ShoppingCart, X, Search, Clock } from "lucide-react";
+import { ArrowLeft, Check, ShoppingBag, X, Search, Clock } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { Card, CardContent } from "@/components/ui/card";
-import Image from "next/image";
 
 interface Restaurant {
   id: string;
@@ -186,18 +184,17 @@ const containerVariants = {
   hidden: { opacity: 0 },
   show: {
     opacity: 1,
-    transition: { staggerChildren: 0.05, delayChildren: 0.2 }
+    transition: { staggerChildren: 0.15, delayChildren: 0.3 },
   },
   exit: {
     opacity: 0,
-    transition: { duration: 0.2 }
+    transition: { duration: 0.2 },
   }
 };
 
 const itemVariants = {
-  hidden: { opacity: 0, y: 10 },
+  hidden: { opacity: 0, y: 20 },
   show: { opacity: 1, y: 0 },
-  exit: { opacity: 0, y: -10 }
 };
 
 enum OrderStep {
@@ -221,6 +218,8 @@ export function OrderScreen({
   const [selectedCategory, setSelectedCategory] = useState<string>("popular");
   const [orderItems, setOrderItems] = useState<OrderItem[]>([]);
   const [menuItems, setMenuItems] = useState<MenuItem[]>([]);
+  const [isExiting, setIsExiting] = useState(false);
+  const [showDialog, setShowDialog] = useState(false);
 
   const handleRestaurantSelect = (restaurant: Restaurant) => {
     setSelectedRestaurant(restaurant);
@@ -280,6 +279,36 @@ export function OrderScreen({
     }, 2000);
   };
 
+  const handleExit = () => {
+    if ((currentStep === OrderStep.MENU_SELECTION && orderItems.length > 0) || 
+        currentStep === OrderStep.CHECKOUT) {
+      setShowDialog(true);
+    } else {
+      handleExitWithAnimation();
+    }
+  };
+
+  const handleExitWithAnimation = () => {
+    setIsExiting(true);
+    setTimeout(() => {
+      if (currentStep > 0 && currentStep !== OrderStep.LOADING && currentStep !== OrderStep.CONFIRMATION) {
+        setCurrentStep(prev => prev - 1);
+        setIsExiting(false);
+      } else {
+        onClose();
+      }
+    }, 300);
+  };
+
+  const handleExitAnyway = () => {
+    setShowDialog(false);
+    onClose();
+  };
+
+  const handleDialogClose = () => {
+    setShowDialog(false);
+  };
+
   const visibleRestaurants = showMoreRestaurants ? RESTAURANTS : RESTAURANTS.slice(0, 2);
 
   const filteredMenuItems = menuItems.filter(item => 
@@ -287,137 +316,132 @@ export function OrderScreen({
   );
 
   return (
-    <motion.div
-      className="fixed inset-0 bg-black bg-opacity-80 z-50 flex items-center justify-center p-4"
-      initial={{ opacity: 0 }}
-      animate={{ opacity: 1 }}
-      exit={{ opacity: 0 }}
-    >
-      <motion.div
-        className="bg-gray-900 rounded-xl w-full max-w-3xl overflow-hidden relative"
-        initial={{ scale: 0.9, opacity: 0 }}
-        animate={{ scale: 1, opacity: 1 }}
-        exit={{ scale: 0.9, opacity: 0 }}
-        transition={{ type: "spring", damping: 20 }}
-      >
-        <div className="sticky top-0 z-10 bg-gray-900 px-6 py-4 border-b border-gray-800 flex items-center justify-between">
-          <button 
-            className="flex items-center gap-2 text-gray-400 hover:text-white"
-            onClick={currentStep > OrderStep.RESTAURANT_SELECTION 
-              ? () => setCurrentStep(prev => prev - 1) 
-              : onClose}
+    <div className="relative flex-1 overflow-y-auto hide-scrollbar fixed inset-0 bg-black bg-opacity-80 z-50 flex items-center justify-center">
+      {/* Restaurant Selection Screen */}
+      {currentStep === OrderStep.RESTAURANT_SELECTION && (
+        <motion.div
+          className="bg-gray-900 rounded-xl w-full max-w-4xl overflow-hidden relative min-h-[80vh] max-h-[90vh]"
+          initial={{ scale: 0.9, opacity: 0 }}
+          animate={{ scale: 1, opacity: 1 }}
+          exit={{ scale: 0.9, opacity: 0 }}
+        >
+          <div
+            onClick={onClose}
+            className="absolute top-6 left-6 cursor-pointer flex items-center gap-4 hover:text-gray-300"
           >
-            <ArrowLeft size={18} />
-            <span>{currentStep > OrderStep.RESTAURANT_SELECTION ? "Back" : "Cancel"}</span>
-          </button>
-          
-          <div className="text-white text-lg font-medium">
-            {currentStep === OrderStep.RESTAURANT_SELECTION && "Select Restaurant"}
-            {currentStep === OrderStep.MENU_SELECTION && selectedRestaurant?.name}
-            {currentStep === OrderStep.CHECKOUT && "Confirm Order"}
-            {currentStep === OrderStep.LOADING && "Processing Order"}
-            {currentStep === OrderStep.CONFIRMATION && "Order Confirmed"}
+            <ArrowLeft className="w-5 h-5 text-white" />
+            <span className="text-white">Back</span>
           </div>
           
-          <div className="bg-blue-600/30 text-blue-400 px-3 py-1 rounded-full text-xs font-medium">
-            Demo Mode
-          </div>
-        </div>
-
-        <AnimatePresence mode="wait">
-          {currentStep === OrderStep.RESTAURANT_SELECTION && (
-            <motion.div
-              key="restaurant-selection"
-              className="p-6 max-h-[70vh] overflow-y-auto"
-              variants={containerVariants}
-              initial="hidden"
-              animate="show"
-              exit="exit"
-            >
-              <motion.div variants={itemVariants} className="mb-4 relative">
-                <Search className="absolute left-3 top-3 text-gray-500 w-5 h-5" />
-                <input
-                  type="text"
-                  placeholder="Search for restaurants"
-                  className="w-full bg-gray-800 border border-gray-700 rounded-lg py-3 pl-10 pr-4 text-white focus:outline-none focus:ring-2 focus:ring-blue-600"
-                />
-              </motion.div>
-              
-              <motion.h2 
-                variants={itemVariants}
-                className="text-white font-semibold mb-4"
-              >
-                NEARBY RESTAURANTS
-              </motion.h2>
-
-              <div className="space-y-4">
-                {visibleRestaurants.map((restaurant) => (
-                  <motion.div
-                    key={restaurant.id}
-                    variants={itemVariants}
-                    onClick={() => handleRestaurantSelect(restaurant)}
-                  >
-                    <Card className="bg-gray-800 border-gray-700 hover:bg-gray-700/50 cursor-pointer transition-colors">
-                      <div className="flex p-4">
-                        <div className="flex-shrink-0 w-24 h-24 rounded-md overflow-hidden">
-                          <img
-                            src={restaurant.image}
-                            alt={restaurant.name}
-                            className="w-full h-full object-cover"
-                          />
-                        </div>
-                        <div className="ml-4 flex flex-col justify-between">
-                          <div>
-                            <h3 className="text-white font-medium">{restaurant.name}</h3>
-                            <p className="text-gray-400 text-sm mt-1 line-clamp-2">
-                              {restaurant.description}
-                            </p>
-                          </div>
-                          <div className="flex items-center gap-4 mt-2">
-                            <div className="flex items-center">
-                              <div className="text-yellow-500">★</div>
-                              <span className="text-white text-sm ml-1">{restaurant.rating}</span>
-                            </div>
-                            <div className="flex items-center text-gray-400 text-sm">
-                              <Clock size={14} className="mr-1" />
-                              {restaurant.deliveryTime}
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    </Card>
-                  </motion.div>
-                ))}
-
-                {!showMoreRestaurants && (
-                  <motion.button
-                    variants={itemVariants}
-                    className="w-full py-3 text-center text-blue-500 hover:text-blue-400 rounded-lg border border-gray-800 hover:border-gray-700"
-                    onClick={() => setShowMoreRestaurants(true)}
-                  >
-                    Show More Restaurants
-                  </motion.button>
-                )}
-              </div>
+          <motion.div
+            initial="hidden"
+            animate={isExiting ? "exit" : "show"}
+            exit="exit"
+            variants={containerVariants}
+            className="flex flex-col items-center justify-center space-y-6 p-6 mt-12 h-full overflow-y-auto"
+          >
+            <motion.div variants={itemVariants} className="self-start w-full">
+              <h2 className="text-6xl font-extrabold text-white mb-6 leading-tight">
+                Select your<br />
+                <span style={{ color: "#2563eb" }}>restaurant</span>
+              </h2>
             </motion.div>
-          )}
 
-          {currentStep === OrderStep.MENU_SELECTION && selectedRestaurant && (
-            <motion.div
-              key="menu-selection"
-              className="h-[70vh] overflow-hidden flex"
-              variants={containerVariants}
-              initial="hidden"
-              animate="show"
-              exit="exit"
-            >
+            <motion.div variants={itemVariants} className="mb-4 relative w-full">
+              <Search className="absolute left-3 top-3 text-gray-500 w-5 h-5" />
+              <input
+                type="text"
+                placeholder="Search for nearby restaurants"
+                className="w-full bg-gray-800 border border-gray-700 rounded-lg py-3 pl-10 pr-4 text-white focus:outline-none focus:ring-2 focus:ring-blue-600"
+              />
+            </motion.div>
+            
+            <motion.div variants={itemVariants} className="w-full grid grid-cols-1 gap-4">
+              {visibleRestaurants.map((restaurant) => (
+                <Button
+                  key={restaurant.id}
+                  variant="outline"
+                  className="flex bg-gray-800 border-gray-700 text-white hover:bg-gray-700/50 transition-colors p-4 w-full h-auto items-start text-left"
+                  onClick={() => handleRestaurantSelect(restaurant)}
+                >
+                  <div className="flex-shrink-0 w-20 h-20 rounded-md overflow-hidden mr-4">
+                    <img
+                      src={restaurant.image}
+                      alt={restaurant.name}
+                      className="w-full h-full object-cover"
+                    />
+                  </div>
+                  <div>
+                    <h3 className="text-white font-medium text-lg">{restaurant.name}</h3>
+                    <p className="text-gray-400 text-sm mt-1 line-clamp-2">
+                      {restaurant.description}
+                    </p>
+                    <div className="flex items-center gap-4 mt-2">
+                      <div className="flex items-center">
+                        <div className="text-yellow-500">★</div>
+                        <span className="text-white text-sm ml-1">{restaurant.rating}</span>
+                      </div>
+                      <div className="flex items-center text-gray-400 text-sm">
+                        <Clock size={14} className="mr-1" />
+                        {restaurant.deliveryTime}
+                      </div>
+                    </div>
+                  </div>
+                </Button>
+              ))}
+
+              {!showMoreRestaurants && (
+                <motion.button
+                  variants={itemVariants}
+                  className="w-full py-3 text-center text-blue-500 hover:text-blue-400 rounded-lg border border-gray-800 hover:border-gray-700"
+                  onClick={() => setShowMoreRestaurants(true)}
+                >
+                  Show More Restaurants
+                </motion.button>
+              )}
+            </motion.div>
+          </motion.div>
+        </motion.div>
+      )}
+
+      {/* Menu Selection Screen */}
+      {currentStep === OrderStep.MENU_SELECTION && selectedRestaurant && (
+        <motion.div
+          className="bg-gray-900 rounded-xl w-full max-w-4xl overflow-hidden relative min-h-[80vh] max-h-[90vh] flex flex-col"
+          initial={{ scale: 0.9, opacity: 0 }}
+          animate={{ scale: 1, opacity: 1 }}
+          exit={{ scale: 0.9, opacity: 0 }}
+        >
+          <div
+            onClick={handleExit}
+            className="absolute top-6 left-6 cursor-pointer flex items-center gap-4 hover:text-gray-300"
+          >
+            <ArrowLeft className="w-5 h-5 text-white" />
+            <span className="text-white">Back</span>
+          </div>
+          
+          <motion.div
+            initial="hidden"
+            animate={isExiting ? "exit" : "show"}
+            exit="exit"
+            variants={containerVariants}
+            className="flex flex-col p-6 mt-12 flex-1 overflow-hidden"
+          >
+            <motion.div variants={itemVariants} className="self-start">
+              <h2 className="text-6xl font-extrabold text-white mb-6 leading-tight">
+                Choose your<br />
+                <span style={{ color: "#2563eb" }}>items</span>
+              </h2>
+            </motion.div>
+
+            <div className="flex flex-1 overflow-hidden">
               {/* Categories sidebar */}
-              <div className="w-1/4 border-r border-gray-800 overflow-y-auto">
+              <motion.div variants={itemVariants} className="w-1/4 border-r border-gray-800 overflow-y-auto pr-2">
                 {CATEGORIES.map((category) => (
-                  <motion.button
+                  <Button
                     key={category.id}
-                    variants={itemVariants}
-                    className={`w-full text-left px-4 py-3 transition-colors ${
+                    variant="ghost"
+                    className={`w-full text-left px-4 py-3 justify-start ${
                       selectedCategory === category.id
                         ? "bg-gray-800 text-white font-medium border-l-2 border-blue-500"
                         : "text-gray-400 hover:bg-gray-800/50"
@@ -425,195 +449,250 @@ export function OrderScreen({
                     onClick={() => setSelectedCategory(category.id)}
                   >
                     {category.name}
-                  </motion.button>
+                  </Button>
                 ))}
-              </div>
-
-              {/* Menu items */}
-              <div className="w-3/4 overflow-y-auto p-4">
-                <div className="space-y-4">
-                  {filteredMenuItems.map((item) => (
-                    <motion.div
-                      key={item.id}
-                      variants={itemVariants}
-                      className="bg-gray-800 rounded-lg p-4 flex justify-between"
-                    >
-                      <div className="flex gap-3">
-                        <div className="w-16 h-16 rounded-md overflow-hidden flex-shrink-0">
-                          <img src={item.image} alt={item.name} className="w-full h-full object-cover" />
-                        </div>
-                        <div>
-                          <h3 className="text-white font-medium">{item.name}</h3>
-                          <p className="text-gray-400 text-sm mt-1 line-clamp-2">{item.description}</p>
-                          <div className="mt-2 text-white font-semibold">{item.price} AED</div>
-                        </div>
-                      </div>
-                      <button
-                        className="self-end bg-blue-600 hover:bg-blue-700 text-white px-3 py-1 rounded h-8"
-                        onClick={() => handleAddToCart(item)}
-                      >
-                        Add
-                      </button>
-                    </motion.div>
-                  ))}
-                </div>
-              </div>
-            </motion.div>
-          )}
-
-          {currentStep === OrderStep.CHECKOUT && (
-            <motion.div
-              key="checkout"
-              className="p-6 max-h-[70vh] overflow-y-auto"
-              variants={containerVariants}
-              initial="hidden"
-              animate="show"
-              exit="exit"
-            >
-              <motion.div 
-                variants={itemVariants} 
-                className="flex items-center justify-center mb-6"
-              >
-                <div className="bg-blue-500/20 p-3 rounded-full">
-                  <ShoppingCart size={28} className="text-blue-500" />
-                </div>
               </motion.div>
 
-              <motion.h3 
-                variants={itemVariants}
-                className="text-xl font-semibold text-white text-center mb-6"
-              >
-                Confirm your order
-              </motion.h3>
-
-              <motion.div variants={itemVariants} className="bg-gray-800 rounded-lg p-4 mb-6">
-                <h4 className="text-white font-medium mb-3">Order Summary</h4>
-                {orderItems.map((orderItem) => (
-                  <div key={orderItem.item.id} className="flex justify-between items-center py-2 border-t border-gray-700">
-                    <div className="flex items-center">
-                      <div className="text-white">{orderItem.quantity}x</div>
-                      <div className="ml-2 text-white">{orderItem.item.name}</div>
-                    </div>
-                    <div className="flex items-center gap-4">
-                      <div className="text-white">{orderItem.quantity * orderItem.item.price} AED</div>
-                      <div className="flex gap-2">
-                        <button 
-                          className="w-6 h-6 rounded-full bg-gray-700 flex items-center justify-center text-white hover:bg-gray-600"
-                          onClick={() => handleRemoveFromCart(orderItem.item.id)}
-                        >
-                          -
-                        </button>
-                        <button 
-                          className="w-6 h-6 rounded-full bg-gray-700 flex items-center justify-center text-white hover:bg-gray-600"
-                          onClick={() => handleAddToCart(orderItem.item)}
-                        >
-                          +
-                        </button>
+              {/* Menu items */}
+              <motion.div variants={itemVariants} className="w-3/4 overflow-y-auto p-4 space-y-4">
+                {filteredMenuItems.map((item) => (
+                  <div
+                    key={item.id}
+                    className="bg-gray-800 rounded-lg p-4 flex justify-between"
+                  >
+                    <div className="flex gap-3">
+                      <div className="w-16 h-16 rounded-md overflow-hidden flex-shrink-0">
+                        <img src={item.image} alt={item.name} className="w-full h-full object-cover" />
+                      </div>
+                      <div>
+                        <h3 className="text-white font-medium">{item.name}</h3>
+                        <p className="text-gray-400 text-sm mt-1 line-clamp-2">{item.description}</p>
+                        <div className="mt-2 text-white font-semibold">{item.price} AED</div>
                       </div>
                     </div>
+                    <button
+                      className="self-end bg-blue-600 hover:bg-blue-700 text-white px-3 py-1 rounded h-8"
+                      onClick={() => handleAddToCart(item)}
+                    >
+                      Add
+                    </button>
                   </div>
                 ))}
               </motion.div>
+            </div>
+          </motion.div>
 
-              <motion.div
-                variants={itemVariants}
-                className="bg-gray-800 rounded-lg p-4 mb-6"
+          {orderItems.length > 0 && (
+            <div className="bg-gray-900 border-t border-gray-800 p-4">
+              <Button
+                className="w-full bg-blue-600 hover:bg-blue-500 text-white"
+                onClick={handleCheckout}
               >
-                <div className="flex justify-between py-2">
-                  <span className="text-gray-300">Subtotal</span>
-                  <span className="text-white">{getTotalAmount()} AED</span>
-                </div>
-                <div className="flex justify-between py-2 border-t border-gray-700">
-                  <span className="text-gray-300">Delivery Fee</span>
-                  <span className="text-white">5 AED</span>
-                </div>
-                <div className="flex justify-between py-2 border-t border-gray-700 font-medium">
-                  <span className="text-white">Total</span>
-                  <span className="text-white">{getTotalAmount() + 5} AED</span>
-                </div>
-              </motion.div>
+                Checkout ({orderItems.reduce((total, item) => total + item.quantity, 0)} items • {getTotalAmount()} AED)
+              </Button>
+            </div>
+          )}
+        </motion.div>
+      )}
 
-              <motion.button
-                variants={itemVariants}
-                className="w-full py-4 bg-blue-600 hover:bg-blue-700 text-white rounded-lg font-medium"
+      {/* Checkout Screen */}
+      {currentStep === OrderStep.CHECKOUT && (
+        <motion.div
+          className="bg-gray-900 rounded-xl w-full max-w-4xl overflow-hidden relative min-h-[80vh] max-h-[90vh]"
+          initial={{ scale: 0.9, opacity: 0 }}
+          animate={{ scale: 1, opacity: 1 }}
+          exit={{ scale: 0.9, opacity: 0 }}
+        >
+          <div
+            onClick={handleExit}
+            className="absolute top-6 left-6 cursor-pointer flex items-center gap-4 hover:text-gray-300"
+          >
+            <ArrowLeft className="w-5 h-5 text-white" />
+            <span className="text-white">Back</span>
+          </div>
+
+          <div className="absolute top-6 right-6">
+            <div className="bg-yellow-500/80 text-yellow-900 px-3 py-1 rounded-full text-xs font-medium">
+              Demo Mode
+            </div>
+          </div>
+          
+          <motion.div
+            initial="hidden"
+            animate={isExiting ? "exit" : "show"}
+            exit="exit"
+            variants={containerVariants}
+            className="flex flex-col items-center space-y-6 p-6 mt-12 h-full overflow-y-auto"
+          >
+            <motion.div variants={itemVariants} className="self-center">
+              <div className="bg-blue-500/20 p-4 rounded-full mb-6">
+                <ShoppingBag size={32} className="text-blue-500" />
+              </div>
+            </motion.div>
+            
+            <motion.div variants={itemVariants} className="self-start w-full">
+              <h2 className="text-6xl font-extrabold text-white mb-8 leading-tight text-center">
+                Confirm<br />
+                <span style={{ color: "#2563eb" }}>your order</span>
+              </h2>
+            </motion.div>
+
+            <motion.div 
+              variants={itemVariants} 
+              className="w-full bg-gray-800 rounded-lg p-4 overflow-y-auto max-h-[40vh]"
+            >
+              {orderItems.map((orderItem) => (
+                <div key={orderItem.item.id} className="flex justify-between items-center py-2 border-b border-gray-700 last:border-b-0">
+                  <div className="flex items-center">
+                    <div className="text-white mr-2">{orderItem.quantity}</div>
+                    <div className="text-white">{orderItem.item.name}</div>
+                  </div>
+                  <div className="flex items-center gap-4">
+                    <div className="text-white">{orderItem.quantity * orderItem.item.price} AED</div>
+                    <div className="flex gap-1">
+                      <button 
+                        className="w-6 h-6 rounded-full bg-gray-700 flex items-center justify-center text-white hover:bg-gray-600"
+                        onClick={() => handleRemoveFromCart(orderItem.item.id)}
+                      >
+                        -
+                      </button>
+                      <button 
+                        className="w-6 h-6 rounded-full bg-gray-700 flex items-center justify-center text-white hover:bg-gray-600"
+                        onClick={() => handleAddToCart(orderItem.item)}
+                      >
+                        +
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </motion.div>
+
+            <motion.div variants={itemVariants} className="w-full text-center">
+              <div className="text-3xl font-light text-white mb-4">
+                Total: <span className="font-medium">{getTotalAmount()} AED</span>
+              </div>
+            </motion.div>
+
+            <motion.div variants={itemVariants} className="w-full">
+              <Button
+                className="w-full bg-blue-600 hover:bg-blue-500 text-white py-6 text-lg"
                 onClick={handleConfirmOrder}
                 disabled={orderItems.length === 0}
               >
                 Place Order
-              </motion.button>
-            </motion.div>
-          )}
-
-          {currentStep === OrderStep.LOADING && (
-            <motion.div
-              key="loading"
-              className="p-6 h-[70vh] flex flex-col items-center justify-center"
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-            >
-              <motion.div
-                className="w-16 h-16 border-4 border-blue-500 border-t-transparent rounded-full"
-                animate={{ rotate: 360 }}
-                transition={{ duration: 1, repeat: Infinity, ease: "linear" }}
-              />
-              <p className="mt-6 text-white text-lg">Processing your order...</p>
-            </motion.div>
-          )}
-
-          {currentStep === OrderStep.CONFIRMATION && (
-            <motion.div
-              key="confirmation"
-              className="p-6 h-[70vh] flex flex-col items-center justify-center"
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-            >
-              <motion.div
-                className="w-20 h-20 bg-green-500 rounded-full flex items-center justify-center"
-                initial={{ scale: 0 }}
-                animate={{ scale: 1 }}
-                transition={{ type: "spring", damping: 10, stiffness: 100 }}
-              >
-                <Check className="w-10 h-10 text-white" />
-              </motion.div>
-              <motion.h3
-                className="mt-6 text-white text-2xl font-semibold text-center"
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.2 }}
-              >
-                Order Confirmed!
-              </motion.h3>
-              <motion.p
-                className="mt-2 text-gray-400 text-center"
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.3 }}
-              >
-                Your order has been placed successfully
-              </motion.p>
-            </motion.div>
-          )}
-        </AnimatePresence>
-
-        {currentStep === OrderStep.MENU_SELECTION && orderItems.length > 0 && (
-          <div className="sticky bottom-0 bg-gray-900 border-t border-gray-800 p-4">
-            <div className="flex items-center justify-between">
-              <div>
-                <span className="text-gray-400">{orderItems.reduce((total, item) => total + item.quantity, 0)} items</span>
-                <p className="text-white font-semibold">{getTotalAmount()} AED</p>
-              </div>
-              <Button 
-                className="bg-blue-600 hover:bg-blue-700"
-                onClick={handleCheckout}
-              >
-                Continue to Checkout
               </Button>
-            </div>
+            </motion.div>
+          </motion.div>
+        </motion.div>
+      )}
+
+      {/* Loading Screen */}
+      {currentStep === OrderStep.LOADING && (
+        <motion.div
+          className="bg-gray-900 rounded-xl w-full max-w-4xl overflow-hidden relative min-h-[80vh] max-h-[90vh]"
+          initial={{ scale: 0.9, opacity: 0 }}
+          animate={{ scale: 1, opacity: 1 }}
+          exit={{ scale: 0.9, opacity: 0 }}
+        >
+          <div className="flex flex-col items-center justify-center h-full p-6">
+            <motion.div
+              className="w-16 h-16 border-4 border-blue-500 border-t-transparent rounded-full"
+              animate={{ rotate: 360 }}
+              transition={{ duration: 1, repeat: Infinity, ease: "linear" }}
+            />
+            <p className="mt-6 text-white text-lg">Processing your order...</p>
           </div>
+        </motion.div>
+      )}
+
+      {/* Confirmation Screen */}
+      {currentStep === OrderStep.CONFIRMATION && (
+        <motion.div
+          className="bg-gray-900 rounded-xl w-full max-w-4xl overflow-hidden relative min-h-[80vh] max-h-[90vh]"
+          initial={{ scale: 0.9, opacity: 0 }}
+          animate={{ scale: 1, opacity: 1 }}
+          exit={{ scale: 0.9, opacity: 0 }}
+        >
+          <div className="flex flex-col items-center justify-center h-full p-6">
+            <motion.div
+              className="w-20 h-20 bg-green-500 rounded-full flex items-center justify-center"
+              initial={{ scale: 0 }}
+              animate={{ scale: 1 }}
+              transition={{ type: "spring", damping: 10, stiffness: 100 }}
+            >
+              <Check className="w-10 h-10 text-white" />
+            </motion.div>
+            <motion.h3
+              className="mt-6 text-white text-2xl font-semibold text-center"
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.2 }}
+            >
+              Order Confirmed!
+            </motion.h3>
+            <motion.p
+              className="mt-2 text-gray-400 text-center"
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.3 }}
+            >
+              Your order has been placed successfully
+            </motion.p>
+          </div>
+        </motion.div>
+      )}
+
+      {/* Exit Dialog */}
+      <AnimatePresence>
+        {showDialog && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="fixed inset-0 flex justify-center items-center bg-black bg-opacity-50 z-50"
+          >
+            <motion.div
+              initial={{ opacity: 0, scale: 0.8 }}
+              animate={{ opacity: 1, scale: 1 }}
+              exit={{ opacity: 0, scale: 0.8 }}
+              transition={{ type: "spring", stiffness: 300, damping: 20 }}
+              className="bg-gray-800 p-8 rounded-lg text-center mx-4 max-w-xs"
+            >
+              <X className="w-16 h-16 text-[#2563eb] mx-auto" />
+              <h2 className="mt-4 text-2xl font-bold text-white">
+                You have unsaved changes
+              </h2>
+              <p className="mt-2 text-gray-300">
+                Do you want to exit without completing your order?
+              </p>
+              <div className="mt-6 flex justify-center gap-4">
+                <button
+                  onClick={handleDialogClose}
+                  className="px-4 py-2 bg-gray-700/50 hover:bg-gray-600 text-white rounded-lg"
+                >
+                  Cancel
+                </button>
+                <button
+                  onClick={handleExitAnyway}
+                  className="px-4 py-2 bg-blue-600 hover:bg-blue-500 text-white rounded-lg"
+                >
+                  Exit anyway
+                </button>
+              </div>
+            </motion.div>
+          </motion.div>
         )}
-      </motion.div>
-    </motion.div>
+      </AnimatePresence>
+      <style jsx global>{`
+        .hide-scrollbar {
+          -ms-overflow-style: none;
+          scrollbar-width: none;
+        }
+        .hide-scrollbar::-webkit-scrollbar {
+          display: none;
+        }
+      `}</style>
+    </div>
   );
 }
