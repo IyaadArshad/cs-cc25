@@ -517,7 +517,7 @@ export default function CaseGuide() {
   );
 
   return (
-    <div ref={containerRef} className="flex-1 p-5 overflow-y-auto bg-gray-950">
+    <div ref={containerRef} className="flex-1 p-5 overflow-y-auto">
       <AnimatePresence mode="wait">
         {selectedCard ? (
           <motion.div
