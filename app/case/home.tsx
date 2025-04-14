@@ -775,8 +775,9 @@ export default function CaseHome() {
       )}
 
       <div className="flex flex-col items-center justify-center space-y-6 mt-8">
-        <AnimatePresence>
+        <AnimatePresence mode="wait">
           <motion.h1
+            key="welcome-title"
             initial={{ opacity: 0, y: -20 }}
             animate={{
               opacity: mainViewReady ? 1 : 0,
@@ -791,6 +792,7 @@ export default function CaseHome() {
           </motion.h1>
 
           <motion.div
+            key="progress-circle"
             initial={{ opacity: 0, scale: 0.9 }}
             animate={{
               opacity: mainViewReady ? (isTransitioning ? 0 : 1) : 0,
