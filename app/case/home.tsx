@@ -946,7 +946,7 @@ export default function CaseHome() {
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 1 + index * 0.1 }}
                 onClick={() =>
-                  article.link && window.open(article.link, "_blank")
+                  article.url && window.open(article.url, "_blank")
                 }
               >
                 <Card className="bg-gray-800 border-gray-700 hover:bg-gray-700/50 cursor-pointer transition-colors">
@@ -954,7 +954,7 @@ export default function CaseHome() {
                     <div className="flex-shrink-0">
                       <div className="w-[100px] h-[70px] rounded-md overflow-hidden bg-gray-700">
                         <img
-                          src="https://via.placeholder.com/100"
+                          src={article.urlToImage || ""}
                           alt={article.title || "News article"}
                           className="w-full h-full object-cover"
                         />
@@ -966,11 +966,11 @@ export default function CaseHome() {
                       </h3>
                       <div className="flex items-center mt-1">
                         <span className="text-xs text-blue-400">
-                          {article.source || "News Source"}
+                          {article.source.name || "News Source"}
                         </span>
                         <span className="mx-2 text-gray-500">•</span>
                         <span className="text-xs text-gray-400">
-                          {article.date || "Recent"}
+                          {article.publishedAt.slice(0,10) || "Recent"}
                         </span>
                       </div>
                     </div>
