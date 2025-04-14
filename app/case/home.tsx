@@ -24,6 +24,7 @@ import { furtherSteps } from "./homeData";
 import { motion, AnimatePresence } from "framer-motion";
 import React from "react";
 import JSConfetti from "js-confetti";
+import { OrderScreen } from "./components/OrderScreen";
 
 export interface Option {
   id: string;
@@ -344,6 +345,8 @@ export default function CaseHome() {
   const [userName, setUserName] = useState("");
   const [isTransitioning, setIsTransitioning] = useState(false);
   const [showDialog, setShowDialog] = useState(false);
+  const [showOrderScreen, setShowOrderScreen] = useState(false);
+  const [activeOrder, setActiveOrder] = useState<any>(null);
 
   const handleDialogClose = () => {
     setShowDialog(false);
@@ -386,7 +389,7 @@ export default function CaseHome() {
       ),
       description: "Find restaurants and food delivery options near you",
       icon: <Utensils size={32} />,
-      link: "https://www.zomato.com/abudhabi",
+      link: "#",
     },
     {
       title: (
@@ -605,6 +608,15 @@ export default function CaseHome() {
     }
   };
 
+  const handleOrderComplete = (restaurant: any) => {
+    setShowOrderScreen(false);
+    setActiveOrder({
+      restaurant: restaurant.name,
+      estimatedTime: "20",
+      status: "In Progress",
+    });
+  };
+
   // Show spinner during initial load
   if (isInitialLoading) {
     return (
@@ -644,9 +656,11 @@ export default function CaseHome() {
     // Sort tasks: unanswered first, answered last
     const sortedSteps = [...furtherSteps].sort((a, b) => {
       const answeredA =
-        taskAnswers[a.id] && taskAnswers[a.id] !== `${a.id}-not-confirmed`;
+        taskAnswers[a.id] &&
+        taskAnswers[a.id] !== `${a.id}-not-confirmed`;
       const answeredB =
-        taskAnswers[b.id] && taskAnswers[b.id] !== `${b.id}-not-confirmed`;
+        taskAnswers[b.id] &&
+        taskAnswers[b.id] !== `${b.id}-not-confirmed`;
       if (answeredA === answeredB) return 0;
       return answeredA ? 1 : -1;
     });
@@ -729,7 +743,39 @@ export default function CaseHome() {
   return (
     <div className="flex-1 p-6 overflow-y-auto">
       <AnimatePresence>
-        <div className="flex flex-col items-center justify-center space-y-6 mt-8">
+        {showOrderScreen && (
+          <OrderScreen
+            onClose={() => setShowOrderScreen(false)}
+            onOrderComplete={handleOrderComplete}
+          />
+        )}
+      </AnimatePresence>
+
+      {activeOrder && (
+        <motion.div
+          initial={{ opacity: 0, y: -20 }}
+          animate={{ opacity: 1, y: 0 }}
+          className="bg-gray-800 rounded-lg p-4 mb-6 cursor-pointer"
+          onClick={() => {
+            /* TODO: Show order details */
+          }}
+        >
+          <div className="flex items-center justify-between">
+            <div>
+              <h3 className="text-white font-medium">
+                {activeOrder.restaurant}
+              </h3>
+              <p className="text-gray-400 text-sm">Order {activeOrder.status}</p>
+            </div>
+            <div className="text-blue-500">
+              Delivery in ~{activeOrder.estimatedTime} mins
+            </div>
+          </div>
+        </motion.div>
+      )}
+
+      <div className="flex flex-col items-center justify-center space-y-6 mt-8">
+        <AnimatePresence>
           <motion.h1
             initial={{ opacity: 0, y: -20 }}
             animate={{
@@ -739,7 +785,9 @@ export default function CaseHome() {
             transition={{ duration: 0.4, delay: 0.2 }}
             className="text-4xl text-white text-center mb-3"
           >
-            {isReturning ? `Welcome back, ${userName}` : `Welcome, ${userName}`}
+            {isReturning
+              ? `Welcome back, ${userName}`
+              : `Welcome, ${userName}`}
           </motion.h1>
 
           <motion.div
@@ -764,8 +812,8 @@ export default function CaseHome() {
               percentage={calculateProgress(taskAnswers, furtherSteps)}
             />
           </motion.div>
-        </div>
-      </AnimatePresence>
+        </AnimatePresence>
+      </div>
 
       {/* Section Divider */}
       <motion.div
@@ -823,7 +871,11 @@ export default function CaseHome() {
                 >
                   <Card
                     className="bg-gray-800 border-gray-700 h-[130px] w-full select-none cursor-pointer hover:bg-gray-700/50 transition-colors"
-                    onClick={() => window.open(action.link, "_blank")}
+                    onClick={() =>
+                      index === 0
+                        ? setShowOrderScreen(true)
+                        : window.open(action.link, "_blank")
+                    }
                   >
                     <CardContent className="p-3 flex flex-col text-left justify-center h-full">
                       <div className="flex flex-col items-start">
