@@ -696,24 +696,45 @@ export const IntroductionData = () => {
                 className="text-white text-2xl font-bold mb-4"
                 variants={itemVariants}
             >
-                Welcome to Abu Dhabi
+                Introducing Yourself in Arabic
             </motion.h2>
             <motion.p className="text-gray-400 mb-4" variants={itemVariants}>
-                Abu Dhabi is the capital of the United Arab Emirates, known for its rich culture, modern skyline, and warm hospitality. Whether you're here for work, study, or adventure, you'll find a vibrant mix of tradition and innovation.
+                Introducing yourself is one of the first steps to making new friends and connections. Here’s how you can introduce yourself in Arabic, along with some useful phrases.
             </motion.p>
             <motion.div variants={itemVariants}>
-                <h3 className="text-white text-xl font-semibold mb-2">Key Facts</h3>
+                <h3 className="text-white text-xl font-semibold mb-2">Basic Introduction</h3>
                 <p className="text-gray-400 mb-4">
-                    - Capital of the UAE<br/>
-                    - Population: Over 1.5 million<br/>
-                    - Language: Arabic (English widely spoken)<br/>
-                    - Currency: UAE Dirham (AED)
+                    - My name is ... : "Ismi ..." (اسمي ...)<br/>
+                    - I am from ... : "Ana min ..." (أنا من ...)<br/>
+                    - I am ... years old: "Umri ... sana" (عمري ... سنة)
                 </p>
             </motion.div>
             <motion.div variants={itemVariants}>
-                <h3 className="text-white text-xl font-semibold mb-2">Highlights</h3>
+                <h3 className="text-white text-xl font-semibold mb-2">Other Useful Phrases</h3>
                 <p className="text-gray-400 mb-4">
-                    Explore world-class attractions like the Sheikh Zayed Grand Mosque, Louvre Abu Dhabi, Yas Island, and beautiful beaches. Enjoy diverse cuisine, shopping, and cultural festivals year-round.
+                    - Nice to meet you: "Tasharraftu bima'rifatik" (تشرفت بمعرفتك)<br/>
+                    - I work as ... : "A'mal ka ..." (أعمل كـ ...)<br/>
+                    - I live in ... : "Askun fi ..." (أسكن في ...)
+                </p>
+            </motion.div>
+            <motion.div variants={itemVariants}>
+                <h3 className="text-white text-xl font-semibold mb-2">Examples of Professions</h3>
+                <p className="text-gray-400 mb-4">
+                    - Engineer: "Muhandis" (مهندس)<br/>
+                    - Doctor: "Tabib" (طبيب)<br/>
+                    - Teacher: "Muallem" (معلم)<br/>
+                    - Nurse: "Mumarrid" (ممرض)<br/>
+                    - Student: "Talib" (طالب)<br/>
+                    - Manager: "Mudir" (مدير)<br/>
+                    - Driver: "Saa'iq" (سائق)<br/>
+                    - Chef: "Tabaakh" (طباخ)
+                </p>
+            </motion.div>
+            <motion.div variants={itemVariants}>
+                <h3 className="text-white text-xl font-semibold mb-2">Example</h3>
+                <p className="text-gray-400 mb-4">
+                    "Ismi Ahmed. Ana min Misr. Askunu fi Abu Dhabi. A'mal ka muhandis. Tasharraftu bima'rifatik."<br/>
+                    (My name is Ahmed. I am from Egypt. I live in Abu Dhabi. I work as an engineer. Nice to meet you.)
                 </p>
             </motion.div>
         </motion.div>
