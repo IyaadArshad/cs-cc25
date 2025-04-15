@@ -8,6 +8,20 @@ import {
   ClothesData,
   FoodData,
   ReligionData,
+  DrivingData,
+  TransportData,
+  WalkingData,
+  EscooterData,
+  VisaResidencyData,
+  EmploymentLawData,
+  LocalLawsData,
+  DisputeResolutionData,
+  ArabicPhrasesData,
+  ArabicNumbersData,
+  SentencesData,
+  IntroductionData
+  
+
 } from "./guideData";
 import {
   ArrowLeft,
@@ -31,15 +45,9 @@ export interface cardData {
   content: string;
   src: string;
   alt: string;
-  comp: string;
+  comp: React.ComponentType;
 }
-export interface category {
-  id: string;
-  title: string;
-  icon: JSX.Element;
-  description: string;
-  cards: cardData[];
-}
+
 
 const guideCategories : category[] = [
   {
@@ -56,7 +64,7 @@ const guideCategories : category[] = [
         alt: "Culture Village",
         content:
           "Explore the rich tapestry of Emirati culture, from traditional Bedouin customs to modern artistic expressions. Discover the values of hospitality, family, and community that define the Emirati identity.",
-        comp: "TraditionsData"
+        comp: TraditionsData,
       },
       {
         id: "culture-2",
@@ -65,7 +73,7 @@ const guideCategories : category[] = [
         alt: "Kandura",
         content:
           "Uncover the significance of traditional Emirati clothing, such as the Kandura for men and the Abaya for women. Learn how these garments reflect cultural pride, religious values, and the desert environment.",
-        comp: "ClothesData"
+        comp: ClothesData,
       },
       {
         id: "culture-3",
@@ -74,7 +82,7 @@ const guideCategories : category[] = [
         alt: "Luqaimat",
         content:
           "Indulge in the flavors of Emirati cuisine, a delightful fusion of Middle Eastern, Persian, and Indian influences. From savory dishes like Machboos to sweet treats like Luqaimat, experience the culinary heritage of the UAE.",
-        comp: 'FoodData'
+        comp: FoodData,
       },
       {
         id: "culture-4",
@@ -83,7 +91,7 @@ const guideCategories : category[] = [
         alt: "Sheikh Zayed Mosque Main Hall",
         content:
           "Delve into the role of Islam in shaping Emirati society and values. Discover the importance of faith, compassion, and generosity in daily life, and explore the stunning mosques and religious sites that showcase Islamic art and architecture.",
-        comp: "ReligionData"
+        comp: ReligionData,
       },
     ],
   },
@@ -101,7 +109,7 @@ const guideCategories : category[] = [
         alt: "Public Transport",
         content:
           "Information about buses, taxis, and other public transportation options in Abu Dhabi.",
-        comp: "TransportData",
+        comp: TransportData,
       },
       {
         id: "transport-2",
@@ -110,7 +118,7 @@ const guideCategories : category[] = [
         alt: "Driving",
         content:
           "Essential information for renting a car and driving in Abu Dhabi.",
-        comp: "DrivingData",
+        comp: DrivingData,
       },
       {
         id: "transport-3",
@@ -119,7 +127,7 @@ const guideCategories : category[] = [
         alt: "Cycling",
         content:
           "Options for walking and cycling around the city and popular recreational routes.",
-        comp: "WalkingData",
+        comp: WalkingData,
       },
       {
         id: "transport-4",
@@ -128,7 +136,7 @@ const guideCategories : category[] = [
         alt: "E-Scooter",
         content:
           "Learn about using e-scooters in Abu Dhabi, including safety tips, regulations, and where to find them for convenient short-distance travel.",
-        comp: "EscooterData",
+        comp: EscooterData,
       },
     ],
   },
@@ -146,7 +154,7 @@ const guideCategories : category[] = [
         alt: "Visa and Residency",
         content:
           "Guidance on visa types, residency permits, and legal requirements for staying in Abu Dhabi.",
-        comp: "VisaResidencyData",
+        comp: VisaResidencyData,
       },
       {
         id: "legal-2",
@@ -155,7 +163,7 @@ const guideCategories : category[] = [
         alt: "Employment Law",
         content:
           "Overview of labor rights, contracts, and workplace regulations in the UAE.",
-        comp: "EmploymentLawData",
+        comp: EmploymentLawData,
       },
       {
         id: "legal-3",
@@ -164,7 +172,7 @@ const guideCategories : category[] = [
         alt: "Local Laws",
         content:
           "Important local laws, customs, and regulations every visitor and resident should know.",
-        comp: "LocalLawsData",
+        comp: LocalLawsData,
       },
       {
         id: "legal-4",
@@ -173,7 +181,7 @@ const guideCategories : category[] = [
         alt: "Dispute Resolution",
         content:
           "Information on how to resolve disputes, including mediation and legal assistance.",
-        comp: "DisputeResolutionData",
+        comp: DisputeResolutionData,
       }
     ],
   },
@@ -189,7 +197,7 @@ const guideCategories : category[] = [
         src: "/img/guide/arabic-letters.jpg",
         alt: "Arabic Phrases",
         content: "Learn essential Arabic greetings and phrases.",
-        comp: "ArabicPhrasesData",
+        comp: ArabicPhrasesData,
       },
       {
         id: "arabic-2",
@@ -197,7 +205,7 @@ const guideCategories : category[] = [
         src: "/img/guide/arabic-numbers.jpg",
         alt: "Arabic Numbers",
         content: "Learn how to count in Arabic.",
-        comp: "ArabicNumbersData",
+        comp: ArabicNumbersData,
       },
       {
         id: "arabic-3",
@@ -205,7 +213,7 @@ const guideCategories : category[] = [
         src: "/img/guide/forming-sentences.jpg",
         alt: "Forming Sentences",
         content: "Learn how to form sentences.",
-        comp: "SentencesData",
+        comp: SentencesData,
       },
       {
         id: "arabic-4",
@@ -213,7 +221,7 @@ const guideCategories : category[] = [
         src: "/img/guide/introduction.jpg",
         alt: "Introduction",
         content: "Learn how to introduce yourself in Arabic.",
-        comp: "IntroductionData",
+        comp: IntroductionData,
       }
     ],
   },
@@ -491,35 +499,12 @@ export default function CaseGuide() {
 
   const renderCardContent = () => {
     if (!selectedCard) return null;
-
-    switch (selectedCard.comp) {
-      case "TraditionsData":
-        return (
-          <div className="prose prose-invert max-w-none">
-            <TraditionsData />
-          </div>
-        );
-      case "ClothesData":
-        return (
-          <div className="prose prose-invert max-w-none">
-            <ClothesData />
-          </div>
-        );
-      case "FoodData":
-        return (
-          <div className="prose prose-invert max-w-none">
-            <FoodData />
-          </div>
-        );
-      case "ReligionData":
-        return (
-          <div className="prose prose-invert max-w-none">
-            <ReligionData />
-          </div>
-        );
-      default:
-        return <PlaceholderContent title={selectedCard.title} />;
-    }
+    const Comp = selectedCard.comp;
+    return (
+      <div className="prose prose-invert max-w-none">
+        <Comp />
+      </div>
+    );
   };
 
   const categoryIcons = {
