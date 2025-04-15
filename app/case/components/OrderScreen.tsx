@@ -37,7 +37,8 @@ const RESTAURANTS: Restaurant[] = [
     id: "shawarma-station",
     name: "Shawarma Station",
     image: "/img/discover/culinaryDelights/shawarmaStation.png",
-    description: "Popular chain known for fresh shawarmas and Middle Eastern street food.",
+    description:
+      "Popular chain known for fresh shawarmas and Middle Eastern street food.",
     rating: 4.5,
     deliveryTime: "20-30 min",
   },
@@ -45,15 +46,18 @@ const RESTAURANTS: Restaurant[] = [
     id: "al-mandi",
     name: "Al Mandi and Al Madhbi House",
     image: "/img/discover/culinaryDelights/alMandi.png",
-    description: "Authentic Yemeni restaurant specializing in Mandi and Madhbi dishes.",
+    description:
+      "Authentic Yemeni restaurant specializing in Mandi and Madhbi dishes.",
     rating: 4.3,
     deliveryTime: "25-35 min",
   },
   {
     id: "nandos",
     name: "Nando's",
-    image: "https://upload.wikimedia.org/wikipedia/commons/thumb/7/72/Flame-grilled_PERi-PERi_chicken.jpg/440px-Flame-grilled_PERi-PERi_chicken.jpg",
-    description: "Famous for its Peri-Peri chicken in a casual dining atmosphere.",
+    image:
+      "https://upload.wikimedia.org/wikipedia/commons/thumb/7/72/Flame-grilled_PERi-PERi_chicken.jpg/440px-Flame-grilled_PERi-PERi_chicken.jpg",
+    description:
+      "Famous for its Peri-Peri chicken in a casual dining atmosphere.",
     rating: 4.2,
     deliveryTime: "20-30 min",
   },
@@ -64,7 +68,7 @@ const RESTAURANTS: Restaurant[] = [
     description: "Famous local spot for Lebanese cuisine at reasonable prices.",
     rating: 4.7,
     deliveryTime: "15-25 min",
-  }
+  },
 ];
 
 // Sample menu categories
@@ -87,7 +91,7 @@ const generateMenuItems = (restaurantId: string): MenuItem[] => {
         description: "Grilled marinated chicken with garlic sauce and pickles",
         price: 18,
         image: "/img/discover/culinaryDelights/shawarmaStation.png",
-        categoryId: "popular"
+        categoryId: "popular",
       },
       {
         id: "beef-shawarma",
@@ -95,7 +99,7 @@ const generateMenuItems = (restaurantId: string): MenuItem[] => {
         description: "Tender beef with tahini sauce and vegetables",
         price: 20,
         image: "/img/discover/culinaryDelights/shawarmaStation.png",
-        categoryId: "popular"
+        categoryId: "popular",
       },
       {
         id: "falafel-wrap",
@@ -103,7 +107,7 @@ const generateMenuItems = (restaurantId: string): MenuItem[] => {
         description: "Crispy falafel with fresh vegetables and tahini",
         price: 15,
         image: "/img/discover/culinaryDelights/shawarmaStation.png",
-        categoryId: "popular"
+        categoryId: "popular",
       },
       {
         id: "hummus",
@@ -111,7 +115,7 @@ const generateMenuItems = (restaurantId: string): MenuItem[] => {
         description: "Creamy chickpea dip with olive oil",
         price: 12,
         image: "/img/discover/culinaryDelights/shawarmaStation.png",
-        categoryId: "appetizers"
+        categoryId: "appetizers",
       },
       {
         id: "tabbouleh",
@@ -119,7 +123,7 @@ const generateMenuItems = (restaurantId: string): MenuItem[] => {
         description: "Fresh parsley salad with bulgur wheat",
         price: 14,
         image: "/img/discover/culinaryDelights/shawarmaStation.png",
-        categoryId: "appetizers"
+        categoryId: "appetizers",
       },
       {
         id: "mixed-grill",
@@ -127,7 +131,7 @@ const generateMenuItems = (restaurantId: string): MenuItem[] => {
         description: "Assortment of grilled meats with rice",
         price: 45,
         image: "/img/discover/culinaryDelights/shawarmaStation.png",
-        categoryId: "main"
+        categoryId: "main",
       },
       {
         id: "french-fries",
@@ -135,7 +139,7 @@ const generateMenuItems = (restaurantId: string): MenuItem[] => {
         description: "Crispy golden fries",
         price: 10,
         image: "/img/discover/culinaryDelights/shawarmaStation.png",
-        categoryId: "sides"
+        categoryId: "sides",
       },
       {
         id: "soft-drink",
@@ -143,7 +147,7 @@ const generateMenuItems = (restaurantId: string): MenuItem[] => {
         description: "Cola, Sprite, or Fanta",
         price: 8,
         image: "/img/discover/culinaryDelights/shawarmaStation.png",
-        categoryId: "drinks"
+        categoryId: "drinks",
       },
       {
         id: "baklava",
@@ -151,7 +155,7 @@ const generateMenuItems = (restaurantId: string): MenuItem[] => {
         description: "Sweet pastry with nuts and honey",
         price: 16,
         image: "/img/discover/culinaryDelights/shawarmaStation.png",
-        categoryId: "desserts"
+        categoryId: "desserts",
       },
     ];
   } else if (restaurantId === "al-mandi") {
@@ -162,15 +166,15 @@ const generateMenuItems = (restaurantId: string): MenuItem[] => {
         description: "Traditional Yemeni dish with aromatic rice and chicken",
         price: 35,
         image: "/img/discover/culinaryDelights/alMandi.png",
-        categoryId: "popular"
+        categoryId: "popular",
       },
       {
         id: "lamb-madhbi",
         name: "Lamb Madhbi",
         description: "Tender lamb grilled on hot stones",
         price: 45,
-        image: "/img/discover/culinaryDelights/alMandi.png", 
-        categoryId: "popular"
+        image: "/img/discover/culinaryDelights/alMandi.png",
+        categoryId: "popular",
       },
       // More items would go here
     ];
@@ -189,7 +193,7 @@ const containerVariants = {
   exit: {
     opacity: 0,
     transition: { duration: 0.2 },
-  }
+  },
 };
 
 const itemVariants = {
@@ -202,7 +206,7 @@ enum OrderStep {
   MENU_SELECTION = 1,
   CHECKOUT = 2,
   LOADING = 3,
-  CONFIRMATION = 4
+  CONFIRMATION = 4,
 }
 
 export function OrderScreen({
@@ -212,9 +216,12 @@ export function OrderScreen({
   onClose: () => void;
   onOrderComplete: (restaurant: Restaurant) => void;
 }) {
-  const [currentStep, setCurrentStep] = useState<OrderStep>(OrderStep.RESTAURANT_SELECTION);
+  const [currentStep, setCurrentStep] = useState<OrderStep>(
+    OrderStep.RESTAURANT_SELECTION
+  );
   const [showMoreRestaurants, setShowMoreRestaurants] = useState(false);
-  const [selectedRestaurant, setSelectedRestaurant] = useState<Restaurant | null>(null);
+  const [selectedRestaurant, setSelectedRestaurant] =
+    useState<Restaurant | null>(null);
   const [selectedCategory, setSelectedCategory] = useState<string>("popular");
   const [orderItems, setOrderItems] = useState<OrderItem[]>([]);
   const [menuItems, setMenuItems] = useState<MenuItem[]>([]);
@@ -228,13 +235,11 @@ export function OrderScreen({
   };
 
   const handleAddToCart = (item: MenuItem) => {
-    setOrderItems(prev => {
-      const existingItem = prev.find(i => i.item.id === item.id);
+    setOrderItems((prev) => {
+      const existingItem = prev.find((i) => i.item.id === item.id);
       if (existingItem) {
-        return prev.map(i => 
-          i.item.id === item.id 
-            ? { ...i, quantity: i.quantity + 1 } 
-            : i
+        return prev.map((i) =>
+          i.item.id === item.id ? { ...i, quantity: i.quantity + 1 } : i
         );
       } else {
         return [...prev, { item, quantity: 1 }];
@@ -243,22 +248,23 @@ export function OrderScreen({
   };
 
   const handleRemoveFromCart = (itemId: string) => {
-    setOrderItems(prev => {
-      const existingItem = prev.find(i => i.item.id === itemId);
+    setOrderItems((prev) => {
+      const existingItem = prev.find((i) => i.item.id === itemId);
       if (existingItem && existingItem.quantity > 1) {
-        return prev.map(i => 
-          i.item.id === itemId 
-            ? { ...i, quantity: i.quantity - 1 } 
-            : i
+        return prev.map((i) =>
+          i.item.id === itemId ? { ...i, quantity: i.quantity - 1 } : i
         );
       } else {
-        return prev.filter(i => i.item.id !== itemId);
+        return prev.filter((i) => i.item.id !== itemId);
       }
     });
   };
 
   const getTotalAmount = () => {
-    return orderItems.reduce((total, item) => total + item.item.price * item.quantity, 0);
+    return orderItems.reduce(
+      (total, item) => total + item.item.price * item.quantity,
+      0
+    );
   };
 
   const handleCheckout = () => {
@@ -280,8 +286,10 @@ export function OrderScreen({
   };
 
   const handleExit = () => {
-    if ((currentStep === OrderStep.MENU_SELECTION && orderItems.length > 0) || 
-        currentStep === OrderStep.CHECKOUT) {
+    if (
+      (currentStep === OrderStep.MENU_SELECTION && orderItems.length > 0) ||
+      currentStep === OrderStep.CHECKOUT
+    ) {
       setShowDialog(true);
     } else {
       handleExitWithAnimation();
@@ -291,8 +299,12 @@ export function OrderScreen({
   const handleExitWithAnimation = () => {
     setIsExiting(true);
     setTimeout(() => {
-      if (currentStep > 0 && currentStep !== OrderStep.LOADING && currentStep !== OrderStep.CONFIRMATION) {
-        setCurrentStep(prev => prev - 1);
+      if (
+        currentStep > 0 &&
+        currentStep !== OrderStep.LOADING &&
+        currentStep !== OrderStep.CONFIRMATION
+      ) {
+        setCurrentStep((prev) => prev - 1);
         setIsExiting(false);
       } else {
         onClose();
@@ -309,10 +321,12 @@ export function OrderScreen({
     setShowDialog(false);
   };
 
-  const visibleRestaurants = showMoreRestaurants ? RESTAURANTS : RESTAURANTS.slice(0, 2);
+  const visibleRestaurants = showMoreRestaurants
+    ? RESTAURANTS
+    : RESTAURANTS.slice(0, 2);
 
-  const filteredMenuItems = menuItems.filter(item => 
-    selectedCategory === "all" || item.categoryId === selectedCategory
+  const filteredMenuItems = menuItems.filter(
+    (item) => selectedCategory === "all" || item.categoryId === selectedCategory
   );
 
   return (
@@ -336,7 +350,7 @@ export function OrderScreen({
             className="flex flex-col space-y-6 mt-12"
           >
             <motion.div variants={itemVariants} className="self-start w-full">
-              <h2 className="text-6xl font-extrabold text-white mb-6 leading-tight">
+              <h2 className="text-6xl font-extrabold text-white mb-2 leading-tight">
                 Choose your
                 <br />
                 <span style={{ color: "#2563eb" }}>restaurant</span>
@@ -348,26 +362,29 @@ export function OrderScreen({
               className="w-full grid grid-cols-2 gap-6"
             >
               {[RESTAURANTS[0], RESTAURANTS[1]].map((restaurant) => {
-                const topItems = generateMenuItems(restaurant.id).filter(
-                  (item) => item.categoryId === "popular"
-                );
+                const topItems = generateMenuItems(restaurant.id)
+                  .filter((item) => item.categoryId === "popular")
+                  .slice(0, 2); // Limit to 2 items only
                 return (
                   <div
                     key={restaurant.id}
-                    className="bg-gray-800 rounded-lg shadow-lg p-4 flex flex-col"
+                    className="bg-gray-800 rounded-lg shadow-lg p-4 flex flex-col h-[380px]"
                   >
-                    <div className="mb-4">
+                    <div className="mb-3">
                       <img
                         src={restaurant.image}
                         alt={restaurant.name}
-                        className="w-full h-40 object-cover rounded-md"
+                        className="w-full h-36 object-cover rounded-md"
                       />
-                      <h3 className="text-white text-xl font-semibold mt-2">
+                      <h3 className="text-white text-xl font-semibold mt-2 truncate">
                         {restaurant.name}
                       </h3>
+                      {/* <p className="text-gray-400 text-sm line-clamp-1">
+                        {restaurant.description}
+                      </p> */}
                     </div>
                     <div className="flex-1">
-                      <h4 className="text-gray-300 mb-2">Top Items</h4>
+                      <h4 className="text-gray-300 mb-2">Quick items</h4>
                       <div className="space-y-2">
                         {topItems.map((item) => (
                           <div
@@ -379,15 +396,15 @@ export function OrderScreen({
                             }}
                           >
                             <div className="flex items-center">
-                              <div className="w-12 h-12 rounded-md overflow-hidden flex-shrink-0 mr-3">
+                              {/* <div className="w-10 h-10 rounded-md overflow-hidden flex-shrink-0 mr-2">
                                 <img
                                   src={item.image}
                                   alt={item.name}
                                   className="w-full h-full object-cover"
                                 />
-                              </div>
-                              <div>
-                                <div className="text-white font-medium">
+                              </div> */}
+                              <div className="flex-1 min-w-0">
+                                <div className="text-white font-medium truncate">
                                   {item.name}
                                 </div>
                                 <div className="text-gray-300 text-sm">
