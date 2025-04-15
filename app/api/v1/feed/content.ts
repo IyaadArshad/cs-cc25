@@ -80,6 +80,14 @@ export const news = [
     publishedAt: "2025-03-26T22:30:11Z",
     content:
       "This 1993 Mercedes-Benz 500SL was initially ordered in Abu Dhabi and was imported to Canada under previous ownership. Finished in Blue Black Metallic over Anthracite leather, the car is powered by a … [+2309 chars]",
+    summary: `<p>A rare 1993 Mercedes-Benz 500SL with Abu Dhabi origins is now available for auction. This classic luxury convertible features a powerful 5.0-liter V8 engine and maintains its elegant Blue Black Metallic exterior with premium Anthracite leather interior.</p>
+              <img src="https://bringatrailer.com/wp-content/uploads/2025/03/1993_mercedes-benz_500sl_dsc00862-fotor-20250310192932-39717.jpg" alt="Mercedes-Benz 500SL">
+              <p>Originally ordered for the Abu Dhabi market, this vehicle represents a unique opportunity for collectors interested in both automotive history and Middle Eastern connections.</p>
+              <ul>
+                <li><strong>Origin:</strong> Abu Dhabi</li>
+                <li><strong>Current Location:</strong> Canada</li>
+                <li><strong>Auction Type:</strong> No Reserve</li>
+              </ul>`,
   },
   {
     source: {
