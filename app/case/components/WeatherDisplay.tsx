@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import Cookies from "js-cookie";
 import { motion, AnimatePresence } from "framer-motion";
 import { getWeatherIcon } from "./WeatherIcons";
-import { Droplets, Wind, Eye, Thermometer, Gauge } from "lucide-react";
+import { Droplets, Wind, Eye, Thermometer, Gauge, Package, Clock } from "lucide-react";
 
 interface WeatherData {
   location: string;
@@ -60,57 +60,66 @@ const usTemperatureCountries = [
   "Turks and Caicos Islands",
 ];
 
-export default function WeatherDisplay() {
+interface WeatherDisplayProps {
+  activeOrder?: {
+    restaurant: string;
+    estimatedTime: string;
+    status: string;
+  } | null;
+  onOrderClick?: () => void;
+}
+
+export default function WeatherDisplay({ activeOrder, onOrderClick }: WeatherDisplayProps) {
   const [weatherData, setWeatherData] = useState<WeatherData | null>(null);
-  const [isLoading, setIsLoading] = useState(true);
+  const [isLoading, setIsLoading] = useState(!activeOrder);
   const [usesFahrenheit, setUsesFahrenheit] = useState(false);
   const [isExpanded, setIsExpanded] = useState(false);
 
   useEffect(() => {
-    // Check user's country from cookies to determine temperature unit
-    const userCountry = Cookies.get("comingFrom");
-    setUsesFahrenheit(
-      userCountry ? usTemperatureCountries.includes(userCountry) : false
-    );
+    if (!activeOrder) {
+      setIsLoading(true);
+      const userCountry = Cookies.get("comingFrom");
+      setUsesFahrenheit(
+        userCountry ? usTemperatureCountries.includes(userCountry) : false
+      );
 
-    // Get coordinates from cookie if available
-    const userLocation = Cookies.get("location") || "Abu Dhabi";
-    // Default coordinates for Abu Dhabi
-    let lat = "24.4539";
-    let lon = "54.3773";
+      const userLocation = Cookies.get("location") || "Abu Dhabi";
+      let lat = "24.4539";
+      let lon = "54.3773";
 
-    // Fetch weather data
-    const fetchWeather = async () => {
-      try {
-        const response = await fetch(
-          `/api/v1/weather?location=${encodeURIComponent(
-            userLocation
-          )}&lat=${lat}&lon=${lon}`
-        );
+      const fetchWeather = async () => {
+        try {
+          const response = await fetch(
+            `/api/v1/weather?location=${encodeURIComponent(
+              userLocation
+            )}&lat=${lat}&lon=${lon}`
+          );
 
-        if (!response.ok) {
-          throw new Error("Failed to fetch weather data");
+          if (!response.ok) {
+            throw new Error("Failed to fetch weather data");
+          }
+
+          const data = await response.json();
+          setWeatherData(data);
+        } catch (error) {
+          console.error("Error fetching weather data:", error);
+        } finally {
+          setIsLoading(false);
         }
+      };
 
-        const data = await response.json();
-        setWeatherData(data);
-      } catch (error) {
-        console.error("Error fetching weather data:", error);
-      } finally {
-        setIsLoading(false);
-      }
-    };
+      fetchWeather();
+    } else {
+      setWeatherData(null);
+      setIsLoading(false);
+    }
+  }, [activeOrder]);
 
-    fetchWeather();
-  }, []);
-
-  // Entrance animation variants
   const pillVariants = {
     hidden: { opacity: 0, y: 10 },
     visible: { opacity: 1, y: 0, transition: { duration: 0.4, delay: 0.1 } },
   };
 
-  // Horizontal expansion variants
   const expandedVariants = {
     collapsed: {
       opacity: 0,
@@ -126,19 +135,27 @@ export default function WeatherDisplay() {
     },
   };
 
-  if (isLoading || !weatherData) {
+  if (isLoading && !activeOrder) {
     return null;
   }
 
-  const temperature = usesFahrenheit
-    ? `${weatherData.temperature.fahrenheit}°F`
-    : `${weatherData.temperature.celsius}°C`;
+  if (!weatherData && !activeOrder) {
+    return null;
+  }
 
-  const feelsLike = weatherData.feels_like
+  const temperature = weatherData
+    ? usesFahrenheit
+      ? `${weatherData.temperature.fahrenheit}°F`
+      : `${weatherData.temperature.celsius}°C`
+    : "";
+
+  const feelsLike = weatherData?.feels_like
     ? usesFahrenheit
       ? `${weatherData.feels_like.fahrenheit}°`
       : `${weatherData.feels_like.celsius}°`
     : null;
+
+  const allowExpansion = !activeOrder && isExpanded;
 
   return (
     <motion.div
@@ -146,65 +163,93 @@ export default function WeatherDisplay() {
       variants={pillVariants}
       initial="hidden"
       animate="visible"
-      onMouseEnter={() => setIsExpanded(true)}
-      onMouseLeave={() => setIsExpanded(false)}
+      onMouseEnter={!activeOrder ? () => setIsExpanded(true) : undefined}
+      onMouseLeave={!activeOrder ? () => setIsExpanded(false) : undefined}
+      onClick={activeOrder ? onOrderClick : undefined}
+      layout
     >
-      <div className="weather-pill">
-        {/* Basic Info - Always visible */}
-        <span className="weather-icon">
-          {weatherData.icon
-            ? getWeatherIcon(weatherData.icon)
-            : getWeatherIcon("01d")}
-        </span>
-        <span className="temperature">{temperature}</span>
-        <span className="divider">|</span>
-        <span className="condition">{weatherData.condition}</span>
+      <div className={`weather-pill ${activeOrder ? "order-active" : ""}`}>
+        <AnimatePresence mode="wait">
+          {activeOrder ? (
+            <motion.div
+              key="order"
+              className="order-info"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 0.2 }}
+            >
+              <Package size={16} className="order-icon" />
+              <span className="order-text truncate">{activeOrder.restaurant}</span>
+              <span className="divider">|</span>
+              <Clock size={14} className="order-icon" />
+              <span className="order-text">~{activeOrder.estimatedTime} min</span>
+            </motion.div>
+          ) : weatherData ? (
+            <motion.div
+              key="weather"
+              className="weather-info"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 0.2 }}
+            >
+              <span className="weather-icon">
+                {weatherData.icon
+                  ? getWeatherIcon(weatherData.icon)
+                  : getWeatherIcon("01d")}
+              </span>
+              <span className="temperature">{temperature}</span>
+              <span className="divider">|</span>
+              <span className="condition">{weatherData.condition}</span>
 
-        {/* Expanded Info - Animates horizontally */}
-        <motion.div
-          className="expanded-info-wrapper"
-          variants={expandedVariants}
-          initial="collapsed"
-          animate={isExpanded ? "expanded" : "collapsed"}
-          aria-hidden={!isExpanded}
-        >
-          <div className="expanded-info-content">
-            {feelsLike && (
-              <>
-                <span className="divider">|</span>
-                <div className="detail-item">
-                  <Thermometer size={14} className="detail-icon" />
-                  <span className="detail-value">{feelsLike}</span>
+              <motion.div
+                className="expanded-info-wrapper"
+                variants={expandedVariants}
+                initial="collapsed"
+                animate={allowExpansion ? "expanded" : "collapsed"}
+                aria-hidden={!allowExpansion}
+              >
+                <div className="expanded-info-content">
+                  {feelsLike && (
+                    <>
+                      <span className="divider">|</span>
+                      <div className="detail-item">
+                        <Thermometer size={14} className="detail-icon" />
+                        <span className="detail-value">{feelsLike}</span>
+                      </div>
+                    </>
+                  )}
+                  <span className="divider">|</span>
+                  <div className="detail-item">
+                    <Droplets size={14} className="detail-icon" />
+                    <span className="detail-value">
+                      {weatherData.humidity.value}%
+                    </span>
+                  </div>
+                  <span className="divider">|</span>
+                  <div className="detail-item">
+                    <Wind size={14} className="detail-icon" />
+                    <span className="detail-value">
+                      {weatherData.wind.value} {weatherData.wind.unit}
+                    </span>
+                  </div>
+                  {weatherData.pressure && (
+                    <>
+                      <span className="divider">|</span>
+                      <div className="detail-item">
+                        <Gauge size={14} className="detail-icon" />
+                        <span className="detail-value">
+                          {weatherData.pressure.value} {weatherData.pressure.unit}
+                        </span>
+                      </div>
+                    </>
+                  )}
                 </div>
-              </>
-            )}
-            <span className="divider">|</span>
-            <div className="detail-item">
-              <Droplets size={14} className="detail-icon" />
-              <span className="detail-value">
-                {weatherData.humidity.value}%
-              </span>
-            </div>
-            <span className="divider">|</span>
-            <div className="detail-item">
-              <Wind size={14} className="detail-icon" />
-              <span className="detail-value">
-                {weatherData.wind.value} {weatherData.wind.unit}
-              </span>
-            </div>
-            {weatherData.pressure && (
-              <>
-                <span className="divider">|</span>
-                <div className="detail-item">
-                  <Gauge size={14} className="detail-icon" />
-                  <span className="detail-value">
-                    {weatherData.pressure.value} {weatherData.pressure.unit}
-                  </span>
-                </div>
-              </>
-            )}
-          </div>
-        </motion.div>
+              </motion.div>
+            </motion.div>
+          ) : null}
+        </AnimatePresence>
       </div>
 
       <style jsx>{`
@@ -226,11 +271,52 @@ export default function WeatherDisplay() {
           cursor: pointer;
           overflow: hidden;
           white-space: nowrap;
-          transition: background-color 0.3s ease;
+          transition: background-color 0.3s ease, box-shadow 0.3s ease;
+          min-height: 32px;
         }
 
-        .weather-pill:hover {
+        .weather-pill.order-active {
+          background-color: rgba(37, 99, 235, 0.85);
+          box-shadow: 0 3px 10px rgba(37, 99, 235, 0.4);
+        }
+        .weather-pill.order-active:hover {
+          background-color: rgba(29, 78, 216, 0.9);
+        }
+
+        .weather-pill:not(.order-active):hover {
           background-color: rgba(10, 37, 64, 0.9);
+        }
+        .weather-pill:not(.order-active) {
+          cursor: default;
+        }
+        .weather-pill.order-active {
+          cursor: pointer;
+        }
+
+        .weather-info {
+          display: flex;
+          align-items: center;
+        }
+
+        .order-info {
+          display: flex;
+          align-items: center;
+          font-size: 14px;
+        }
+        .order-icon {
+          margin-right: 5px;
+          opacity: 0.8;
+          flex-shrink: 0;
+        }
+        .order-text {
+          font-weight: 500;
+          flex-shrink: 0;
+        }
+        .order-text.truncate {
+          max-width: 120px;
+          overflow: hidden;
+          text-overflow: ellipsis;
+          white-space: nowrap;
         }
 
         .weather-icon {

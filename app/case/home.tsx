@@ -27,7 +27,7 @@ import React from "react";
 import JSConfetti from "js-confetti";
 import { OrderScreen } from "./components/OrderScreen";
 import { OrderDetails } from "./components/OrderDetails";
-import WeatherDisplay from "./components/WeatherDisplay";
+import StatusPill from "./components/StatusPill";
 
 export interface Option {
   id: string;
@@ -797,33 +797,9 @@ export default function CaseHome() {
       {/* Weather gradient background */}
       <div className="weather-gradient">
         <div className="p-6">
-          {activeOrder && (
-            <motion.div
-              initial={{ opacity: 0, y: -20 }}
-              animate={{ opacity: 1, y: 0 }}
-              className="bg-gray-800 rounded-lg p-4 mb-6 cursor-pointer hover:bg-gray-700/70 transition-all"
-              onClick={() => setShowOrderDetails(true)}
-            >
-              <div className="flex items-center justify-between">
-                <div>
-                  <h3 className="text-white font-medium">
-                    {activeOrder.restaurant}
-                  </h3>
-                  <p className="text-gray-400 text-sm">
-                    Order {activeOrder.status}
-                  </p>
-                </div>
-                <div className="text-blue-400 flex items-center">
-                  <Clock className="w-4 h-4 mr-1" />
-                  <span>Delivery in ~{activeOrder.estimatedTime} mins</span>
-                </div>
-              </div>
-            </motion.div>
-          )}
-
           <div className="flex flex-col items-center justify-center">
             <AnimatePresence mode="wait">
-              {/* Weather Pill - "The Island" - Positioned ABOVE welcome text */}
+              {/* Status Pill - Weather or Order Status */}
               {!isInitialLoading &&
                 mainViewReady &&
                 !currentTaskStep &&
@@ -833,9 +809,21 @@ export default function CaseHome() {
                     initial={{ opacity: 0, y: -10 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.4, delay: 0.2 }}
-                    className="mb-3"
+                    className="mb-3" // Keep margin for spacing
+                    // Add layout prop for smoother animation if content changes size
+                    layout
                   >
-                    <WeatherDisplay />
+                    {activeOrder ? (
+                      <StatusPill
+                        mode="order"
+                        orderInfo={activeOrder}
+                        onClick={() => setShowOrderDetails(true)}
+                      />
+                    ) : (
+                      <StatusPill
+                        mode="weather"
+                      />
+                    )}
                   </motion.div>
                 )}
 
