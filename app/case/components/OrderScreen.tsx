@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { ArrowLeft, Check, ShoppingBag, X, Search, Clock } from "lucide-react";
+import { ArrowLeft, Check, ShoppingBag, X, Search, Clock, MapPin } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
 interface Restaurant {
@@ -612,8 +612,8 @@ export function OrderScreen({
           </div>
 
           <div className="absolute top-6 right-6 z-10">
-            <div className="bg-yellow-500/80 text-yellow-900 px-3 py-1 rounded-full text-xs font-medium">
-              Demo Mode
+            <div className="bg-yellow-500 text-yellow-900 px-3 py-1 rounded-full text-xs font-medium">
+              <b>Payment Disabled: Demo Mode</b>
             </div>
           </div>
 
@@ -622,72 +622,114 @@ export function OrderScreen({
             animate={isExiting ? "exit" : "show"}
             exit="exit"
             variants={containerVariants}
-            className="flex flex-col items-center space-y-6 mt-12"
+            className="flex flex-col space-y-6 mt-12"
           >
-            <motion.div variants={itemVariants} className="self-center">
-              <div className="bg-blue-500/20 p-4 rounded-full mb-6">
+            {/* Updated header with basket icon and title */}
+            <motion.div 
+              variants={itemVariants} 
+              className="flex flex-col items-center w-full"
+            >
+              <div className="bg-blue-500/20 p-4 rounded-full mb-4">
                 <ShoppingBag size={32} className="text-blue-500" />
               </div>
-            </motion.div>
-
-            <motion.div variants={itemVariants} className="w-full">
-              <h2 className="text-6xl font-extrabold text-white mb-8 leading-tight text-center">
+              
+              <h2 className="text-4xl md:text-5xl font-extrabold text-white text-center leading-tight">
                 Confirm
                 <br />
                 <span style={{ color: "#2563eb" }}>your order</span>
               </h2>
             </motion.div>
 
-            <motion.div
-              variants={itemVariants}
-              className="w-full bg-gray-800 rounded-lg p-4 overflow-y-auto max-h-[40vh]"
-            >
-              {orderItems.map((orderItem) => (
-                <div
-                  key={orderItem.item.id}
-                  className="flex justify-between items-center py-2 border-b border-gray-700 last:border-b-0"
-                >
-                  <div className="flex items-center">
-                    <div className="text-white mr-2">{orderItem.quantity}×</div>
-                    <div className="text-white">{orderItem.item.name}</div>
-                  </div>
-                  <div className="flex items-center gap-4">
-                    <div className="text-white">
-                      {orderItem.quantity * orderItem.item.price} AED
-                    </div>
-                    <div className="flex gap-1">
-                      <button
-                        className="w-6 h-6 rounded-full bg-gray-700 flex items-center justify-center text-white hover:bg-gray-600"
-                        onClick={() => handleRemoveFromCart(orderItem.item.id)}
-                      >
-                        -
-                      </button>
-                      <button
-                        className="w-6 h-6 rounded-full bg-gray-700 flex items-center justify-center text-white hover:bg-gray-600"
-                        onClick={() => handleAddToCart(orderItem.item)}
-                      >
-                        +
-                      </button>
-                    </div>
-                  </div>
+            {/* Added delivery location */}
+            <motion.div variants={itemVariants} className="w-full">
+              <div className="bg-gray-800/80 rounded-lg p-4 flex items-center justify-between">
+                <div className="flex items-center gap-2">
+                  <MapPin className="text-gray-400 h-5 w-5 flex-shrink-0" />
+                  <span className="text-white text-sm">Cambridge International School, Abu Dhabi</span>
                 </div>
-              ))}
-            </motion.div>
-
-            <motion.div variants={itemVariants} className="w-full text-center">
-              <div className="text-3xl font-light text-white mb-4">
-                Total:{" "}
-                <span className="font-medium">{getTotalAmount()} AED</span>
+                <span className="text-blue-400 text-xs cursor-pointer">change</span>
               </div>
             </motion.div>
 
-            <motion.div variants={itemVariants} className="w-full">
+            {/* Improved item list with better styling */}
+            <motion.div
+              variants={itemVariants}
+              className="w-full bg-gray-800 rounded-lg overflow-hidden"
+            >
+              <div className="p-4 border-b border-gray-700">
+                <h3 className="text-lg font-medium text-white">Order summary</h3>
+              </div>
+              <div className="p-4 max-h-[40vh] overflow-y-auto">
+                {orderItems.map((orderItem) => (
+                  <div
+                    key={orderItem.item.id}
+                    className="flex justify-between items-center py-3 border-b border-gray-700/50 last:border-b-0"
+                  >
+                    <div className="flex items-center gap-3">
+                      <div className="bg-gray-700 rounded-md w-10 h-10 flex items-center justify-center flex-shrink-0">
+                        <span className="text-white font-medium">{orderItem.quantity}×</span>
+                      </div>
+                      <div>
+                        <div className="text-white">{orderItem.item.name}</div>
+                        <div className="text-gray-400 text-sm">{orderItem.item.price} AED each</div>
+                      </div>
+                    </div>
+                    <div className="flex items-center gap-4">
+                      <div className="text-white font-medium">
+                        {orderItem.quantity * orderItem.item.price} AED
+                      </div>
+                      <div className="flex gap-1">
+                        <button
+                          className="w-7 h-7 rounded-full bg-gray-700 flex items-center justify-center text-white hover:bg-gray-600 transition-colors"
+                          onClick={() => handleRemoveFromCart(orderItem.item.id)}
+                        >
+                          -
+                        </button>
+                        <button
+                          className="w-7 h-7 rounded-full bg-gray-700 flex items-center justify-center text-white hover:bg-gray-600 transition-colors"
+                          onClick={() => handleAddToCart(orderItem.item)}
+                        >
+                          +
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                ))}
+              </div>
+              <div className="p-4 border-t border-gray-700 bg-gray-800/80">
+                <div className="flex justify-between items-center">
+                  <span className="text-gray-300">Subtotal</span>
+                  <span className="text-white">{getTotalAmount()} AED</span>
+                </div>
+                <div className="flex justify-between items-center mt-2">
+                  <span className="text-gray-300">Delivery fee</span>
+                  <span className="text-white">5 AED</span>
+                </div>
+                <div className="flex justify-between items-center mt-4 pt-3 border-t border-gray-700">
+                  <span className="text-white font-medium">Total</span>
+                  <span className="text-white text-xl font-semibold">
+                    {getTotalAmount() + 5} AED
+                  </span>
+                </div>
+              </div>
+            </motion.div>
+
+            {/* Vertically stacked buttons */}
+            <motion.div variants={itemVariants} className="w-full space-y-3">
               <Button
-                className="w-full bg-blue-600 hover:bg-blue-500 text-white py-6 text-lg"
+                className="w-full bg-blue-600 hover:bg-blue-500 text-white py-4 text-base font-medium"
                 onClick={handleConfirmOrder}
                 disabled={orderItems.length === 0}
               >
-                Place Order
+                Confirm Order
+              </Button>
+              
+              <Button
+                variant="outline"
+                className="w-full bg-gray-800 border-gray-700 text-white hover:bg-gray-700 hover:text-white py-3"
+                onClick={handleExit}
+              >
+                Go Back
               </Button>
             </motion.div>
           </motion.div>
