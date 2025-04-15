@@ -2,44 +2,6 @@
 import { motion } from "framer-motion";
 import { cardData } from "./guide";
 
-export const cardsData: cardData[] = [
-    {
-      id: "culture-1",
-      title: "Emirati Culture and Traditions",
-      content:
-        "Explore the rich tapestry of Emirati culture, from traditional Bedouin customs to modern artistic expressions. Discover the values of hospitality, family, and community that define the Emirati identity.",
-      src: "/img/culture/cultureVillage.webp",
-      alt: "Culture Village",
-      comp: "TraditionsData"
-    },
-    {
-      id: "culture-2",
-      title: "Traditional Emirati Wear",
-      content:
-        "Uncover the significance of traditional Emirati clothing, such as the Kandura for men and the Abaya for women. Learn how these garments reflect cultural pride, religious values, and the desert environment.",
-      src: "/img/culture/kandura.jpg",
-      alt: "Kandura",
-      comp: "ClothesData"
-    },
-    {
-      id: "culture-3",
-      title: "Emirati Food",
-      content:
-        "Indulge in the flavors of Emirati cuisine, a delightful fusion of Middle Eastern, Persian, and Indian influences. From savory dishes like Machboos to sweet treats like Luqaimat, experience the culinary heritage of the UAE.",
-      src: "/img/culture/luqaimat.jpg",
-      alt: "Luqaimat",
-      comp: 'FoodData'
-    },
-    {
-      id: "4",
-      title: "Religious Values and Beliefs",
-      content:
-        "Delve into the role of Islam in shaping Emirati society and values. Discover the importance of faith, compassion, and generosity in daily life, and explore the stunning mosques and religious sites that showcase Islamic art and architecture.",
-      src: "/img/culture/zayedMosque.jpg",
-      alt: "Sheikh Zayed Mosque Main Hall",
-      comp: "ReligionData"
-    },
-  ];
 
 const containerVariants = {
     hidden: { opacity: 0 },
@@ -264,4 +226,44 @@ export const ReligionData = () => {
             </motion.div>
         </motion.div>
     );
+}
+
+export const TransportData = () => {
+}
+
+export const DrivingData = () => {
+
+}
+
+export const WalkingData = () => {
+
+}
+
+export const EscooterData = () => {
+
+}
+
+export const VisaResidencyData = () => {
+
+}
+
+export const LocalLawsData = () => {
+}
+
+export const DisputeResolutionData = () => {
+}
+
+export const EmploymentLawData = () => {
+}
+
+export const ArabicPhrasesData = () => {
+}
+
+export const ArabicNumbersData = () => {
+}
+
+export const IntroductionData = () => {
+}
+
+export const SentencesData = () => {
 }

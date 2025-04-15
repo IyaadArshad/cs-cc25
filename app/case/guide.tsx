@@ -4,7 +4,6 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import Image from "next/image";
 import { motion, AnimatePresence } from "framer-motion";
 import {
-  cardsData,
   TraditionsData,
   ClothesData,
   FoodData,
