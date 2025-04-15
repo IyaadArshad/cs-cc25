@@ -20,6 +20,7 @@ import {
   shoppingPlaces,
   essentialServices,
 } from "./discoverData";
+import Image from "next/image";
 
 const cardVariants = {
   hidden: { opacity: 0, y: 20 },
@@ -107,10 +108,13 @@ export default function CaseDiscover() {
               transition={{ delay: 0.15 }} // Reduced from 0.3
               className="relative w-full h-[300px] mb-8"
             >
-              <img
+              <Image
                 src={selectedPlace.image}
                 alt={selectedPlace.title}
-                className="w-full h-full object-cover rounded-lg"
+                fill
+                className="object-cover rounded-lg"
+                sizes="(max-width: 768px) 100vw, 800px"
+                priority
               />
             </motion.div>
 
@@ -346,11 +350,15 @@ function PlaceCard({
       onClick={onSelect}
     >
       <CardContent className="p-6 flex flex-col h-full">
-        <img
-          src={place.image || "/placeholder.svg"}
-          alt={place.title}
-          className="w-full h-36 object-cover rounded-md mb-4"
-        />
+        <div className="relative w-full h-36 mb-4">
+          <Image
+            src={place.image || "/placeholder.svg"}
+            alt={place.title}
+            fill
+            className="object-cover rounded-md"
+            sizes="(max-width: 768px) 50vw, 33vw"
+          />
+        </div>
         <h3 className="text-white text-lg font-semibold mb-2 line-clamp-1">
           {place.title}
         </h3>
