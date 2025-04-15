@@ -1,5 +1,5 @@
 "use client";
-import { useState, useRef, useEffect } from "react";
+import { useState, useRef, useEffect, JSX } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import Image from "next/image";
 import { motion, AnimatePresence } from "framer-motion";
@@ -23,6 +23,7 @@ import {
   User,
   Calendar,
   ChevronRight,
+  LibrarySquareIcon
 } from "lucide-react";
 
 export interface cardData {
@@ -33,50 +34,59 @@ export interface cardData {
   alt: string;
   comp: string;
 }
+export interface category {
+  id: string;
+  title: string;
+  icon: JSX.Element;
+  description: string;
+  cards: cardData[];
+}
 
-const guideCategories = [
-  {
-    id: "welcome",
-    title: "Welcome",
-    icon: <BookOpen className="w-4 h-4" />,
-    description: "Your essential guide to visiting and living in Abu Dhabi.",
-    cards: [
-      {
-        id: "welcome-1",
-        title: "About Abu Dhabi",
-        src: "/images/abudhabi-skyline.jpg",
-        alt: "Abu Dhabi Skyline",
-        content:
-          "Abu Dhabi is the capital of the United Arab Emirates and offers a blend of traditional heritage and modern innovation.",
-        comp: "AboutData",
-      },
-      {
-        id: "welcome-2",
-        title: "Travel Tips",
-        src: "/images/travel-tips.jpg",
-        alt: "Travel Tips",
-        content:
-          "Practical information to help you prepare for your visit or move to Abu Dhabi.",
-        comp: "TravelTipsData",
-      },
-      {
-        id: "welcome-3",
-        title: "Safety & Regulations",
-        src: "/images/safety.jpg",
-        alt: "Safety Information",
-        content:
-          "Important safety information and local regulations to be aware of during your stay.",
-        comp: "SafetyData",
-      },
-    ],
-  },
+const guideCategories : category[] = [
   {
     id: "culture",
     title: "Culture",
     icon: <BookOpen className="w-4 h-4" />,
     description:
       "Emirati culture blends Bedouin traditions, Islamic values, and heritage. Hospitality, family, and community are key.",
-    cards: cardsData, // Reusing existing culture cards
+    cards: [
+      {
+        id: "culture-1",
+        title: "Emirati Culture and Traditions",
+        src: "/img/guide/cultureVillage.webp",
+        alt: "Culture Village",
+        content:
+          "Explore the rich tapestry of Emirati culture, from traditional Bedouin customs to modern artistic expressions. Discover the values of hospitality, family, and community that define the Emirati identity.",
+        comp: "TraditionsData"
+      },
+      {
+        id: "culture-2",
+        title: "Traditional Emirati Wear",
+        src: "/img/guide/kandura.jpg",
+        alt: "Kandura",
+        content:
+          "Uncover the significance of traditional Emirati clothing, such as the Kandura for men and the Abaya for women. Learn how these garments reflect cultural pride, religious values, and the desert environment.",
+        comp: "ClothesData"
+      },
+      {
+        id: "culture-3",
+        title: "Emirati Food",
+        src: "/img/guide/luqaimat.jpg",
+        alt: "Luqaimat",
+        content:
+          "Indulge in the flavors of Emirati cuisine, a delightful fusion of Middle Eastern, Persian, and Indian influences. From savory dishes like Machboos to sweet treats like Luqaimat, experience the culinary heritage of the UAE.",
+        comp: 'FoodData'
+      },
+      {
+        id: "culture-4",
+        title: "Religious Values and Beliefs",
+        src: "/img/guide/zayedMosque.jpg",
+        alt: "Sheikh Zayed Mosque Main Hall",
+        content:
+          "Delve into the role of Islam in shaping Emirati society and values. Discover the importance of faith, compassion, and generosity in daily life, and explore the stunning mosques and religious sites that showcase Islamic art and architecture.",
+        comp: "ReligionData"
+      },
+    ],
   },
   {
     id: "getting-around",
@@ -88,7 +98,7 @@ const guideCategories = [
       {
         id: "transport-1",
         title: "Public Transport",
-        src: "/images/public-transport.jpg",
+        src: "/img/guide/public-transport.jpg",
         alt: "Public Transport",
         content:
           "Information about buses, taxis, and other public transportation options in Abu Dhabi.",
@@ -97,7 +107,7 @@ const guideCategories = [
       {
         id: "transport-2",
         title: "Driving in Abu Dhabi",
-        src: "/images/driving.jpg",
+        src: "/img/guide/driving.jpg",
         alt: "Driving",
         content:
           "Essential information for renting a car and driving in Abu Dhabi.",
@@ -106,24 +116,78 @@ const guideCategories = [
       {
         id: "transport-3",
         title: "Walking & Cycling",
-        src: "/images/cycling.jpg",
+        src: "/img/guide/cycling.jpg",
         alt: "Cycling",
         content:
           "Options for walking and cycling around the city and popular recreational routes.",
         comp: "WalkingData",
       },
+      {
+        id: "transport-4",
+        title: "E-Scooters",
+        src: "/img/guide/escooter.jpg",
+        alt: "E-Scooter",
+        content:
+          "Learn about using e-scooters in Abu Dhabi, including safety tips, regulations, and where to find them for convenient short-distance travel.",
+        comp: "EscooterData",
+      },
+    ],
+  },
+  {
+    id: "legal-advice",
+    title: "Legal Advice",
+    icon: <HelpCircle className="w-4 h-4" />,
+    description:
+      "Essential legal information and resources for residents and visitors in Abu Dhabi.",
+    cards: [
+      {
+        id: "legal-1",
+        title: "Visa & Residency",
+        src: "/img/guide/visa-residency.jpg",
+        alt: "Visa and Residency",
+        content:
+          "Guidance on visa types, residency permits, and legal requirements for staying in Abu Dhabi.",
+        comp: "VisaResidencyData",
+      },
+      {
+        id: "legal-2",
+        title: "Employment Law",
+        src: "/img/guide/employment-law.jpg",
+        alt: "Employment Law",
+        content:
+          "Overview of labor rights, contracts, and workplace regulations in the UAE.",
+        comp: "EmploymentLawData",
+      },
+      {
+        id: "legal-3",
+        title: "Local Laws & Customs",
+        src: "/img/guide/local-laws.jpg",
+        alt: "Local Laws",
+        content:
+          "Important local laws, customs, and regulations every visitor and resident should know.",
+        comp: "LocalLawsData",
+      },
+      {
+        id: "legal-4",
+        title: "Dispute Resolution",
+        src: "/img/guide/dispute-resolution.jpg",
+        alt: "Dispute Resolution",
+        content:
+          "Information on how to resolve disputes, including mediation and legal assistance.",
+        comp: "DisputeResolutionData",
+      }
     ],
   },
   {
     id: "learn-arabic",
     title: "Learn Arabic",
-    icon: <BookOpen className="w-4 h-4" />,
+    icon: <LibrarySquareIcon className="w-4 h-4" />,
     description: "Learn some basic Arabic phrases to enhance your experience.",
     cards: [
       {
         id: "arabic-1",
-        title: "Basic Phrases",
-        src: "/images/arabic-phrases.jpg",
+        title: "Basic Phrases for Everyday life",
+        src: "/img/guide/arabic-letters.jpg",
         alt: "Arabic Phrases",
         content: "Learn essential Arabic greetings and phrases.",
         comp: "ArabicPhrasesData",
@@ -131,26 +195,34 @@ const guideCategories = [
       {
         id: "arabic-2",
         title: "Numbers & Counting",
-        src: "/images/arabic-numbers.jpg",
+        src: "/img/guide/arabic-numbers.jpg",
         alt: "Arabic Numbers",
         content: "Learn how to count in Arabic.",
         comp: "ArabicNumbersData",
       },
       {
         id: "arabic-3",
-        title: "Useful Words",
-        src: "/images/arabic-words.jpg",
-        alt: "Useful Arabic Words",
-        content: "Expand your vocabulary with these useful Arabic words.",
-        comp: "ArabicWordsData",
+        title: "Forming Sentences",
+        src: "/img/guide/forming-sentences.jpg",
+        alt: "Forming Sentences",
+        content: "Learn how to form sentences.",
+        comp: "SentencesData",
       },
+      {
+        id: "arabic-4",
+        title: "How to introduce yourself",
+        src: "/img/guide/introduction.jpg",
+        alt: "Introduction",
+        content: "Learn how to introduce yourself in Arabic.",
+        comp: "IntroductionData",
+      }
     ],
   },
 ];
 
 export default function CaseGuide() {
   const containerRef = useRef<HTMLDivElement>(null);
-  const [selectedTab, setSelectedTab] = useState("welcome");
+  const [selectedCategory, setSelectedCategory] = useState<category | null>(null);
   const [selectedCard, setSelectedCard] = useState<cardData | null>(null);
   const [searchQuery, setSearchQuery] = useState("");
   const [isSearching, setIsSearching] = useState(false);
@@ -335,17 +407,7 @@ export default function CaseGuide() {
                     transition={{ duration: 0.2 }}
                     className="px-4 pb-4"
                   >
-                    {/* <div className="h-48 relative mb-4 mt-2 rounded-lg overflow-hidden">
-                      <div className="absolute inset-0 bg-gray-900/20 z-10"></div>
-                      <img
-                        src={event.image}
-                        alt={event.title}
-                        className="w-full h-full object-cover"
-                        onError={(e) => {
-                          e.currentTarget.src = "/images/event-placeholder.jpg";
-                        }}
-                      />
-                    </div> */}
+                    
                     <p className="text-gray-300 pt-4  mb-4">
                       {event.description}
                     </p>
@@ -465,8 +527,8 @@ export default function CaseGuide() {
     welcome: <Home className="w-5 h-5" />,
     culture: <BookOpen className="w-5 h-5" />,
     "getting-around": <Bus className="w-5 h-5" />,
-    dining: <Utensils className="w-5 h-5" />,
-    attractions: <MapPin className="w-5 h-5" />,
+    "legal-advice": <HelpCircle className="w-5 h-5" />,
+    "learn-arabic": <BookOpen className="w-5 h-5" />,
   };
 
   const DecorationShapes = () => (
@@ -550,6 +612,79 @@ export default function CaseGuide() {
           </motion.div>
         ) : showEvents ? (
           <EventsDetailView />
+        ) : selectedCategory ? (
+          <motion.div
+            key="category-detail"
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: 10 }}
+            transition={{ duration: 0.2 }}
+            className="pb-10"
+          >
+            <div className="flex items-center gap-4 mb-6">
+              <motion.button
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+                onClick={() => setSelectedCategory(null)}
+                className="flex items-center gap-2 text-white hover:text-blue-400"
+              >
+                <ArrowLeft className="w-5 h-5" />
+                <span>Back to Categories</span>
+              </motion.button>
+            </div>
+            <motion.h1
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ duration: 0.2, delay: 0.1 }}
+              className="text-white text-4xl font-bold mb-8"
+            >
+              {selectedCategory.title}
+            </motion.h1>
+            <motion.p
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ duration: 0.2, delay: 0.15 }}
+              className="text-gray-300 text-lg mb-8"
+            >
+              {selectedCategory.description}
+            </motion.p>
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              {selectedCategory.cards.map((card, index) => (
+                <motion.div
+                  key={card.id}
+                  initial={{ opacity: 0, y: 10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.2, delay: index * 0.05 }}
+                  className="h-full"
+                >
+                  <Card
+                    className="w-full h-full cursor-pointer hover:bg-gray-700/50 transition bg-gray-800 border-gray-700 flex flex-col"
+                    onClick={() => setSelectedCard(card as cardData)}
+                  >
+                    <div className="h-32 relative">
+                      <Image
+                        src={card.src}
+                        alt={card.alt}
+                        className="object-cover rounded-t-lg"
+                        fill
+                        sizes="(max-width: 768px) 100vw, 384px"
+                      />
+                    </div>
+                    <CardContent className="p-4 flex-grow flex flex-col justify-between">
+                      <div>
+                        <h4 className="text-white font-medium mb-1">
+                          {card.title}
+                        </h4>
+                        <p className="text-gray-400 text-sm line-clamp-2">
+                          {card.content}
+                        </p>
+                      </div>
+                    </CardContent>
+                  </Card>
+                </motion.div>
+              ))}
+            </div>
+          </motion.div>
         ) : (
           <div>
             <motion.div
@@ -623,7 +758,7 @@ export default function CaseGuide() {
                               onClick={() => setSelectedCard(card as cardData)}
                             >
                               <CardContent className="p-4 flex flex-row items-center">
-                                <div className="w-12 h-12 relative rounded-full overflow-hidden flex-shrink-0">
+                                <div className="w-12 h-12 relative rounded-full overflow-hidden flex-shrink-0 mr-4">
                                   <Image
                                     src={card.src}
                                     alt={card.alt}
@@ -663,31 +798,6 @@ export default function CaseGuide() {
               </motion.div>
             ) : (
               <div className="space-y-6">
-                <motion.div
-                  initial={
-                    isFirstRender.current ? { opacity: 0, y: 10 } : false
-                  }
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.2, delay: 0.2 }}
-                  className="relative overflow-hidden rounded-xl bg-gradient-to-br from-blue-600 to-blue-800 p-6 shadow-lg"
-                >
-                  <DecorationShapes />
-                  <div className="flex items-start">
-                    <div>
-                      <h2 className="text-2xl font-bold text-white mb-2">
-                        Welcome to Abu Dhabi
-                      </h2>
-                      <p className="text-blue-100 max-w-lg">
-                        Your comprehensive guide to navigating, exploring, and
-                        enjoying everything Abu Dhabi has to offer.
-                      </p>
-                      <button className="mt-4 bg-white text-blue-700 rounded-full px-5 py-2 text-sm font-medium hover:bg-blue-50 transition shadow-sm">
-                        Get Started
-                      </button>
-                    </div>
-                    <User className="ml-auto w-16 h-16 text-blue-300 opacity-40" />
-                  </div>
-                </motion.div>
 
                 <motion.div
                   initial={
@@ -734,11 +844,11 @@ export default function CaseGuide() {
                       >
                         <Card
                           className="w-full cursor-pointer hover:bg-gray-800/70 transition bg-gray-800 border-gray-700 shadow-md overflow-hidden"
-                          onClick={() => setSelectedTab(category.id)}
+                          onClick={() => setSelectedCategory(category)}
                         >
                           <CardContent className="p-4">
                             <div className="flex items-start mb-3">
-                              <div className="w-10 h-10 rounded-full bg-blue-600/20 flex items-center justify-center">
+                              <div className="w-10 h-10 rounded-full bg-blue-600/20 text-white flex items-center justify-center">
                                 {
                                   categoryIcons[
                                     category.id as keyof typeof categoryIcons
@@ -769,7 +879,7 @@ export default function CaseGuide() {
                   </div>
                 </motion.div>
 
-                {selectedTab && (
+                {selectedCategory && (
                   <motion.div
                     initial={{ opacity: 0, y: 10 }}
                     animate={{ opacity: 1, y: 0 }}
@@ -780,19 +890,13 @@ export default function CaseGuide() {
                       <h3 className="text-xl font-bold text-white flex items-center">
                         {
                           categoryIcons[
-                            selectedTab as keyof typeof categoryIcons
+                            selectedCategory.id as keyof typeof categoryIcons
                           ]
                         }
-                        <span className="ml-2">
-                          {
-                            guideCategories.find(
-                              (cat) => cat.id === selectedTab
-                            )?.title
-                          }
-                        </span>
+                        <span className="ml-2">{selectedCategory.title}</span>
                       </h3>
                       <button
-                        onClick={() => setSelectedTab("welcome")}
+                        onClick={() => setSelectedCategory(null)}
                         className="text-sm text-gray-400 hover:text-white"
                       >
                         View All
@@ -800,45 +904,43 @@ export default function CaseGuide() {
                     </div>
 
                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                      {guideCategories
-                        .find((cat) => cat.id === selectedTab)
-                        ?.cards.map((card, index) => (
-                            <motion.div
-                            key={card.id}
-                            initial={{ opacity: 0, y: 10 }}
-                            animate={{ opacity: 1, y: 0 }}
-                            transition={{
-                              duration: 0.2,
-                              delay: 0.7 + index * 0.05,
-                            }}
-                            className="h-full"
-                            >
-                            <Card
-                              className="w-full h-full cursor-pointer hover:bg-gray-700/50 transition bg-gray-800 border-gray-700 flex flex-col"
-                              onClick={() => setSelectedCard(card as cardData)}
-                            >
-                              <div className="h-32 relative">
+                      {selectedCategory && selectedCategory.cards.map((card: cardData, index: number) => (
+                        <motion.div
+                          key={card.id}
+                          initial={{ opacity: 0, y: 10 }}
+                          animate={{ opacity: 1, y: 0 }}
+                          transition={{
+                            duration: 0.2,
+                            delay: 0.7 + index * 0.05,
+                          }}
+                          className="h-full"
+                        >
+                          <Card
+                            className="w-full h-full cursor-pointer hover:bg-gray-700/50 transition bg-gray-800 border-gray-700 flex flex-col"
+                            onClick={() => setSelectedCard(card as cardData)}
+                          >
+                            <div className="h-32 relative">
                               <Image
-                              src={card.src}
-                              alt={card.alt}
-                              className="object-cover rounded-t-lg"
-                              fill
-                              sizes="(max-width: 768px) 100vw, 384px"
+                                src={card.src}
+                                alt={card.alt}
+                                className="object-cover rounded-t-lg"
+                                fill
+                                sizes="(max-width: 768px) 100vw, 384px"
                               />
-                              </div>
-                              <CardContent className="p-4 flex-grow flex flex-col justify-between">
+                            </div>
+                            <CardContent className="p-4 flex-grow flex flex-col justify-between">
                               <div>
-                              <h4 className="text-white font-medium mb-1">
-                                {card.title}
-                              </h4>
-                              <p className="text-gray-400 text-sm line-clamp-2">
-                                {card.content}
-                              </p>
+                                <h4 className="text-white font-medium mb-1">
+                                  {card.title}
+                                </h4>
+                                <p className="text-gray-400 text-sm line-clamp-2">
+                                  {card.content}
+                                </p>
                               </div>
-                              </CardContent>
-                            </Card>
-                            </motion.div>
-                        ))}
+                            </CardContent>
+                          </Card>
+                        </motion.div>
+                      ))}
                     </div>
                   </motion.div>
                 )}

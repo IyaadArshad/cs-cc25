@@ -4,7 +4,7 @@ import { cardData } from "./guide";
 
 export const cardsData: cardData[] = [
     {
-      id: "1",
+      id: "culture-1",
       title: "Emirati Culture and Traditions",
       content:
         "Explore the rich tapestry of Emirati culture, from traditional Bedouin customs to modern artistic expressions. Discover the values of hospitality, family, and community that define the Emirati identity.",
@@ -13,7 +13,7 @@ export const cardsData: cardData[] = [
       comp: "TraditionsData"
     },
     {
-      id: "2",
+      id: "culture-2",
       title: "Traditional Emirati Wear",
       content:
         "Uncover the significance of traditional Emirati clothing, such as the Kandura for men and the Abaya for women. Learn how these garments reflect cultural pride, religious values, and the desert environment.",
@@ -22,7 +22,7 @@ export const cardsData: cardData[] = [
       comp: "ClothesData"
     },
     {
-      id: "3",
+      id: "culture-3",
       title: "Emirati Food",
       content:
         "Indulge in the flavors of Emirati cuisine, a delightful fusion of Middle Eastern, Persian, and Indian influences. From savory dishes like Machboos to sweet treats like Luqaimat, experience the culinary heritage of the UAE.",
