@@ -332,96 +332,106 @@ export function OrderScreen({
   return (
     <div className="relative flex-1 p-6 overflow-y-auto hide-scrollbar">
       {/* Restaurant Selection Screen */}
-      {currentStep === OrderStep.RESTAURANT_SELECTION && (
-        <>
-          <div
-            onClick={onClose}
-            className="absolute top-6 left-6 cursor-pointer flex items-center gap-4 hover:text-gray-300 z-10"
-          >
-            <ArrowLeft className="w-5 h-5 text-white" />
-            <span className="text-white">Back</span>
-          </div>
-
-          <motion.div
-            initial="hidden"
-            animate={isExiting ? "exit" : "show"}
-            exit="exit"
-            variants={containerVariants}
-            className="flex flex-col space-y-6 mt-12"
-          >
-            <motion.div variants={itemVariants} className="self-start w-full">
-              <h2 className="text-6xl font-extrabold text-white mb-2 leading-tight">
-                Choose your
-                <br />
-                <span style={{ color: "#2563eb" }}>restaurant</span>
-              </h2>
-            </motion.div>
+        {currentStep === OrderStep.RESTAURANT_SELECTION && (
+          <>
+            <div
+          onClick={onClose}
+          className="absolute top-6 left-6 cursor-pointer flex items-center gap-4 hover:text-gray-300 z-10"
+            >
+          <ArrowLeft className="w-5 h-5 text-white" />
+          <span className="text-white">Back</span>
+            </div>
 
             <motion.div
-              variants={itemVariants}
-              className="w-full grid grid-cols-2 gap-6"
+          initial="hidden"
+          animate={isExiting ? "exit" : "show"}
+          exit="exit"
+          variants={containerVariants}
+          className="flex flex-col space-y-6 mt-12"
             >
-              {[RESTAURANTS[0], RESTAURANTS[1]].map((restaurant) => {
-                const topItems = generateMenuItems(restaurant.id)
-                  .filter((item) => item.categoryId === "popular")
-                  .slice(0, 2); // Limit to 2 items only
-                return (
-                  <div
-                    key={restaurant.id}
-                    className="bg-gray-800 rounded-lg shadow-lg p-4 flex flex-col h-[400px]"
-                  >
-                    <div className="mb-2">
-                      <img
-                        src={restaurant.image}
-                        alt={restaurant.name}
-                        className="w-full h-32 object-cover rounded-md"
-                      />
-                      <h3 className="text-white text-xl font-semibold mt-2 truncate">
-                        {restaurant.name}
-                      </h3>
-                    </div>
-                    <div className="flex-1 flex flex-col">
-                      <h4 className="text-gray-300 text-sm mb-1">
-                        Quick items
-                      </h4>
-                      <div className="space-y-1.5 flex-grow">
-                        {topItems.map((item) => (
-                          <div
-                            key={item.id}
-                            className="bg-gray-700 rounded-md p-2 cursor-pointer hover:bg-gray-600"
-                            onClick={() => {
-                              handleRestaurantSelect(restaurant);
-                              handleAddToCart(item);
-                            }}
-                          >
-                            <div className="flex items-center">
-                              <div className="flex-1 min-w-0">
-                                <div className="text-white font-medium truncate text-sm">
-                                  {item.name}
-                                </div>
-                                <div className="text-gray-300 text-xs">
-                                  {item.price} AED
-                                </div>
-                              </div>
-                            </div>
-                          </div>
-                        ))}
-                      </div>
-                      <button
-                        className="w-full bg-[#2563EB] hover:bg-[#2058cf] text-white py-2 rounded-md mt-2"
-                        onClick={() => handleRestaurantSelect(restaurant)}
-                      >
-                        Order now
-                      </button>
-                    </div>
-                  </div>
-                );
-              })}
-            </motion.div>
+          <motion.div variants={itemVariants} className="self-start w-full">
+            <h2 className="text-6xl font-extrabold text-white mb-2 leading-tight">
+              Choose your
+              <br />
+              <span style={{ color: "#2563eb" }}>restaurant</span>
+            </h2>
           </motion.div>
-        </>
-      )}
-      {currentStep === OrderStep.MENU_SELECTION && selectedRestaurant && (
+
+          <motion.div
+            variants={itemVariants}
+            className="w-full grid grid-cols-2 gap-6"
+          >
+            {[RESTAURANTS[0], RESTAURANTS[1]].map((restaurant) => {
+              const topItems = generateMenuItems(restaurant.id)
+            .filter((item) => item.categoryId === "popular")
+            .slice(0, 2); // Limit to 2 items only
+            
+              const restaurantItemsInCart = orderItems.filter(
+            orderItem => topItems.some(item => item.id === orderItem.item.id)
+              );
+              
+              const itemCount = restaurantItemsInCart.length;
+              
+              return (
+            <div
+              key={restaurant.id}
+              className="bg-gray-800 rounded-lg shadow-lg p-4 flex flex-col h-[400px]"
+            >
+              <div className="mb-2">
+          <img
+              src={restaurant.image}
+              alt={restaurant.name}
+              className="w-full h-32 object-cover rounded-md"
+          />
+          <h3 className="text-white text-xl font-semibold mt-2 truncate">
+              {restaurant.name}
+          </h3>
+              </div>
+              <div className="flex-1 flex flex-col">
+          <h4 className="text-gray-300 text-sm mb-1">
+              Quick items
+          </h4>
+          <div className="space-y-1.5 flex-grow">
+              {topItems.map((item) => {
+          const isSelected = orderItems.some(
+            orderItem => orderItem.item.id === item.id
+          );
+          return (
+            <div
+          key={item.id}
+          className="bg-gray-700 rounded-md p-2 cursor-pointer hover:bg-gray-600 flex justify-between items-center"
+          onClick={() => handleAddToCart(item)}
+            >
+          <div className="flex-1 min-w-0">
+            <div className="text-white font-medium truncate text-sm">
+              {item.name}
+            </div>
+            <div className="text-gray-300 text-xs">
+              {item.price} AED
+            </div>
+          </div>
+          {isSelected && (
+            <Check className="h-4 w-4 text-white" />
+          )}
+            </div>
+          );
+              })}
+          </div>
+          <button
+              className="w-full bg-[#2563EB] hover:bg-[#2058cf] text-white py-2 rounded-md mt-2"
+              onClick={() => handleRestaurantSelect(restaurant)}
+          >
+              Order now {itemCount > 0 && `(${itemCount})`}
+          </button>
+              </div>
+            </div>
+              );
+            })}
+          </motion.div>
+            </motion.div>
+          </>
+        )}
+        {currentStep === OrderStep.MENU_SELECTION && selectedRestaurant && (
         <>
           <div
             onClick={handleExit}
