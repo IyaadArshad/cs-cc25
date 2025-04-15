@@ -672,7 +672,7 @@ export default function CaseHome() {
   // Show order details if active
   if (showOrderDetails && activeOrder) {
     return (
-      <OrderDetails 
+      <OrderDetails
         order={activeOrder}
         onClose={() => setShowOrderDetails(false)}
       />
@@ -709,11 +709,9 @@ export default function CaseHome() {
     // Sort tasks: unanswered first, answered last
     const sortedSteps = [...furtherSteps].sort((a, b) => {
       const answeredA =
-        taskAnswers[a.id] &&
-        taskAnswers[a.id] !== `${a.id}-not-confirmed`;
+        taskAnswers[a.id] && taskAnswers[a.id] !== `${a.id}-not-confirmed`;
       const answeredB =
-        taskAnswers[b.id] &&
-        taskAnswers[b.id] !== `${b.id}-not-confirmed`;
+        taskAnswers[b.id] && taskAnswers[b.id] !== `${b.id}-not-confirmed`;
       if (answeredA === answeredB) return 0;
       return answeredA ? 1 : -1;
     });
@@ -807,7 +805,9 @@ export default function CaseHome() {
               <h3 className="text-white font-medium">
                 {activeOrder.restaurant}
               </h3>
-              <p className="text-gray-400 text-sm">Order {activeOrder.status}</p>
+              <p className="text-gray-400 text-sm">
+                Order {activeOrder.status}
+              </p>
             </div>
             <div className="text-blue-400 flex items-center">
               <Clock className="w-4 h-4 mr-1" />
@@ -829,9 +829,7 @@ export default function CaseHome() {
             transition={{ duration: 0.4, delay: 0.2 }}
             className="text-4xl text-white text-center mb-3"
           >
-            {isReturning
-              ? `Welcome back, ${userName}`
-              : `Welcome, ${userName}`}
+            {isReturning ? `Welcome back, ${userName}` : `Welcome, ${userName}`}
           </motion.h1>
 
           <motion.div
@@ -1004,8 +1002,11 @@ export default function CaseHome() {
                               return "Invalid date";
                             }
                             const now = new Date();
-                            const diffInMs = now.getTime() - publishedDate.getTime();
-                            const diffInHours = Math.floor(diffInMs / (1000 * 60 * 60));
+                            const diffInMs =
+                              now.getTime() - publishedDate.getTime();
+                            const diffInHours = Math.floor(
+                              diffInMs / (1000 * 60 * 60)
+                            );
                             if (diffInHours < 24) {
                               return `${diffInHours}h ago`;
                             } else {
