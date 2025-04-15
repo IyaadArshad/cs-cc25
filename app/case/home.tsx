@@ -44,6 +44,20 @@ export interface TaskQuestionProps {
   progress: number;
 }
 
+export interface Article {
+  source: {
+    id: string | null;
+    name: string;
+  };
+  author: string | null;
+  title: string;
+  description: string | null;
+  url: string;
+  urlToImage: string | null;
+  publishedAt: string;
+  content: string | null;
+}
+
 function TaskQuestion({
   question,
   emphasisText,
@@ -369,6 +383,22 @@ export default function CaseHome() {
   const [hasShownCelebration, setHasShownCelebration] = useState(false);
   const [newsArticles, setNewsArticles] = useState<any[]>([]);
   const [isLoadingNews, setIsLoadingNews] = useState(false);
+
+  // Add state to manage the overlay visibility and selected article
+  const [selectedArticle, setSelectedArticle] = useState<Article | null>(null);
+  const [isOverlayVisible, setIsOverlayVisible] = useState(false);
+
+  // Function to handle article click
+  const handleArticleClick = (article: Article) => {
+    setSelectedArticle(article);
+    setIsOverlayVisible(true);
+  };
+
+  // Function to close the overlay
+  const closeOverlay = () => {
+    setIsOverlayVisible(false);
+    setSelectedArticle(null);
+  };
 
   const quickActions = [
     {
@@ -945,16 +975,14 @@ export default function CaseHome() {
                 initial={{ opacity: 0, y: 10 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 1 + index * 0.1 }}
-                onClick={() =>
-                  article.link && window.open(article.link, "_blank")
-                }
+                onClick={() => handleArticleClick(article)}
               >
                 <Card className="bg-gray-800 border-gray-700 hover:bg-gray-700/50 cursor-pointer transition-colors">
                   <div className="flex p-3">
                     <div className="flex-shrink-0">
                       <div className="w-[100px] h-[70px] rounded-md overflow-hidden bg-gray-700">
                         <img
-                          src="https://via.placeholder.com/100"
+                          src={article.urlToImage || ""}
                           alt={article.title || "News article"}
                           className="w-full h-full object-cover"
                         />
@@ -966,11 +994,25 @@ export default function CaseHome() {
                       </h3>
                       <div className="flex items-center mt-1">
                         <span className="text-xs text-blue-400">
-                          {article.source || "News Source"}
+                          {article.source.name || "News Source"}
                         </span>
                         <span className="mx-2 text-gray-500">•</span>
                         <span className="text-xs text-gray-400">
-                          {article.date || "Recent"}
+                          {(() => {
+                            const publishedDate = new Date(article.publishedAt);
+                            if (isNaN(publishedDate.getTime())) {
+                              return "Invalid date";
+                            }
+                            const now = new Date();
+                            const diffInMs = now.getTime() - publishedDate.getTime();
+                            const diffInHours = Math.floor(diffInMs / (1000 * 60 * 60));
+                            if (diffInHours < 24) {
+                              return `${diffInHours}h ago`;
+                            } else {
+                              const diffInDays = Math.floor(diffInHours / 24);
+                              return `${diffInDays}d ago`;
+                            }
+                          })()}
                         </span>
                       </div>
                     </div>
@@ -981,6 +1023,46 @@ export default function CaseHome() {
           )}
         </div>
       </motion.div>
+
+      {/* Add the overlay component */}
+      {isOverlayVisible && selectedArticle && (
+        <motion.div
+          className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          exit={{ opacity: 0 }}
+          transition={{ duration: 0.3 }}
+        >
+          <motion.div
+            className="bg-gray-800 p-6 rounded-lg max-w-lg w-full relative"
+            initial={{ scale: 0.8, opacity: 0 }}
+            animate={{ scale: 1, opacity: 1 }}
+            exit={{ scale: 0.8, opacity: 0 }}
+            transition={{ duration: 0.3 }}
+          >
+            <button
+              className="text-black px-4 absolute font-extrabold bg-white rounded-full p-1 bottom-5 right-4"
+              onClick={closeOverlay}
+            >
+              Close
+            </button>
+            <h2 className="text-white text-xl font-bold mb-4">
+              {selectedArticle.title}
+            </h2>
+            <p className="text-gray-300 mb-4">
+              {selectedArticle.description || "No summary available."}
+            </p>
+            <a
+              href={selectedArticle.url}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-blue-400 hover:underline"
+            >
+              Read full article
+            </a>
+          </motion.div>
+        </motion.div>
+      )}
 
       <AnimatePresence>
         {showDialog && (
