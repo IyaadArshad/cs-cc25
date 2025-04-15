@@ -368,24 +368,23 @@ export function OrderScreen({
                 return (
                   <div
                     key={restaurant.id}
-                    className="bg-gray-800 rounded-lg shadow-lg p-4 flex flex-col h-[380px]"
+                    className="bg-gray-800 rounded-lg shadow-lg p-4 flex flex-col h-[400px]"
                   >
-                    <div className="mb-3">
+                    <div className="mb-2">
                       <img
                         src={restaurant.image}
                         alt={restaurant.name}
-                        className="w-full h-36 object-cover rounded-md"
+                        className="w-full h-32 object-cover rounded-md"
                       />
                       <h3 className="text-white text-xl font-semibold mt-2 truncate">
                         {restaurant.name}
                       </h3>
-                      {/* <p className="text-gray-400 text-sm line-clamp-1">
-                        {restaurant.description}
-                      </p> */}
                     </div>
-                    <div className="flex-1">
-                      <h4 className="text-gray-300 mb-2">Quick items</h4>
-                      <div className="space-y-2">
+                    <div className="flex-1 flex flex-col">
+                      <h4 className="text-gray-300 text-sm mb-1">
+                        Quick items
+                      </h4>
+                      <div className="space-y-1.5 flex-grow">
                         {topItems.map((item) => (
                           <div
                             key={item.id}
@@ -396,18 +395,11 @@ export function OrderScreen({
                             }}
                           >
                             <div className="flex items-center">
-                              {/* <div className="w-10 h-10 rounded-md overflow-hidden flex-shrink-0 mr-2">
-                                <img
-                                  src={item.image}
-                                  alt={item.name}
-                                  className="w-full h-full object-cover"
-                                />
-                              </div> */}
                               <div className="flex-1 min-w-0">
-                                <div className="text-white font-medium truncate">
+                                <div className="text-white font-medium truncate text-sm">
                                   {item.name}
                                 </div>
-                                <div className="text-gray-300 text-sm">
+                                <div className="text-gray-300 text-xs">
                                   {item.price} AED
                                 </div>
                               </div>
@@ -415,6 +407,12 @@ export function OrderScreen({
                           </div>
                         ))}
                       </div>
+                      <button
+                        className="w-full bg-[#2563EB] hover:bg-[#2058cf] text-white py-2 rounded-md mt-2"
+                        onClick={() => handleRestaurantSelect(restaurant)}
+                      >
+                        Order now
+                      </button>
                     </div>
                   </div>
                 );
