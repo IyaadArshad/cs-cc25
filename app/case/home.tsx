@@ -27,6 +27,7 @@ import React from "react";
 import JSConfetti from "js-confetti";
 import { OrderScreen } from "./components/OrderScreen";
 import { OrderDetails } from "./components/OrderDetails";
+import WeatherDisplay from "./components/WeatherDisplay";
 
 export interface Option {
   id: string;
@@ -827,10 +828,21 @@ export default function CaseHome() {
               y: mainViewReady ? 0 : -20,
             }}
             transition={{ duration: 0.4, delay: 0.2 }}
-            className="text-4xl text-white text-center mb-3"
+            className="text-4xl text-white text-center -mb-2"
           >
             {isReturning ? `Welcome back, ${userName}` : `Welcome, ${userName}`}
           </motion.h1>
+          
+          {/* Weather Pill - "The Island" */}
+          {!isInitialLoading && mainViewReady && !overviewMode && !currentTaskStep && !showOrderScreen && !showOrderDetails && (
+            <motion.div
+              initial={{ opacity: 0, y: -10 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.4, delay: 0.3 }}
+            >
+              <WeatherDisplay />
+            </motion.div>
+          )}
 
           <motion.div
             key="progress-circle"
