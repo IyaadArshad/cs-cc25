@@ -278,7 +278,7 @@ export const shoppingPlaces = [
 export const essentialServices = [
   {
     image:
-      "/img/discover/essentialServices/abuDhabiDepartmentOfMunicipalitiesAndTransport.png",
+      "/img/discover/essentialServices/tamm.jpg",
     title: "TAMM Service Centre",
     description: "One-stop shop for government services in Abu Dhabi.",
     longDescription: [
@@ -291,7 +291,7 @@ export const essentialServices = [
   },
   {
     image:
-      "/img/discover/essentialServices/abuDhabiDepartmentOfMunicipalitiesAndTransport.png",
+      "/img/discover/essentialServices/seha.jpg",
     title: "Abu Dhabi Health Services (SEHA)",
     description: "Network of public hospitals and clinics in Abu Dhabi.",
     longDescription: [
@@ -303,7 +303,7 @@ export const essentialServices = [
     externalLink: "https://seha.ae",
   },
   {
-    image: "/img/discover/essentialServices/abuDhabiChamber.png",
+    image: "/img/discover/essentialServices/AbuDhabiPolice.png",
     title: "Abu Dhabi Police",
     description:
       "Main law enforcement agency, offering various services including traffic-related matters.",
@@ -331,8 +331,8 @@ export const essentialServices = [
   },
   {
     image:
-      "/img/discover/essentialServices/abuDhabiDepartmentOfMunicipalitiesAndTransport.png",
-    title: "Abu Dhabi Distribution Company",
+      "/img/discover/essentialServices/taqa.jpg",
+    title: "TAQA",
     description: "Manages electricity and water services for residents.",
     longDescription: [
       "ADDC is the sole provider of electricity and water services in Abu Dhabi region.",
