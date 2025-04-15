@@ -327,13 +327,13 @@ export function OrderScreen({
             <ArrowLeft className="w-5 h-5 text-white" />
             <span className="text-white">Back</span>
           </div>
-          
+
           <motion.div
             initial="hidden"
             animate={isExiting ? "exit" : "show"}
             exit="exit"
             variants={containerVariants}
-            className="flex flex-col items-center justify-center space-y-6 mt-12"
+            className="flex flex-col space-y-6 mt-12"
           >
             <motion.div variants={itemVariants} className="self-start w-full">
               <h2 className="text-6xl font-extrabold text-white mb-6 leading-tight">
@@ -343,57 +343,69 @@ export function OrderScreen({
               </h2>
             </motion.div>
 
-            {/* <motion.div variants={itemVariants} className="mb-4 relative w-full">
-            <Search className="absolute left-3 top-3 text-gray-500 w-5 h-5" />
-            <input
-              type="text"
-              placeholder="Search for restaurants"
-              className="w-full bg-gray-800 border border-gray-700 rounded-lg py-3 pl-10 pr-4 text-white focus:outline-none focus:ring-2 focus:ring-blue-600"
-            />
-          </motion.div> */}
-
             <motion.div
               variants={itemVariants}
-              className="w-full grid grid-cols-2 gap-4"
+              className="w-full grid grid-cols-2 gap-6"
             >
-              {RESTAURANTS.map((restaurant) => (
-                <div
-                  key={restaurant.id}
-                  className="flex flex-col bg-gray-800 rounded-lg overflow-hidden border border-gray-700 hover:border-gray-600 transition-colors cursor-pointer"
-                  onClick={() => handleRestaurantSelect(restaurant)}
-                >
-                  <div className="w-full aspect-video">
-                    <img
-                      src={restaurant.image}
-                      alt={restaurant.name}
-                      className="w-full h-full object-cover"
-                    />
-                  </div>
-                  <div className="p-3">
-                    <h3 className="text-white font-medium text-lg line-clamp-1">
-                      {restaurant.name}
-                    </h3>
-                    <div className="flex items-center gap-2 mt-1.5">
-                      <div className="flex items-center">
-                        <div className="text-yellow-500">★</div>
-                        <span className="text-white text-sm ml-0.5">
-                          {restaurant.rating}
-                        </span>
-                      </div>
-                      <div className="flex items-center text-gray-400 text-sm">
-                        <Clock size={12} className="mr-0.5" />
-                        {restaurant.deliveryTime}
+              {[RESTAURANTS[0], RESTAURANTS[1]].map((restaurant) => {
+                const topItems = generateMenuItems(restaurant.id).filter(
+                  (item) => item.categoryId === "popular"
+                );
+                return (
+                  <div
+                    key={restaurant.id}
+                    className="bg-gray-800 rounded-lg shadow-lg p-4 flex flex-col"
+                  >
+                    <div className="mb-4">
+                      <img
+                        src={restaurant.image}
+                        alt={restaurant.name}
+                        className="w-full h-40 object-cover rounded-md"
+                      />
+                      <h3 className="text-white text-xl font-semibold mt-2">
+                        {restaurant.name}
+                      </h3>
+                    </div>
+                    <div className="flex-1">
+                      <h4 className="text-gray-300 mb-2">Top Items</h4>
+                      <div className="space-y-2">
+                        {topItems.map((item) => (
+                          <div
+                            key={item.id}
+                            className="bg-gray-700 rounded-md p-2 cursor-pointer hover:bg-gray-600"
+                            onClick={() => {
+                              handleRestaurantSelect(restaurant);
+                              handleAddToCart(item);
+                            }}
+                          >
+                            <div className="flex items-center">
+                              <div className="w-12 h-12 rounded-md overflow-hidden flex-shrink-0 mr-3">
+                                <img
+                                  src={item.image}
+                                  alt={item.name}
+                                  className="w-full h-full object-cover"
+                                />
+                              </div>
+                              <div>
+                                <div className="text-white font-medium">
+                                  {item.name}
+                                </div>
+                                <div className="text-gray-300 text-sm">
+                                  {item.price} AED
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        ))}
                       </div>
                     </div>
                   </div>
-                </div>
-              ))}
+                );
+              })}
             </motion.div>
           </motion.div>
         </>
       )}
-
-      {/* Menu Selection Screen */}
       {currentStep === OrderStep.MENU_SELECTION && selectedRestaurant && (
         <>
           <div

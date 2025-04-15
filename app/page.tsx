@@ -333,7 +333,7 @@ export default function Page() {
               className="flex flex-col items-center justify-center gap-1 opacity-50 cursor-not-allowed"
             >
               <ChatBubbleLeftRightIcon className="w-8 h-8 text-[#ffffff]/50" />
-              <span className="text-[12px] text-[#ffffff]/50">Chat</span>
+              <span className="text-[12px] text-[#ffffff]/50">Agent</span>
             </button>
             <button
               disabled
@@ -448,7 +448,7 @@ export default function Page() {
                 activeTab === "chat" ? "text-[#2563eb]" : "text-[#ffffff]"
               }`}
             >
-              Chat
+              Agent
             </span>
           </button>
           <button
