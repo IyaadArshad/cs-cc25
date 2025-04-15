@@ -1,28 +1,21 @@
 export const news = [
   {
     source: {
-      id: "abc-news",
-      name: "ABC News",
+      id: "eye-of-dubai",
+      name: "Eye of Dubai",
     },
-    author: "David Brennan",
+    author: "Emily Thompson",
     title:
-      "American ballet dancer released from Russia in prisoner exchange, Rubio says",
+      "UAE's Diplomatic Outreach Intensifies as International Leaders Convene in Abu Dhabi",
     description:
-      "U.S.-Russian dual citizen Ksenia Karelina was released from Russian prison in an overnight prisoner exchange, Secretary of State Marco Rubio announced on Thursday.",
-    url: "https://abcnews.go.com/International/american-ballet-dancer-released-russia-prisoner-exchange-rubio/story?id=120670307",
-    urlToImage:
-      "https://i.abcnewsfe.com/a/ed8d7f8d-63ae-44a4-a34f-3139ea911ad9/Ksenia-Karelina-250410_1744276728430_hpMain_16x9.jpg?w=1600",
-    publishedAt: "2025-04-10T09:24:37Z",
+      "A high-level international summit in Abu Dhabi sees world leaders discussing strategic alliances and regional security measures, underscoring the UAE's growing diplomatic influence.",
+    url: "https://m.eyeofdubai.ae/news/details/300-diplomatic-leaders-convene-in-uae-as-abu-dhabi-diplomacy-conference-opens",
+    urlToImage: "/news/abudhabi.jpg",
+    publishedAt: "2025-04-14T12:00:00Z",
     content:
-      "LONDON -- U.S.-Russian dual citizen Ksenia Karelina was released from Russian prison in an overnight prisoner exchange, Secretary of State Marco Rubio announced on Thursday.\r\nKarelina -- a ballet dan… [+597 chars]",
-    summary: `<p>In a significant diplomatic breakthrough, U.S.-Russian dual citizen and ballet dancer Ksenia Karelina has been freed from Russian detention through a carefully negotiated prisoner exchange. The release marks another successful diplomatic effort to bring Americans home from foreign detention.</p>
-              <img src="https://i.abcnewsfe.com/a/ed8d7f8d-63ae-44a4-a34f-3139ea911ad9/Ksenia-Karelina-250410_1744276728430_hpMain_16x9.jpg" alt="Ksenia Karelina Release">
-              <p>The exchange, which took place under the cover of darkness, represents a rare moment of cooperation between Washington and Moscow despite ongoing tensions. Karelina's release has been celebrated by both her family and diplomatic officials who worked tirelessly to secure her freedom.</p>
-              <ul>
-                <li><strong>Exchange Location:</strong> Undisclosed location</li>
-                <li><strong>Duration of Detention:</strong> Several months</li>
-                <li><strong>Diplomatic Achievement:</strong> Successful negotiation during heightened tensions</li>
-              </ul>`,
+      "In a move that signals its rising stature on the world stage, the UAE played host to an international summit in Abu Dhabi. Leaders from across the globe gathered to discuss emerging security challenges and strategic economic collaborations in the region...",
+    summary:
+      '<p>The United Arab Emirates continues to bolster its international diplomatic presence by hosting a high-profile summit in Abu Dhabi. Global leaders engaged in robust discussions about strategic partnerships and regional security.</p><img src="/news/abudhabi.jpg" alt="UAE Diplomacy Summit"><p>Notable aspects of the summit include:</p><ul><li><strong>Global Participation:</strong> Leaders from over 50 countries in attendance.</li><li><strong>Security Discussions:</strong> Addressing both regional and international challenges.</li><li><strong>Economic Collaboration:</strong> Plans to enhance trade and investment in the region.</li></ul>',
   },
   {
     source: {
@@ -46,30 +39,6 @@ export const news = [
                 <li><strong>Location:</strong> Abu Dhabi, UAE</li>
                 <li><strong>Mediator:</strong> United Arab Emirates government</li>
                 <li><strong>Diplomatic Impact:</strong> Positive signal for future negotiations</li>
-              </ul>`,
-  },
-  {
-    source: {
-      id: "rt",
-      name: "RT",
-    },
-    author: "RT",
-    title: "WATCH Russia-US prisoner swap in Abu Dhabi",
-    description:
-      "Russia’s FSB has released a video showing a prisoner swap between Russia and the US in Abu Dhabi Read Full Article at RT.com",
-    url: "https://www.rt.com/russia/615540-russia-us-prisoner-swap-video/",
-    urlToImage:
-      "https://mf.b37mrtl.ru/files/2025.04/article/67f7c81720302725315e3546.png",
-    publishedAt: "2025-04-10T13:39:53Z",
-    content:
-      "Russia’s Federal Security Service (FSB) has released two videos showing a surprise prisoner swap between the US and Russia, which was mediated by the United Arab Emirates.\r\nThe exchange took place on… [+1210 chars]",
-    summary: `<p>Russia’s Federal Security Service (FSB) has released video footage of a prisoner swap between Russia and the United States, mediated by the United Arab Emirates. The exchange highlights the UAE's role as a neutral ground for international negotiations.</p>
-              <img src="https://mf.b37mrtl.ru/files/2025.04/article/67f7c81720302725315e3546.png" alt="Russia-US Prisoner Swap Video">
-              <p>The video showcases the moment of exchange, emphasizing the importance of third-party mediation in resolving complex geopolitical issues. The successful swap is seen as a diplomatic win for all parties involved.</p>
-              <ul>
-                <li><strong>Location:</strong> Abu Dhabi, UAE</li>
-                <li><strong>Video Released By:</strong> Russia’s FSB</li>
-                <li><strong>Significance:</strong> Demonstrates UAE's diplomatic capabilities</li>
               </ul>`,
   },
   {
