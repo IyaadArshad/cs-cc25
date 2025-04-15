@@ -115,73 +115,34 @@ const guideCategories = [
     ],
   },
   {
-    id: "dining",
-    title: "Dining",
-    icon: <Utensils className="w-4 h-4" />,
-    description:
-      "Discover the diverse culinary scene of Abu Dhabi from traditional Emirati cuisine to international restaurants.",
+    id: "learn-arabic",
+    title: "Learn Arabic",
+    icon: <BookOpen className="w-4 h-4" />,
+    description: "Learn some basic Arabic phrases to enhance your experience.",
     cards: [
       {
-        id: "dining-1",
-        title: "Local Cuisine",
-        src: "/images/local-cuisine.jpg",
-        alt: "Local Cuisine",
-        content:
-          "Traditional Emirati dishes and where to find the best local dining experiences.",
-        comp: "LocalCuisineData",
+        id: "arabic-1",
+        title: "Basic Phrases",
+        src: "/images/arabic-phrases.jpg",
+        alt: "Arabic Phrases",
+        content: "Learn essential Arabic greetings and phrases.",
+        comp: "ArabicPhrasesData",
       },
       {
-        id: "dining-2",
-        title: "International Restaurants",
-        src: "/images/international-restaurants.jpg",
-        alt: "International Restaurants",
-        content:
-          "A guide to the diverse international dining options available in Abu Dhabi.",
-        comp: "InternationalData",
+        id: "arabic-2",
+        title: "Numbers & Counting",
+        src: "/images/arabic-numbers.jpg",
+        alt: "Arabic Numbers",
+        content: "Learn how to count in Arabic.",
+        comp: "ArabicNumbersData",
       },
       {
-        id: "dining-3",
-        title: "Cafés & Desserts",
-        src: "/images/cafes.jpg",
-        alt: "Cafés",
-        content: "The best cafés and dessert spots to enjoy in Abu Dhabi.",
-        comp: "CafesData",
-      },
-    ],
-  },
-  {
-    id: "attractions",
-    title: "Attractions",
-    icon: <MapPin className="w-4 h-4" />,
-    description:
-      "Explore the top attractions and activities that Abu Dhabi has to offer.",
-    cards: [
-      {
-        id: "attractions-1",
-        title: "Cultural Sites",
-        src: "/images/cultural-sites.jpg",
-        alt: "Cultural Sites",
-        content:
-          "Discover the rich cultural heritage of Abu Dhabi through its museums and historical sites.",
-        comp: "CulturalSitesData",
-      },
-      {
-        id: "attractions-2",
-        title: "Theme Parks",
-        src: "/images/theme-parks.jpg",
-        alt: "Theme Parks",
-        content:
-          "Family-friendly theme parks and entertainment venues in Abu Dhabi.",
-        comp: "ThemeParksData",
-      },
-      {
-        id: "attractions-3",
-        title: "Natural Wonders",
-        src: "/images/natural-wonders.jpg",
-        alt: "Natural Wonders",
-        content:
-          "Explore the natural beauty of Abu Dhabi from deserts to mangrove forests.",
-        comp: "NaturalWondersData",
+        id: "arabic-3",
+        title: "Useful Words",
+        src: "/images/arabic-words.jpg",
+        alt: "Useful Arabic Words",
+        content: "Expand your vocabulary with these useful Arabic words.",
+        comp: "ArabicWordsData",
       },
     ],
   },
@@ -842,7 +803,7 @@ export default function CaseGuide() {
                       {guideCategories
                         .find((cat) => cat.id === selectedTab)
                         ?.cards.map((card, index) => (
-                          <motion.div
+                            <motion.div
                             key={card.id}
                             initial={{ opacity: 0, y: 10 }}
                             animate={{ opacity: 1, y: 0 }}
@@ -850,30 +811,33 @@ export default function CaseGuide() {
                               duration: 0.2,
                               delay: 0.7 + index * 0.05,
                             }}
-                          >
+                            className="h-full"
+                            >
                             <Card
-                              className="w-full cursor-pointer hover:bg-gray-700/50 transition bg-gray-800 border-gray-700"
+                              className="w-full h-full cursor-pointer hover:bg-gray-700/50 transition bg-gray-800 border-gray-700 flex flex-col"
                               onClick={() => setSelectedCard(card as cardData)}
                             >
                               <div className="h-32 relative">
-                                <Image
-                                  src={card.src}
-                                  alt={card.alt}
-                                  className="object-cover rounded-t-lg"
-                                  fill
-                                  sizes="(max-width: 768px) 100vw, 384px"
-                                />
+                              <Image
+                              src={card.src}
+                              alt={card.alt}
+                              className="object-cover rounded-t-lg"
+                              fill
+                              sizes="(max-width: 768px) 100vw, 384px"
+                              />
                               </div>
-                              <CardContent className="p-4">
-                                <h4 className="text-white font-medium mb-1">
-                                  {card.title}
-                                </h4>
-                                <p className="text-gray-400 text-sm line-clamp-2">
-                                  {card.content}
-                                </p>
+                              <CardContent className="p-4 flex-grow flex flex-col justify-between">
+                              <div>
+                              <h4 className="text-white font-medium mb-1">
+                                {card.title}
+                              </h4>
+                              <p className="text-gray-400 text-sm line-clamp-2">
+                                {card.content}
+                              </p>
+                              </div>
                               </CardContent>
                             </Card>
-                          </motion.div>
+                            </motion.div>
                         ))}
                     </div>
                   </motion.div>
@@ -888,24 +852,13 @@ export default function CaseGuide() {
                   className="mt-8 bg-gray-800 rounded-xl p-6 border border-gray-700"
                 >
                   <div className="flex items-center justify-between mb-4">
-                    <h3 className="text-xl font-bold text-white">Need Help?</h3>
+                    <h3 className="text-xl font-bold text-white">Looking for something else?</h3>
                     <Map className="w-6 h-6 text-blue-400" />
                   </div>
                   <p className="text-gray-400 mb-4">
-                    Can't find what you're looking for? Our support team is here
-                    to help you navigate Abu Dhabi with ease.
+                    Find what you're looking for with our AI agent or through our discover page.
                   </p>
-                  <div className="flex flex-wrap gap-3">
-                    <button className="px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-md">
-                      Contact Support
-                    </button>
-                    <button className="px-4 py-2 bg-gray-700 hover:bg-gray-600 text-white rounded-md">
-                      Download Map
-                    </button>
-                    <button className="px-4 py-2 bg-gray-700 hover:bg-gray-600 text-white rounded-md">
-                      Emergency Info
-                    </button>
-                  </div>
+
                 </motion.div>
               </div>
             )}

@@ -30,7 +30,7 @@ import CaseGuide from "./case/guide";
 import CaseSettings from "./case/settings";
 
 export default function Page() {
-  const [activeTab, setActiveTab] = useState<Tab>("home");
+  const [ activeTab, setActiveTab] = useState<Tab>("home");
   const [userName, setUserName] = useState("");
   const [phase, setPhase] = useState<"name" | "bio" | "origin" | "final">(
     "name"
