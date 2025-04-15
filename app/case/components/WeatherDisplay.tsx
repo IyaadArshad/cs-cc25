@@ -2,6 +2,15 @@
 
 import { useEffect, useState } from 'react';
 import Cookies from 'js-cookie';
+import { 
+  SunIcon, 
+  CloudSunIcon, 
+  CloudIcon, 
+  CloudRainIcon, 
+  CloudSnowIcon, 
+  CloudFogIcon, 
+  CloudLightningIcon 
+} from './WeatherIcons';
 
 interface WeatherData {
   location: string;
@@ -80,23 +89,59 @@ export default function WeatherDisplay() {
   const temperature = usesFahrenheit 
     ? `${weatherData.temperature.fahrenheit}°F` 
     : `${weatherData.temperature.celsius}°C`;
+    
+  // Get appropriate weather icon based on condition
+  const getWeatherIcon = (condition: string) => {
+    const conditionLower = condition.toLowerCase();
+    
+    if (conditionLower.includes('clear') || conditionLower.includes('sunny')) {
+      return <SunIcon className="w-5 h-5" />;
+    } else if (conditionLower.includes('partly cloudy') || conditionLower.includes('mostly sunny')) {
+      return <CloudSunIcon className="w-5 h-5" />;
+    } else if (conditionLower.includes('cloud')) {
+      return <CloudIcon className="w-5 h-5" />;
+    } else if (conditionLower.includes('rain') || conditionLower.includes('shower') || conditionLower.includes('drizzle')) {
+      return <CloudRainIcon className="w-5 h-5" />;
+    } else if (conditionLower.includes('snow') || conditionLower.includes('sleet') || conditionLower.includes('ice')) {
+      return <CloudSnowIcon className="w-5 h-5" />;
+    } else if (conditionLower.includes('fog') || conditionLower.includes('haze') || conditionLower.includes('mist')) {
+      return <CloudFogIcon className="w-5 h-5" />;
+    } else if (conditionLower.includes('thunder') || conditionLower.includes('lightning') || conditionLower.includes('storm')) {
+      return <CloudLightningIcon className="w-5 h-5" />;
+    } else {
+      return <SunIcon className="w-5 h-5" />; // Default to sun
+    }
+  };
 
   return (
-    <div className="weather-pill-container flex justify-center -mb-2.5">
+    <div className="weather-pill-container flex justify-center">
       <div className="weather-pill">
+        <span className="weather-icon">{getWeatherIcon(weatherData.condition)}</span>
         <span className="temperature">{temperature}</span>
         <span className="divider">|</span>
         <span className="condition">{weatherData.condition}</span>
       </div>
       
-      <style jsx>{`        
+      <style jsx>{`
+        .weather-pill-container {
+          margin-bottom: 8px;
+        }
+        
         .weather-pill {
-          background-color: #27272A;
+          background-color: rgba(10, 37, 64, 0.75);
           border-radius: 20px;
-          padding: 5px 16px;
+          padding: 4px 14px;
           display: inline-flex;
           align-items: center;
           color: white;
+          backdrop-filter: blur(4px);
+          box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+        }
+        
+        .weather-icon {
+          margin-right: 6px;
+          display: flex;
+          align-items: center;
         }
         
         .temperature {

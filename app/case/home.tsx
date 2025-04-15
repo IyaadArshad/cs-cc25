@@ -793,249 +793,254 @@ export default function CaseHome() {
   }
 
   return (
-    <div className="flex-1 p-6 overflow-y-auto">
-      {activeOrder && (
-        <motion.div
-          initial={{ opacity: 0, y: -20 }}
-          animate={{ opacity: 1, y: 0 }}
-          className="bg-gray-800 rounded-lg p-4 mb-6 cursor-pointer hover:bg-gray-700/70 transition-all"
-          onClick={() => setShowOrderDetails(true)}
-        >
-          <div className="flex items-center justify-between">
-            <div>
-              <h3 className="text-white font-medium">
-                {activeOrder.restaurant}
-              </h3>
-              <p className="text-gray-400 text-sm">
-                Order {activeOrder.status}
-              </p>
-            </div>
-            <div className="text-blue-400 flex items-center">
-              <Clock className="w-4 h-4 mr-1" />
-              <span>Delivery in ~{activeOrder.estimatedTime} mins</span>
-            </div>
-          </div>
-        </motion.div>
-      )}
-
-      <div className="flex flex-col items-center justify-center space-y-6 mt-8">
-        <AnimatePresence mode="wait">
-          <motion.h1
-            key="welcome-title"
-            initial={{ opacity: 0, y: -20 }}
-            animate={{
-              opacity: mainViewReady ? 1 : 0,
-              y: mainViewReady ? 0 : -20,
-            }}
-            transition={{ duration: 0.4, delay: 0.2 }}
-            className="text-4xl text-white text-center -mb-2"
-          >
-            {isReturning ? `Welcome back, ${userName}` : `Welcome, ${userName}`}
-          </motion.h1>
-          
-          {/* Weather Pill - "The Island" */}
-          {!isInitialLoading && mainViewReady && !overviewMode && !currentTaskStep && !showOrderScreen && !showOrderDetails && (
+    <div className="flex-1 overflow-y-auto relative">
+      {/* Weather gradient background */}
+      <div className="weather-gradient">
+        <div className="p-6">
+          {activeOrder && (
             <motion.div
-              initial={{ opacity: 0, y: -10 }}
+              initial={{ opacity: 0, y: -20 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.4, delay: 0.3 }}
+              className="bg-gray-800 rounded-lg p-4 mb-6 cursor-pointer hover:bg-gray-700/70 transition-all"
+              onClick={() => setShowOrderDetails(true)}
             >
-              <WeatherDisplay />
+              <div className="flex items-center justify-between">
+                <div>
+                  <h3 className="text-white font-medium">
+                    {activeOrder.restaurant}
+                  </h3>
+                  <p className="text-gray-400 text-sm">
+                    Order {activeOrder.status}
+                  </p>
+                </div>
+                <div className="text-blue-400 flex items-center">
+                  <Clock className="w-4 h-4 mr-1" />
+                  <span>Delivery in ~{activeOrder.estimatedTime} mins</span>
+                </div>
+              </div>
             </motion.div>
           )}
 
-          <motion.div
-            key="progress-circle"
-            initial={{ opacity: 0, scale: 0.9 }}
-            animate={{
-              opacity: mainViewReady ? (isTransitioning ? 0 : 1) : 0,
-              scale: mainViewReady ? (isTransitioning ? 0.9 : 1) : 0.9,
-            }}
-            transition={{ duration: 0.4, delay: 0.4 }}
-            onClick={
-              calculateProgress(taskAnswers, furtherSteps) === 100
-                ? undefined
-                : handleOverviewClick
-            }
-            className={`cursor-pointer transform transition-transform hover:scale-105 ${
-              calculateProgress(taskAnswers, furtherSteps) === 100
-                ? ""
-                : "animate-wiggle"
-            }`}
-          >
-            <ProgressCircle
-              percentage={calculateProgress(taskAnswers, furtherSteps)}
-            />
-          </motion.div>
-        </AnimatePresence>
-      </div>
-
-      {/* Section Divider */}
-      <motion.div
-        initial={{ opacity: 0, scaleX: 0.8 }}
-        animate={{
-          opacity: mainViewReady ? 1 : 0,
-          scaleX: mainViewReady ? 1 : 0.8,
-        }}
-        transition={{ duration: 0.4, delay: 0.5 }}
-        className="w-full flex items-center gap-4 mt-8"
-      >
-        <div className="h-px bg-gray-700 flex-grow"></div>
-      </motion.div>
-
-      {/* Quick Actions Carousel */}
-
-      <motion.h1
-        initial={{ opacity: 0, y: 20 }}
-        animate={{
-          opacity: mainViewReady ? 1 : 0,
-          y: mainViewReady ? 0 : 20,
-        }}
-        transition={{ duration: 0.4, delay: 0.55 }}
-        className="text-2xl mt-4 text-white"
-      >
-        Quick Actions
-      </motion.h1>
-
-      <motion.div
-        initial={{ opacity: 0, y: 20 }}
-        animate={{
-          opacity: mainViewReady ? 1 : 0,
-          y: mainViewReady ? 0 : 20,
-        }}
-        transition={{ duration: 0.4, delay: 0.6 }}
-        className="w-full mt-6"
-      >
-        <Carousel
-          opts={carouselOptions}
-          className="w-full cursor-grab active:cursor-grabbing"
-        >
-          <CarouselContent className="select-none px-2 -ml-1">
-            {quickActions.map((action, index) => (
-              <CarouselItem
-                key={index}
-                className={`pl-2 ${
-                  index === 0 ? "ml-1" : ""
-                } basis-[60%] min-w-[200px] sm:basis-1/3 md:basis-[28%] lg:basis-[20%] xl:basis-1/6 max-w-[250px]`}
-              >
+          <div className="flex flex-col items-center justify-center">
+            <AnimatePresence mode="wait">
+              {/* Weather Pill - "The Island" - Positioned ABOVE welcome text */}
+              {!isInitialLoading && mainViewReady && !currentTaskStep && !showOrderScreen && !showOrderDetails && (
                 <motion.div
-                  initial={{ opacity: 0, y: 20 }}
+                  initial={{ opacity: 0, y: -10 }}
                   animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: 0.1 + index * 0.05 }}
-                  className="h-full"
+                  transition={{ duration: 0.4, delay: 0.2 }}
+                  className="mb-3"
                 >
-                  <Card
-                    className="bg-gray-800 border-gray-700 h-[130px] w-full select-none cursor-pointer hover:bg-gray-700/50 transition-colors"
-                    onClick={() =>
-                      index === 0
-                        ? setShowOrderScreen(true)
-                        : window.open(action.link, "_blank")
-                    }
-                  >
-                    <CardContent className="p-3 flex flex-col text-left justify-center h-full">
-                      <div className="flex flex-col items-start">
-                        <div className="text-[#2563eb] mb-3">{action.icon}</div>
-                        <h1 className="text-white font-semibold text-lg leading-normal">
-                          {action.title}
-                        </h1>
-                      </div>
-                    </CardContent>
-                  </Card>
+                  <WeatherDisplay />
                 </motion.div>
-              </CarouselItem>
-            ))}
-          </CarouselContent>
-        </Carousel>
-      </motion.div>
-
-      <motion.div
-        initial={{ opacity: 0, scaleX: 0.8 }}
-        animate={{
-          opacity: mainViewReady ? 1 : 0,
-          scaleX: mainViewReady ? 1 : 0.8,
-        }}
-        transition={{ duration: 0.4, delay: 0.7 }}
-        className="w-full flex items-center gap-4 mt-8"
-      >
-        <div className="h-px bg-gray-700 flex-grow"></div>
-      </motion.div>
-
-      {/* News & Stories Section */}
-      <motion.div
-        initial={{ opacity: 0, y: 20 }}
-        animate={{
-          opacity: mainViewReady ? 1 : 0,
-          y: mainViewReady ? 0 : 20,
-        }}
-        transition={{ duration: 0.4, delay: 0.8 }}
-        className="w-full"
-      >
-        <h2 className="text-2xl text-white mb-4 mt-4">For You</h2>
-
-        <div className="space-y-4">
-          {/* Microsoft Articles */}
-          {isLoadingNews ? (
-            <div className="flex justify-center py-4">
-              <div className="w-6 h-6 border-2 border-t-transparent border-blue-500 rounded-full animate-spin"></div>
-            </div>
-          ) : (
-            newsArticles.map((article, index) => (
-              <motion.div
-                key={`news-${index}`}
-                initial={{ opacity: 0, y: 10 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 1 + index * 0.1 }}
-                onClick={() => handleArticleClick(article)}
+              )}
+              
+              <motion.h1
+                key="welcome-title"
+                initial={{ opacity: 0, y: -20 }}
+                animate={{
+                  opacity: mainViewReady ? 1 : 0,
+                  y: mainViewReady ? 0 : -20,
+                }}
+                transition={{ duration: 0.4, delay: 0.3 }}
+                className="text-4xl text-white text-center mb-4"
               >
-                <Card className="bg-gray-800 border-gray-700 hover:bg-gray-700/50 cursor-pointer transition-colors">
-                  <div className="flex p-3">
-                    <div className="flex-shrink-0">
-                      <div className="w-[100px] h-[70px] rounded-md overflow-hidden bg-gray-700">
-                        <img
-                          src={article.urlToImage || ""}
-                          alt={article.title || "News article"}
-                          className="w-full h-full object-cover"
-                        />
-                      </div>
-                    </div>
-                    <div className="ml-4 flex flex-col justify-between flex-1">
-                      <h3 className="text-white font-medium line-clamp-2 text-sm">
-                        {article.title}
-                      </h3>
-                      <div className="flex items-center mt-1">
-                        <span className="text-xs text-blue-400">
-                          {article.source.name || "News Source"}
-                        </span>
-                        <span className="mx-2 text-gray-500">•</span>
-                        <span className="text-xs text-gray-400">
-                          {(() => {
-                            const publishedDate = new Date(article.publishedAt);
-                            if (isNaN(publishedDate.getTime())) {
-                              return "Invalid date";
-                            }
-                            const now = new Date();
-                            const diffInMs =
-                              now.getTime() - publishedDate.getTime();
-                            const diffInHours = Math.floor(
-                              diffInMs / (1000 * 60 * 60)
-                            );
-                            if (diffInHours < 24) {
-                              return `${diffInHours}h ago`;
-                            } else {
-                              const diffInDays = Math.floor(diffInHours / 24);
-                              return `${diffInDays}d ago`;
-                            }
-                          })()}
-                        </span>
-                      </div>
-                    </div>
-                  </div>
-                </Card>
+                {isReturning ? `Welcome back, ${userName}` : `Welcome, ${userName}`}
+              </motion.h1>
+
+              <motion.div
+                key="progress-circle"
+                initial={{ opacity: 0, scale: 0.9 }}
+                animate={{
+                  opacity: mainViewReady ? (isTransitioning ? 0 : 1) : 0,
+                  scale: mainViewReady ? (isTransitioning ? 0.9 : 1) : 0.9,
+                }}
+                transition={{ duration: 0.4, delay: 0.4 }}
+                onClick={
+                  calculateProgress(taskAnswers, furtherSteps) === 100
+                    ? undefined
+                    : handleOverviewClick
+                }
+                className={`cursor-pointer transform transition-transform hover:scale-105 ${
+                  calculateProgress(taskAnswers, furtherSteps) === 100
+                    ? ""
+                    : "animate-wiggle"
+                }`}
+              >
+                <ProgressCircle
+                  percentage={calculateProgress(taskAnswers, furtherSteps)}
+                />
               </motion.div>
-            ))
-          )}
+            </AnimatePresence>
+          </div>
+
+          {/* Section Divider */}
+          <motion.div
+            initial={{ opacity: 0, scaleX: 0.8 }}
+            animate={{
+              opacity: mainViewReady ? 1 : 0,
+              scaleX: mainViewReady ? 1 : 0.8,
+            }}
+            transition={{ duration: 0.4, delay: 0.5 }}
+            className="w-full flex items-center gap-4 mt-8"
+          >
+            <div className="h-px bg-gray-700 flex-grow"></div>
+          </motion.div>
+
+          {/* Quick Actions Carousel */}
+          <motion.h1
+            initial={{ opacity: 0, y: 20 }}
+            animate={{
+              opacity: mainViewReady ? 1 : 0,
+              y: mainViewReady ? 0 : 20,
+            }}
+            transition={{ duration: 0.4, delay: 0.55 }}
+            className="text-2xl mt-4 text-white"
+          >
+            Quick Actions
+          </motion.h1>
+
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{
+              opacity: mainViewReady ? 1 : 0,
+              y: mainViewReady ? 0 : 20,
+            }}
+            transition={{ duration: 0.4, delay: 0.6 }}
+            className="w-full mt-6"
+          >
+            <Carousel
+              opts={carouselOptions}
+              className="w-full cursor-grab active:cursor-grabbing"
+            >
+              <CarouselContent className="select-none px-2 -ml-1">
+                {quickActions.map((action, index) => (
+                  <CarouselItem
+                    key={index}
+                    className={`pl-2 ${
+                      index === 0 ? "ml-1" : ""
+                    } basis-[60%] min-w-[200px] sm:basis-1/3 md:basis-[28%] lg:basis-[20%] xl:basis-1/6 max-w-[250px]`}
+                  >
+                    <motion.div
+                      initial={{ opacity: 0, y: 20 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{ delay: 0.1 + index * 0.05 }}
+                      className="h-full"
+                    >
+                      <Card
+                        className="bg-gray-800 border-gray-700 h-[130px] w-full select-none cursor-pointer hover:bg-gray-700/50 transition-colors"
+                        onClick={() =>
+                          index === 0
+                            ? setShowOrderScreen(true)
+                            : window.open(action.link, "_blank")
+                        }
+                      >
+                        <CardContent className="p-3 flex flex-col text-left justify-center h-full">
+                          <div className="flex flex-col items-start">
+                            <div className="text-[#2563eb] mb-3">{action.icon}</div>
+                            <h1 className="text-white font-semibold text-lg leading-normal">
+                              {action.title}
+                            </h1>
+                          </div>
+                        </CardContent>
+                      </Card>
+                    </motion.div>
+                  </CarouselItem>
+                ))}
+              </CarouselContent>
+            </Carousel>
+          </motion.div>
+
+          <motion.div
+            initial={{ opacity: 0, scaleX: 0.8 }}
+            animate={{
+              opacity: mainViewReady ? 1 : 0,
+              scaleX: mainViewReady ? 1 : 0.8,
+            }}
+            transition={{ duration: 0.4, delay: 0.7 }}
+            className="w-full flex items-center gap-4 mt-8"
+          >
+            <div className="h-px bg-gray-700 flex-grow"></div>
+          </motion.div>
+
+          {/* News & Stories Section */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{
+              opacity: mainViewReady ? 1 : 0,
+              y: mainViewReady ? 0 : 20,
+            }}
+            transition={{ duration: 0.4, delay: 0.8 }}
+            className="w-full"
+          >
+            <h2 className="text-2xl text-white mb-4 mt-4">For You</h2>
+
+            <div className="space-y-4">
+              {/* Articles */}
+              {isLoadingNews ? (
+                <div className="flex justify-center py-4">
+                  <div className="w-6 h-6 border-2 border-t-transparent border-blue-500 rounded-full animate-spin"></div>
+                </div>
+              ) : (
+                newsArticles.map((article, index) => (
+                  <motion.div
+                    key={`news-${index}`}
+                    initial={{ opacity: 0, y: 10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: 1 + index * 0.1 }}
+                    onClick={() => handleArticleClick(article)}
+                  >
+                    <Card className="bg-gray-800 border-gray-700 hover:bg-gray-700/50 cursor-pointer transition-colors">
+                      <div className="flex p-3">
+                        <div className="flex-shrink-0">
+                          <div className="w-[100px] h-[70px] rounded-md overflow-hidden bg-gray-700">
+                            <img
+                              src={article.urlToImage || ""}
+                              alt={article.title || "News article"}
+                              className="w-full h-full object-cover"
+                            />
+                          </div>
+                        </div>
+                        <div className="ml-4 flex flex-col justify-between flex-1">
+                          <h3 className="text-white font-medium line-clamp-2 text-sm">
+                            {article.title}
+                          </h3>
+                          <div className="flex items-center mt-1">
+                            <span className="text-xs text-blue-400">
+                              {article.source.name || "News Source"}
+                            </span>
+                            <span className="mx-2 text-gray-500">•</span>
+                            <span className="text-xs text-gray-400">
+                              {(() => {
+                                const publishedDate = new Date(article.publishedAt);
+                                if (isNaN(publishedDate.getTime())) {
+                                  return "Invalid date";
+                                }
+                                const now = new Date();
+                                const diffInMs =
+                                  now.getTime() - publishedDate.getTime();
+                                const diffInHours = Math.floor(
+                                  diffInMs / (1000 * 60 * 60)
+                                );
+                                if (diffInHours < 24) {
+                                  return `${diffInHours}h ago`;
+                                } else {
+                                  const diffInDays = Math.floor(diffInHours / 24);
+                                  return `${diffInDays}d ago`;
+                                }
+                              })()}
+                            </span>
+                          </div>
+                        </div>
+                      </div>
+                    </Card>
+                  </motion.div>
+                ))
+              )}
+            </div>
+          </motion.div>
         </div>
-      </motion.div>
+      </div>
 
       {/* Add the overlay component */}
       {isOverlayVisible && selectedArticle && (
@@ -1117,7 +1122,7 @@ export default function CaseHome() {
           </motion.div>
         )}
       </AnimatePresence>
-      {/* Add custom keyframes for wiggle animation */}
+      {/* Add custom styles for the gradient and animations */}
       <style jsx global>{`
         @keyframes wiggle {
           0%,
@@ -1142,6 +1147,12 @@ export default function CaseHome() {
           animation: wiggle 1s ease-in-out;
           animation-delay: 14s;
           animation-iteration-count: infinite;
+        }
+        
+        .weather-gradient {
+          background: linear-gradient(180deg, #1e40af 0%, rgba(30, 64, 175, 0) 300px);
+          position: relative;
+          min-height: 100%;
         }
       `}</style>
     </div>
