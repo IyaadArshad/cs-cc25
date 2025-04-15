@@ -1,59 +1,191 @@
-import React from 'react';
+import React from "react";
 
-export const SunIcon = ({ className = "w-4 h-4" }: { className?: string }) => (
-  <svg className={className} viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <circle cx="12" cy="12" r="5" fill="#FFD700" />
-    <path d="M12 2V4M12 20V22M4 12H2M6.31 6.31L4.9 4.9M17.69 6.31L19.1 4.9M6.31 17.69L4.9 19.1M17.69 17.69L19.1 19.1M22 12H20" 
-      stroke="#FFD700" strokeWidth="2" strokeLinecap="round" />
+export const SunIcon = ({ className = "w-5 h-5" }: { className?: string }) => (
+  <svg
+    className={className}
+    viewBox="0 0 24 24"
+    fill="none"
+    xmlns="http://www.w3.org/2000/svg"
+  >
+    <circle cx="12" cy="12" r="6" fill="#FFD700" />
+    <path
+      d="M12 2V4M12 20V22M4 12H2M6.31 6.31L4.9 4.9M17.69 6.31L19.1 4.9M6.31 17.69L4.9 19.1M17.69 17.69L19.1 19.1M22 12H20"
+      stroke="#FFD700"
+      strokeWidth="2"
+      strokeLinecap="round"
+    />
   </svg>
 );
 
-export const CloudSunIcon = ({ className = "w-4 h-4" }: { className?: string }) => (
-  <svg className={className} viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <circle cx="9" cy="7" r="3" fill="#FFD700" />
-    <path d="M9 2V3.5M3.5 7H2M5 3.5L4 2.5M13 3.5L14 2.5M5 10.5L4 11.5M13 10.5L14 11.5M15.5 7H14" 
-      stroke="#FFD700" strokeWidth="1.5" strokeLinecap="round" />
-    <path d="M6.5 15.5C4.84 15.5 3.5 14.16 3.5 12.5C3.5 10.84 4.84 9.5 6.5 9.5C6.62 9.5 6.73 9.51 6.85 9.52C7.38 7.5 9.29 6 11.5 6C14.26 6 16.5 8.24 16.5 11C16.5 11.25 16.47 11.5 16.43 11.73C16.8 11.58 17.18 11.5 17.6 11.5C19.37 11.5 20.81 12.89 20.9 14.65L21 16.5H3L3.1 14.65C3.15 13.77 3.6 13 4.25 12.52C4.83 11.87 5.62 11.5 6.5 11.5C7.56 11.5 8.5 12.06 9.05 12.9C8.18 13.65 7.6 14.75 7.6 16H9.7C9.75 15.81 9.82 15.63 9.91 15.46C10.26 14.76 10.83 14.19 11.54 13.87C11.98 13.68 12.47 13.59 12.96 13.62M17.6 16L17.6 16.01" 
-      fill="#D1D5DB" />
+export const CloudSunIcon = ({
+  className = "w-5 h-5",
+}: {
+  className?: string;
+}) => (
+  <svg
+    className={className}
+    viewBox="0 0 24 24"
+    fill="none"
+    xmlns="http://www.w3.org/2000/svg"
+  >
+    <circle cx="8" cy="8" r="3.5" fill="#FFD700" />
+    <path
+      fillRule="evenodd"
+      clipRule="evenodd"
+      d="M17.5 18H7C4.79086 18 3 16.2091 3 14C3 11.7909 4.79086 10 7 10C7.11873 10 7.23576 10.0043 7.35108 10.0126C8.15128 7.73507 10.393 6 13 6C16.3137 6 19 8.68629 19 12C19 12.2457 18.9793 12.4863 18.9392 12.7209C20.6134 13.1861 21.818 14.7295 21.9695 16.5641L22 16.9944L21.9947 17.4249C21.9105 17.9705 21.5923 18 17.5 18Z"
+      fill="#D1D5DB"
+    />
   </svg>
 );
 
-export const CloudIcon = ({ className = "w-4 h-4" }: { className?: string }) => (
-  <svg className={className} viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <path d="M7.5 18.5H19C21.21 18.5 23 16.71 23 14.5C23 12.29 21.21 10.5 19 10.5C18.79 10.5 18.59 10.52 18.39 10.55C17.9 8.07 15.69 6.25 13 6.25C9.82 6.25 7.25 8.82 7.25 12C7.25 12.43 7.3 12.84 7.39 13.23C5.45 13.43 4 15.09 4 17.12C4 17.95 4.28 18.74 4.81 19.35C5.34 19.97 6.08 18.5 7 18.5" 
-      fill="#D1D5DB" />
+export const CloudIcon = ({
+  className = "w-5 h-5",
+}: {
+  className?: string;
+}) => (
+  <svg
+    className={className}
+    viewBox="0 0 24 24"
+    fill="none"
+    xmlns="http://www.w3.org/2000/svg"
+  >
+    <path
+      fillRule="evenodd"
+      clipRule="evenodd"
+      d="M17.5 18H7C4.79086 18 3 16.2091 3 14C3 11.7909 4.79086 10 7 10C7.11873 10 7.23576 10.0043 7.35108 10.0126C8.15128 7.73507 10.393 6 13 6C16.3137 6 19 8.68629 19 12C19 12.2457 18.9793 12.4863 18.9392 12.7209C20.6134 13.1861 21.818 14.7295 21.9695 16.5641L22 16.9944L21.9947 17.4249C21.9105 17.9705 21.5923 18 17.5 18Z"
+      fill="#D1D5DB"
+    />
   </svg>
 );
 
-export const CloudRainIcon = ({ className = "w-4 h-4" }: { className?: string }) => (
-  <svg className={className} viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <path d="M7.5 13.5H19C21.21 13.5 23 11.71 23 9.5C23 7.29 21.21 5.5 19 5.5C18.79 5.5 18.59 5.52 18.39 5.55C17.9 3.07 15.69 1.25 13 1.25C9.82 1.25 7.25 3.82 7.25 7C7.25 7.43 7.3 7.84 7.39 8.23C5.45 8.43 4 10.09 4 12.12C4 12.95 4.28 13.74 4.81 14.35C5.34 14.97 6.08 13.5 7 13.5" 
-      fill="#D1D5DB" />
-    <path d="M8 18L7 20M12 18L11 20M16 18L15 20" stroke="#3B82F6" strokeWidth="2" strokeLinecap="round" />
+export const CloudRainIcon = ({
+  className = "w-5 h-5",
+}: {
+  className?: string;
+}) => (
+  <svg
+    className={className}
+    viewBox="0 0 24 24"
+    fill="none"
+    xmlns="http://www.w3.org/2000/svg"
+  >
+    <path
+      fillRule="evenodd"
+      clipRule="evenodd"
+      d="M17.5 13H7C4.79086 13 3 11.2091 3 9C3 6.79086 4.79086 5 7 5C7.11873 5 7.23576 5.00427 7.35108 5.01264C8.15128 2.73507 10.393 1 13 1C16.3137 1 19 3.68629 19 7C19 7.24566 18.9793 7.4863 18.9392 7.72091C20.6134 8.18608 21.818 9.72954 21.9695 11.5641L22 11.9944L21.9947 12.4249C21.9105 12.9705 21.5923 13 17.5 13Z"
+      fill="#D1D5DB"
+    />
+    <path
+      d="M8 16L7 19M12 16L11 19M16 16L15 19"
+      stroke="#3B82F6"
+      strokeWidth="2"
+      strokeLinecap="round"
+    />
   </svg>
 );
 
-export const CloudSnowIcon = ({ className = "w-4 h-4" }: { className?: string }) => (
-  <svg className={className} viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <path d="M7.5 13.5H19C21.21 13.5 23 11.71 23 9.5C23 7.29 21.21 5.5 19 5.5C18.79 5.5 18.59 5.52 18.39 5.55C17.9 3.07 15.69 1.25 13 1.25C9.82 1.25 7.25 3.82 7.25 7C7.25 7.43 7.3 7.84 7.39 8.23C5.45 8.43 4 10.09 4 12.12C4 12.95 4.28 13.74 4.81 14.35C5.34 14.97 6.08 13.5 7 13.5" 
-      fill="#D1D5DB" />
-    <path d="M8 18V18.01M12 18V18.01M16 18V18.01M8 21V21.01M12 21V21.01M16 21V21.01" 
-      stroke="white" strokeWidth="2" strokeLinecap="round" />
+export const CloudSnowIcon = ({
+  className = "w-5 h-5",
+}: {
+  className?: string;
+}) => (
+  <svg
+    className={className}
+    viewBox="0 0 24 24"
+    fill="none"
+    xmlns="http://www.w3.org/2000/svg"
+  >
+    <path
+      fillRule="evenodd"
+      clipRule="evenodd"
+      d="M17.5 13H7C4.79086 13 3 11.2091 3 9C3 6.79086 4.79086 5 7 5C7.11873 5 7.23576 5.00427 7.35108 5.01264C8.15128 2.73507 10.393 1 13 1C16.3137 1 19 3.68629 19 7C19 7.24566 18.9793 7.4863 18.9392 7.72091C20.6134 8.18608 21.818 9.72954 21.9695 11.5641L22 11.9944L21.9947 12.4249C21.9105 12.9705 21.5923 13 17.5 13Z"
+      fill="#D1D5DB"
+    />
+    <path
+      d="M8 17V17.01M12 17V17.01M16 17V17.01M8 20V20.01M12 20V20.01M16 20V20.01"
+      stroke="white"
+      strokeWidth="2"
+      strokeLinecap="round"
+    />
   </svg>
 );
 
-export const CloudFogIcon = ({ className = "w-4 h-4" }: { className?: string }) => (
-  <svg className={className} viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <path d="M7.5 9.5H19C21.21 9.5 23 7.71 23 5.5C23 3.29 21.21 1.5 19 1.5C18.79 1.5 18.59 1.52 18.39 1.55C17.9 -0.93 15.69 -2.75 13 -2.75C9.82 -2.75 7.25 -0.18 7.25 3C7.25 3.43 7.3 3.84 7.39 4.23C5.45 4.43 4 6.09 4 8.12C4 8.95 4.28 9.74 4.81 10.35C5.34 10.97 6.08 9.5 7 9.5" 
-      fill="#D1D5DB" />
-    <path d="M5 14H19M7 18H17M9 22H15" stroke="#D1D5DB" strokeWidth="2" strokeLinecap="round" />
+export const CloudFogIcon = ({
+  className = "w-5 h-5",
+}: {
+  className?: string;
+}) => (
+  <svg
+    className={className}
+    viewBox="0 0 24 24"
+    fill="none"
+    xmlns="http://www.w3.org/2000/svg"
+  >
+    <path
+      fillRule="evenodd"
+      clipRule="evenodd"
+      d="M17.5 9H7C4.79086 9 3 7.20914 3 5C3 2.79086 4.79086 1 7 1C7.11873 1 7.23576 1.00427 7.35108 1.01264C8.15128 -1.26493 10.393 -3 13 -3C16.3137 -3 19 -0.313706 19 3C19 3.24566 18.9793 3.4863 18.9392 3.72091C20.6134 4.18608 21.818 5.72954 21.9695 7.56406L22 7.99443L21.9947 8.42493C21.9105 8.97054 21.5923 9 17.5 9Z"
+      fill="#D1D5DB"
+    />
+    <path
+      d="M5 13H19M7 17H17M9 21H15"
+      stroke="#D1D5DB"
+      strokeWidth="2"
+      strokeLinecap="round"
+    />
   </svg>
 );
 
-export const CloudLightningIcon = ({ className = "w-4 h-4" }: { className?: string }) => (
-  <svg className={className} viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <path d="M7.5 13.5H19C21.21 13.5 23 11.71 23 9.5C23 7.29 21.21 5.5 19 5.5C18.79 5.5 18.59 5.52 18.39 5.55C17.9 3.07 15.69 1.25 13 1.25C9.82 1.25 7.25 3.82 7.25 7C7.25 7.43 7.3 7.84 7.39 8.23C5.45 8.43 4 10.09 4 12.12C4 12.95 4.28 13.74 4.81 14.35C5.34 14.97 6.08 13.5 7 13.5" 
-      fill="#D1D5DB" />
-    <path d="M13 13L10 18H14L11 23" stroke="#FFD700" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+export const CloudThunderIcon = ({
+  className = "w-5 h-5",
+}: {
+  className?: string;
+}) => (
+  <svg
+    className={className}
+    viewBox="0 0 24 24"
+    fill="none"
+    xmlns="http://www.w3.org/2000/svg"
+  >
+    <path
+      fillRule="evenodd"
+      clipRule="evenodd"
+      d="M17.5 13H7C4.79086 13 3 11.2091 3 9C3 6.79086 4.79086 5 7 5C7.11873 5 7.23576 5.00427 7.35108 5.01264C8.15128 2.73507 10.393 1 13 1C16.3137 1 19 3.68629 19 7C19 7.24566 18.9793 7.4863 18.9392 7.72091C20.6134 8.18608 21.818 9.72954 21.9695 11.5641L22 11.9944L21.9947 12.4249C21.9105 12.9705 21.5923 13 17.5 13Z"
+      fill="#D1D5DB"
+    />
+    <path
+      d="M13 12.5L10 17.5H14L11 22.5"
+      stroke="#FFD700"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    />
   </svg>
 );
+
+// Map OpenWeather icon codes to our custom icons
+export const getWeatherIcon = (iconCode: string, className = "w-5 h-5") => {
+  // First digit is for day/night, second digit is for weather condition
+  const conditionCode = iconCode.substring(0, 2);
+
+  switch (conditionCode) {
+    case "01": // Clear sky
+      return <SunIcon className={className} />;
+    case "02": // Few clouds
+      return <CloudSunIcon className={className} />;
+    case "03": // Scattered clouds
+    case "04": // Broken clouds
+      return <CloudIcon className={className} />;
+    case "09": // Shower rain
+    case "10": // Rain
+      return <CloudRainIcon className={className} />;
+    case "11": // Thunderstorm
+      return <CloudThunderIcon className={className} />;
+    case "13": // Snow
+      return <CloudSnowIcon className={className} />;
+    case "50": // Mist
+      return <CloudFogIcon className={className} />;
+    default:
+      return <SunIcon className={className} />;
+  }
+};
