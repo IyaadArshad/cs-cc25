@@ -116,13 +116,13 @@ export default function WeatherDisplay() {
       opacity: 0,
       width: 0,
       marginLeft: 0,
-      transition: { duration: 0.2 },
+      transition: { duration: 0.4 },
     },
     expanded: {
       opacity: 1,
       width: "auto",
       marginLeft: "8px",
-      transition: { duration: 0.3, delay: 0.05 },
+      transition: { duration: 0.4, delay: 0.02 },
     },
   };
 
