@@ -824,17 +824,21 @@ export default function CaseHome() {
           <div className="flex flex-col items-center justify-center">
             <AnimatePresence mode="wait">
               {/* Weather Pill - "The Island" - Positioned ABOVE welcome text */}
-              {!isInitialLoading && mainViewReady && !currentTaskStep && !showOrderScreen && !showOrderDetails && (
-                <motion.div
-                  initial={{ opacity: 0, y: -10 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.4, delay: 0.2 }}
-                  className="mb-3"
-                >
-                  <WeatherDisplay />
-                </motion.div>
-              )}
-              
+              {!isInitialLoading &&
+                mainViewReady &&
+                !currentTaskStep &&
+                !showOrderScreen &&
+                !showOrderDetails && (
+                  <motion.div
+                    initial={{ opacity: 0, y: -10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.4, delay: 0.2 }}
+                    className="mb-3"
+                  >
+                    <WeatherDisplay />
+                  </motion.div>
+                )}
+
               <motion.h1
                 key="welcome-title"
                 initial={{ opacity: 0, y: -20 }}
@@ -845,7 +849,9 @@ export default function CaseHome() {
                 transition={{ duration: 0.4, delay: 0.3 }}
                 className="text-4xl text-white text-center mb-4"
               >
-                {isReturning ? `Welcome back, ${userName}` : `Welcome, ${userName}`}
+                {isReturning
+                  ? `Welcome back, ${userName}`
+                  : `Welcome, ${userName}`}
               </motion.h1>
 
               <motion.div
@@ -937,7 +943,9 @@ export default function CaseHome() {
                       >
                         <CardContent className="p-3 flex flex-col text-left justify-center h-full">
                           <div className="flex flex-col items-start">
-                            <div className="text-[#2563eb] mb-3">{action.icon}</div>
+                            <div className="text-[#2563eb] mb-3">
+                              {action.icon}
+                            </div>
                             <h1 className="text-white font-semibold text-lg leading-normal">
                               {action.title}
                             </h1>
@@ -1012,7 +1020,9 @@ export default function CaseHome() {
                             <span className="mx-2 text-gray-500">•</span>
                             <span className="text-xs text-gray-400">
                               {(() => {
-                                const publishedDate = new Date(article.publishedAt);
+                                const publishedDate = new Date(
+                                  article.publishedAt
+                                );
                                 if (isNaN(publishedDate.getTime())) {
                                   return "Invalid date";
                                 }
@@ -1025,7 +1035,9 @@ export default function CaseHome() {
                                 if (diffInHours < 24) {
                                   return `${diffInHours}h ago`;
                                 } else {
-                                  const diffInDays = Math.floor(diffInHours / 24);
+                                  const diffInDays = Math.floor(
+                                    diffInHours / 24
+                                  );
                                   return `${diffInDays}d ago`;
                                 }
                               })()}
@@ -1148,9 +1160,13 @@ export default function CaseHome() {
           animation-delay: 14s;
           animation-iteration-count: infinite;
         }
-        
+
         .weather-gradient {
-          background: linear-gradient(180deg, #1e40af 0%, rgba(30, 64, 175, 0) 300px);
+          background: linear-gradient(
+            180deg,
+            #1e40af 0%,
+            rgba(30, 64, 175, 0) 300px
+          );
           position: relative;
           min-height: 100%;
         }

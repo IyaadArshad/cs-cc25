@@ -112,8 +112,18 @@ export default function WeatherDisplay() {
 
   // Horizontal expansion variants
   const expandedVariants = {
-    collapsed: { opacity: 0, width: 0, marginLeft: 0, transition: { duration: 0.2 } },
-    expanded: { opacity: 1, width: 'auto', marginLeft: '8px', transition: { duration: 0.3, delay: 0.05 } },
+    collapsed: {
+      opacity: 0,
+      width: 0,
+      marginLeft: 0,
+      transition: { duration: 0.2 },
+    },
+    expanded: {
+      opacity: 1,
+      width: "auto",
+      marginLeft: "8px",
+      transition: { duration: 0.3, delay: 0.05 },
+    },
   };
 
   if (isLoading || !weatherData) {
@@ -230,7 +240,8 @@ export default function WeatherDisplay() {
           flex-shrink: 0;
         }
 
-        .temperature, .condition {
+        .temperature,
+        .condition {
           font-size: 14px;
           flex-shrink: 0;
         }
