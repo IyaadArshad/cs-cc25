@@ -104,6 +104,18 @@ export default function WeatherDisplay() {
     fetchWeather();
   }, []);
 
+  // Entrance animation variants
+  const pillVariants = {
+    hidden: { opacity: 0, y: 10 },
+    visible: { opacity: 1, y: 0, transition: { duration: 0.4, delay: 0.1 } },
+  };
+
+  // Horizontal expansion variants
+  const expandedVariants = {
+    collapsed: { opacity: 0, width: 0, marginLeft: 0, transition: { duration: 0.2 } },
+    expanded: { opacity: 1, width: 'auto', marginLeft: '8px', transition: { duration: 0.3, delay: 0.05 } },
+  };
+
   if (isLoading || !weatherData) {
     return null;
   }
@@ -114,182 +126,155 @@ export default function WeatherDisplay() {
 
   const feelsLike = weatherData.feels_like
     ? usesFahrenheit
-      ? `${weatherData.feels_like.fahrenheit}°F`
-      : `${weatherData.feels_like.celsius}°C`
+      ? `${weatherData.feels_like.fahrenheit}°`
+      : `${weatherData.feels_like.celsius}°`
     : null;
 
   return (
-    <>
-      <div
-        className="weather-pill-container flex justify-center"
-        onMouseEnter={() => setIsExpanded(true)}
-        onMouseLeave={() => setIsExpanded(false)}
-      >
+    <motion.div
+      className="weather-pill-container flex justify-center"
+      variants={pillVariants}
+      initial="hidden"
+      animate="visible"
+      onMouseEnter={() => setIsExpanded(true)}
+      onMouseLeave={() => setIsExpanded(false)}
+    >
+      <div className="weather-pill">
+        {/* Basic Info - Always visible */}
+        <span className="weather-icon">
+          {weatherData.icon
+            ? getWeatherIcon(weatherData.icon)
+            : getWeatherIcon("01d")}
+        </span>
+        <span className="temperature">{temperature}</span>
+        <span className="divider">|</span>
+        <span className="condition">{weatherData.condition}</span>
+
+        {/* Expanded Info - Animates horizontally */}
         <motion.div
-          className="weather-pill"
-          animate={{
-            width: isExpanded ? "auto" : "auto",
-            height: isExpanded ? "auto" : "32px",
-            borderRadius: "20px",
-          }}
-          transition={{ duration: 0.3 }}
+          className="expanded-info-wrapper"
+          variants={expandedVariants}
+          initial="collapsed"
+          animate={isExpanded ? "expanded" : "collapsed"}
+          aria-hidden={!isExpanded}
         >
-          {/* Basic View - Always visible */}
-          <div className="basic-view">
-            <span className="weather-icon">
-              {weatherData.icon
-                ? getWeatherIcon(weatherData.icon)
-                : getWeatherIcon("01d")}
-            </span>
-            <span className="temperature">{temperature}</span>
-            <span className="divider">|</span>
-            <span className="condition">{weatherData.condition}</span>
-          </div>
-
-          {/* Expanded View - Only visible on hover */}
-          <AnimatePresence>
-            {isExpanded && (
-              <motion.div
-                className="expanded-view"
-                initial={{ opacity: 0, height: 0 }}
-                animate={{ opacity: 1, height: "auto" }}
-                exit={{ opacity: 0, height: 0 }}
-                transition={{ duration: 0.2 }}
-              >
-                <hr className="divider-line" />
-
-                <div className="details-grid">
-                  {feelsLike && (
-                    <div className="detail-item">
-                      <Thermometer size={14} className="detail-icon" />
-                      <span className="detail-label">Feels like:</span>
-                      <span className="detail-value">{feelsLike}</span>
-                    </div>
-                  )}
-
-                  <div className="detail-item">
-                    <Droplets size={14} className="detail-icon" />
-                    <span className="detail-label">Humidity:</span>
-                    <span className="detail-value">
-                      {weatherData.humidity.value}
-                      {weatherData.humidity.unit}
-                    </span>
-                  </div>
-
-                  <div className="detail-item">
-                    <Wind size={14} className="detail-icon" />
-                    <span className="detail-label">Wind:</span>
-                    <span className="detail-value">
-                      {weatherData.wind.value} {weatherData.wind.unit}
-                    </span>
-                  </div>
-
-                  {weatherData.pressure && (
-                    <div className="detail-item">
-                      <Gauge size={14} className="detail-icon" />
-                      <span className="detail-label">Pressure:</span>
-                      <span className="detail-value">
-                        {weatherData.pressure.value} {weatherData.pressure.unit}
-                      </span>
-                    </div>
-                  )}
-
-                  {weatherData.visibility && (
-                    <div className="detail-item">
-                      <Eye size={14} className="detail-icon" />
-                      <span className="detail-label">Visibility:</span>
-                      <span className="detail-value">
-                        {weatherData.visibility.value}{" "}
-                        {weatherData.visibility.unit}
-                      </span>
-                    </div>
-                  )}
+          <div className="expanded-info-content">
+            {feelsLike && (
+              <>
+                <span className="divider">|</span>
+                <div className="detail-item">
+                  <Thermometer size={14} className="detail-icon" />
+                  <span className="detail-value">{feelsLike}</span>
                 </div>
-              </motion.div>
+              </>
             )}
-          </AnimatePresence>
+            <span className="divider">|</span>
+            <div className="detail-item">
+              <Droplets size={14} className="detail-icon" />
+              <span className="detail-value">
+                {weatherData.humidity.value}%
+              </span>
+            </div>
+            <span className="divider">|</span>
+            <div className="detail-item">
+              <Wind size={14} className="detail-icon" />
+              <span className="detail-value">
+                {weatherData.wind.value} {weatherData.wind.unit}
+              </span>
+            </div>
+            {weatherData.pressure && (
+              <>
+                <span className="divider">|</span>
+                <div className="detail-item">
+                  <Gauge size={14} className="detail-icon" />
+                  <span className="detail-value">
+                    {weatherData.pressure.value} {weatherData.pressure.unit}
+                  </span>
+                </div>
+              </>
+            )}
+          </div>
         </motion.div>
-
-        <style jsx>{`
-          .weather-pill-container {
-            margin-bottom: 12px;
-            z-index: 10;
-          }
-
-          .weather-pill {
-            background-color: rgba(10, 37, 64, 0.75);
-            padding: 6px 16px;
-            display: flex;
-            flex-direction: column;
-            color: white;
-            backdrop-filter: blur(4px);
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
-            cursor: pointer;
-          }
-
-          .basic-view {
-            display: flex;
-            align-items: center;
-            white-space: nowrap;
-          }
-
-          .weather-icon {
-            margin-right: 6px;
-            display: flex;
-            align-items: center;
-          }
-
-          .temperature {
-            font-weight: 500;
-            font-size: 14px;
-          }
-
-          .divider {
-            margin: 0 8px;
-            opacity: 0.6;
-          }
-
-          .condition {
-            font-size: 14px;
-            opacity: 0.9;
-          }
-
-          .divider-line {
-            margin: 8px 0;
-            border: 0;
-            height: 1px;
-            background-color: rgba(255, 255, 255, 0.2);
-          }
-
-          .details-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 8px 16px;
-            padding: 0 0 6px;
-          }
-
-          .detail-item {
-            display: flex;
-            align-items: center;
-            font-size: 12px;
-            white-space: nowrap;
-          }
-
-          .detail-icon {
-            margin-right: 4px;
-            opacity: 0.7;
-          }
-
-          .detail-label {
-            margin-right: 4px;
-            opacity: 0.7;
-          }
-
-          .detail-value {
-            font-weight: 500;
-          }
-        `}</style>
       </div>
-    </>
+
+      <style jsx>{`
+        .weather-pill-container {
+          margin-bottom: 12px;
+          z-index: 10;
+        }
+
+        .weather-pill {
+          background-color: rgba(10, 37, 64, 0.75);
+          backdrop-filter: blur(5px);
+          -webkit-backdrop-filter: blur(5px);
+          padding: 6px 16px;
+          border-radius: 20px;
+          display: inline-flex;
+          align-items: center;
+          color: white;
+          box-shadow: 0 2px 8px rgba(0, 0, 0, 0.25);
+          cursor: pointer;
+          overflow: hidden;
+          white-space: nowrap;
+          transition: background-color 0.3s ease;
+        }
+
+        .weather-pill:hover {
+          background-color: rgba(10, 37, 64, 0.9);
+        }
+
+        .weather-icon {
+          margin-right: 8px;
+          display: flex;
+          align-items: center;
+          flex-shrink: 0;
+        }
+
+        .temperature, .condition {
+          font-size: 14px;
+          flex-shrink: 0;
+        }
+        .temperature {
+          font-weight: 500;
+        }
+        .condition {
+          opacity: 0.9;
+        }
+
+        .divider {
+          margin: 0 8px;
+          opacity: 0.5;
+          flex-shrink: 0;
+        }
+
+        .expanded-info-wrapper {
+          display: flex;
+          align-items: center;
+          overflow: hidden;
+        }
+
+        .expanded-info-content {
+          display: flex;
+          align-items: center;
+        }
+
+        .detail-item {
+          display: flex;
+          align-items: center;
+          font-size: 13px;
+          flex-shrink: 0;
+        }
+
+        .detail-icon {
+          margin-right: 3px;
+          opacity: 0.7;
+        }
+
+        .detail-value {
+          font-weight: 400;
+          opacity: 0.9;
+        }
+      `}</style>
+    </motion.div>
   );
 }

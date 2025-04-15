@@ -18,7 +18,7 @@ export async function GET(request: Request) {
     // Fetch data from OpenWeather API
     const response = await fetch(
       `https://api.openweathermap.org/data/3.0/onecall?lat=${lat}&lon=${lon}&exclude=minutely,hourly,daily,alerts&units=metric&appid=${apiKey}`,
-      { next: { revalidate: 600 } } // Cache for 10 minutes
+      { next: { revalidate: 3600 } } // Cache for 1 hour (3600 seconds)
     );
 
     if (!response.ok) {
