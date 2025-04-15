@@ -473,49 +473,73 @@ export function OrderScreen({
             animate={isExiting ? "exit" : "show"}
             exit="exit"
             variants={containerVariants}
-            className="flex flex-col mt-12 h-[calc(100vh-130px)]"
+            className="flex flex-col mt-12 min-h-[calc(100vh-130px)]"
           >
-            <motion.div variants={itemVariants} className="self-start">
-              <h2 className="text-6xl font-extrabold text-white mb-6 leading-tight">
+            <motion.div variants={itemVariants} className="self-start w-full">
+              <h2 className="text-4xl md:text-6xl font-extrabold text-white mb-6 leading-tight">
                 Choose your
                 <br />
                 <span style={{ color: "#2563eb" }}>items</span>
               </h2>
             </motion.div>
 
-            <div className="flex flex-1 overflow-hidden">
-              {/* Categories sidebar */}
+            {/* Updated categories and menu layout */}
+            <div className="flex flex-col md:flex-row flex-1 overflow-hidden gap-4">
+              {/* Categories sidebar - improved text handling */}
               <motion.div
                 variants={itemVariants}
-                className="w-1/4 border-r border-gray-800 overflow-y-auto pr-2"
+                className="w-full md:w-1/4 border-b md:border-b-0 md:border-r border-gray-700 overflow-y-auto md:pr-2 pb-4 md:pb-0"
               >
-                {CATEGORIES.map((category) => (
-                  <Button
-                    key={category.id}
-                    variant="ghost"
-                    className={`w-full text-left px-4 py-3 justify-start ${
-                      selectedCategory === category.id
-                        ? "bg-gray-800 text-white font-medium border-l-2 border-blue-500"
-                        : "text-gray-400 hover:bg-gray-800/50"
-                    }`}
-                    onClick={() => setSelectedCategory(category.id)}
-                  >
-                    {category.name}
-                  </Button>
-                ))}
+                {/* Mobile horizontal scroll */}
+                <div className="flex md:hidden overflow-x-auto gap-2 pb-2 hide-scrollbar">
+                  {CATEGORIES.map((category) => (
+                    <Button
+                      key={category.id}
+                      variant="ghost"
+                      className={`flex-shrink-0 text-left px-4 py-2 justify-start ${
+                        selectedCategory === category.id
+                          ? "bg-gray-800 text-white font-medium border-b-2 md:border-b-0 md:border-l-2 border-blue-500"
+                          : "text-gray-400 hover:bg-gray-800/50 hover:text-white"
+                      }`}
+                      onClick={() => setSelectedCategory(category.id)}
+                    >
+                      {category.name}
+                    </Button>
+                  ))}
+                </div>
+
+                {/* Desktop vertical categories */}
+                <div className="hidden md:flex md:flex-col gap-1">
+                  {CATEGORIES.map((category) => (
+                    <Button
+                      key={category.id}
+                      variant="ghost"
+                      className={`w-full text-left px-4 py-3 justify-start ${
+                        selectedCategory === category.id
+                          ? "bg-gray-800 text-white font-medium border-l-2 border-blue-500"
+                          : "text-gray-400 hover:bg-gray-800/50 hover:text-white"
+                      }`}
+                      onClick={() => setSelectedCategory(category.id)}
+                    >
+                      {/* Text with ellipsis if needed */}
+                      <span className="truncate">{category.name}</span>
+                    </Button>
+                  ))}
+                </div>
               </motion.div>
 
               {/* Menu items */}
               <motion.div
                 variants={itemVariants}
-                className="w-3/4 overflow-y-auto p-4 space-y-4"
+                className="w-full md:w-3/4 overflow-y-auto p-1 md:p-4 space-y-4 flex-1"
+                style={{ maxHeight: "calc(100vh - 300px)" }}
               >
                 {filteredMenuItems.map((item) => (
                   <div
                     key={item.id}
-                    className="bg-gray-800 rounded-lg p-4 flex justify-between"
+                    className="bg-gray-800 rounded-lg p-3 md:p-4 flex flex-col sm:flex-row justify-between gap-3"
                   >
-                    <div className="flex gap-3">
+                    <div className="flex gap-3 flex-1">
                       <div className="w-16 h-16 rounded-md overflow-hidden flex-shrink-0">
                         <img
                           src={item.image}
@@ -523,7 +547,7 @@ export function OrderScreen({
                           className="w-full h-full object-cover"
                         />
                       </div>
-                      <div>
+                      <div className="flex-1">
                         <h3 className="text-white font-medium">{item.name}</h3>
                         <p className="text-gray-400 text-sm mt-1 line-clamp-2">
                           {item.description}
@@ -534,29 +558,45 @@ export function OrderScreen({
                       </div>
                     </div>
                     <button
-                      className="self-end bg-blue-600 hover:bg-blue-700 text-white px-3 py-1 rounded h-8"
+                      className="self-end sm:self-center bg-blue-600 hover:bg-blue-700 text-white px-3 py-1 rounded h-8 flex-shrink-0"
                       onClick={() => handleAddToCart(item)}
                     >
                       Add
                     </button>
                   </div>
                 ))}
+                {/* Added more padding to ensure content is visible above navbar and checkout button */}
+                {orderItems.length > 0 && <div className="h-48"></div>}
               </motion.div>
             </div>
           </motion.div>
 
-          {orderItems.length > 0 && (
-            <div className="sticky bottom-4 mt-6 w-full">
-              <Button
-                className="w-full bg-blue-600 hover:bg-blue-500 text-white py-3"
-                onClick={handleCheckout}
+          {/* Improved checkout button container - positioned above the navbar */}
+          <AnimatePresence>
+            {orderItems.length > 0 && (
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: 20 }}
+                transition={{ duration: 0.3 }}
+                className="fixed bottom-[96px] left-0 right-0 bg-gray-900/90 backdrop-blur-md border-t border-gray-700/50 z-20"
               >
-                Checkout (
-                {orderItems.reduce((total, item) => total + item.quantity, 0)}{" "}
-                items • {getTotalAmount()} AED)
-              </Button>
-            </div>
-          )}
+                <div className="container mx-auto px-6 py-4 max-w-screen-2xl">
+                  <Button
+                    className="w-full bg-blue-600 hover:bg-blue-500 text-white py-3 text-base md:text-lg font-medium"
+                    onClick={handleCheckout}
+                  >
+                    Checkout (
+                    {orderItems.reduce(
+                      (total, item) => total + item.quantity,
+                      0
+                    )}{" "}
+                    items • {getTotalAmount()} AED)
+                  </Button>
+                </div>
+              </motion.div>
+            )}
+          </AnimatePresence>
         </>
       )}
 
